@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Keyword Usage in Reddit</title>
+        <link rel="stylesheet" href="/static/css/nav.css" />
+        <link rel="stylesheet" href="/static/css/result.css" />
+        <link
+            type="image/png"
+            sizes="96x96"
+            rel="icon"
+            href="/static/images/keyword.png"
+        />
+    </head>
+    <body>
+        <nav>
+            <a href="/" class="brand-logo">Keyword Tracker</a>
+            <a class="menu" onclick="makeRespo()">
+                <img src="/static/images/menu.png" alt="Menu" />
+            </a>
+            <div class="right">
+                <ul>
+                    <li>
+                        <a href="/index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="/about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <p class="title">
+                Showing Reddit Results for <br />
+                <span class="query"></span>
+            </p>
+
+            <div class="boxes">
+                <div class="box">
+                    <h1>Posts</h1>
+                    <p>11k</p>
+                </div>
+
+                <div class="box">
+                    <h1>Upvotes</h1>
+                    <p>500k</p>
+                </div>
+
+                <div class="box">
+                    <h1>Likes</h1>
+                    <p>34.7k</p>
+                </div>
+            </div>
+            <p class="title">Trending Graph</p>
+            <div class="graph">
+                <canvas id="graph"></canvas>
+            </div>
+        </div>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
+            integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="/static/js/nav.js"></script>
+        <script src="/static/js/result.js"></script>
+    </body>
+</html>
