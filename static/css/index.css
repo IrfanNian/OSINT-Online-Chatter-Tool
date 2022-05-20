@@ -94,15 +94,9 @@ button {
     border-radius: 10px;
 }
 
-.pastebin {
+.search {
     color: #3a559f;
     border-radius: 20px;
-}
-.reddit {
-    color: #ff571e;
-}
-.twitter {
-    color: #4fa7eb;
 }
 
 @media only screen and (max-width: 1080px) {
