@@ -25,47 +25,29 @@
                     <li>
                         <a href="/">Home</a>
                     </li>
-                    <li>
-                        <a href="/">About</a>
-                    </li>
                 </ul>
             </div>
         </nav>
         <div class="container">
             <div class="content">
                 <h1>Tracking Online Chatter</h1>
-
+				<form method="POST" id="search">
                 <input
                     type="text"
                     id="keyword"
-                    placeholder="Search for keywords..."
+                    placeholder="Search for keyword..."
                 />
 
                 <div class="buttons">
-                    <button id="PastebinSubmit" disabled class="fb">
+                    <button id="SearchSubmit" type="submit"  disabled class="Search">
                         <img
-                            src="/static/images/pastebin.png"
-                            alt="Pastebin"
-                            width="40px"
+                            src="/static/images/search.png"
+                            alt="search"
+                            width="35px"
                         />
-                        <span> PASTEBIN </span>
+                        <span> SEARCH </span>
                     </button>
-                    <button id="TwitterSubmit" disabled class="twitter">
-                        <img
-                            src="/static/images/twitter.png"
-                            alt="Twitter"
-                            width="40px"
-                        />
-                        <span> TWITTER </span>
-                    </button>
-                    <button id="RedditSubmit" disabled class="reddit">
-                        <img
-                            src="/static/images/reddit.png"
-                            alt="Reddit"
-                            width="40px"
-                        />
-                        <span> REDDIT </span>
-                    </button>
+				</form>
                 </div>
             </div>
         </div>
