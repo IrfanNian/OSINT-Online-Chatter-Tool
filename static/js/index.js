@@ -1,25 +1,15 @@
 const keyword = document.getElementById("keyword");
-const PastebinSubmit = document.getElementById("PastebinSubmit");
-const TwitterSubmit = document.getElementById("TwitterSubmit");
-const RedditSubmit = document.getElementById("RedditSubmit");
+const form = document.forms[0];
 
 keyword.addEventListener("input", function () {
     if (keyword.value.length > 0) {
-        PastebinSubmit.disabled = false;
-        TwitterSubmit.disabled = false;
-        RedditSubmit.disabled = false;
+        SearchSubmit.disabled = false;
     } else {
-        PastebinSubmit.disabled = true;
-        TwitterSubmit.disabled = true;
-        RedditSubmit.disabled = true;
+        SearchSubmit.disabled = true;
     }
 });
-PastebinSubmit.addEventListener("click", () => {
-    window.location.href = `/pastebin?q=${keyword.value}`;
-});
-TwitterSubmit.addEventListener("click", () => {
-    window.location.href = `/twitter?q=${keyword.value}`;
-});
-RedditSubmit.addEventListener("click", () => {
-    window.location.href = `/reddit?q=${keyword.value}`;
+
+form.addEventListener("submit", () => {
+    form.action = `/results?q=${keyword.value}`;
+    console.log(form.action);
 });

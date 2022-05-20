@@ -2,7 +2,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 let query = params.q;
-document.title = `${query} | Keyword Usage in pastebin`;
+document.title = `${query} | Keyword Usage`;
 
 document.querySelector("span.query").innerText = `"${query}"`;
 
