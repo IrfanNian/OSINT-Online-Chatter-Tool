@@ -1,15 +1,17 @@
-import os.path
-
 from flask import Flask, render_template, request
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
-from scrapers.twitter_scraper import TwitterScraper
-from scrapers.reddit_scraper import RedditScraper
+from scrapers.master_scraper import MasterScraper
 import os
 
 app = Flask(__name__)  # Create the flask object
 
 RESULT_FOLDER = "results"
+ENABLED_SCRAPING_SOURCES = {
+    "ts": True,
+    "rs": True,
+    "ps": True
+}
 
 
 @app.route('/')
@@ -22,14 +24,12 @@ def default():
 
 @app.route('/results', methods=['POST'])
 def results():
-    text = request.form['keyword']
-    ts = TwitterScraper()
-    ts.run(text)
-    rs = RedditScraper()
-    rs.scrape(text)
+    if request.method == "POST":
+        searchbar_text = request.form['keyword']
+        ms = MasterScraper()
+        ms.run(ENABLED_SCRAPING_SOURCES, searchbar_text)
     return render_template('results.html')
 
 
 if __name__ == '__main__':
     app.run()
-    app.scrape()
