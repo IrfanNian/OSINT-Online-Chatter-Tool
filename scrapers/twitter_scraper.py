@@ -25,11 +25,11 @@ class TwitterScraper(threading.Thread):
 
         # Checking for timeframe
         if self.arg_advance_since is not None and self.arg_advance_until is not None:
-            statement = self.arg_search + "since:" + self.arg_advance_since + " until:" + self.arg_advance_until
+            statement = self.arg_search + " since:" + self.arg_advance_since + " until:" + self.arg_advance_until
         elif self.arg_advance_since is None and self.arg_advance_until is not None:
-            statement = self.arg_search + "until:" + self.arg_advance_until
+            statement = self.arg_search + " until:" + self.arg_advance_until
         elif self.arg_advance_since is not None and self.arg_advance_until is None:
-            statement = self.arg_search + "since:" + self.arg_advance_since
+            statement = self.arg_search + " since:" + self.arg_advance_since
         else:
             statement = self.arg_search
 
