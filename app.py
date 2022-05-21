@@ -1,5 +1,3 @@
-import os.path
-
 from flask import Flask, render_template, request
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
@@ -21,9 +19,9 @@ def default():
 
 @app.route('/results', methods=['POST'])
 def results():
-    text = request.form['keyword']
+    searchbar_text = request.form['keyword']
     ts = TwitterScraper()
-    ts.run(text)
+    ts.run(searchbar_text)
     return render_template('results.html')
 
 

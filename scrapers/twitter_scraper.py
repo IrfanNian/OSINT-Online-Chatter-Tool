@@ -6,7 +6,7 @@ CWD = os.getcwd()
 
 
 class TwitterScraper:
-    def run(self, arg_searchbar, arg_advance_since, arg_advance_until, arg_advance_limit):
+    def run(self, arg_searchbar, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None):
         default_tweets = 200  # temporary
 
         # Creating list to append tweet data to
