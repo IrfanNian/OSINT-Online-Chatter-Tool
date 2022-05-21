@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tracking Online Chatter 🔍</title>
+        <link rel="stylesheet" href="/static/css/index.css" />
+        <link rel="stylesheet" href="/static/css/nav.css" />
+        <link
+            type="image/png"
+            sizes="96x96"
+            rel="icon"
+            href="/static/images/keyword.png"
+        />
+    </head>
+    <body>
+        <nav>
+            <a href="/" class="brand-logo">Tracking Online Chatter</a>
+            <a class="menu" onclick="makeRespo()">
+                <img src="/static/images/menu.png" alt="Menu" />
+            </a>
+            <div class="right">
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="content">
+                <h1>Tracking Online Chatter</h1>
+				<form method="POST" id="search">
+                <input
+                    type="text"
+                    id="keyword"
+                    name="keyword"
+                    placeholder="Search for keyword..."
+                />
+
+                <div class="buttons">
+                    <button id="SearchSubmit" type="submit"  disabled class="Search">
+                        <img
+                            src="/static/images/search.png"
+                            alt="search"
+                            width="35px"
+                        />
+                        <span> SEARCH </span>
+                    </button>
+				</form>
+                </div>
+            </div>
+        </div>
+        <script src="/static/js/index.js"></script>
+        <script src="/static/js/nav.js"></script>
+    </body>
+</html>
