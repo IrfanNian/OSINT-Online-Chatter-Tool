@@ -1,7 +1,10 @@
+import os.path
+
 from flask import Flask, render_template, request
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
 from scrapers.twitter_scraper import TwitterScraper
+from scrapers.reddit_scraper import RedditScraper
 import os
 
 app = Flask(__name__)  # Create the flask object
@@ -19,11 +22,14 @@ def default():
 
 @app.route('/results', methods=['POST'])
 def results():
-    searchbar_text = request.form['keyword']
+    text = request.form['keyword']
     ts = TwitterScraper()
-    ts.run(searchbar_text)
+    ts.run(text)
+    rs = RedditScraper()
+    rs.scrape(text)
     return render_template('results.html')
 
 
 if __name__ == '__main__':
     app.run()
+    app.scrape()
