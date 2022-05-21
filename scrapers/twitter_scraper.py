@@ -7,10 +7,10 @@ CWD = os.getcwd()
 
 
 class TwitterScraper(threading.Thread):
-    def __init__(self, arg_searchbar, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
+    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_include=None, arg_advance_exclude=None):
         threading.Thread.__init__(self)
-        self.arg_searchbar = arg_searchbar
+        self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
@@ -25,13 +25,13 @@ class TwitterScraper(threading.Thread):
 
         # Checking for timeframe
         if self.arg_advance_since is not None and self.arg_advance_until is not None:
-            statement = self.arg_searchbar + "since:" + self.arg_advance_since + " until:" + self.arg_advance_until
+            statement = self.arg_search + " since:" + self.arg_advance_since + " until:" + self.arg_advance_until
         elif self.arg_advance_since is None and self.arg_advance_until is not None:
-            statement = self.arg_searchbar + "until:" + self.arg_advance_until
+            statement = self.arg_search + " until:" + self.arg_advance_until
         elif self.arg_advance_since is not None and self.arg_advance_until is None:
-            statement = self.arg_searchbar + "since:" + self.arg_advance_since
+            statement = self.arg_search + " since:" + self.arg_advance_since
         else:
-            statement = self.arg_searchbar
+            statement = self.arg_search
 
         # Check for customised tweet limit
         if type(self.arg_advance_limit) == int:
@@ -50,4 +50,4 @@ class TwitterScraper(threading.Thread):
         # todo: the plan is to search the dataframe again
 
         # Output to CSV for now
-        tweets_df.to_csv(os.path.join(CWD, "results", "tweets-results.csv"), sep=",", index=False)
+        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",", index=False)
