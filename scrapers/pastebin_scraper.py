@@ -25,11 +25,15 @@ class PastebinScrapper(threading.Thread):
         print(text)
 
     def run(self):
+        """
+        Runs the pastebin scraper module
+        :return None:
+        """
         # API Request
         response = requests.get("https://psbdmp.ws/api/v3/search/" + self.arg_search)
-        print("Response Status: " + str(response.status_code))
+        # print("Response Status: " + str(response.status_code))
         json_data = json.loads(response.text)
-        print(json_data)
+        # print(json_data)
 
         # Convert to csv format
         df = pd.json_normalize(json_data['data'])
