@@ -3,6 +3,7 @@ from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
 from scrapers.master_scraper import MasterScraper
 import os
+import shutil
 
 app = Flask(__name__)  # Create the flask object
 
@@ -16,14 +17,16 @@ ENABLED_SCRAPING_SOURCES = {
 
 @app.route('/')
 def default():
-    # this is here for now
-    if not os.path.exists(RESULT_FOLDER):
-        os.makedirs(RESULT_FOLDER)
     return render_template('index.html')
 
 
 @app.route('/results', methods=['POST'])
 def results():
+    if not os.path.exists(RESULT_FOLDER):
+        os.makedirs(RESULT_FOLDER)
+    # cleanup
+    shutil.rmtree(RESULT_FOLDER)
+    os.makedirs(RESULT_FOLDER)
     if request.method == "POST":
         searchbar_text = request.form['keyword']
         ms = MasterScraper()
