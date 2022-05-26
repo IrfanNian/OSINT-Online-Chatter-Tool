@@ -1,6 +1,8 @@
 import requests
 import json
 import pandas as pd
+import threading
+import os
 # GET /api/v3/search/psbdmp
 # curl https://psbdmp.ws/api/v3/search/hacking
 
@@ -9,28 +11,26 @@ import pandas as pd
 # print(response.status_code)  # response status code
 # print(response.json())
 
-# User input a keyword
-keyword = str(input("Enter keyword: "))
-# API Request
-response = requests.get("https://psbdmp.ws/api/v3/search/"+ keyword)
-print("Response Status: " + str(response.status_code))
-# print(response.json()) #raw data from API
+CWD = os.getcwd()
 
-def jprint(obj):
-    # create a formatted string of the Python JSON object
-    text = json.dumps(obj, sort_keys=True, indent=4)
-    print(text)
 
-# Print in json format
-# jprint(response.json())
+class PastebinScrapper(threading.Thread):
+    def __init__(self, arg_search):
+        threading.Thread.__init__(self)
+        self.arg_search = arg_search
 
-# writeFile =open('PasteBin.json', 'w')
-# writeFile.write(response.json())
-# writeFile.close()
+    def jprint(self, obj):
+        # create a formatted string of the Python JSON object
+        text = json.dumps(obj, sort_keys=True, indent=4)
+        print(text)
 
-json_data = json.loads(response.text)
-print(json_data)
+    def run(self):
+        # API Request
+        response = requests.get("https://psbdmp.ws/api/v3/search/" + self.arg_search)
+        print("Response Status: " + str(response.status_code))
+        json_data = json.loads(response.text)
+        print(json_data)
 
-# Convert to csv format
-df = pd.json_normalize(json_data['data'])
-df.to_csv("PasteBin.csv")
+        # Convert to csv format
+        df = pd.json_normalize(json_data['data'])
+        df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.csv"), sep=",", index=False)
