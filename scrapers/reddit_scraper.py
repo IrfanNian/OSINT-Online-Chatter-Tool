@@ -13,6 +13,10 @@ class RedditScraper(threading.Thread):
         self.arg_search = arg_search
 
     def run(self):
+        """
+        Runs the reddit scraper module
+        :return None:
+        """
         reddit = praw.Reddit(client_id="",  # my client id
                              client_secret="",  # your client secret
                              user_agent="",  # user agent name
@@ -24,13 +28,13 @@ class RedditScraper(threading.Thread):
 
         for i in sub_list:
             subreddit = reddit.subreddit(i)
-            red_dict = {"title": [], "author": [], "created": [], "text": [], "url": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
 
             for post in subreddit.search(self.arg_search, sort="new", limit=100):
                 date = datetime.datetime.fromtimestamp(post.created)
                 red_dict["title"].append(post.title)
-                red_dict["author"].append(post.author)
-                red_dict["created"].append(date)
+                red_dict["user"].append(post.author)
+                red_dict["time"].append(date)
                 red_dict["text"].append(post.selftext)
                 red_dict["url"].append(post.url)
 

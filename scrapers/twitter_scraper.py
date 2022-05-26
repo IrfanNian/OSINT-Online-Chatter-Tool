@@ -18,6 +18,10 @@ class TwitterScraper(threading.Thread):
         self.arg_advance_exclude = arg_advance_exclude
 
     def run(self):
+        """
+        Runs the twitter scraper module
+        :return None:
+        """
         default_tweets = 200  # todo: still have to decide default value
 
         # Creating list to append tweet data to
@@ -44,7 +48,7 @@ class TwitterScraper(threading.Thread):
             tweets_list.append([tweet.date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
-        tweets_df = pd.DataFrame(tweets_list, columns=["Datetime", "Tweet Id", "Text", "Username"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
 
         # Advance search operations for must be "included/excluded"
         # todo: the plan is to search the dataframe again

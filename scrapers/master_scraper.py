@@ -5,6 +5,12 @@ from scrapers.pastebin_scraper import PastebinScrapper
 
 class MasterScraper:
     def run(self, arg_scraping_sources, arg_searchbar_text):
+        """
+        Runs the master scraper which controls the other scraper modules
+        :param arg_scraping_sources:
+        :param arg_searchbar_text:
+        :return None:
+        """
         # start them scraper threads
         if arg_scraping_sources["ts"]:
             ts_thread = TwitterScraper(arg_searchbar_text)
