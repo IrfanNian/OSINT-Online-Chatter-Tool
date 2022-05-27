@@ -22,7 +22,7 @@ class TwitterScraper(threading.Thread):
         Runs the twitter scraper module
         :return None:
         """
-        limit = 200  # todo: still have to decide default value
+        limit = 500  # todo: still have to decide default value
 
         # Creating list to append tweet data to
         tweets_list = []
