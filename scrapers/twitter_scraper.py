@@ -22,7 +22,7 @@ class TwitterScraper(threading.Thread):
         Runs the twitter scraper module
         :return None:
         """
-        default_tweets = 200  # todo: still have to decide default value
+        limit = 200  # todo: still have to decide default value
 
         # Creating list to append tweet data to
         tweets_list = []
@@ -39,11 +39,11 @@ class TwitterScraper(threading.Thread):
 
         # Check for customised tweet limit
         if type(self.arg_advance_limit) == int:
-            default_tweets = self.arg_advance_limit
+            limit = self.arg_advance_limit
 
         # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):
-            if i > default_tweets:
+            if i > limit:
                 break
             tweets_list.append([tweet.date, tweet.id, tweet.content, tweet.user.username])
 
@@ -54,4 +54,5 @@ class TwitterScraper(threading.Thread):
         # todo: the plan is to search the dataframe again
 
         # Output to CSV for now
-        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",", index=False)
+        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
+                         index=False)
