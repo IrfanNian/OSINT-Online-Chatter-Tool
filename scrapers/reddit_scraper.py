@@ -1,5 +1,5 @@
 # import praw
-import time
+# import time
 from psaw import PushshiftAPI
 import datetime as dt
 import pandas as pd
@@ -17,23 +17,35 @@ class RedditScraper(threading.Thread):
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
 
+    def clean_data(self, arg_df):
+        """
+        Remove unwanted data from the dataframe
+        :param arg_df:
+        :return df:
+        """
+        df = arg_df.loc[~(arg_df['text'] == '[removed]')]
+        df = df.loc[~(pd.isna(df['text']))]
+        return df
+
     def run(self):
         """
         Runs the reddit scraper module
         :return None:
         """
         api = PushshiftAPI()
-        limit = 200  # todo: still have to decide default value
+        limit = 500  # todo: still have to decide default value
         # self.arg_advance_since = "2020-12-31"
         # self.arg_advance_until = "2021-12-31"
 
         # convert date to epoch timestamp
         if self.arg_advance_since:
             self.arg_advance_since = dt.datetime.strptime(self.arg_advance_since, '%Y-%m-%d')
-            self.arg_advance_since = int(dt.datetime(self.arg_advance_since.year, self.arg_advance_since.month, self.arg_advance_since.day).timestamp())
+            self.arg_advance_since = int(dt.datetime(self.arg_advance_since.year, self.arg_advance_since.month,
+                                                     self.arg_advance_since.day).timestamp())
         if self.arg_advance_until:
             self.arg_advance_until = dt.datetime.strptime(self.arg_advance_until, '%Y-%m-%d')
-            self.arg_advance_until = int(dt.datetime(self.arg_advance_until.year, self.arg_advance_until.month, self.arg_advance_until.day).timestamp())
+            self.arg_advance_until = int(dt.datetime(self.arg_advance_until.year, self.arg_advance_until.month,
+                                                     self.arg_advance_until.day).timestamp())
 
         # Check for customised limit
         if type(self.arg_advance_limit) == int:
@@ -59,16 +71,22 @@ class RedditScraper(threading.Thread):
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search)
 
             for post in gen:
-                date = dt.datetime.fromtimestamp(post.created)
-                red_dict["title"].append(post.title)
-                red_dict["user"].append(post.author)
-                red_dict["time"].append(date)
-                red_dict["text"].append(post.selftext)
-                red_dict["url"].append(post.url)
+                try:
+                    date = dt.datetime.fromtimestamp(post.created)
+                    red_dict["title"].append(post.title)
+                    red_dict["user"].append(post.author)
+                    red_dict["time"].append(date)
+                    red_dict["text"].append(post.selftext)
+                    red_dict["url"].append(post.url)
+                except AttributeError:
+                    pass
 
-            submission_df = pd.DataFrame(red_dict)
+            submission_df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in red_dict.items()]))
+            submission_df = self.clean_data(submission_df)
             submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
                                  sep=",", index=False)
+            submission_df = submission_df.reset_index()
+            submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 
     # def run(self):
     #     """
