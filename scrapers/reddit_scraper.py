@@ -85,6 +85,8 @@ class RedditScraper(threading.Thread):
             submission_df = self.clean_data(submission_df)
             submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
                                  sep=",", index=False)
+            submission_df = submission_df.reset_index()
+            submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 
     # def run(self):
     #     """
