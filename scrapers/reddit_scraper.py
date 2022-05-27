@@ -71,14 +71,17 @@ class RedditScraper(threading.Thread):
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search)
 
             for post in gen:
-                date = dt.datetime.fromtimestamp(post.created)
-                red_dict["title"].append(post.title)
-                red_dict["user"].append(post.author)
-                red_dict["time"].append(date)
-                red_dict["text"].append(post.text)
-                red_dict["url"].append(post.url)
+                try:
+                    date = dt.datetime.fromtimestamp(post.created)
+                    red_dict["title"].append(post.title)
+                    red_dict["user"].append(post.author)
+                    red_dict["time"].append(date)
+                    red_dict["text"].append(post.selftext)
+                    red_dict["url"].append(post.url)
+                except AttributeError:
+                    pass
 
-            submission_df = pd.DataFrame(red_dict)
+            submission_df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
             submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
                                  sep=",", index=False)
