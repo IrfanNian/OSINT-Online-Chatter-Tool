@@ -75,7 +75,7 @@ class RedditScraper(threading.Thread):
                 red_dict["title"].append(post.title)
                 red_dict["user"].append(post.author)
                 red_dict["time"].append(date)
-                red_dict["text"].append(post.selftext)
+                red_dict["text"].append(post.text)
                 red_dict["url"].append(post.url)
 
             submission_df = pd.DataFrame(red_dict)
