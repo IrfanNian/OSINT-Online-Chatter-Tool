@@ -4,8 +4,10 @@ from psaw import PushshiftAPI
 import datetime as dt
 import pandas as pd
 import os
+import numpy as np
 
 CWD = os.getcwd()
+pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
@@ -22,7 +24,7 @@ class RedditScraper:
         :return df:
         """
         df = arg_df.loc[~(arg_df['text'] == '[removed]')]
-        df = df.loc[~(pd.isna(df['text']))]
+        df['text'] = np.where(df['text'].isnull(), df['text'], df['title'])
         return df
 
     def run(self):

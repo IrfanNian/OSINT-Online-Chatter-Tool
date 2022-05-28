@@ -1,6 +1,7 @@
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import os
+import datetime as dt
 
 CWD = os.getcwd()
 
@@ -45,7 +46,9 @@ class TwitterScraper:
                 break
             if self.arg_search.lower() not in tweet.content.lower():
                 continue
-            tweets_list.append([tweet.date, tweet.id, tweet.content, tweet.user.username])
+            date = str(tweet.date).split("+", 1)[0]
+            date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
