@@ -2,6 +2,7 @@ from modules.twitter_scraper import TwitterScraper
 from modules.reddit_scraper import RedditScraper
 from modules.pastebin_scraper import PastebinScrapper
 from modules.feather_reader import FeatherReader
+import multiprocessing
 
 
 class ModuleController:
@@ -24,23 +25,26 @@ class ModuleController:
         :param arg_searchbar_text:
         :return None:
         """
-        # start them scraper threads
+        processes = []
+        # start them scraper processes
         if arg_scraping_sources["ts"]:
-            ts_thread = TwitterScraper(arg_searchbar_text, arg_since, arg_until, arg_limit)
-            ts_thread.start()
+            ts = TwitterScraper(arg_searchbar_text, arg_since, arg_until, arg_limit)
+            ts_process = multiprocessing.Process(target=ts.run())
+            ts_process.start()
+            processes.append(ts_process)
         if arg_scraping_sources["rs"]:
-            rs_thread = RedditScraper(arg_searchbar_text, arg_since, arg_until, arg_limit)
-            rs_thread.start()
+            rs = RedditScraper(arg_searchbar_text, arg_since, arg_until, arg_limit)
+            rs_process = multiprocessing.Process(target=rs.run)
+            rs_process.start()
+            processes.append(rs_process)
         if arg_scraping_sources["ps"]:
-            ps_thread = PastebinScrapper(arg_searchbar_text)
-            ps_thread.start()
+            ps = PastebinScrapper(arg_searchbar_text)
+            ps_process = multiprocessing.Process(target=ps.run())
+            ps_process.start()
+            processes.append(ps_process)
 
-        # join them scraper threads
-        if arg_scraping_sources["ts"]:
-            ts_thread.join()
-        if arg_scraping_sources["rs"]:
-            rs_thread.join()
-        if arg_scraping_sources["ps"]:
-            ps_thread.join()
+        # join them scraper processes
+        for process in processes:
+            process.join()
 
         result_df = self.compile_feather()

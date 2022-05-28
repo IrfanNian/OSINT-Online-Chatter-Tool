@@ -4,14 +4,12 @@ from psaw import PushshiftAPI
 import datetime as dt
 import pandas as pd
 import os
-import threading
 
 CWD = os.getcwd()
 
 
-class RedditScraper(threading.Thread):
+class RedditScraper:
     def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None):
-        threading.Thread.__init__(self)
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since

@@ -1,7 +1,6 @@
 import requests
 import json
 import pandas as pd
-import threading
 import os
 # GET /api/v3/search/psbdmp
 # curl https://psbdmp.ws/api/v3/search/hacking
@@ -14,9 +13,8 @@ import os
 CWD = os.getcwd()
 
 
-class PastebinScrapper(threading.Thread):
+class PastebinScrapper:
     def __init__(self, arg_search):
-        threading.Thread.__init__(self)
         self.arg_search = arg_search
 
     def jprint(self, obj):

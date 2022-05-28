@@ -25,7 +25,7 @@ class FeatherReader:
         :return None:
         """
         ts = dt.datetime.now().timestamp()
-        arg_df.to_csv(os.path.join(CWD, "results", "results_compiled_" + str(ts) + ".csv"), sep=",", index=False)
+        arg_df.to_csv(os.path.join(CWD, RESULT_FOLDER, "results_compiled_" + str(ts) + ".csv"), sep=",", index=False)
 
     def save_as_csv(self, arg_df):
         """

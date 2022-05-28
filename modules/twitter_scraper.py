@@ -1,15 +1,13 @@
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import os
-import threading
 
 CWD = os.getcwd()
 
 
-class TwitterScraper(threading.Thread):
+class TwitterScraper:
     def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_include=None, arg_advance_exclude=None):
-        threading.Thread.__init__(self)
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
