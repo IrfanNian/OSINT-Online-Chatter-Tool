@@ -38,4 +38,5 @@ class PastebinScrapper(threading.Thread):
         # Convert to csv format
         df = pd.json_normalize(json_data['data'])
         df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.csv"), sep=",", index=False)
+        df = df.reset_index()
         df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.feather"))
