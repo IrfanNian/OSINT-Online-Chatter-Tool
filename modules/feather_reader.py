@@ -12,7 +12,7 @@ class FeatherReader:
         Opens a csv file and reads it into memory
         :return all_csv_files:
         """
-        directory = os.path.join(CWD, "..", RESULT_FOLDER)
+        directory = os.path.join(CWD, RESULT_FOLDER)
         all_feather_files = glob.glob(os.path.join(directory, "*.feather"))
         return all_feather_files
 
@@ -38,9 +38,3 @@ class FeatherReader:
         feather_filenames = self.get_feather_files()
         compiled_df = self.feather_to_df(feather_filenames)
         return compiled_df
-
-
-# debugging code, remove later
-if __name__ == '__main__':
-    test = FeatherReader()
-    test.run()

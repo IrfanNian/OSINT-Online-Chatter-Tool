@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
-from scrapers.master_scraper import MasterScraper
+from modules.module_controller import ModuleController
 import os
 import shutil
 
@@ -29,8 +29,8 @@ def results():
     os.makedirs(RESULT_FOLDER)
     if request.method == "POST":
         searchbar_text = request.form['keyword']
-        ms = MasterScraper()
-        ms.run(ENABLED_SCRAPING_SOURCES, searchbar_text)
+        mc = ModuleController()
+        mc.run(ENABLED_SCRAPING_SOURCES, searchbar_text)
     return render_template('results.html')
 
 
