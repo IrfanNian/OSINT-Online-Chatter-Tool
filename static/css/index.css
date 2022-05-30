@@ -25,7 +25,7 @@ body {
     /* height: 100px; */
 }
 
-input {
+#keyword {
     width: 100%;
     padding: 10px 15px;
     outline: none;
@@ -60,11 +60,32 @@ h1 {
     font-family: "Livvic", sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 73px;
+    font-size: 65px;
     line-height: 92px;
     text-align: center;
     letter-spacing: 0.045em;
 
+    color: #000000bc;
+}
+h2 {
+    font-family: "Livvic", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 35px;
+    text-align: center;
+    letter-spacing: 0.045em;
+    color: #000000bc;
+}
+
+label {
+    font-family: "Livvic", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 35px;
+    text-align: center;
+    letter-spacing: 0.045em;
     color: #000000bc;
 }
 
