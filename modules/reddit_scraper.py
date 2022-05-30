@@ -11,11 +11,13 @@ pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
-    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None):
+    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_advance_subreddit=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
+        self.arg_advance_subreddit = arg_advance_subreddit
 
     def clean_data(self, arg_df):
         """
@@ -52,7 +54,12 @@ class RedditScraper:
             limit = self.arg_advance_limit
 
         # List of subreddits to scrape data
-        sub_list = ['cybersecurity']
+        if self.arg_advance_subreddit is None:
+            # default value
+            sub_list = ['cybersecurity']
+        else:
+            # see how frontend people want to pass in the data
+            sub_list = ['cybersecurity']  # todo
 
         for subreddit in sub_list:
             red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
