@@ -1,15 +1,14 @@
 import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import os
-import threading
+import datetime as dt
 
 CWD = os.getcwd()
 
 
-class TwitterScraper(threading.Thread):
+class TwitterScraper:
     def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_include=None, arg_advance_exclude=None):
-        threading.Thread.__init__(self)
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
@@ -47,7 +46,9 @@ class TwitterScraper(threading.Thread):
                 break
             if self.arg_search.lower() not in tweet.content.lower():
                 continue
-            tweets_list.append([tweet.date, tweet.id, tweet.content, tweet.user.username])
+            date = str(tweet.date).split("+", 1)[0]
+            date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])

@@ -4,18 +4,20 @@ from psaw import PushshiftAPI
 import datetime as dt
 import pandas as pd
 import os
-import threading
+import numpy as np
 
 CWD = os.getcwd()
+pd.options.mode.chained_assignment = None
 
 
-class RedditScraper(threading.Thread):
-    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None):
-        threading.Thread.__init__(self)
+class RedditScraper:
+    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_advance_subreddit=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
+        self.arg_advance_subreddit = arg_advance_subreddit
 
     def clean_data(self, arg_df):
         """
@@ -24,7 +26,7 @@ class RedditScraper(threading.Thread):
         :return df:
         """
         df = arg_df.loc[~(arg_df['text'] == '[removed]')]
-        df = df.loc[~(pd.isna(df['text']))]
+        df['text'] = np.where(df['text'].isnull(), df['text'], df['title'])
         return df
 
     def run(self):
@@ -52,7 +54,12 @@ class RedditScraper(threading.Thread):
             limit = self.arg_advance_limit
 
         # List of subreddits to scrape data
-        sub_list = ['cybersecurity']
+        if self.arg_advance_subreddit is None:
+            # default value
+            sub_list = ['cybersecurity']
+        else:
+            # see how frontend people want to pass in the data
+            sub_list = ['cybersecurity']  # todo
 
         for subreddit in sub_list:
             red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
