@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tracking Online Chatter 🔍</title>
-        <link rel="stylesheet" href="/static/css/index.css" />
-        <link rel="stylesheet" href="/static/css/nav.css" />
-        <link
-            type="image/png"
-            sizes="96x96"
-            rel="icon"
-            href="/static/images/keyword.png"
-        />
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tracking Online Chatter 🔍</title>
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link type="image/png"
+          sizes="96x96"
+          rel="icon"
+          href="/static/images/keyword.png" />
+</head>
     <body>
         <nav>
             <a href="/" class="brand-logo">Tracking Online Chatter</a>
@@ -31,24 +29,51 @@
         <div class="container">
             <div class="content">
                 <h1>Tracking Online Chatter</h1>
-				<form method="POST" id="search">
-                <input
-                    type="text"
-                    id="keyword"
-                    name="keyword"
-                    placeholder="Search for keyword..."
-                />
+                <form method="POST" id="search">
+                    <input type="text"
+                           id="keyword"
+                           placeholder="Search for keyword..." />
+                    <center>
+                        <h2>Advanced Options</h2><br />
+                        <label for="platf">Platform: </label>
+                        <select name="platf" id="platf">
+                            <option value="twitter">Twitter</option>
+                            <option value="reddit">Reddit</option>
+                            <option value="pastebin">Pastebin</option>
+                        </select><br />
+                        <label for="tRan">Time Range: </label>
+                        <select name="timeRangeDrop" id="tRan" onchange='CheckTime(this.value)'>
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="lastSeven">Last 7 days</option>
+                            <option value="lastThirty">Last 30 days</option>
+                            <option value="lastNinty">Last 90 days</option>
+                            <option value="lastSixMth">Last 6 months</option>
+                            <option value="lastOneYr">Last 1 year</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                        <label id="from" style='display:none'>From:</label>
+                        <input type="date" name="customTimeStart" id="customTimeStart" style='display:none' />
+                        <label id="to" style='display:none'>To:</label>
+                        <input type="date" name="customTimeEnd" id="customTimeEnd" style='display:none' />
+                        <br />
+                        <label for="depth">Depth: </label>
+                        <select name="depthDrop" id="depth">
+                            <option value="quick">Quick</option>
+                            <option value="standard">Standard</option>
+                            <option value="deep">Deep</option>
+                        </select><br />
 
-                <div class="buttons">
-                    <button id="SearchSubmit" type="submit"  disabled class="Search">
-                        <img
-                            src="/static/images/search.png"
-                            alt="search"
-                            width="35px"
-                        />
-                        <span> SEARCH </span>
-                    </button>
-				</form>
+                    </center>
+                    <br />
+                    <div class="buttons">
+                        <button id="SearchSubmit" type="submit" disabled class="Search">
+                            <img src="/static/images/search.png"
+                                 alt="search"
+                                 width="35px" />
+                            <span> SEARCH </span>
+                        </button>
+                </form>
                 </div>
             </div>
         </div>
