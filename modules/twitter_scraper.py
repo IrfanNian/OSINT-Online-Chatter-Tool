@@ -61,5 +61,5 @@ class TwitterScraper:
                          index=False)
 
         # Output to feather
-        tweets_df = tweets_df.reset_index()
+        tweets_df = tweets_df.reset_index(drop=True)
         tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))

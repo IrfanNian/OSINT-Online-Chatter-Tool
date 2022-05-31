@@ -46,6 +46,7 @@ class FeatherReader:
             # open and read the file to df
             df = pd.read_feather(filename)
             compiled_df = pd.concat([compiled_df, df], ignore_index=True)
+            compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
     def run(self):
