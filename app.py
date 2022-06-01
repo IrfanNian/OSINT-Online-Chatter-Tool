@@ -29,6 +29,18 @@ def results():
     os.makedirs(RESULT_FOLDER)
     if request.method == "POST":
         searchbar_text = request.form['keyword']
+        chosen_sources = request.form['platf']
+        if chosen_sources == "twitter":
+            ENABLED_SCRAPING_SOURCES['rs'] = False
+            ENABLED_SCRAPING_SOURCES['ps'] = False
+        elif chosen_sources == "pastebin":
+            ENABLED_SCRAPING_SOURCES['rs'] = False
+            ENABLED_SCRAPING_SOURCES['ts'] = False
+        elif chosen_sources == "reddit":
+            ENABLED_SCRAPING_SOURCES['ps'] = False
+            ENABLED_SCRAPING_SOURCES['ts'] = False
+        else:
+            pass
         mc = ModuleController()
         mc.run(ENABLED_SCRAPING_SOURCES, searchbar_text)
     return render_template('results.html')
