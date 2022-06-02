@@ -38,7 +38,7 @@ class ModuleController:
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
-            ps = PastebinScrapper(arg_searchbar_text)
+            ps = PastebinScrapper(arg_searchbar_text, arg_since, arg_until)
             ps_process = multiprocessing.Process(target=ps.run())
             ps_process.start()
             processes.append(ps_process)
