@@ -21,8 +21,6 @@ class TwitterScraper:
         Runs the twitter scraper module
         :return None:
         """
-        limit = 500  # todo: still have to decide default value
-
         # Creating list to append tweet data to
         tweets_list = []
 
@@ -39,6 +37,8 @@ class TwitterScraper:
         # Check for customised tweet limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):

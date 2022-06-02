@@ -2,17 +2,13 @@ from flask import Flask, render_template, request
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
 from modules.module_controller import ModuleController
+from modules.module_configurator import ModuleConfigurator
 import os
 import shutil
 
 app = Flask(__name__)  # Create the flask object
 
 RESULT_FOLDER = "results"
-ENABLED_SCRAPING_SOURCES = {
-    "ts": True,
-    "rs": True,
-    "ps": True
-}
 
 
 @app.route('/')
@@ -28,21 +24,23 @@ def results():
     shutil.rmtree(RESULT_FOLDER)
     os.makedirs(RESULT_FOLDER)
     if request.method == "POST":
+        # configure settings
         searchbar_text = request.form['keyword']
         chosen_sources = request.form['platf']
-        if chosen_sources == "twitter":
-            ENABLED_SCRAPING_SOURCES['rs'] = False
-            ENABLED_SCRAPING_SOURCES['ps'] = False
-        elif chosen_sources == "pastebin":
-            ENABLED_SCRAPING_SOURCES['rs'] = False
-            ENABLED_SCRAPING_SOURCES['ts'] = False
-        elif chosen_sources == "reddit":
-            ENABLED_SCRAPING_SOURCES['ps'] = False
-            ENABLED_SCRAPING_SOURCES['ts'] = False
+        time_range = request.form['timeRangeDrop']
+        depth_range = request.form['depthDrop']
+        mcr = ModuleConfigurator()
+        scraping_sources = mcr.configure_sources(chosen_sources)
+        if time_range == "custom":
+            since_date = request.form['customTimeStart']
+            until_date = request.form['customTimeEnd']
+            since, until = mcr.configure_custom_date(since_date, until_date)
         else:
-            pass
+            since, until = mcr.configure_date(time_range)
+        limit = mcr.configure_depth(depth_range)
+        # run modules
         mc = ModuleController()
-        mc.run(ENABLED_SCRAPING_SOURCES, searchbar_text)
+        mc.run(scraping_sources, searchbar_text, since, until, limit)
     return render_template('results.html')
 
 

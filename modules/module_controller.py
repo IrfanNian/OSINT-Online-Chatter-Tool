@@ -17,7 +17,7 @@ class ModuleController:
 
     def run(self, arg_scraping_sources, arg_searchbar_text, arg_since=None, arg_until=None, arg_limit=None):
         """
-        Runs the master scraper which controls the other scraper modules
+        Runs the module controller which controls the other modules
         :param arg_limit:
         :param arg_until:
         :param arg_since:

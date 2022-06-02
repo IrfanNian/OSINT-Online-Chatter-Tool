@@ -11,7 +11,7 @@ pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
-    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None,
+    def __init__(self, arg_search,  arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_subreddit=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
@@ -35,9 +35,6 @@ class RedditScraper:
         :return None:
         """
         api = PushshiftAPI()
-        limit = 500  # todo: still have to decide default value
-        # self.arg_advance_since = "2020-12-31"
-        # self.arg_advance_until = "2021-12-31"
 
         # convert date to epoch timestamp
         if self.arg_advance_since:
@@ -52,6 +49,8 @@ class RedditScraper:
         # Check for customised limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         # List of subreddits to scrape data
         if self.arg_advance_subreddit is None:
@@ -88,12 +87,13 @@ class RedditScraper:
                 except AttributeError:
                     pass
 
-            submission_df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in red_dict.items()]))
+            submission_df = pd.DataFrame(dict([(k, pd.Series(v, dtype=pd.StringDtype())) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
             submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
                                  sep=",", index=False)
             submission_df = submission_df.reset_index(drop=True)
-            submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
+            submission_df.to_feather(os.path.join(CWD, "results",
+                                                  str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 
     # def run(self):
     #     """
