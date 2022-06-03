@@ -41,6 +41,8 @@ class ModuleConfigurator:
             since = today
         if until > today:
             until = today
+        if since > until:
+            since = until
         return str(since), str(until)
 
     def configure_date(self, arg_date):
