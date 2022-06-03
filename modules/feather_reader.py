@@ -4,6 +4,7 @@ import glob
 
 CWD = os.getcwd()
 RESULT_FOLDER = "results"
+STATIC_FOLDER = os.path.join("static", "results")
 
 
 class FeatherReader:
@@ -18,11 +19,11 @@ class FeatherReader:
 
     def save_as_csv(self, arg_df):
         """
-        Wrapper function
+        Save the compiled dataframe to csv file format
         :param arg_df:
         :return None:
         """
-        arg_df.to_csv(os.path.join(CWD, RESULT_FOLDER, "results_compiled" + ".csv"), sep=",", index=False)
+        arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "results_compiled.csv"), sep=",", index=False)
 
     def feather_to_df(self, arg_feather_filenames):
         """

@@ -9,6 +9,7 @@ import shutil
 app = Flask(__name__)  # Create the flask object
 
 RESULT_FOLDER = "results"
+STATIC_FOLDER = os.path.join("static", "results")
 
 
 @app.route('/')
@@ -20,9 +21,13 @@ def default():
 def results():
     if not os.path.exists(RESULT_FOLDER):
         os.makedirs(RESULT_FOLDER)
+    if not os.path.exists(STATIC_FOLDER):
+        os.makedirs(STATIC_FOLDER)
     # cleanup
     shutil.rmtree(RESULT_FOLDER)
     os.makedirs(RESULT_FOLDER)
+    shutil.rmtree(STATIC_FOLDER)
+    os.makedirs(STATIC_FOLDER)
     if request.method == "POST":
         # configure settings
         searchbar_text = request.form['keyword']
