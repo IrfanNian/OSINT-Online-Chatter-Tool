@@ -6,6 +6,7 @@ ENABLED_SCRAPING_SOURCES = {
     "rs": True,
     "ps": True
 }
+TODAY = dt.date.today()
 
 
 class ModuleConfigurator:
@@ -34,13 +35,12 @@ class ModuleConfigurator:
         :param arg_until:
         :return since, until:
         """
-        today = dt.date.today()
         since = dt.datetime.strptime(arg_since, '%Y-%m-%d').date()
         until = dt.datetime.strptime(arg_until, '%Y-%m-%d').date()
-        if since > today:
-            since = today
-        if until > today:
-            until = today
+        if since > TODAY:
+            since = TODAY
+        if until > TODAY:
+            until = TODAY
         if since > until:
             since = until
         return str(since), str(until)
@@ -52,32 +52,25 @@ class ModuleConfigurator:
         :return since date, until date:
         """
         if arg_date == "today":
-            today = dt.date.today()
-            return str(today), str(today)
+            return str(TODAY), str(TODAY)
         elif arg_date == "yesterday":
-            today = dt.date.today()
-            yesterday = today - dt.timedelta(days=1)
-            return str(yesterday), str(today)
+            yesterday = TODAY - dt.timedelta(days=1)
+            return str(yesterday), str(TODAY)
         elif arg_date == "lastSeven":
-            today = dt.date.today()
-            last_seven = today - dt.timedelta(days=7)
-            return str(last_seven), str(today)
+            last_seven = TODAY - dt.timedelta(days=7)
+            return str(last_seven), str(TODAY)
         elif arg_date == "lastThirty":
-            today = dt.date.today()
-            last_thirty = today - dateutil.relativedelta.relativedelta(months=1)
-            return str(last_thirty), str(today)
+            last_thirty = TODAY - dateutil.relativedelta.relativedelta(months=1)
+            return str(last_thirty), str(TODAY)
         elif arg_date == "lastNinty":
-            today = dt.date.today()
-            last_ninty = today - dateutil.relativedelta.relativedelta(months=3)
-            return str(last_ninty), str(today)
+            last_ninty = TODAY - dateutil.relativedelta.relativedelta(months=3)
+            return str(last_ninty), str(TODAY)
         elif arg_date == "lastSixMth":
-            today = dt.date.today()
-            last_six_mth = today - dateutil.relativedelta.relativedelta(months=6)
-            return str(last_six_mth), str(today)
+            last_six_mth = TODAY - dateutil.relativedelta.relativedelta(months=6)
+            return str(last_six_mth), str(TODAY)
         elif arg_date == "lastOneYr":
-            today = dt.date.today()
-            last_one_yr = today - dateutil.relativedelta.relativedelta(years=1)
-            return str(last_one_yr), str(today)
+            last_one_yr = TODAY - dateutil.relativedelta.relativedelta(years=1)
+            return str(last_one_yr), str(TODAY)
         else:
             pass
 
