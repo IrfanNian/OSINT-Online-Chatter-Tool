@@ -57,9 +57,10 @@ class TwitterScraper:
         # todo: the plan is to search the dataframe again
 
         # Output to CSV
-        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
-                         index=False)
+        if len(tweets_df) != 0:
+            tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
+                             index=False)
 
-        # Output to feather
-        tweets_df = tweets_df.reset_index(drop=True)
-        tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))
+            # Output to feather
+            tweets_df = tweets_df.reset_index(drop=True)
+            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))

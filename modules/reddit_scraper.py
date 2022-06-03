@@ -55,7 +55,7 @@ class RedditScraper:
         # List of subreddits to scrape data
         if self.arg_advance_subreddit is None:
             # default value
-            sub_list = ['cybersecurity']
+            sub_list = ['cybersecurity', 'netsec']
         else:
             # see how frontend people want to pass in the data
             sub_list = ['cybersecurity']  # todo
@@ -89,11 +89,11 @@ class RedditScraper:
 
             submission_df = pd.DataFrame(dict([(k, pd.Series(v, dtype=pd.StringDtype())) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
-            submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
-                                 sep=",", index=False)
-            submission_df = submission_df.reset_index(drop=True)
-            submission_df.to_feather(os.path.join(CWD, "results",
-                                                  str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
+            if len(submission_df) != 0:
+                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
+                submission_df = submission_df.reset_index(drop=True)
+                submission_df.to_feather(os.path.join(CWD, "results",
+                                                      str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 
     # def run(self):
     #     """

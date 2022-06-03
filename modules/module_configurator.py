@@ -18,7 +18,7 @@ class ModuleConfigurator:
         :param arg_depth:
         :return limit:
         """
-        limit = 500
+        limit = 5000
         if arg_depth == "quick":
             limit = 1000
         elif arg_depth == "standard":
