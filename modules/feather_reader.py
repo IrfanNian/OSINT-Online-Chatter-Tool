@@ -1,5 +1,4 @@
 import os
-import threading
 import pandas as pd
 import glob
 
@@ -17,21 +16,13 @@ class FeatherReader:
         all_feather_files = glob.glob(os.path.join(directory, "*.feather"))
         return all_feather_files
 
-    def _save_as_csv(self, arg_df):
-        """
-        Saves the compiled dataframe as csv
-        :param arg_df:
-        :return None:
-        """
-        arg_df.to_csv(os.path.join(CWD, RESULT_FOLDER, "results_compiled" + ".csv"), sep=",", index=False)
-
     def save_as_csv(self, arg_df):
         """
         Wrapper function
         :param arg_df:
         :return None:
         """
-        threading.Thread(target=self._save_as_csv(arg_df)).start()
+        arg_df.to_csv(os.path.join(CWD, RESULT_FOLDER, "results_compiled" + ".csv"), sep=",", index=False)
 
     def feather_to_df(self, arg_feather_filenames):
         """
