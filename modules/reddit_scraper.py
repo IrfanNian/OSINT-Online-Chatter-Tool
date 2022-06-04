@@ -11,7 +11,7 @@ pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
-    def __init__(self, arg_search, arg_advance_limit=None, arg_advance_since=None, arg_advance_until=None,
+    def __init__(self, arg_search,  arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_subreddit=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
@@ -35,9 +35,6 @@ class RedditScraper:
         :return None:
         """
         api = PushshiftAPI()
-        limit = 500  # todo: still have to decide default value
-        # self.arg_advance_since = "2020-12-31"
-        # self.arg_advance_until = "2021-12-31"
 
         # convert date to epoch timestamp
         if self.arg_advance_since:
@@ -52,17 +49,19 @@ class RedditScraper:
         # Check for customised limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         # List of subreddits to scrape data
         if self.arg_advance_subreddit is None:
             # default value
-            sub_list = ['cybersecurity']
+            sub_list = ['cybersecurity', 'netsec']
         else:
             # see how frontend people want to pass in the data
             sub_list = ['cybersecurity']  # todo
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "platform": [],}
 
             # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
@@ -85,15 +84,17 @@ class RedditScraper:
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
                     red_dict["url"].append(post.url)
+                    red_dict["platform"].append("reddit")
                 except AttributeError:
                     pass
 
-            submission_df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in red_dict.items()]))
+            submission_df = pd.DataFrame(dict([(k, pd.Series(v, dtype=pd.StringDtype())) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
-            submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"),
-                                 sep=",", index=False)
-            submission_df = submission_df.reset_index(drop=True)
-            submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
+            if len(submission_df) != 0:
+                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
+                submission_df = submission_df.reset_index(drop=True)
+                submission_df.to_feather(os.path.join(CWD, "results",
+                                                      str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 
     # def run(self):
     #     """

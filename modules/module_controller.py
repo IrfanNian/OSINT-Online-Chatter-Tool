@@ -17,7 +17,7 @@ class ModuleController:
 
     def run(self, arg_scraping_sources, arg_searchbar_text, arg_since=None, arg_until=None, arg_limit=None):
         """
-        Runs the master scraper which controls the other scraper modules
+        Runs the module controller which controls the other modules
         :param arg_limit:
         :param arg_until:
         :param arg_since:
@@ -38,7 +38,7 @@ class ModuleController:
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
-            ps = PastebinScrapper(arg_searchbar_text)
+            ps = PastebinScrapper(arg_searchbar_text, arg_since, arg_until)
             ps_process = multiprocessing.Process(target=ps.run())
             ps_process.start()
             processes.append(ps_process)

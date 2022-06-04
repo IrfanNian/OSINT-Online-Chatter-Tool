@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>	
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>		
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,17 +53,15 @@
                     <p>22.7k</p>
                 </div>
             </div>
-            <p class="title">Trending Graph</p>
-            <div class="graph">
-                <canvas id="graph"></canvas>
-            </div>
+            <p class="title">Keyword Frequency</p>
+            <div id="graph" class="graph"></div>
+			<canvas id="graph">
+			<script type="text/javascript">
+				var graphs = {{graphJSON | safe}};
+				Plotly.plot('graph',graphs,{});        
+			</script>
+			</canvas>
         </div>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
-            integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/result.js"></script>
     </body>

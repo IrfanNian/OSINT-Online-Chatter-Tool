@@ -21,8 +21,6 @@ class TwitterScraper:
         Runs the twitter scraper module
         :return None:
         """
-        limit = 500  # todo: still have to decide default value
-
         # Creating list to append tweet data to
         tweets_list = []
 
@@ -39,6 +37,8 @@ class TwitterScraper:
         # Check for customised tweet limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):
@@ -48,18 +48,20 @@ class TwitterScraper:
                 continue
             date = str(tweet.date).split("+", 1)[0]
             date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, "twitter"])
 
         # Creating a dataframe from the tweets list above
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "platform"])
 
         # Advance search operations for must be "included/excluded"
         # todo: the plan is to search the dataframe again
 
         # Output to CSV
-        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
-                         index=False)
+        if len(tweets_df) != 0:
+            tweets_df['platform'] = "twitter"
+            tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
+                             index=False)
 
-        # Output to feather
-        tweets_df = tweets_df.reset_index(drop=True)
-        tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))
+            # Output to feather
+            tweets_df = tweets_df.reset_index(drop=True)
+            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))

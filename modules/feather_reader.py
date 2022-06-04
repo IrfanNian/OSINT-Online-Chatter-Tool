@@ -1,11 +1,10 @@
 import os
-import threading
 import pandas as pd
 import glob
-import datetime as dt
 
 CWD = os.getcwd()
 RESULT_FOLDER = "results"
+STATIC_FOLDER = os.path.join("static", "results")
 
 
 class FeatherReader:
@@ -18,22 +17,13 @@ class FeatherReader:
         all_feather_files = glob.glob(os.path.join(directory, "*.feather"))
         return all_feather_files
 
-    def _save_as_csv(self, arg_df):
-        """
-        Saves the compiled dataframe as csv
-        :param arg_df:
-        :return None:
-        """
-        ts = dt.datetime.now().timestamp()
-        arg_df.to_csv(os.path.join(CWD, RESULT_FOLDER, "results_compiled_" + str(ts) + ".csv"), sep=",", index=False)
-
     def save_as_csv(self, arg_df):
         """
-        Wrapper function
+        Save the compiled dataframe to csv file format
         :param arg_df:
         :return None:
         """
-        threading.Thread(target=self._save_as_csv(arg_df)).start()
+        arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "results_compiled.csv"), sep=",", index=False)
 
     def feather_to_df(self, arg_feather_filenames):
         """
@@ -41,7 +31,7 @@ class FeatherReader:
         :param arg_feather_filenames:
         :return compiled_df:
         """
-        compiled_df = pd.DataFrame(columns=["time", "text", "user"])
+        compiled_df = pd.DataFrame(columns=["time", "text", "user", "platform"])
         for filename in arg_feather_filenames:
             # open and read the file to df
             df = pd.read_feather(filename)

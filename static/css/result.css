@@ -69,20 +69,6 @@ body {
     color: rgb(0, 0, 0);
 }
 
-.graph {
-    border: 1px solid #e6e6e6;
-    padding: 30px;
-    background-color: #f6f6f6;
-    border-radius: 20px;
-
-    display: grid;
-    grid-gap: 5px;
-    grid-auto-flow: column;
-    width: 60%;
-    margin: 0 0 0 auto;
-    margin-bottom: 50px;
-}
-
 /* Responsive */
 
 @media only screen and (max-width: 969px) {
