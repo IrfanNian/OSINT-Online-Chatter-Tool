@@ -7,8 +7,7 @@ document.title = `${query} | Keyword Usage`;
 document.querySelector("span.query").innerText = `"${query}"`;
 const ctx = document.querySelector("#graph").getContext("2d");
 
-d3.csv('/static/results/bubble.csv').then(function(datapoints){
-    console.log(datapoints);
+d3.csv('/static/results/charting.csv').then(function(datapoints){
     const storage = [];
     var min = 1;
     var max = 1;
@@ -56,8 +55,6 @@ d3.csv('/static/results/bubble.csv').then(function(datapoints){
     }
     maxDate.setDate(maxDate.getDate() + 5);
     minDate.setDate(minDate.getDate() - 1);
-
-    console.log(storage);
 
     //setup
     const data = {
