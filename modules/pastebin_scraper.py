@@ -53,6 +53,8 @@ class PastebinScrapper:
         df = pd.json_normalize(json_data['data'])
         if self.arg_advance_since is not None or self.arg_advance_until is not None:
             df = self.date_range(df)
+        df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
+        df['time'] = df['time'].apply(lambda x: x.isoformat())
         if len(df) != 0:
             df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.csv"), sep=",", index=False)
             df = df.reset_index(drop=True)

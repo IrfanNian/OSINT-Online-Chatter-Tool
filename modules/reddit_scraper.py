@@ -78,7 +78,7 @@ class RedditScraper:
 
             for post in gen:
                 try:
-                    date = dt.datetime.fromtimestamp(post.created)
+                    date = dt.datetime.fromtimestamp(post.created).isoformat()
                     red_dict["title"].append(post.title)
                     red_dict["user"].append(post.author)
                     red_dict["time"].append(date)

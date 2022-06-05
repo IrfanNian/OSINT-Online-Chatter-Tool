@@ -5,82 +5,109 @@ let query = params.q;
 document.title = `${query} | Keyword Usage`;
 
 document.querySelector("span.query").innerText = `"${query}"`;
-
 const ctx = document.querySelector("#graph").getContext("2d");
 
-// Gradient Fill
-let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-gradient.addColorStop(0, "rgba(58,123,213,1)");
-gradient.addColorStop(1, "rgba(0,210,255,0.3)");
+d3.csv('/static/results/bubble.csv').then(function(datapoints){
+    console.log(datapoints);
+    const storage = [];
+    var min = 1;
+    var max = 1;
+    var minDate = new Date();
+    var maxDate = new Date();
 
-let delayed;
+    for (i = 0; i < datapoints.length; i++) {
+        if (datapoints[i].date_count != "") {
+            if (datapoints[i].date_count > max) {
+                max = datapoints[i].date_count;
+            }
+            if (datapoints[i].date_count < min) {
+                min = datapoints[i].date_count;
+            }
+        }
+    }
+    const ratio = (100-1)/(max-min);
 
-const labels = ["2012", "2013", "2019", "2020", "2021"];
+    for (i = 0; i < datapoints.length; i++) {
+        var text = [];
+        if (datapoints[i].date_count != "") {
+            x = datapoints[i].time_count;
+            y = datapoints[i].time_count;
+            r = datapoints[i].date_count;
+            var xDate = new Date(x);
+            if (xDate < minDate) {
+                minDate = new Date(xDate.getTime());
+            }
+            if (xDate > maxDate) {
+                maxDate = new Date(xDate.getTime());
+            }
+            r = Math.floor(1 + ratio*(r-min));
 
-const data = {
-    labels,
-    datasets: [
-        {
-            data: [450, 326, 500, 175, 410],
-            label: "Sales Figures",
-            tension: 0.4,
-        },
-    ],
-};
-
-const config = {
-    type: "line",
-    data,
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                display: false,
-            },
-            tooltips: {
-                enabled: false,
-            },
-        },
-        radius: 0,
-        hitRadius: 30,
-        hoverRadius: 0,
-        borderColor: "grey",
-
-        resposive: true,
-        animation: {
-            onComplete: () => {
-                delayed: true;
-            },
-            delay: (context) => {
-                let delay = 0;
-                if (
-                    context.type === "data" &&
-                    context.mode === "default" &&
-                    !delayed
-                ) {
-                    delay =
-                        context.dataIndex * 300 + context.datasetIndex * 100;
+            for (a = 0; a < datapoints.length; a++) {
+                var dateOnly = new Date(datapoints[a].time);
+                dateOnly = dateOnly.toISOString().substring(0,10);
+                if (y == dateOnly) {
+                    text.push(datapoints[a].text);
                 }
-                return delay;
-            },
-        },
-        scales: {
-            x: {
-                grid: { borderColor: "black", color: "black" },
-                ticks: { color: "black" },
-            },
-            y: {
-                grid: { borderColor: "black", color: "black" }, //pls check index.css
-                ticks: {
-                    count: 6,
-                    color: "black",
-                    callback: function (value) {
-                        return "$" + value + "m";
-                    },
-                },
-            },
-        },
-    },
-};
+            }
 
-const myChart = new Chart(ctx, config);
+            var json = {x: x, y: y, r:r, text: text};
+            storage.push(json);
+        }
+    }
+    maxDate.setDate(maxDate.getDate() + 5);
+    minDate.setDate(minDate.getDate() - 1);
+
+    console.log(storage);
+
+    //setup
+    const data = {
+        datasets: [{
+            label: 'No. of Chatter (Scaled)',
+            data: storage
+        }]
+    }
+
+    //config
+    const config = {
+        type: 'bubble',
+        data,
+        options: {
+            onClick: clickHandler,
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'DD MMM YYYY',
+                    },
+                    max: maxDate,
+                    min: minDate
+                },
+                y: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'DD MMM YYYY',
+                    },
+                    max: maxDate,
+                    min: minDate
+                }
+            }
+        }
+    }
+
+    //config
+    var chart = new Chart(ctx, config);
+
+    function clickHandler(evt) {
+        const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+    
+        if (points.length) {
+            const firstPoint = points[0];
+            const label = chart.data.labels[firstPoint.index];
+            const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+            console.log(value)
+        }
+    }
+    
+});

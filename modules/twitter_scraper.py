@@ -48,6 +48,7 @@ class TwitterScraper:
                 continue
             date = str(tweet.date).split("+", 1)[0]
             date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date = date.isoformat()
             tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
