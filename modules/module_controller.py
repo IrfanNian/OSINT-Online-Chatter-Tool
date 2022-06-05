@@ -2,6 +2,7 @@ from modules.twitter_scraper import TwitterScraper
 from modules.reddit_scraper import RedditScraper
 from modules.pastebin_scraper import PastebinScrapper
 from modules.feather_reader import FeatherReader
+from modules.data_processor import DataProcessor
 import multiprocessing
 
 
@@ -34,7 +35,7 @@ class ModuleController:
             processes.append(ts_process)
         if arg_scraping_sources["rs"]:
             rs = RedditScraper(arg_searchbar_text, arg_since, arg_until, arg_limit)
-            rs_process = multiprocessing.Process(target=rs.run)
+            rs_process = multiprocessing.Process(target=rs.run())
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
@@ -48,3 +49,5 @@ class ModuleController:
             process.join()
 
         result_df = self.compile_feather()
+        dp = DataProcessor(result_df)
+        dp.run()

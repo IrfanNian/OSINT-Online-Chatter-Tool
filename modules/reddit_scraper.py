@@ -27,6 +27,7 @@ class RedditScraper:
         """
         df = arg_df.loc[~(arg_df['text'] == '[removed]')]
         df['text'] = np.where(df['text'].isnull(), df['text'], df['title'])
+        df = df.drop_duplicates(subset=['title', 'user'], keep='first')
         return df
 
     def run(self):
@@ -55,7 +56,7 @@ class RedditScraper:
         # List of subreddits to scrape data
         if self.arg_advance_subreddit is None:
             # default value
-            sub_list = ['cybersecurity', 'netsec']
+            sub_list = ['cybersecurity', 'netsec', 'blueteamsec']
         else:
             # see how frontend people want to pass in the data
             sub_list = ['cybersecurity']  # todo
@@ -78,7 +79,7 @@ class RedditScraper:
 
             for post in gen:
                 try:
-                    date = dt.datetime.fromtimestamp(post.created)
+                    date = dt.datetime.fromtimestamp(post.created).isoformat()
                     red_dict["title"].append(post.title)
                     red_dict["user"].append(post.author)
                     red_dict["time"].append(date)
