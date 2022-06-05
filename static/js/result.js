@@ -28,6 +28,7 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 
     for (i = 0; i < datapoints.length; i++) {
         var text = [];
+        var user = [];
         if (datapoints[i].date_count != "") {
             x = datapoints[i].time_count;
             y = datapoints[i].time_count;
@@ -46,10 +47,11 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                 dateOnly = dateOnly.toISOString().substring(0,10);
                 if (y == dateOnly) {
                     text.push(datapoints[a].text);
+                    user.push(datapoints[a].user);
                 }
             }
 
-            var json = {x: x, y: y, r:r, text: text};
+            var json = {x: x, y: y, r:r, text: text, user: user};
             storage.push(json);
         }
     }
@@ -103,7 +105,20 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             const firstPoint = points[0];
             const label = chart.data.labels[firstPoint.index];
             const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-            console.log(value)
+            console.log(value.text)
+            console.log(value.user)
+            var ar = [value.user, value.text], table = document.querySelector('table tbody');
+            table.innerHTML = '';
+            var r = ar[0].map(function(col, i) {
+                return ar.map(function(row) {
+                  return row[i];
+                });
+              });
+              
+            //Add data to table
+            r.forEach(function(e) {
+                table.innerHTML += '<tr><td>' + e[0] + '</td><td>' + e[1] + '</td></tr>'
+            })
         }
     }
     
