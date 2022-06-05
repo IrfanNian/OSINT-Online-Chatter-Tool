@@ -36,7 +36,8 @@ class FeatherReader:
             # open and read the file to df
             df = pd.read_feather(filename)
             compiled_df = pd.concat([compiled_df, df], ignore_index=True)
-            compiled_df.reset_index(inplace=True, drop=True)
+        compiled_df = compiled_df.drop_duplicates(subset=['title', 'user'], keep='first')
+        compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
     def run(self):
