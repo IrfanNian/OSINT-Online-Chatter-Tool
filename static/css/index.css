@@ -50,6 +50,23 @@ body {
     margin: 40px auto;
 }
 
+#csubr {
+	display: none;
+}
+
+div {
+	padding: 10px;
+	margin: 5px;
+}
+input,
+select,
+option {
+	padding: 5px;
+}
+select {
+	width: 150px;
+}
+
 input::placeholder {
     color: rgb(89, 89, 89);
 }

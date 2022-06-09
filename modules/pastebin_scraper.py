@@ -15,8 +15,9 @@ CWD = os.getcwd()
 
 
 class PastebinScrapper:
-    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None):
         self.arg_search = arg_search
+        self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
 
