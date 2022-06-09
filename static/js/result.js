@@ -16,42 +16,45 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 
     for (i = 0; i < datapoints.length; i++) {
         if (datapoints[i].date_count != "") {
+            var tDate = datapoints[i].time_count
+            var xDate = new Date(tDate);
             if (datapoints[i].date_count > max) {
                 max = datapoints[i].date_count;
             }
             if (datapoints[i].date_count < min) {
                 min = datapoints[i].date_count;
             }
-        }
-    }
-    const ratio = (100-1)/(max-min);
-
-    for (i = 0; i < datapoints.length; i++) {
-        var text = [];
-        var user = [];
-        if (datapoints[i].date_count != "") {
-            x = datapoints[i].time_count;
-            y = datapoints[i].time_count;
-            r = datapoints[i].date_count;
-            var xDate = new Date(x);
             if (xDate < minDate) {
                 minDate = new Date(xDate.getTime());
             }
             if (xDate > maxDate) {
                 maxDate = new Date(xDate.getTime());
             }
+        }
+    }
+    const ratio = (100-1)/(max-min);
+
+    const diffTime = Math.abs(maxDate - minDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    for (i = 0; i < datapoints.length; i++) {
+        var text = [];
+        var user = [];
+        if (datapoints[i].date_count != "") {
+            var x = datapoints[i].time_count;
+            var r = datapoints[i].date_count;
+            var y = r/diffDays;
             r = Math.floor(1 + ratio*(r-min));
 
             for (a = 0; a < datapoints.length; a++) {
                 var dateOnly = new Date(datapoints[a].time);
                 dateOnly = dateOnly.toISOString().substring(0,10);
-                if (y == dateOnly) {
+                if (x == dateOnly) {
                     text.push(datapoints[a].text);
                     user.push(datapoints[a].user);
                 }
             }
-
-            var json = {x: x, y: y, r:r, text: text, user: user};
+            var json = {x: x, y: y, r: r, text: text, user: user};
             storage.push(json);
         }
     }
@@ -75,6 +78,10 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             scales: {
                 x: {
                     type: 'time',
+                    title: {
+                        display: true,
+                        text: 'Date',
+                    },
                     time: {
                         unit: 'day',
                         tooltipFormat: 'DD MMM YYYY',
@@ -83,13 +90,10 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                     min: minDate
                 },
                 y: {
-                    type: 'time',
-                    time: {
-                        unit: 'day',
-                        tooltipFormat: 'DD MMM YYYY',
+                    title: {
+                        display: true,
+                        text: 'Avg Chatter / Days',
                     },
-                    max: maxDate,
-                    min: minDate
                 }
             }
         }
