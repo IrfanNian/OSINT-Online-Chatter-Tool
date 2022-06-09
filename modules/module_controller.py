@@ -16,7 +16,8 @@ class ModuleController:
         result_df = fr.run()
         return result_df
 
-    def run(self, arg_scraping_sources, arg_searchbar_text, arg_custom_reddit=None, arg_since=None, arg_until=None, arg_limit=None):
+    def run(self, arg_scraping_sources, arg_searchbar_text, arg_custom_reddit=None, arg_since=None, arg_until=None,
+            arg_limit=None):
         """
         Runs the module controller which controls the other modules
         :param arg_limit:

@@ -11,8 +11,8 @@ pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
-    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
-                 ):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_advance_limit=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since
@@ -54,11 +54,11 @@ class RedditScraper:
             limit = 500
             
         # Specific subreddit search
-        if len(self.arg_advance_subreddit) > 0:
+        if self.arg_advance_subreddit is None:
             # default value
-            sub_list = self.arg_advance_subreddit.split(',')
+            sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
         else:
-            sub_list = ['cybersecurity','blueteamsec','netsec']
+            sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
             red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
@@ -75,9 +75,7 @@ class RedditScraper:
             else:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search)
 
-
             for post in gen:
-
                 try:
                     date = dt.datetime.fromtimestamp(post.created).isoformat()
                     red_dict["title"].append(post.title)

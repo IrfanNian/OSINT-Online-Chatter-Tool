@@ -11,8 +11,15 @@ TODAY = dt.date.today()
 
 class ModuleConfigurator:
     def configure_subreddit(self, arg_subreddit):
-        if arg_subreddit == None:
-            pass
+        """
+        Configure custom subreddit
+        :param arg_subreddit:
+        :return sub_list:
+        """
+        sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
+        if arg_subreddit is not None:
+            sub_list = arg_subreddit.split(',')
+        return sub_list
 
     def configure_depth(self, arg_depth):
         """

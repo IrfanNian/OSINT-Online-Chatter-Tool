@@ -28,11 +28,11 @@ def results():
     os.makedirs(STATIC_FOLDER)
     if request.method == "POST":
         # configure settings
-        searchbar_text = request.form['keyword']
-        chosen_sources = request.form['platf']
-        custom_reddit = request.form['csubrtext']
-        time_range = request.form['timeRangeDrop']
-        depth_range = request.form['depthDrop']
+        searchbar_text = request.form.get('keyword')
+        chosen_sources = request.form.get('platf')
+        custom_subreddit = request.form.get('csubrtext')
+        time_range = request.form.get('timeRangeDrop')
+        depth_range = request.form.get('depthDrop')
         mcr = ModuleConfigurator()
         scraping_sources = mcr.configure_sources(chosen_sources)
         if time_range == "custom":
@@ -40,11 +40,14 @@ def results():
             until_date = request.form['customTimeEnd']
             since, until = mcr.configure_custom_date(since_date, until_date)
         else:
+            if time_range is None:
+                time_range = "lastSeven"
             since, until = mcr.configure_date(time_range)
         limit = mcr.configure_depth(depth_range)
+        custom_subreddit = mcr.configure_subreddit(custom_subreddit)
         # run modules
         mc = ModuleController()
-        mc.run(scraping_sources, searchbar_text, custom_reddit, since, until, limit)
+        mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit)
     return render_template('results.html')
 
 
