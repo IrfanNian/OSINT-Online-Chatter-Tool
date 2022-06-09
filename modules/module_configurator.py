@@ -11,7 +11,9 @@ TODAY = dt.date.today()
 
 class ModuleConfigurator:
     def configure_subreddit(self, arg_subreddit):
-        pass
+    
+        if arg_subreddit == None:
+            pass
 
     def configure_depth(self, arg_depth):
         """

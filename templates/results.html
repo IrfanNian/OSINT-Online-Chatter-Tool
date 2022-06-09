@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-		<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>	
-		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>		
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,6 +13,19 @@
             rel="icon"
             href="/static/images/keyword.png"
         />
+        <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+                integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+                integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
+                crossorigin="anonymous"
+                referrerpolicy="no-referrer">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
     </head>
     <body>
         <nav>
@@ -53,14 +63,15 @@
                     <p>22.7k</p>
                 </div>
             </div>
-            <p class="title">Keyword Frequency</p>
-            <div id="graph" class="graph"></div>
-			<canvas id="graph">
-			<script type="text/javascript">
-				var graphs = {{graphJSON | safe}};
-				Plotly.plot('graph',graphs,{});        
-			</script>
-			</canvas>
+            <p class="title">Trending Graph</p>
+            <div class="graph">
+                <canvas id="graph"></canvas>
+            </div>
+            <div class="bubbletable">
+                <table>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/result.js"></script>

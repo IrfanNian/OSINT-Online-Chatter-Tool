@@ -7,10 +7,11 @@ CWD = os.getcwd()
 
 
 class TwitterScraper:
-    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_include=None, arg_advance_exclude=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
+        self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_include = arg_advance_include
@@ -48,17 +49,17 @@ class TwitterScraper:
                 continue
             date = str(tweet.date).split("+", 1)[0]
             date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, "twitter"])
+            date = date.isoformat()
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "platform"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
 
         # Advance search operations for must be "included/excluded"
         # todo: the plan is to search the dataframe again
 
         # Output to CSV
         if len(tweets_df) != 0:
-            tweets_df['platform'] = "twitter"
             tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
                              index=False)
 

@@ -14,6 +14,17 @@ form.addEventListener("submit", () => {
     console.log(form.action);
 });
 
+function showHide() {
+    let customreddit = document.getElementById('platf')
+    if (customreddit.value == 'all') {
+        document.getElementById('csubr').style.display = 'block'
+    } 
+    else if (customreddit.value == 'reddit') {
+        document.getElementById('csubr').style.display = 'block'
+    }else {
+        document.getElementById('csubr').style.display = 'none'
+    }
+}
 
 function CheckTime(val) {
     var element1 = document.getElementById('customTimeStart');
