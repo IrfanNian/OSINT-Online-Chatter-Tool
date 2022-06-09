@@ -12,12 +12,13 @@ pd.options.mode.chained_assignment = None
 
 class RedditScraper:
     def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
-                 arg_advance_limit=None):
+                 arg_advance_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
         self.arg_advance_subreddit = arg_advance_subreddit
+        self.arg_refinement = arg_refinement
 
     def clean_data(self, arg_df):
         """
@@ -88,6 +89,8 @@ class RedditScraper:
 
             submission_df = pd.DataFrame(dict([(k, pd.Series(v, dtype=pd.StringDtype())) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
+            if self.arg_refinement is not None:
+                submission_df = submission_df[submission_df["text"].str.contains(self.arg_refinement)]
             if len(submission_df) != 0:
                 submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df = submission_df.reset_index(drop=True)

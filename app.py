@@ -33,6 +33,7 @@ def results():
         custom_subreddit = request.form.get('csubrtext')
         time_range = request.form.get('timeRangeDrop')
         depth_range = request.form.get('depthDrop')
+        refinement = request.form.get('refinement')
         mcr = ModuleConfigurator()
         scraping_sources = mcr.configure_sources(chosen_sources)
         if time_range == "custom":
@@ -47,7 +48,7 @@ def results():
         custom_subreddit = mcr.configure_subreddit(custom_subreddit)
         # run modules
         mc = ModuleController()
-        mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit)
+        mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit, refinement)
     return render_template('results.html')
 
 

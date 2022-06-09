@@ -15,11 +15,13 @@ CWD = os.getcwd()
 
 
 class PastebinScrapper:
-    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_since = arg_advance_since
         self.arg_advance_until = arg_advance_until
+        self.arg_refinement = arg_refinement
 
     def jprint(self, obj):
         # create a formatted string of the Python JSON object
@@ -56,6 +58,8 @@ class PastebinScrapper:
             df = self.date_range(df)
         df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
         df['time'] = df['time'].apply(lambda x: x.isoformat())
+        if self.arg_refinement is not None:
+            df = df[df["text"].str.contains(self.arg_refinement)]
         if len(df) != 0:
             df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.csv"), sep=",", index=False)
             df = df.reset_index(drop=True)
