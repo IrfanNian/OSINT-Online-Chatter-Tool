@@ -37,14 +37,23 @@
                     <center>
                         <h2>Advanced Options</h2><br />
                         <label for="platf">Platform: </label>
-                        <select name="platf" id="platf">
+                        <select name="platf" id="platf" onchange='showHide()'>
+							<option value="" disabled selected hidden>Platform..</option>
                             <option value="all">All</option>
                             <option value="twitter">Twitter</option>
                             <option value="reddit">Reddit</option>
                             <option value="pastebin">Pastebin</option>
-                        </select><br />
+						</select>
+						<br />
+						<div name="csubr" id="csubr">
+						<label>Enter Subreddit: </label>
+						<input type="text" name="csubrtext" id="csubrtext" placeholder="Leave blank for default"/>
+						<img src="/static/images/i.png" width="20px"
+						title="To seach multiple subreddits, use commas as delimiters. For eg: hacking,sysadmin"></img>
+						</div>
                         <label for="tRan">Time Range: </label>
                         <select name="timeRangeDrop" id="tRan" onchange='CheckTime(this.value)'>
+							<option value="" disabled selected hidden>Time Range..</option>
                             <option value="today">Today</option>
                             <option value="yesterday">Yesterday</option>
                             <option value="lastSeven">Last 7 days</option>
@@ -60,12 +69,14 @@
                         <input type="date" name="customTimeEnd" id="customTimeEnd" style='display:none' />
                         <br />
                         <label for="depth">Depth: </label>
-                        <select name="depthDrop" id="depth">
+							<select name="depthDrop" id="depth">
+							<option value="" disabled selected hidden>Depth..</option>
                             <option value="quick">Quick</option>
                             <option value="standard">Standard</option>
                             <option value="deep">Deep</option>
                         </select><br />
-
+						<label for="tRan">Refinements: </label>
+						<input type="text" name="refinement" id="refinement"/>
                     </center>
                     <br />
                     <div class="buttons">

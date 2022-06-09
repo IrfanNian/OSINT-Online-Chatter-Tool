@@ -7,10 +7,11 @@ CWD = os.getcwd()
 
 
 class TwitterScraper:
-    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
                  arg_advance_include=None, arg_advance_exclude=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
+        self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_include = arg_advance_include

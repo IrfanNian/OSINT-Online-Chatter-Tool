@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request
-from flask.helpers import flash, url_for
-from werkzeug.utils import redirect
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
 import os
@@ -32,6 +30,7 @@ def results():
         # configure settings
         searchbar_text = request.form['keyword']
         chosen_sources = request.form['platf']
+        custom_reddit = request.form['csubrtext']
         time_range = request.form['timeRangeDrop']
         depth_range = request.form['depthDrop']
         mcr = ModuleConfigurator()
@@ -45,7 +44,7 @@ def results():
         limit = mcr.configure_depth(depth_range)
         # run modules
         mc = ModuleController()
-        mc.run(scraping_sources, searchbar_text, since, until, limit)
+        mc.run(scraping_sources, searchbar_text, custom_reddit, since, until, limit)
     return render_template('results.html')
 
 

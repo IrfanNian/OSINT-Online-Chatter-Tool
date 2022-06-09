@@ -11,8 +11,8 @@ pd.options.mode.chained_assignment = None
 
 
 class RedditScraper:
-    def __init__(self, arg_search,  arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
-                 arg_advance_subreddit=None):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
+                 ):
         self.arg_search = arg_search
         self.arg_advance_limit = arg_advance_limit
         self.arg_advance_since = arg_advance_since
@@ -46,24 +46,25 @@ class RedditScraper:
             self.arg_advance_until = dt.datetime.strptime(self.arg_advance_until, '%Y-%m-%d')
             self.arg_advance_until = int(dt.datetime(self.arg_advance_until.year, self.arg_advance_until.month,
                                                      self.arg_advance_until.day).timestamp())
-
+  
         # Check for customised limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
         else:
             limit = 500
 
-        # List of subreddits to scrape data
-        if self.arg_advance_subreddit is None:
-            # default value
-            sub_list = ['cybersecurity', 'netsec', 'blueteamsec']
         else:
-            # see how frontend people want to pass in the data
-            sub_list = ['cybersecurity']  # todo
+            limit = 500
+            
+        # Specific subreddit search
+        if len(self.arg_advance_subreddit) > 0:
+            # default value
+            sub_list = self.arg_advance_subreddit.split(',')
+        else:
+            sub_list = ['cybersecurity','blueteamsec','netsec']
 
         for subreddit in sub_list:
             red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
-
             # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
@@ -77,7 +78,9 @@ class RedditScraper:
             else:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search)
 
+
             for post in gen:
+
                 try:
                     date = dt.datetime.fromtimestamp(post.created).isoformat()
                     red_dict["title"].append(post.title)
