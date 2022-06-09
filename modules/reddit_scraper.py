@@ -50,6 +50,8 @@ class RedditScraper:
         # Check for customised limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         else:
             limit = 500
@@ -88,6 +90,7 @@ class RedditScraper:
                     red_dict["url"].append(post.url)
                 except AttributeError:
                     pass
+
             submission_df = pd.DataFrame(dict([(k, pd.Series(v, dtype=pd.StringDtype())) for k, v in red_dict.items()]))
             submission_df = self.clean_data(submission_df)
             if len(submission_df) != 0:
