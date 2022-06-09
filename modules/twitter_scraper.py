@@ -7,15 +7,14 @@ CWD = os.getcwd()
 
 
 class TwitterScraper:
-    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
-                 arg_advance_include=None, arg_advance_exclude=None):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_advance_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
         self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
-        self.arg_advance_include = arg_advance_include
-        self.arg_advance_exclude = arg_advance_exclude
+        self.arg_refinement = arg_refinement
 
     def run(self):
         """
@@ -55,8 +54,9 @@ class TwitterScraper:
         # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
 
-        # Advance search operations for must be "included/excluded"
-        # todo: the plan is to search the dataframe again
+        # Refinement
+        if self.arg_refinement is not None:
+            tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
 
         # Output to CSV
         if len(tweets_df) != 0:

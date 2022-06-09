@@ -50,3 +50,7 @@ function CheckTime(val) {
     else
         element1.style.display = 'none';
 }
+
+function on() {
+  document.getElementById("overlay").style.display = "block";
+}
