@@ -52,9 +52,6 @@ class RedditScraper:
             limit = self.arg_advance_limit
         else:
             limit = 500
-
-        else:
-            limit = 500
             
         # Specific subreddit search
         if len(self.arg_advance_subreddit) > 0:
