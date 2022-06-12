@@ -7,6 +7,7 @@ document.title = `${query} | Keyword Usage`;
 document.querySelector("span.query").innerText = `"${query}"`;
 const ctx = document.querySelector("#graph").getContext("2d");
 
+
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     const storage = [];
     var min = 1;
@@ -69,6 +70,13 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
         }]
     }
 
+    /*const sdata = {
+        datasets: [{
+            label: 'Scatter Dataset',
+            data: storage
+        }]
+    };*/
+
     //config
     const config = {
         type: 'bubble',
@@ -98,6 +106,22 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             }
         }
     }
+    /*const sconfig = {
+        type: 'scatter',
+        data: sdata,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Scatter Chart'
+                }
+            }
+        },
+    };*/
 
     //config
     var chart = new Chart(ctx, config);
@@ -125,5 +149,13 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             })
         }
     }
+
+    /*var sgraph = new Chart(sctx, sconfig);
+        const sgraph = new Chart(
+        document.getElementById('sgraph'),
+        sconfig
+        );*/
+   
+
     
 });
