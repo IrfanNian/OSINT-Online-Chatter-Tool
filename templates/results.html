@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Keyword Usage in</title>
-        <link rel="stylesheet" href="/static/css/nav.css" />
-        <link rel="stylesheet" href="/static/css/result.css" />
-        <link
-            type="image/png"
-            sizes="96x96"
-            rel="icon"
-            href="/static/images/keyword.png"
-        />
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keyword Usage in</title>
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link rel="stylesheet" href="/static/css/result.css" />
+    <link type="image/png"
+          sizes="96x96"
+          rel="icon"
+          href="/static/images/keyword.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+            integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+            integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
+
+</head>
     <body>
         <nav>
             <a href="/" class="brand-logo">Tracking Online Chatter</a>
@@ -30,37 +39,54 @@
         </nav>
         <div class="container">
             <p class="title">
-                Showing Results for <br />
+                Showing Results for:
                 <span class="query"></span>
             </p>
-
-            <div class="boxes">
-                <div class="box">
-                    <h1>Posts</h1>
-                    <p>141k</p>
-                </div>
-
-                <div class="box">
-                    <h1>Shares</h1>
-                    <p>50k</p>
-                </div>
-
-                <div class="box">
-                    <h1>Likes</h1>
-                    <p>22.7k</p>
-                </div>
+            <div style="display: flex; justify-content: space-around;">
+                <p class="title">Consolidated Results</p>
+                <p class="title">Trending Graph</p>
             </div>
-            <p class="title">Trending Graph</p>
-            <div class="graph">
+            <div class="bubbletable">
+                <table id="tablebubz" class="display">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+             <div class="graph">
                 <canvas id="graph"></canvas>
             </div>
+            <div style="display: flex; margin-top: 400px;">
+                <p class="title" style="margin-right: 500px; margin-left:200px;">Timeline</p>
+                <p class="title">Pie Chart</p>
+            </div>
+
+
+            <div class="timelineChart">
+                <canvas id="graph"></canvas>  <!-- To be replaced. -->
+            </div>
+            <div class="pieChart">
+                <canvas id="graph"></canvas>  <!-- To be replaced. -->
+            </div>
+            <div class="boxes">
+                <div class="box">
+                    <h1>Most No. of Chatter in a day:</h1>
+                    <p>1502</p> <!-- To be replaced. -->
+                </div>
+
+                <div class="box">
+                    <h1>Total Chatter Found:</h1>
+                    <p>52429</p> <!-- To be replaced. -->
+                </div>
+            </div>
         </div>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"
-            integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
+        <div class="bNav">
+            <p></p>
+        </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/result.js"></script>
     </body>
