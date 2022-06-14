@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=K2D:wght@600;800&family=Livvic:wght@600&display=swap");
-
 html,
 body {
     height: 100%;
@@ -16,6 +15,17 @@ body {
     height: 100vh;
     padding: 0 30px;
     padding-top: 120px;
+}
+
+.bNav {
+    clear: left;
+    float: bottom;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-family: "K2D", sans-serif;
+    color: #e3e3e3;
 }
 
 .title {
@@ -38,13 +48,15 @@ body {
 }
 
 .boxes {
-    display: grid;
+    display: inline;
     grid-gap: 5px;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     justify-content: center;
-    width: 60%;
+    width: 15%;
     margin: 0 0 0 auto;
     margin-bottom: 50px;
+    float: right;
+
 }
 
 .box {
@@ -53,35 +65,165 @@ body {
     max-width: 400px;
     padding: 10px 40px;
     border-radius: 20px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .box h1 {
-    font-size: 40px;
+    font-size: 20px;
     font-family: "K2D", sans-serif;
-    font-weight: 600;
-    color: #904ee6;
+    font-weight: 400;
 }
 
 .box p {
-    font-size: 30px;
+    font-size: 28px;
     font-family: "K2D", sans-serif;
     font-weight: 600;
-    color: rgb(0, 0, 0);
+    color: #02b0a7;
 }
 
 .graph {
     border: 1px solid #e6e6e6;
-    padding: 30px;
+    padding: 5px;
     background-color: #f6f6f6;
     border-radius: 20px;
 
     display: grid;
     grid-gap: 5px;
     grid-auto-flow: column;
-    width: 60%;
+    width: 48%;
     margin: 0 0 0 auto;
     margin-bottom: 50px;
+    float: right;
+    box-shadow: 0 0 20px #737272;
 }
+
+
+.bubbletable {
+    height: 340px;
+    width: 700px;
+    max-width: 700px;
+    max-height: 340px;
+    overflow-y: auto;
+    text-align: left;
+    width: fit-content;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    float: left;
+}
+
+.bubbletable * {
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+.bubbletable table {
+	border-collapse: separate;
+	font-size: 13px;
+	background-color: #f6f6f6;
+	border-spacing: 0;
+	table-layout: fixed;
+    color: black;
+}
+
+table thead tr th {
+	padding: 18px 24px;
+	border-bottom: 1px solid #1c1c1c;
+	position: sticky;
+	top: 0;
+    background-color: #e3e3e3;
+    font-family: "K2D", sans-serif;
+}
+
+table tbody tr td {
+	padding: 11px 24px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: "K2D", sans-serif;
+}
+
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.timelineChart {
+    height: 340px;
+    width: 550px;
+    max-width: 550px;
+    max-height: 350px;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+    clear: left;
+    margin-right: 20px;
+}
+.pieChart {
+    height: 340px;
+    width: 580px;
+    max-width: 580px;
+    max-height: 350px;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+
+}
+
+/*
+.bubbletable {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 350px;
+    border: 1px solid #e6e6e6;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 0 20px #737272;
+    border-radius: 20px;
+    float: left;
+    width: 700px;
+    flex-wrap: wrap;
+    padding: 20px;
+
+
+    table {
+        display: block;
+
+    }
+
+}
+#tablebubz {
+
+}
+
+thead, th {
+    background-color: #737272;
+    color: white;
+    border: 1px solid #e6e6e6;
+    padding: 10px;
+    text-align: left;
+
+}
+
+tbody td {
+    border: 1px solid #e6e6e6;
+    color: #333;
+    padding: 10px;
+    text-shadow: 1px 1px 1px #fff;
+}
+
+tbody {
+
+}
+
+
+
+
 
 /* Responsive */
 
