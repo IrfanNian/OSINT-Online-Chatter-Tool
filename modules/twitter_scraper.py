@@ -7,22 +7,20 @@ CWD = os.getcwd()
 
 
 class TwitterScraper:
-    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_advance_limit=None,
-                 arg_advance_include=None, arg_advance_exclude=None):
+    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
+                 arg_advance_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
+        self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
-        self.arg_advance_include = arg_advance_include
-        self.arg_advance_exclude = arg_advance_exclude
+        self.arg_refinement = arg_refinement
 
     def run(self):
         """
         Runs the twitter scraper module
         :return None:
         """
-        limit = 500  # todo: still have to decide default value
-
         # Creating list to append tweet data to
         tweets_list = []
 
@@ -39,6 +37,8 @@ class TwitterScraper:
         # Check for customised tweet limit
         if type(self.arg_advance_limit) == int:
             limit = self.arg_advance_limit
+        else:
+            limit = 500
 
         # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):
@@ -48,18 +48,21 @@ class TwitterScraper:
                 continue
             date = str(tweet.date).split("+", 1)[0]
             date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            date = date.isoformat()
             tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
 
         # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
 
-        # Advance search operations for must be "included/excluded"
-        # todo: the plan is to search the dataframe again
+        # Refinement
+        if self.arg_refinement is not None:
+            tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
 
         # Output to CSV
-        tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
-                         index=False)
+        if len(tweets_df) != 0:
+            tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
+                             index=False)
 
-        # Output to feather
-        tweets_df = tweets_df.reset_index()
-        tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))
+            # Output to feather
+            tweets_df = tweets_df.reset_index(drop=True)
+            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))
