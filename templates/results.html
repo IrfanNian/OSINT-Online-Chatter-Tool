@@ -46,12 +46,14 @@
                 <p class="title">Consolidated Results</p>
                 <p class="title">Trending Graph</p>
             </div>
+            <input type="text" id="searchBar" onkeyup="myFunction()" placeholder="Search for ...">
             <div class="bubbletable">
+
                 <table id="tablebubz" class="display">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Message</th>
+                            <th style="width: 166px;">Username</th>
+                            <th style="width: 534px;">Message</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -60,17 +62,17 @@
              <div class="graph">
                 <canvas id="graph"></canvas>
             </div>
-            <div style="display: flex; margin-top: 400px;">
+            <div style="display: flex; margin-top: 450px;">
                 <p class="title" style="margin-right: 500px; margin-left:200px;">Timeline</p>
                 <p class="title">Pie Chart</p>
             </div>
 
 
             <div class="timelineChart">
-                <canvas id="graph"></canvas>  <!-- To be replaced. -->
+                <canvas id="timline"></canvas>  <!-- To be replaced. -->
             </div>
             <div class="pieChart">
-                <canvas id="graph"></canvas>  <!-- To be replaced. -->
+                <canvas id="pie"></canvas>  <!-- To be replaced. -->
             </div>
             <div class="boxes">
                 <div class="box">

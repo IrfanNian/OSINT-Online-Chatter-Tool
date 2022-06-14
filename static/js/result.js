@@ -104,7 +104,7 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 
     function clickHandler(evt) {
         const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-    
+
         if (points.length) {
             const firstPoint = points[0];
             const label = chart.data.labels[firstPoint.index];
@@ -118,12 +118,37 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                   return row[i];
                 });
               });
-              
+
             //Add data to table
             r.forEach(function(e) {
                 table.innerHTML += '<tr><td>' + e[0] + '</td><td>' + e[1] + '</td></tr>'
             })
         }
     }
-    
 });
+
+function myFunction() {
+  var input, filter, table, tr, td, i, t;
+  input = document.getElementById("searchBar");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("tablebubz");
+  tr = table.querySelectorAll("tbody tr:not(.header)");
+  for (i = 0; i < tr.length; i++) {
+    var filtered = false;
+    var tds = tr[i].getElementsByTagName("td");
+    for(t=0; t<tds.length; t++) {
+        var td = tds[t];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            filtered = true;
+          }
+        }
+    }
+    if(filtered===true) {
+        tr[i].style.display = '';
+    }
+    else {
+        tr[i].style.display = 'none';
+    }
+  }
+}

@@ -106,10 +106,11 @@ body {
     max-height: 340px;
     overflow-y: auto;
     text-align: left;
-    width: fit-content;
+    /* width: fit-content; */
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     float: left;
+    background-color: #f6f6f6;
 }
 
 .bubbletable * {
@@ -131,7 +132,7 @@ table thead tr th {
 	border-bottom: 1px solid #1c1c1c;
 	position: sticky;
 	top: 0;
-    background-color: #e3e3e3;
+    background-color: #e6e6e6;
     font-family: "K2D", sans-serif;
 }
 
@@ -140,6 +141,11 @@ table tbody tr td {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-family: "K2D", sans-serif;
+}
+
+table thead {
+  width: 100%;
+  max-width: 100%;
 }
 
 
@@ -175,6 +181,20 @@ table tbody tr td {
 
 }
 
+#searchBar {
+    background-image: url('../images/search.png'); /* Add a search icon to input */
+    /* background-position: 10px 12px; Position the search icon */
+    background-repeat: no-repeat; /*  Do not repeat the icon image */
+    background-size: auto;
+    width: 50%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 10px;
+    background-color: white;
+    float:left;
+}
 
 /* Responsive */
 
