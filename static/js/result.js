@@ -7,6 +7,10 @@ document.title = `${query} | Keyword Usage`;
 document.querySelector("span.query").innerText = `"${query}"`;
 const ctx = document.querySelector("#graph").getContext("2d");
 
+let currentPage = 1;
+let recordsPerPage = 50;
+let numPage = 1;
+
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     const storage = [];
     var min = 1;
@@ -104,51 +108,129 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 
     function clickHandler(evt) {
         const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        let currentArray = [];
 
         if (points.length) {
             const firstPoint = points[0];
             const label = chart.data.labels[firstPoint.index];
             const value = chart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-            console.log(value.text)
-            console.log(value.user)
             var ar = [value.user, value.text], table = document.querySelector('table tbody');
-            table.innerHTML = '';
+            function getNumPages(array) {
+                return Math.ceil(array.length/recordsPerPage);
+            }
+
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    changePage(currentPage, currentArray);
+                }
+            }
+
+            function nextPage() {
+                if (currentPage < numPage) {
+                    currentPage++;
+                    changePage(currentPage, currentArray);
+                }
+            }
+
+            function changePage(page, array) {
+                numPage = getNumPages(array);
+                const btn_prev = document.getElementById('btn-prev');
+                const btn_next = document.getElementById('btn-next');
+                let page_span = document.getElementById('page');
+                const btn_page_nav = document.getElementById('pagination_nav');
+                btn_page_nav.style.display = 'inline-block';
+                page_span.style.display = 'inline-block';
+
+                if (page < 1) {
+                    page = 1;
+                }
+
+                if (page > numPage) {
+                    page = numPage;
+                }
+
+                table.innerHTML = '';
+                page_span.innerHTML = '';
+
+                if (recordsPerPage > array.length) {
+                    recordsPerPage = array.length;
+                }
+                else {
+                    recordsPerPage = 50;
+                }
+
+                for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
+                    table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                }
+                page_span.innerHTML += page + "/" + numPage;
+                btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
+                btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
+                let tbl = document.getElementById("tablebubz");
+                if (tbl.rows.length == 1) {
+                    btn_page_nav.style.display = 'none';
+                }
+            }
+
+            function searchArray(array) {
+                input = document.getElementById("searchBar");
+                filter = input.value.toUpperCase();
+                let filtered = array.filter(text => {
+                    return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
+                })
+                currentArray = filtered;
+                changePage(1, filtered)
+            }
+
             var r = ar[0].map(function(col, i) {
                 return ar.map(function(row) {
                   return row[i];
                 });
               });
 
-            //Add data to table
-            r.forEach(function(e) {
-                table.innerHTML += '<tr><td>' + e[0] + '</td><td>' + e[1] + '</td></tr>'
-            })
+            document.getElementById('searchBar').addEventListener('keyup', (e) => {
+                    e.preventDefault();
+                    searchArray(r);
+            });
+
+            document.getElementById('btn-next').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    nextPage();
+            });
+
+            document.getElementById('btn-prev').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    prevPage();
+            });
+
+            currentArray = r;
+            changePage(1, r);
         }
     }
 });
 
-function myFunction() {
-  var input, filter, table, tr, td, i, t;
-  input = document.getElementById("searchBar");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tablebubz");
-  tr = table.querySelectorAll("tbody tr:not(.header)");
-  for (i = 0; i < tr.length; i++) {
-    var filtered = false;
-    var tds = tr[i].getElementsByTagName("td");
-    for(t=0; t<tds.length; t++) {
-        var td = tds[t];
-        if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            filtered = true;
-          }
-        }
-    }
-    if(filtered===true) {
-        tr[i].style.display = '';
-    }
-    else {
-        tr[i].style.display = 'none';
-    }
-  }
-}
+//function myFunction() {
+//    var input, filter, table, tr, td, i, t;
+//    input = document.getElementById("searchBar");
+//    filter = input.value.toUpperCase();
+//    table = document.getElementById("tablebubz");
+//    tr = table.querySelectorAll("tbody tr:not(.header)");
+//    for (i = 0; i < tr.length; i++) {
+//        var filtered = false;
+//        var tds = tr[i].getElementsByTagName("td");
+//        for(t=0; t<tds.length; t++) {
+//            var td = tds[t];
+//            if (td) {
+//                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+//                    filtered = true;
+//                }
+//            }
+//        }
+//        if(filtered===true) {
+//            tr[i].style.display = '';
+//        }
+//        else {
+//            tr[i].style.display = 'none';
+//        }
+//    }
+//}
