@@ -7,7 +7,6 @@ document.title = `${query} | Keyword Usage`;
 document.querySelector("span.query").innerText = `"${query}"`;
 const ctx = document.querySelector("#graph").getContext("2d");
 
-let currentPage = 1;
 let recordsPerPage = 50;
 let numPage = 1;
 
@@ -109,6 +108,7 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
     function clickHandler(evt) {
         const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
         let currentArray = [];
+        let currentPage = 1;
 
         if (points.length) {
             const firstPoint = points[0];
@@ -179,7 +179,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                     return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
                 })
                 currentArray = filtered;
-                changePage(1, filtered)
+                currentPage = 1;
+                changePage(currentPage, filtered)
             }
 
             var r = ar[0].map(function(col, i) {
@@ -204,7 +205,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             });
 
             currentArray = r;
-            changePage(1, r);
+            currentPage = 1;
+            changePage(currentPage, r);
         }
     }
 });
