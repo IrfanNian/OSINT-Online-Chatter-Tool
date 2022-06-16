@@ -92,8 +92,8 @@ class RedditScraper:
             if self.arg_refinement is not None:
                 submission_df = submission_df[submission_df["text"].str.contains(self.arg_refinement)]
             if len(submission_df) != 0:
-                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df = submission_df.reset_index(drop=True)
+                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df.to_feather(os.path.join(CWD, "results",
                                                       str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 

@@ -14,21 +14,16 @@ let currentPage = 1;
 
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     const storage = [];
-    var min = 1;
-    var max = 1;
     var minDate = new Date();
     var maxDate = new Date();
+
+    var max = Math.max.apply(Math, datapoints.map(function(o) {return o.date_count}))
+    var min = Math.min.apply(Math, datapoints.map(function(o) {return o.date_count}))
 
     for (i = 0; i < datapoints.length; i++) {
         if (datapoints[i].date_count != "") {
             var tDate = datapoints[i].time_count
             var xDate = new Date(tDate);
-            if (datapoints[i].date_count > max) {
-                max = datapoints[i].date_count;
-            }
-            if (datapoints[i].date_count < min) {
-                min = datapoints[i].date_count;
-            }
             if (xDate < minDate) {
                 minDate = new Date(xDate.getTime());
             }
