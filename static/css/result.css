@@ -66,7 +66,7 @@ body {
     padding: 10px 40px;
     border-radius: 20px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .box h1 {
@@ -93,24 +93,26 @@ body {
     grid-auto-flow: column;
     width: 48%;
     margin: 0 0 0 auto;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     float: right;
     box-shadow: 0 0 20px #737272;
 }
 
 
 .bubbletable {
-    height: 340px;
-    width: 700px;
-    max-width: 700px;
-    max-height: 340px;
+    display: grid;
+    grid-gap: 5px;
+    width:51%;
+    height:52.5%;
     overflow-y: auto;
     text-align: left;
     /* width: fit-content; */
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     float: left;
+    clear:left;
     background-color: #f6f6f6;
+    margin-bottom: 10px;
 }
 
 .bubbletable * {
@@ -136,6 +138,14 @@ table thead tr th {
     font-family: "K2D", sans-serif;
 }
 
+table tfoot {
+    padding: 18px 24px;
+	border-bottom: 1px solid #1c1c1c;
+	position: sticky;
+	top: 0;
+    background-color: #e6e6e6;
+    font-family: "K2D", sans-serif;
+}
 table tbody tr td {
 	padding: 11px 24px;
 	overflow: hidden;
@@ -154,10 +164,8 @@ table thead {
 }
 
 .timelineChart {
-    height: 340px;
-    width: 550px;
-    max-width: 550px;
-    max-height: 350px;
+    width:41.5%;
+    height: 52.5%;
     overflow-y: auto;
     text-align: left;
     border-radius: 30px;
@@ -165,19 +173,19 @@ table thead {
     background-color: #f6f6f6;
     float: left;
     clear: left;
-    margin-right: 20px;
+    margin-right: 15px;
+    margin-bottom: 10px;
 }
 .pieChart {
-    height: 340px;
-    width: 580px;
-    max-width: 580px;
-    max-height: 350px;
+    width:41.5%;
+    height: 52.5%;
     overflow-y: auto;
     text-align: left;
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     background-color: #f6f6f6;
     float: left;
+    margin-bottom: 10px;s
 
 }
 
@@ -194,6 +202,21 @@ table thead {
     border-radius: 10px;
     background-color: white;
     float:left;
+}
+
+.headingOne{
+    display: flex;
+    justify-content: space-around;
+}
+
+.headingTwo{
+    display: flex;
+    margin-top: 450px;
+}
+
+#timelineName{
+    margin-right: 500px;
+    margin-left:200px;
 }
 
 /* Responsive */
@@ -233,5 +256,43 @@ table thead {
     .graph {
         width: 100%;
         padding: 5px;
+        margin-bottom: 50px;
     }
+    .bubbletable{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .pieChart{
+        width: 100%;
+    }
+    .timelineChart{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    #searchBar{
+        margin-top:50px;
+    }
+    .headingOne {
+        flex-direction: column;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        height: 70%;
+        position: absolute;
+        float: top;
+
+    }
+     .headingTwo {
+        flex-direction: column;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        height: 60%;
+        position: absolute;
+        margin-top: 61.25em;
+    }
+
+    #timelineName{
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
 }
