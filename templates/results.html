@@ -42,7 +42,7 @@
                 Showing Results for:
                 <span class="query"></span>
             </p>
-            <div style="display: flex; justify-content: space-around;">
+            <div class="headingOne">
                 <p class="title">Consolidated Results</p>
                 <p class="title">Trending Graph</p>
             </div>
@@ -52,25 +52,30 @@
                 <table id="tablebubz" class="display">
                     <thead>
                         <tr>
-                            <th style="width: 166px;">Username</th>
-                            <th style="width: 534px;">Message</th>
+                            <th style="width: 10.375em;">Username</th>
+                            <th style="width: 33.375em;">Message</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="padding-left:20px;">
+                                <a href="#" id="btn-prev">Prev</a> |
+                                <a href="#" id="btn-next">Next</a>
+                            </td>
+                            <td>
+                                Page: <span id="page"></span>
+                            </td>
+                        </tr>
+
+                    </tfoot>
                 </table>
-                <div style="display: none; padding-left: 25px;" id="pagination_nav">
-                    <p>
-                        <a href="#" id="btn-prev">Prev</a>
-                        <a href="#" id="btn-next">Next</a>
-                    </p>
-                    <p>Page: <span id="page"></span></p>
-                </div>
             </div>
              <div class="graph">
                 <canvas id="graph"></canvas>
             </div>
-            <div style="display: flex; margin-top: 450px;">
-                <p class="title" style="margin-right: 500px; margin-left:200px;">Timeline</p>
+            <div class="headingTwo">
+                <p class="title" id="timelineName">Timeline</p>
                 <p class="title">Pie Chart</p>
             </div>
 
