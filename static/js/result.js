@@ -9,6 +9,8 @@ const ctx = document.querySelector("#graph").getContext("2d");
 
 let recordsPerPage = 50;
 let numPage = 1;
+let currentArray = [];
+let currentPage = 1;
 
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     const storage = [];
@@ -107,8 +109,6 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 
     function clickHandler(evt) {
         const points = chart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-        let currentArray = [];
-        let currentPage = 1;
 
         if (points.length) {
             const firstPoint = points[0];
@@ -161,7 +161,12 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                 }
 
                 for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
-                    table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                    try {
+                        table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                    }
+                    catch {
+                        numPage = 1;
+                    }
                 }
                 page_span.innerHTML += page + "/" + numPage;
                 btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
