@@ -17,7 +17,7 @@ class ModuleConfigurator:
         :return sub_list:
         """
         sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
-        if arg_subreddit is not None:
+        if arg_subreddit is not None and arg_subreddit != "":
             sub_list = arg_subreddit.split(',')
         return sub_list
 

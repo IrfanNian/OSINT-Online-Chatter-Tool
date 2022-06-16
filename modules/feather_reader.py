@@ -10,7 +10,7 @@ STATIC_FOLDER = os.path.join("static", "results")
 class FeatherReader:
     def get_feather_files(self):
         """
-        Opens a csv file and reads it into memory
+        Opens a feather file and reads it into memory
         :return all_csv_files:
         """
         directory = os.path.join(CWD, RESULT_FOLDER)
@@ -27,7 +27,7 @@ class FeatherReader:
 
     def feather_to_df(self, arg_feather_filenames):
         """
-        Converts all csv in the results folder into dataframes and compile them
+        Converts all feather files in the results folder into dataframes and compile them
         :param arg_feather_filenames:
         :return compiled_df:
         """
@@ -42,7 +42,7 @@ class FeatherReader:
 
     def run(self):
         """
-        Runs the csv reader module
+        Runs the feather reader module
         :return compiled_df:
         """
         feather_filenames = self.get_feather_files()
