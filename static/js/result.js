@@ -133,8 +133,6 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                 const btn_prev = document.getElementById('btn-prev');
                 const btn_next = document.getElementById('btn-next');
                 let page_span = document.getElementById('page');
-                const btn_page_nav = document.getElementById('pagination_nav');
-                btn_page_nav.style.display = 'inline-block';
                 page_span.style.display = 'inline-block';
 
                 if (page < 1) {
