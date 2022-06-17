@@ -18,6 +18,10 @@ app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+def allowed_file(arg_filename):
+    return '.' in arg_filename and arg_filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route('/')
 def default():
     return render_template('index.html')
@@ -62,9 +66,12 @@ def results():
         master_switch = request.form.get('disableScraping')
         if "file" in request.files:
             for f in request.files.getlist("file"):
-                if f.filename != "":
+                if f.filename != "" and allowed_file(f.filename):
                     filename = secure_filename(f.filename)
                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                else:
+                    error = "Invalid filetype"
+                    return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
         scraping_sources = mcr.configure_sources(chosen_sources, master_switch)
         if time_range == "custom":
