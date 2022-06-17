@@ -53,8 +53,11 @@ class TwitterScraper:
             date = date.isoformat()
             location = tweet.coordinates
             if location is not None:
-                location = geolocator.reverse("%s, %s" % (location.latitude, location.longitude))
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, str(location)])
+                location = str(geolocator.reverse("%s, %s" % (location.latitude, location.longitude)))
+                location = location.split(",")[-1][1:]
+            else:
+                location = "No Data"
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location])
 
         # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location"])
