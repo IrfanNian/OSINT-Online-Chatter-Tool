@@ -52,5 +52,5 @@ class ModuleController:
             process.join()
 
         result_df = self.compile_feather()
-        dp = DataProcessor(result_df)
-        dp.run()
+        dp = DataProcessor()
+        dp.run(result_df)
