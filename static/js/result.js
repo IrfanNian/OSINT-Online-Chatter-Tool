@@ -12,6 +12,10 @@ let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
 
+function download_result() {
+    window.location.replace("/download");
+}
+
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     // bubble chart
     const bubbleStorage = [];

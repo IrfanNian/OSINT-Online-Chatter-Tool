@@ -1,4 +1,7 @@
 const keyword = document.getElementById("keyword");
+const checkbox = document.querySelector("input[name=disableScraping]");
+const file = document.getElementById("file");
+const scrapingLabel = document.getElementById("disableScrapingLabel");
 const form = document.forms[0];
 
 keyword.addEventListener("input", function () {
@@ -9,46 +12,55 @@ keyword.addEventListener("input", function () {
     }
 });
 
+checkbox.addEventListener("change", function () {
+    if (this.checked) {
+        SearchSubmit.disabled = false;
+    } else {
+        SearchSubmit.disabled = true;
+    }
+});
+
 form.addEventListener("submit", () => {
+    if (keyword.value == "") {
+        keyword.value = "Custom Processing"
+    }
     form.action = `/results?q=${keyword.value}`;
     console.log(form.action);
 });
 
-function showHide() {
-    let customreddit = document.getElementById('platf')
-    if (customreddit.value == 'all') {
-        document.getElementById('csubr').style.display = 'block'
-    } 
-    else if (customreddit.value == 'reddit') {
-        document.getElementById('csubr').style.display = 'block'
-    }else {
-        document.getElementById('csubr').style.display = 'none'
+function showCheckbox() {
+    if(file.files.length > 0) {
+        checkbox.removeAttribute("hidden");
+        scrapingLabel.removeAttribute("hidden");
     }
 }
 
-function CheckTime(val) {
-    var element1 = document.getElementById('customTimeStart');
-    if (val == 'custom')
-        element1.style.display = 'block';
-    else
-        element1.style.display = 'none';
+function showHide() {
+    let customreddit = document.getElementById('platf')
+    console.log(customreddit.value)
+    if (customreddit.value == 'all') {
+        document.getElementById('csubrtexttr').removeAttribute("hidden");
+    }
+    else if (customreddit.value == 'reddit') {
+        document.getElementById('csubrtexttr').removeAttribute("hidden");
+    }
+    else {
+        document.getElementById('csubrtexttr').setAttribute("hidden", true);
+    }
+}
 
-    var element2 = document.getElementById('customTimeEnd');
+function checkTime(val) {
+    var element1 = document.getElementById('customTimeStartTr');
     if (val == 'custom')
-        element2.style.display = 'block';
+        element1.removeAttribute("hidden");
     else
-        element2.style.display = 'none';
-    var element1 = document.getElementById('from');
-    if (val == 'custom')
-        element1.style.display = 'block';
-    else
-        element1.style.display = 'none';
+        element1.setAttribute("hidden", true);
 
-    var element1 = document.getElementById('to');
+    var element2 = document.getElementById('customTimeEndTr');
     if (val == 'custom')
-        element1.style.display = 'block';
+        element2.removeAttribute("hidden");
     else
-        element1.style.display = 'none';
+        element2.setAttribute("hidden", true);
 }
 
 function on() {

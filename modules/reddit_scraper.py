@@ -62,7 +62,7 @@ class RedditScraper:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": []}
             # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,

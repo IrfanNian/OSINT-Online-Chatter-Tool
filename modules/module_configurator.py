@@ -82,21 +82,27 @@ class ModuleConfigurator:
         else:
             pass
 
-    def configure_sources(self, arg_sources):
+    def configure_sources(self, arg_sources, arg_switch):
         """
         Configure sources
+        :param arg_switch:
         :param arg_sources:
         :return ENABLED_SCRAPING_SOURCES:
         """
-        if arg_sources == "twitter":
+        if arg_switch == "disableScraping":
             ENABLED_SCRAPING_SOURCES['rs'] = False
-            ENABLED_SCRAPING_SOURCES['ps'] = False
-        elif arg_sources == "pastebin":
-            ENABLED_SCRAPING_SOURCES['rs'] = False
-            ENABLED_SCRAPING_SOURCES['ts'] = False
-        elif arg_sources == "reddit":
             ENABLED_SCRAPING_SOURCES['ps'] = False
             ENABLED_SCRAPING_SOURCES['ts'] = False
         else:
-            pass
+            if arg_sources == "twitter":
+                ENABLED_SCRAPING_SOURCES['rs'] = False
+                ENABLED_SCRAPING_SOURCES['ps'] = False
+            elif arg_sources == "pastebin":
+                ENABLED_SCRAPING_SOURCES['rs'] = False
+                ENABLED_SCRAPING_SOURCES['ts'] = False
+            elif arg_sources == "reddit":
+                ENABLED_SCRAPING_SOURCES['ps'] = False
+                ENABLED_SCRAPING_SOURCES['ts'] = False
+            else:
+                pass
         return ENABLED_SCRAPING_SOURCES
