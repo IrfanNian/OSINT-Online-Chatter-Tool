@@ -2,8 +2,10 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd
 import os
 import datetime as dt
+from geopy.geocoders import Nominatim
 
 CWD = os.getcwd()
+geolocator = Nominatim(user_agent="chatter")
 
 
 class TwitterScraper:
@@ -49,10 +51,13 @@ class TwitterScraper:
             date = str(tweet.date).split("+", 1)[0]
             date = dt.datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
             date = date.isoformat()
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username])
+            location = tweet.coordinates
+            if location is not None:
+                location = geolocator.reverse("%s, %s" % (location.latitude, location.longitude))
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, str(location)])
 
         # Creating a dataframe from the tweets list above
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location"])
 
         # Refinement
         if self.arg_refinement is not None:
