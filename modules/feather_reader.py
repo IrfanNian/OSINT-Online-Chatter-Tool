@@ -4,7 +4,8 @@ import glob
 
 CWD = os.getcwd()
 RESULT_FOLDER = "results"
-STATIC_FOLDER = os.path.join("static", "results")
+STATIC_RESULT_FOLDER = os.path.join("static", "results")
+UPLOAD_FOLDER = os.path.join("static", "uploads")
 
 
 class FeatherReader:
@@ -13,8 +14,11 @@ class FeatherReader:
         Opens a feather file and reads it into memory
         :return all_csv_files:
         """
-        directory = os.path.join(CWD, RESULT_FOLDER)
-        all_feather_files = glob.glob(os.path.join(directory, "*.feather"))
+        result_directory = os.path.join(CWD, RESULT_FOLDER)
+        upload_directory = os.path.join(CWD, UPLOAD_FOLDER)
+        all_result_feather_files = glob.glob(os.path.join(result_directory, "*.feather"))
+        all_upload_feather_files = glob.glob(os.path.join(upload_directory, "*.feather"))
+        all_feather_files = all_result_feather_files + all_upload_feather_files
         return all_feather_files
 
     def save_as_csv(self, arg_df):
@@ -23,7 +27,7 @@ class FeatherReader:
         :param arg_df:
         :return None:
         """
-        arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "results_compiled.csv"), sep=",", index=False)
+        arg_df.to_csv(os.path.join(CWD, STATIC_RESULT_FOLDER, "results_compiled.csv"), sep=",", index=False)
 
     def feather_to_df(self, arg_feather_filenames):
         """
