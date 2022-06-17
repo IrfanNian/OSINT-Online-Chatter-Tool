@@ -108,6 +108,9 @@
                             <span> SEARCH </span>
                         </button>
                     </div>
+                    {% if error %}
+                    <p class="error">Error: {{ error }}</p>
+                    {% endif%}
                 </form>
             </div>
         </div>

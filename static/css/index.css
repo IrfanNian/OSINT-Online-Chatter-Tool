@@ -203,6 +203,11 @@ button {
   margin-right: auto;
 }
 
+.error {
+    color: red;
+    text-align: center;
+}
+
 hr{
     border: 0;
     margin: 0;
