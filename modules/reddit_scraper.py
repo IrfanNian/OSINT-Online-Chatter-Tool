@@ -62,7 +62,7 @@ class RedditScraper:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": [], "platform": []}
             # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
@@ -84,6 +84,7 @@ class RedditScraper:
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
                     red_dict["url"].append(post.url)
+                    red_dict["platform"].append("reddit")
                 except AttributeError:
                     pass
 

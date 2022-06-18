@@ -57,10 +57,10 @@ class TwitterScraper:
                 location = location.split(",")[-1][1:]
             else:
                 location = "No Data"
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location])
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location, "twitter"])
 
         # Creating a dataframe from the tweets list above
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location", "platform"])
 
         # Refinement
         if self.arg_refinement is not None:
