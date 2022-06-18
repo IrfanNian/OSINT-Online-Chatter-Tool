@@ -9,9 +9,19 @@ STATIC_FOLDER = os.path.join("static", "results")
 
 class DataProcessor:
     def write_to_csv(self, arg_df):
+        """
+        Writes final processed dataframe to csv for client side processing
+        :param arg_df:
+        :return None:
+        """
         arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "charting.csv"), sep=",", index=False)
 
     def bubble_chart(self, arg_df):
+        """
+        Processes dataframe and adds additional data to support the bubble chart
+        :param arg_df:
+        :return bubble_chart_df:
+        """
         bubble_chart_df = arg_df.copy()
         bubble_chart_df['time'] = pd.to_datetime(bubble_chart_df['time']).dt.date
         bubble_chart_df['date_count'] = bubble_chart_df.time.map(bubble_chart_df.groupby('time').size())
@@ -23,6 +33,11 @@ class DataProcessor:
         return bubble_chart_df
 
     def country_chart(self, arg_df):
+        """
+        Processes dataframe and adds additional data to support the country bar chart
+        :param arg_df:
+        :return country_chart_df:
+        """
         country_chart_df = arg_df.copy()
         country_chart_df['country_count'] = country_chart_df.location.map(country_chart_df.groupby('location').size())
         country_chart_df.drop_duplicates(subset=['location'], inplace=True)
@@ -33,6 +48,11 @@ class DataProcessor:
         return country_chart_df
 
     def run(self, arg_df):
+        """
+        Runs the data processor module
+        :param arg_df:
+        :return None:
+        """
         bubble_df = self.bubble_chart(arg_df)
         country_df = self.country_chart(bubble_df)
         self.write_to_csv(country_df)

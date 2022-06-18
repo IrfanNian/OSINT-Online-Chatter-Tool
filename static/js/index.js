@@ -20,14 +20,6 @@ checkbox.addEventListener("change", function () {
     }
 });
 
-form.addEventListener("submit", () => {
-    if (keyword.value == "") {
-        keyword.value = "Custom Processing"
-    }
-    form.action = `/results?q=${keyword.value}`;
-    console.log(form.action);
-});
-
 function showCheckbox() {
     if(file.files.length > 0) {
         checkbox.removeAttribute("hidden");

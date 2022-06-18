@@ -1,20 +1,10 @@
-const params = new Proxy(new URLSearchParams(window.location.search), {
-    get: (searchParams, prop) => searchParams.get(prop),
-});
-let query = params.q;
-document.title = `${query} | Keyword Usage`;
-
-document.querySelector("span.query").innerText = `"${query}"`;
+const form = document.forms[0];
 const bubbleChartHTML = document.querySelector("#graph").getContext("2d");
 const countryChartHTML = document.querySelector("#countryGraph").getContext("2d");
 
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
-
-function download_result() {
-    window.location.replace("/download");
-}
 
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     // bubble chart

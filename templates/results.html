@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Keyword Usage in</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="/static/css/nav.css" />
     <link rel="stylesheet" href="/static/css/result.css" />
     <link type="image/png"
@@ -32,7 +32,11 @@
             <div class="right">
                 <ul>
                     <li>
-                        <a href="#" onclick="download_result()">Download</a>
+                        {% if title != "Scraping Disabled" %}
+                        <form method="POST" action="/download">
+                            <input type="submit" class="button" value="Download">
+                        </form>
+                        {% endif %}
                     </li>
                     <li>
                         <a href="/">Home</a>
@@ -43,7 +47,7 @@
         <div class="container">
             <p class="title">
                 Showing Results for:
-                <span class="query"></span>
+                <span class="query">{{ result }}</span>
             </p>
             <div class="headingOne">
                 <p class="title">Consolidated Results</p>
@@ -51,7 +55,6 @@
             </div>
             <input type="text" id="searchBar" placeholder="Search for ...">
             <div class="bubbletable">
-
                 <table id="tablebubz" class="display">
                     <thead>
                         <tr>
@@ -70,7 +73,6 @@
                                 Page: <span id="page"></span>
                             </td>
                         </tr>
-
                     </tfoot>
                 </table>
             </div>

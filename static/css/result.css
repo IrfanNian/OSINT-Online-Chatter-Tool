@@ -219,6 +219,19 @@ table thead {
     margin-left:200px;
 }
 
+.button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
 /* Responsive */
 
 @media only screen and (max-width: 969px) {

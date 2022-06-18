@@ -32,7 +32,7 @@
             </div>
             <div class="content">
                 <h1>Tracking Online Chatter</h1>
-                <form method="POST" id="search" enctype="multipart/form-data">
+                <form method="POST" id="search" action="/results" enctype="multipart/form-data">
                     <input type="text"
                            id="keyword"
                            name="keyword"
@@ -77,7 +77,8 @@
                             <td><input type="date" name="customTimeEnd" id="customTimeEnd"/></td>
                         </tr>
                         <tr>
-                            <td><label for="depth">Depth: </label></td>
+                            <td><label for="depth">Depth<img src="/static/images/i.png" width="20px"
+                            title="Quick: 1000; Standard: 10000; Deep: 100000; iterations">: </label></td>
                             <td><select name="depthDrop" id="depth">
                                 <option value="" disabled selected hidden>Depth..</option>
                                 <option value="quick">Quick</option>
