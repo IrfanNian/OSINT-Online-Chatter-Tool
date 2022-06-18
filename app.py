@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
@@ -7,6 +7,7 @@ import shutil
 import datetime as dt
 from io import BytesIO
 import zipfile
+import secrets
 
 RESULT_FOLDER = "results"
 STATIC_RESULT_FOLDER = os.path.join("static", "results")
@@ -15,6 +16,7 @@ ALLOWED_EXTENSIONS = {"feather"}
 
 app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = secrets.token_hex(24)
 
 
 def allowed_file(arg_filename):
@@ -35,7 +37,8 @@ def default():
 def download_data():
     if request.method == "POST":
         timestamp = dt.datetime.now().timestamp()
-        filename = "result_%s.zip" % timestamp
+        keyword = session['keyword']
+        filename = keyword + "_result_%s.zip" % timestamp
         memory_file = BytesIO()
         with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as f:
             for root, dirs, files in os.walk(RESULT_FOLDER):
@@ -86,6 +89,7 @@ def results():
                     error = "Invalid filetype"
                     return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
+        session['keyword'] = searchbar_text
         scraping_sources = mcr.configure_sources(chosen_sources, master_switch)
         if time_range == "custom":
             since_date = request.form['customTimeStart']
