@@ -69,7 +69,7 @@ def results():
                 if f.filename != "" and allowed_file(f.filename):
                     filename = secure_filename(f.filename)
                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                else:
+                elif f.filename != "" and not allowed_file(f.filename):
                     error = "Invalid filetype"
                     return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
