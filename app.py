@@ -27,17 +27,20 @@ def default():
     return render_template('index.html')
 
 
-@app.route('/download')
+@app.route('/download', methods=['POST'])
 def download_data():
-    timestamp = dt.datetime.now().timestamp()
-    filename = "result_%s.zip" % timestamp
-    memory_file = BytesIO()
-    with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as f:
-        for root, dirs, files in os.walk(RESULT_FOLDER):
-            for file in files:
-                f.write(os.path.join(root, file))
-    memory_file.seek(0)
-    return send_file(memory_file, download_name=filename, as_attachment=True)
+    if request.method == "POST":
+        timestamp = dt.datetime.now().timestamp()
+        filename = "result_%s.zip" % timestamp
+        memory_file = BytesIO()
+        with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as f:
+            for root, dirs, files in os.walk(RESULT_FOLDER):
+                for file in files:
+                    f.write(os.path.join(root, file))
+        memory_file.seek(0)
+        return send_file(memory_file, download_name=filename, as_attachment=True)
+    else:
+        return render_template('results.html')
 
 
 @app.route('/results', methods=['POST'])
