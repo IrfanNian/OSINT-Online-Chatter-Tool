@@ -1,4 +1,3 @@
-import flask
 from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
@@ -19,6 +18,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def allowed_file(arg_filename):
+    """
+    Whitelist validation for file extensions
+    :param arg_filename:
+    :return:
+    """
     return '.' in arg_filename and arg_filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -27,7 +31,7 @@ def default():
     return render_template('index.html')
 
 
-@app.route('/download', methods=['POST'])
+@app.route('/download', methods=['GET', 'POST'])
 def download_data():
     if request.method == "POST":
         timestamp = dt.datetime.now().timestamp()
@@ -40,7 +44,7 @@ def download_data():
         memory_file.seek(0)
         return send_file(memory_file, download_name=filename, as_attachment=True)
     else:
-        return render_template('results.html')
+        return render_template('index.html')
 
 
 @app.route('/results', methods=['POST'])
