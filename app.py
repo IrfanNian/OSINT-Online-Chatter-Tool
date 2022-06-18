@@ -71,11 +71,17 @@ def results():
         depth_range = request.form.get('depthDrop')
         refinement = request.form.get('refinement')
         master_switch = request.form.get('disableScraping')
+        if master_switch == "disableScraping":
+            title = "Scraping Disabled"
+        else:
+            title = searchbar_text + " | Keyword Usage"
         if "file" in request.files:
             for f in request.files.getlist("file"):
                 if f.filename != "" and allowed_file(f.filename):
                     filename = secure_filename(f.filename)
                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    if master_switch == "disableScraping":
+                        searchbar_text = filename.split("_")[0]
                 elif f.filename != "" and not allowed_file(f.filename):
                     error = "Invalid filetype"
                     return render_template('index.html', error=error)
@@ -94,7 +100,9 @@ def results():
         # run modules
         mc = ModuleController()
         mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit, refinement)
-    return render_template('results.html')
+        return render_template('results.html', title=title, result=searchbar_text)
+    else:
+        return render_template('index.html')
 
 
 if __name__ == '__main__':
