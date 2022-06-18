@@ -32,9 +32,11 @@
             <div class="right">
                 <ul>
                     <li>
+                        {% if title != "Scraping Disabled" %}
                         <form method="POST" action="/download">
                             <input type="submit" class="button" value="Download">
                         </form>
+                        {% endif %}
                     </li>
                     <li>
                         <a href="/">Home</a>
