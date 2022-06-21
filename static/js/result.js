@@ -1,6 +1,7 @@
 const form = document.forms[0];
 const bubbleChartHTML = document.querySelector("#graph").getContext("2d");
 const countryChartHTML = document.querySelector("#countryGraph").getContext("2d");
+const scatterGraphHTML = document.querySelector("#scatterGraph").getContext("2d");
 
 let recordsPerPage = 50;
 let numPage = 1;
@@ -91,22 +92,6 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             }
         }
     }
-    /*const sconfig = {
-        type: 'scatter',
-        data: sdata,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Scatter Chart'
-                }
-            }
-        },
-    };*/
 
     //config
     var bubbleChart = new Chart(bubbleChartHTML, bubbleChartConfig);
@@ -381,6 +366,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             changePage(currentPage, r);
         }
     }
+
+    // scatter graph
 
 });
 
