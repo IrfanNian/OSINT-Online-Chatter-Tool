@@ -9,15 +9,15 @@ UPLOAD_FOLDER = os.path.join("static", "uploads")
 
 
 class FeatherReader:
-    def get_feather_files(self):
+    def get_feather_files(self, arg_keyword):
         """
         Opens a feather file and reads it into memory
         :return all_csv_files:
         """
         result_directory = os.path.join(CWD, RESULT_FOLDER)
         upload_directory = os.path.join(CWD, UPLOAD_FOLDER)
-        all_result_feather_files = glob.glob(os.path.join(result_directory, "*.feather"))
-        all_upload_feather_files = glob.glob(os.path.join(upload_directory, "*.feather"))
+        all_result_feather_files = glob.glob(os.path.join(result_directory, arg_keyword))
+        all_upload_feather_files = glob.glob(os.path.join(upload_directory, arg_keyword))
         all_feather_files = all_result_feather_files + all_upload_feather_files
         return all_feather_files
 
@@ -47,12 +47,19 @@ class FeatherReader:
         compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
+    def twitter_user_list(self):
+        all_feather_files = self.get_feather_files("*_tweets_results.feather")
+        twitter_df = self.feather_to_df(all_feather_files)
+        twitter_df.drop_duplicates(subset=["user"], inplace=True)
+        twitter_user_list = twitter_df["user"].tolist()
+        return twitter_user_list
+
     def run(self):
         """
         Runs the feather reader module
         :return compiled_df:
         """
-        feather_filenames = self.get_feather_files()
+        feather_filenames = self.get_feather_files("*.feather")
         compiled_df = self.feather_to_df(feather_filenames)
         self.save_as_csv(compiled_df)
         return compiled_df
