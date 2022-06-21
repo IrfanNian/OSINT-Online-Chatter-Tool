@@ -58,7 +58,7 @@ class PastebinScrapper:
             df = self.date_range(df)
         df['time'] = pd.to_datetime(df['time'], format='%Y-%m-%d %H:%M:%S')
         df['time'] = df['time'].apply(lambda x: x.isoformat())
-        df['location'] = ""
+        df['location'] = "No Data"
         df['platform'] = "pastebin"
         if self.arg_refinement is not None:
             df = df[df["text"].str.contains(self.arg_refinement)]
