@@ -33,17 +33,17 @@ class ModuleController:
         # start them scraper processes
         if arg_scraping_sources["ts"]:
             ts = TwitterScraper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_limit, arg_refinement)
-            ts_process = multiprocessing.Process(target=ts.run())
+            ts_process = multiprocessing.Process(target=ts.run)
             ts_process.start()
             processes.append(ts_process)
         if arg_scraping_sources["rs"]:
             rs = RedditScraper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_limit, arg_refinement)
-            rs_process = multiprocessing.Process(target=rs.run())
+            rs_process = multiprocessing.Process(target=rs.run)
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
             ps = PastebinScrapper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_refinement)
-            ps_process = multiprocessing.Process(target=ps.run())
+            ps_process = multiprocessing.Process(target=ps.run)
             ps_process.start()
             processes.append(ps_process)
 
@@ -52,5 +52,5 @@ class ModuleController:
             process.join()
 
         result_df = self.compile_feather()
-        dp = DataProcessor(result_df)
-        dp.run()
+        dp = DataProcessor()
+        dp.run(result_df)

@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Keyword Usage in</title>
-        <link rel="stylesheet" href="/static/css/nav.css" />
-        <link rel="stylesheet" href="/static/css/result.css" />
-        <link
-            type="image/png"
-            sizes="96x96"
-            rel="icon"
-            href="/static/images/keyword.png"
-        />
-        <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
-                integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
-                crossorigin="anonymous"
-                referrerpolicy="no-referrer">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
-                integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
-                crossorigin="anonymous"
-                referrerpolicy="no-referrer">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link rel="stylesheet" href="/static/css/result.css" />
+    <link type="image/png"
+          sizes="96x96"
+          rel="icon"
+          href="/static/images/keyword.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+            integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+            integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
+
+</head>
     <body>
         <nav>
             <a href="/" class="brand-logo">Tracking Online Chatter</a>
@@ -36,6 +32,13 @@
             <div class="right">
                 <ul>
                     <li>
+                        {% if title != "Scraping Disabled" %}
+                        <form method="POST" action="/download">
+                            <input type="submit" class="button" value="Download">
+                        </form>
+                        {% endif %}
+                    </li>
+                    <li>
                         <a href="/">Home</a>
                     </li>
                 </ul>
@@ -43,37 +46,70 @@
         </nav>
         <div class="container">
             <p class="title">
-                Showing Results for <br />
-                <span class="query"></span>
+                Showing Results for:
+                <span class="query">{{ result }}</span>
             </p>
 
-            <div class="boxes">
-                <div class="box">
-                    <h1>Posts</h1>
-                    <p>141k</p>
-                </div>
-
-                <div class="box">
-                    <h1>Shares</h1>
-                    <p>40k</p>
-                </div>
-
-                <div class="box">
-                    <h1>Likes</h1>
-                    <p>22.7k</p>
-                </div>
+            <div class="headingOne">
+                <p class="title">Consolidated Results</p>
+                <p class="title">Trending Graph</p>
             </div>
-            <p class="title">Trending Graph</p>
-
+            <input type="text" id="searchBar" placeholder="Search for ...">
+            <div class="bubbletable">
+                <table id="tablebubz" class="display">
+                    <thead>
+                        <tr>
+                            <th style="width: 10.375em;">Username</th>
+                            <th style="width: 33.375em;">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="padding-left:20px;">
+                                <a href="#" id="btn-prev">Prev</a> |
+                                <a href="#" id="btn-next">Next</a>
+                            </td>
+                            <td>
+                                Page: <span id="page"></span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
             <div class="graph">
                 <canvas id="graph"></canvas>
             </div>
-            <div class="bubbletable">
-                <table>
-                    <tbody></tbody>
-                </table>
+
+            <div class="headingTwo">
+                <p class="title" id="timelineName">Timeline</p>
+                <p class="title">Pie Chart</p>
             </div>
-            
+
+            <div class="timelineChart">
+                <canvas id="timline"></canvas>  <!-- To be replaced. -->
+            </div>
+            <div class="pieChart">
+                <canvas id="pie"></canvas>  <!-- To be replaced. -->
+            </div>
+            <div class="graph">
+                <canvas id="countryGraph"></canvas>
+            </div>
+            <div class="boxes">
+                <div class="box">
+                    <h1>Most No. of Chatter in a day:</h1>
+                    <p>1502</p> <!-- To be replaced. -->
+                </div>
+
+                <div class="box">
+                    <h1>Total Chatter Found:</h1>
+                    <p>52429</p> <!-- To be replaced. -->
+                </div>
+            </div>
+        </div>
+        <div class="bNav">
+            <p></p>
+
         </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/result.js"></script>

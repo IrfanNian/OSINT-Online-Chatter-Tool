@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=K2D:wght@600;800&family=Livvic:wght@600&display=swap");
-
 html,
 body {
     height: 100%;
@@ -16,6 +15,17 @@ body {
     height: 100vh;
     padding: 0 30px;
     padding-top: 120px;
+}
+
+.bNav {
+    clear: left;
+    float: bottom;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 15px;
+    font-family: "K2D", sans-serif;
+    color: #e3e3e3;
 }
 
 .title {
@@ -38,13 +48,15 @@ body {
 }
 
 .boxes {
-    display: grid;
+    display: inline;
     grid-gap: 5px;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     justify-content: center;
-    width: 60%;
+    width: 15%;
     margin: 0 0 0 auto;
     margin-bottom: 50px;
+    float: right;
+
 }
 
 .box {
@@ -53,34 +65,171 @@ body {
     max-width: 400px;
     padding: 10px 40px;
     border-radius: 20px;
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 .box h1 {
-    font-size: 40px;
+    font-size: 20px;
     font-family: "K2D", sans-serif;
-    font-weight: 600;
-    color: #904ee6;
+    font-weight: 400;
 }
 
 .box p {
-    font-size: 30px;
+    font-size: 28px;
     font-family: "K2D", sans-serif;
     font-weight: 600;
-    color: rgb(0, 0, 0);
+    color: #02b0a7;
 }
 
 .graph {
     border: 1px solid #e6e6e6;
-    padding: 30px;
+    padding: 5px;
     background-color: #f6f6f6;
     border-radius: 20px;
 
     display: grid;
     grid-gap: 5px;
     grid-auto-flow: column;
-    width: 60%;
+    width: 48%;
     margin: 0 0 0 auto;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+    float: right;
+    box-shadow: 0 0 20px #737272;
+}
+
+
+.bubbletable {
+    display: grid;
+    grid-gap: 5px;
+    width:51%;
+    height:52.5%;
+    overflow-y: auto;
+    text-align: left;
+    /* width: fit-content; */
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    float: left;
+    clear:left;
+    background-color: #f6f6f6;
+    margin-bottom: 10px;
+}
+
+.bubbletable * {
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+.bubbletable table {
+	border-collapse: separate;
+	font-size: 13px;
+	background-color: #f6f6f6;
+	border-spacing: 0;
+	table-layout: fixed;
+    color: black;
+}
+
+table thead tr th {
+	padding: 18px 24px;
+	border-bottom: 1px solid #1c1c1c;
+	position: sticky;
+	top: 0;
+    background-color: #e6e6e6;
+    font-family: "K2D", sans-serif;
+}
+
+table tfoot {
+    padding: 18px 24px;
+	border-bottom: 1px solid #1c1c1c;
+	position: sticky;
+	top: 0;
+    background-color: #e6e6e6;
+    font-family: "K2D", sans-serif;
+}
+table tbody tr td {
+	padding: 11px 24px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: "K2D", sans-serif;
+}
+
+table thead {
+  width: 100%;
+  max-width: 100%;
+}
+
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.timelineChart {
+    width:41.5%;
+    height: 52.5%;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+    clear: left;
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+.pieChart {
+    width:41.5%;
+    height: 52.5%;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+    margin-bottom: 10px;s
+
+}
+
+#searchBar {
+    background-image: url('../images/search.png'); /* Add a search icon to input */
+    /* background-position: 10px 12px; Position the search icon */
+    background-repeat: no-repeat; /*  Do not repeat the icon image */
+    background-size: auto;
+    width: 50%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+    border-radius: 10px;
+    background-color: white;
+    float:left;
+}
+
+.headingOne{
+    display: flex;
+    justify-content: space-around;
+}
+
+.headingTwo{
+    display: flex;
+    margin-top: 450px;
+}
+
+#timelineName{
+    margin-right: 500px;
+    margin-left:200px;
+}
+
+.button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 /* Responsive */
@@ -94,7 +243,7 @@ body {
         font-size: 25px;
         font-family: "K2D", sans-serif;
         font-weight: 600;
-        /* text-align: center; */
+        text-align: center;
         margin-bottom: 40px;
     }
     .title span {
@@ -120,5 +269,42 @@ body {
     .graph {
         width: 100%;
         padding: 5px;
+        margin-bottom: 50px;
+    }
+    .bubbletable{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    .pieChart{
+        width: 100%;
+    }
+    .timelineChart{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+    #searchBar{
+        margin-top:50px;
+    }
+    .headingOne {
+        flex-direction: column;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        height: 70%;
+        position: absolute;
+        float: top;
+
+    }
+     .headingTwo {
+        flex-direction: column;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        height: 60%;
+        position: absolute;
+        margin-top: 61.25em;
+    }
+
+    #timelineName{
+        margin-right: 0px;
+        margin-left: 0px;
     }
 }
