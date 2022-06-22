@@ -3,7 +3,6 @@ from modules.reddit_scraper import RedditScraper
 from modules.pastebin_scraper import PastebinScrapper
 from modules.feather_reader import FeatherReader
 from modules.data_processor import DataProcessor
-from modules.twitter_friends import TwitterFriends
 import multiprocessing
 
 
@@ -45,11 +44,5 @@ class ModuleController:
 
         fr = FeatherReader()
         result_df = fr.run()
-        try:
-            twitter_users = fr.twitter_user_list()
-            tf = TwitterFriends()
-            tf.run(twitter_users)
-        except:
-            print("twitter friends got problem")
         dp = DataProcessor()
         dp.run(result_df)
