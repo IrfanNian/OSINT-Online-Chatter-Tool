@@ -1,6 +1,7 @@
 const form = document.forms[0];
 const bubbleChartHTML = document.querySelector("#graph").getContext("2d");
 const countryChartHTML = document.querySelector("#countryGraph").getContext("2d");
+const multilineChartHTML = document.querySelector("#timeline").getContext("2d");
 
 let recordsPerPage = 50;
 let numPage = 1;
@@ -9,6 +10,13 @@ let currentArray = [];
 d3.csv('/static/results/charting.csv').then(function(datapoints){
     // bubble chart
     const bubbleStorage = [];
+	var TWCount=0;
+	var RDCount=0;
+	var PBCount=0;
+	var TWSeries=[];
+	var RDSeries=[];
+	var PBSeries=[];
+	
     var minDate = new Date();
     var maxDate = new Date();
 
@@ -26,7 +34,26 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                 maxDate = new Date(xDate.getTime());
             }
         }
+		if (datapoints[i].date!="")
+		{
+			if(datapoints[i].platform=="twitter")
+			{
+				TWCount=TWCount+parseInt(datapoints[i].count);
+				TWSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
+			}
+			else if(datapoints[i].platform=="reddit")
+			{
+				RDCount=RDCount+parseInt(datapoints[i].count);
+				RDSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
+			}
+			else if(datapoints[i].platform=="pastebin")
+			{
+				PBCount=PBCount+parseInt(datapoints[i].count);
+				PBSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
+			}
+		}
     }
+	
     const ratio = (100-1)/(max-min);
 
     const diffTime = Math.abs(maxDate - minDate);
@@ -90,7 +117,7 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             }
         }
     }
-
+	
     //config
     var bubbleChart = new Chart(bubbleChartHTML, bubbleChartConfig);
 
@@ -364,6 +391,111 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             changePage(currentPage, r);
         }
     }
+	
+	//wordcloud 
+	function wordcloud(myWords){
+		var margin = {top: 10, right: 10, bottom: 10, left: 10}
+		//calculate size of canvas
+		width = 520 - margin.left - margin.right;
+		height = 350 - margin.top - margin.bottom;
+		
+		
+		//positioning
+		var svg = d3.select("#word-cloud").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+		var layout = d3.layout.cloud()
+			.size([width, height])
+			.words(myWords.map(function(d) { return {text: d.word, size:d.size}; }))
+			.padding(5)
+			.rotate(function() { return ~~(Math.random() * 2) * 90; })
+			.fontSize(function(d) { return d.size/2; }) 
+			.on("end", draw);
+			
+		layout.start();
+		
+		//draw words in svg canvas
+		function draw(words) {
+		  svg
+			.append("g")
+			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+			  .selectAll("text")
+				.data(words)
+			  .enter().append("text")
+				.style("font-size", function(d) { return d.size; })
+				.style("fill", "#69b3a2")
+				.attr("text-anchor", "middle")
+				.style("font-family", "Impact")
+				.attr("transform", function(d) {
+				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+				})
+			.text(function(d) { return d.text; });
+		}
+	}
+	
+	wordcloud(datapoints);
+
+
+	//multiple line chart
+	const MultilineChartConfig = {
+        type: 'line',
+        data: {
+            datasets: [
+				{
+					label: 'Twitter',
+					data: TWSeries,
+					borderColor: "rgba(0, 172, 238, 1)",
+					backgroundColor: "rgba(0, 172, 238, 0.5)"
+				},
+				{
+					label: 'Reddit',
+					data: RDSeries,
+					borderColor: "rgba(255, 67, 0, 1)",
+					backgroundColor: "rgba(255, 67, 0, 0.5)"
+					
+				},
+				{
+					label: 'Pastebin',
+					data: PBSeries,
+					borderColor: "rgba(0, 0, 0, 1)",
+					backgroundColor: "rgba(0, 0, 0, 0.5)"
+				}
+			],
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    title: {
+                        display: true,
+                        text: 'Date',
+                    },
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'DD MMM YYYY',
+                    },
+                    max: maxDate,
+                    min: minDate
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Posts / Days',
+                    },
+                }
+            }
+        }
+    }
+	
+	var MultilineChart = new Chart(multilineChartHTML, MultilineChartConfig);
+	
+	
+	document.getElementById("CountTW").innerHTML=TWCount
+	document.getElementById("CountRD").innerHTML=RDCount
+	document.getElementById("CountPB").innerHTML=PBCount
 });
 
 //function myFunction() {
@@ -391,3 +523,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 //        }
 //    }
 //}
+
+
+
+
+
