@@ -113,8 +113,8 @@ class DataProcessor:
         """
         bubble_df = self.bubble_chart(arg_df)
         country_df = self.country_chart(bubble_df)                                            
-        country_df=self.wordcloud_and_muiltiline(country_df)                                               
-        self.write_to_csv(country_df)
+        multi_df=self.wordcloud_and_muiltiline(country_df)                                               
+        self.write_to_csv(multi_df)
 
 
 # debug code ignore
