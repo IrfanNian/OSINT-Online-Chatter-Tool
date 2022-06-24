@@ -20,6 +20,15 @@ checkbox.addEventListener("change", function () {
     }
 });
 
+window.onload = function(){
+   var checkboxes = document.getElementsByTagName("INPUT");
+   for(let x=0; x < checkboxes.length; x++) {
+      if (checkboxes[x].type == "checkbox") {
+          checkboxes[x].checked = false;
+      }
+   }
+}
+
 function showCheckbox() {
     if(file.files.length > 0) {
         checkbox.removeAttribute("hidden");

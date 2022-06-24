@@ -47,6 +47,18 @@ class FeatherReader:
         compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
+    def twitter_user_list(self):
+        """
+        Gets all Twitter Users into a list
+        :return twitter_user_list:
+        """
+        all_feather_files = self.get_feather_files("*_tweets_results.feather")
+        twitter_df = self.feather_to_df(all_feather_files)
+        twitter_df.drop_duplicates(subset=["user"], inplace=True)
+        # twitter_df["user"] = "@" + twitter_df["user"].astype(str)
+        twitter_user_list = twitter_df["user"].tolist()
+        return twitter_user_list
+
     def run(self):
         """
         Runs the feather reader module
