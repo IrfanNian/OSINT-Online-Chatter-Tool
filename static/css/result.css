@@ -17,6 +17,13 @@ body {
     padding-top: 120px;
 }
 
+nav {
+    z-index:999;
+    background: rgb(159,193,205);
+    background: linear-gradient(112deg, rgba(159,193,205,1) 0%, rgba(50,96,155,1) 80%, rgba(91,96,160,1) 100%);
+    height: 10%;
+}
+
 .bNav {
     clear: left;
     float: bottom;
@@ -92,6 +99,7 @@ body {
     grid-gap: 5px;
     grid-auto-flow: column;
     width: 48%;
+    height:52.5%;
     margin: 0 0 0 auto;
     margin-bottom: 10px;
     float: right;
@@ -142,7 +150,7 @@ table tfoot {
     padding: 18px 24px;
 	border-bottom: 1px solid #1c1c1c;
 	position: sticky;
-	top: 0;
+	bottom: 0;
     background-color: #e6e6e6;
     font-family: "K2D", sans-serif;
 }
@@ -164,7 +172,7 @@ table thead {
 }
 
 .timelineChart {
-    width:41.5%;
+    width:49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -173,11 +181,24 @@ table thead {
     background-color: #f6f6f6;
     float: left;
     clear: left;
-    margin-right: 15px;
+    margin-right: 10px;
     margin-bottom: 10px;
 }
-.pieChart {
-    width:41.5%;
+
+.countryGraph {
+    width:49.5%;
+    height: 52.5%;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.usernameCloud {
+    width: 38%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -189,7 +210,7 @@ table thead {
 }
 
 .wordCloud {
-    width:41.5%;
+    width:38%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -198,7 +219,9 @@ table thead {
     background-color: #f6f6f6;
     float: left;
     margin-bottom: 10px;
+    margin-right: 10px;
 }
+
 
 .boxes {
     display: grid;
@@ -302,18 +325,20 @@ table thead {
 
 .headingTwo{
     display: flex;
-    margin-top: 500px;
+    margin-top: 450px;
+    justify-content: space-around;
 }
 
 .headingThree{
     display: flex;
-    margin-top: 450px;
+    margin-top: 400px;
+    justify-content: space-around;
 }
 
-#timelineName{
-    margin-right: 500px;
-    margin-left:200px;
+#wordcloudname {
+    margin-left: 10px;
 }
+
 
 .button {
     background-color: black;
@@ -380,7 +405,7 @@ table thead {
         width: 100%;
         margin-bottom: 50px;
     }
-    .pieChart{
+    .usernameCloud{
         width: 100%;
     }
     .timelineChart{

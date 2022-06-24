@@ -426,9 +426,53 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 				.data(words)
 			  .enter().append("text")
 				.style("font-size", function(d) { return d.size; })
-				.style("fill", "#69b3a2")
+				.style("fill", "#bd7dab")
 				.attr("text-anchor", "middle")
-				.style("font-family", "Impact")
+				.style("font-family", "K2D")
+				.attr("transform", function(d) {
+				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+				})
+			.text(function(d) { return d.text; });
+		}
+	}
+
+		//usernamecloud
+	function usernamecloud(myWords){
+		var margin = {top: 10, right: 10, bottom: 10, left: 10}
+		//calculate size of canvas
+		width = 520 - margin.left - margin.right;
+		height = 350 - margin.top - margin.bottom;
+
+
+		//positioning
+		var svg = d3.select("#username-cloud").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+		var layout = d3.layout.cloud()
+			.size([width, height])
+			.words(myWords.map(function(d) { return {text: d.user, size:d.size}; }))
+			.padding(5)
+			.rotate(function() { return ~~(Math.random() * 2) * 90; })
+			.fontSize(function(d) { return d.size/2; })
+			.on("end", draw);
+
+		layout.start();
+
+		//draw words in svg canvas
+		function draw(words) {
+		  svg
+			.append("g")
+			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+			  .selectAll("text")
+				.data(words)
+			  .enter().append("text")
+				.style("font-size", function(d) { return d.size; })
+				.style("fill", "#5cacc2")
+				.attr("text-anchor", "middle")
+				.style("font-family", "K2D")
 				.attr("transform", function(d) {
 				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 				})
@@ -437,6 +481,7 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 	}
 	
 	wordcloud(datapoints);
+	usernamecloud(datapoints);
 
 
 	//multiple line chart
