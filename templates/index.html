@@ -32,56 +32,75 @@
             </div>
             <div class="content">
                 <h1>Tracking Online Chatter</h1>
-                <form method="POST" id="search">
+                <form method="POST" id="search" action="/results" enctype="multipart/form-data">
                     <input type="text"
                            id="keyword"
                            name="keyword"
                            placeholder="Search for keyword..." />
-                    <center>
-                        <h2>Advanced Options</h2><br />
-                        <label for="platf">Platform: </label>
-                        <select name="platf" id="platf" onchange='showHide()'>
-							<option value="" disabled selected hidden>Platform..</option>
-                            <option value="all">All</option>
-                            <option value="twitter">Twitter</option>
-                            <option value="reddit">Reddit</option>
-                            <option value="pastebin">Pastebin</option>
-						</select>
-						<br />
-						<div name="csubr" id="csubr">
-						<label>Enter Subreddit(s): </label>
-						<input type="text" name="csubrtext" id="csubrtext" placeholder="Leave blank for default"/>
-						<img src="/static/images/i.png" width="20px"
-						title="To seach multiple subreddits, use commas as delimiters. For eg: hacking,sysadmin"></img>
-						</div>
-                        <label for="tRan">Time Range: </label>
-                        <select name="timeRangeDrop" id="tRan" onchange='CheckTime(this.value)'>
-							<option value="" disabled selected hidden>Time Range..</option>
-                            <option value="today">Today</option>
-                            <option value="yesterday">Yesterday</option>
-                            <option value="lastSeven">Last 7 days</option>
-                            <option value="lastThirty">Last 30 days</option>
-                            <option value="lastNinty">Last 90 days</option>
-                            <option value="lastSixMth">Last 6 months</option>
-                            <option value="lastOneYr">Last 1 year</option>
-                            <option value="custom">Custom</option>
-                        </select>
-                        <label id="from" style='display:none'>From:</label>
-                        <input type="date" name="customTimeStart" id="customTimeStart" style='display:none' />
-                        <label id="to" style='display:none'>To:</label>
-                        <input type="date" name="customTimeEnd" id="customTimeEnd" style='display:none' />
-                        <br />
-                        <label for="depth">Depth: </label>
-							<select name="depthDrop" id="depth">
-							<option value="" disabled selected hidden>Depth..</option>
-                            <option value="quick">Quick</option>
-                            <option value="standard">Standard</option>
-                            <option value="deep">Deep</option>
-                        </select><br />
-						<label for="tRan">Refinements: </label>
-						<input type="text" name="refinement" id="refinement"/>
-                    </center>
-                    <br />
+                    <hr><br>
+                    <h2>Advanced Options</h2><br>
+                    <table class="center">
+                        <tr>
+                            <td><label for="platf">Platform: </label></td>
+                            <td><select name="platf" id="platf" onchange='showHide()'>
+                                    <option value="" disabled selected hidden>Platform..</option>
+                                    <option value="all">All</option>
+                                    <option value="twitter">Twitter</option>
+                                    <option value="reddit">Reddit</option>
+                                    <option value="pastebin">Pastebin</option>
+                                </select></td>
+                        </tr>
+                        <tr id="csubrtexttr" hidden>
+                            <td><label for="csubrtext" id="csubrtextLabel">Enter Subreddit(s)<img src="/static/images/i.png" width="20px" title="(Optional) To search multiple subreddits, use commas as delimiters. For eg: hacking,sysadmin">: </label></td>
+                            <td><input type="text" name="csubrtext" id="csubrtext" placeholder="Leave blank for default"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="tRan">Time Range: </label></td>
+                            <td><select name="timeRangeDrop" id="tRan" onchange='checkTime(this.value)'>
+                                <option value="" disabled selected hidden>Time Range..</option>
+                                <option value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="lastSeven">Last 7 days</option>
+                                <option value="lastThirty">Last 30 days</option>
+                                <option value="lastNinty">Last 90 days</option>
+                                <option value="lastSixMth">Last 6 months</option>
+                                <option value="lastOneYr">Last 1 year</option>
+                                <option value="custom">Custom</option>
+                            </select></td>
+                        </tr>
+                        <tr id="customTimeStartTr" hidden>
+                            <td><label id="from">From:</label></td>
+                            <td><input type="date" name="customTimeStart" id="customTimeStart"/></td>
+                        </tr>
+                        <tr id="customTimeEndTr" hidden>
+                            <td><label id="to">To:</label></td>
+                            <td><input type="date" name="customTimeEnd" id="customTimeEnd"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="depth">Depth<img src="/static/images/i.png" width="20px"
+                            title="Quick: 1000; Standard: 10000; Deep: 100000; iterations">: </label></td>
+                            <td><select name="depthDrop" id="depth">
+                                <option value="" disabled selected hidden>Depth..</option>
+                                <option value="quick">Quick</option>
+                                <option value="standard">Standard</option>
+                                <option value="deep">Deep</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td><label for="refinement">Refinement<img src="/static/images/i.png" width="20px"
+                            title="(Optional) To further refine search results with another keyword">: </label></td>
+                            <td><input type="text" name="refinement" id="refinement" placeholder="Optional keyword"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="file">File Upload<img src="/static/images/i.png" width="20px"
+                            title="(Optional) Able to accept multiple feather files from past results">: </label></td>
+                            <td><input type="file" name="file" id="file" multiple onchange="showCheckbox()"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;"><input type="checkbox" name="disableScraping" value="disableScraping" id="disableScraping" hidden><label for="disableScraping" id="disableScrapingLabel" hidden> Disable Scraping</label></td>
+                        </tr>
+                    </table>
+                    <br>
                     <div class="buttons">
                         <button id="SearchSubmit" type="submit" onclick="on()" disabled class="Search">
                             <img src="/static/images/search.png"
@@ -89,8 +108,11 @@
                                  width="35px" />
                             <span> SEARCH </span>
                         </button>
+                    </div>
+                    {% if error %}
+                    <p class="error">Error: {{ error }}</p>
+                    {% endif%}
                 </form>
-                </div>
             </div>
         </div>
         <script src="/static/js/index.js"></script>

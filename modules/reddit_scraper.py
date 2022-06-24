@@ -62,7 +62,7 @@ class RedditScraper:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": [], "platform": []}
             # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
@@ -84,6 +84,8 @@ class RedditScraper:
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
                     red_dict["url"].append(post.url)
+                    red_dict["location"].append("No Data")
+                    red_dict["platform"].append("reddit")
                 except AttributeError:
                     pass
 
@@ -92,8 +94,8 @@ class RedditScraper:
             if self.arg_refinement is not None:
                 submission_df = submission_df[submission_df["text"].str.contains(self.arg_refinement)]
             if len(submission_df) != 0:
-                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df = submission_df.reset_index(drop=True)
+                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df.to_feather(os.path.join(CWD, "results",
                                                       str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
 

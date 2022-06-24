@@ -4,17 +4,21 @@ import glob
 
 CWD = os.getcwd()
 RESULT_FOLDER = "results"
-STATIC_FOLDER = os.path.join("static", "results")
+STATIC_RESULT_FOLDER = os.path.join("static", "results")
+UPLOAD_FOLDER = os.path.join("static", "uploads")
 
 
 class FeatherReader:
     def get_feather_files(self):
         """
-        Opens a csv file and reads it into memory
+        Opens a feather file and reads it into memory
         :return all_csv_files:
         """
-        directory = os.path.join(CWD, RESULT_FOLDER)
-        all_feather_files = glob.glob(os.path.join(directory, "*.feather"))
+        result_directory = os.path.join(CWD, RESULT_FOLDER)
+        upload_directory = os.path.join(CWD, UPLOAD_FOLDER)
+        all_result_feather_files = glob.glob(os.path.join(result_directory, "*.feather"))
+        all_upload_feather_files = glob.glob(os.path.join(upload_directory, "*.feather"))
+        all_feather_files = all_result_feather_files + all_upload_feather_files
         return all_feather_files
 
     def save_as_csv(self, arg_df):
@@ -23,26 +27,29 @@ class FeatherReader:
         :param arg_df:
         :return None:
         """
-        arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "results_compiled.csv"), sep=",", index=False)
+        arg_df.to_csv(os.path.join(CWD, STATIC_RESULT_FOLDER, "results_compiled.csv"), sep=",", index=False)
 
     def feather_to_df(self, arg_feather_filenames):
         """
-        Converts all csv in the results folder into dataframes and compile them
+        Converts all feather files in the results folder into dataframes and compile them
         :param arg_feather_filenames:
         :return compiled_df:
         """
-        compiled_df = pd.DataFrame(columns=["time", "text", "user"])
+        compiled_df = pd.DataFrame(columns=["time", "text", "user", "location"])
         for filename in arg_feather_filenames:
             # open and read the file to df
             df = pd.read_feather(filename)
             compiled_df = pd.concat([compiled_df, df], ignore_index=True)
-        compiled_df = compiled_df.drop_duplicates(subset=['title', 'user'], keep='first')
+        try:
+            compiled_df = compiled_df.drop_duplicates(subset=['title', 'user'], keep='first')
+        except KeyError:
+            pass
         compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
     def run(self):
         """
-        Runs the csv reader module
+        Runs the feather reader module
         :return compiled_df:
         """
         feather_filenames = self.get_feather_files()
