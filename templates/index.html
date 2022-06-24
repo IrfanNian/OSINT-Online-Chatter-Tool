@@ -77,8 +77,10 @@
                             <td><input type="date" name="customTimeEnd" id="customTimeEnd"/></td>
                         </tr>
                         <tr>
-                            <td><label for="depth">Depth<img src="/static/images/i.png" width="20px"
-                            title="Quick: 1000; Standard: 10000; Deep: 100000; iterations">: </label></td>
+                            <td><label class="tooltip" for="depth">Depth<img src="/static/images/i.png" width="20px"
+                            title="">:
+                                <span class="tooltiptext">Quick: 1000; Standard: 10000; Deep: 100000; iterations</span>
+                            </label></td>
                             <td><select name="depthDrop" id="depth">
                                 <option value="" disabled selected hidden>Depth..</option>
                                 <option value="quick">Quick</option>
@@ -87,13 +89,18 @@
                             </select></td>
                         </tr>
                         <tr>
-                            <td><label for="refinement">Refinement<img src="/static/images/i.png" width="20px"
-                            title="(Optional) To further refine search results with another keyword">: </label></td>
+                            <td><label class="tooltip" for="refinement">Refinement<img src="/static/images/i.png" width="20px"
+                            title="">:
+                                <span class="tooltiptext">(Optional) To further refine search results with another keyword</span>
+                            </label></td>
                             <td><input type="text" name="refinement" id="refinement" placeholder="Optional keyword"/></td>
                         </tr>
                         <tr>
-                            <td><label for="file">File Upload<img src="/static/images/i.png" width="20px"
-                            title="(Optional) Able to accept multiple feather files from past results">: </label></td>
+                            <td><label class="tooltip" for="file">File Upload<img  src="/static/images/i.png" width="20px"
+                            title="">:
+                                <span class="tooltiptext">(Optional) Able to accept multiple feather files from past results</span>
+                            </label></td>
+
                             <td><input type="file" name="file" id="file" multiple onchange="showCheckbox()"/></td>
                         </tr>
                         <tr>
