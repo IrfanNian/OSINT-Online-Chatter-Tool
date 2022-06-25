@@ -107,6 +107,20 @@ nav {
     box-shadow: 0 0 20px #737272;
 }
 
+.information {
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    background-color: #f6f6f6;
+    border-radius: 20px;
+    grid-gap: 5px;
+    grid-auto-flow: column;
+    margin: 0 0 0 auto;
+    margin-bottom: 10px;
+    width: 100%;
+    box-shadow: 0 0 20px #737272;
+    font-family: "K2D", sans-serif;
+}
+
 ::-webkit-scrollbar {
   width: 0;
 }

@@ -76,7 +76,6 @@ class TwitterFriends:
         self.master_list = self.twitter_user_list()
         self.user_pending_queue.append(arg_user)
         self.user_list.append(arg_user)
-        print(arg_level)
         level = 0
         while level < arg_level:
             user_level_list = []

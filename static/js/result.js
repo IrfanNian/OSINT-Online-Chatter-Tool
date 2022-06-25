@@ -34,20 +34,16 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
                 maxDate = new Date(xDate.getTime());
             }
         }
-		if (datapoints[i].date!="")
-		{
-			if(datapoints[i].platform=="twitter")
-			{
+		if (datapoints[i].date!="") {
+			if(datapoints[i].platform=="twitter") {
 				TWCount=TWCount+parseInt(datapoints[i].count);
 				TWSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
 			}
-			else if(datapoints[i].platform=="reddit")
-			{
+			else if(datapoints[i].platform=="reddit") {
 				RDCount=RDCount+parseInt(datapoints[i].count);
 				RDSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
 			}
-			else if(datapoints[i].platform=="pastebin")
-			{
+			else if(datapoints[i].platform=="pastebin") {
 				PBCount=PBCount+parseInt(datapoints[i].count);
 				PBSeries.push({x: datapoints[i].date, y:parseInt(datapoints[i].count)});
 			}
@@ -55,7 +51,6 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
     }
 	
     const ratio = (100-1)/(max-min);
-
     const diffTime = Math.abs(maxDate - minDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
@@ -292,7 +287,6 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             const firstPoint = points[0];
             const label = countryChart.data.labels[firstPoint.index];
             const value = countryChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-            console.log(value)
             var ar = [value.user, value.text], table = document.querySelector('table tbody');
             function getNumPages(array) {
                 return Math.ceil(array.length/recordsPerPage);
@@ -393,8 +387,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
     }
 	
 	//wordcloud 
-	function wordcloud(myWords){
-		var margin = {top: 10, right: 10, bottom: 10, left: 10}
+	function wordcloud(myWords) {
+		var margin = { top: 10, right: 10, bottom: 10, left: 10 }
 		//calculate size of canvas
 		width = 520 - margin.left - margin.right;
 		height = 350 - margin.top - margin.bottom;
@@ -419,30 +413,29 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 		
 		//draw words in svg canvas
 		function draw(words) {
-		  svg
-			.append("g")
-			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
-			  .selectAll("text")
+		    svg
+		        .append("g")
+			    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+			    .selectAll("text")
 				.data(words)
-			  .enter().append("text")
+			    .enter().append("text")
 				.style("font-size", function(d) { return d.size; })
 				.style("fill", "#bd7dab")
 				.attr("text-anchor", "middle")
 				.style("font-family", "K2D")
 				.attr("transform", function(d) {
-				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+				    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
 				})
-			.text(function(d) { return d.text; });
+			    .text(function(d) { return d.text; });
 		}
 	}
 
-		//usernamecloud
-	function usernamecloud(myWords){
+    //usernamecloud
+	function usernamecloud(myWords) {
 		var margin = {top: 10, right: 10, bottom: 10, left: 10}
 		//calculate size of canvas
 		width = 520 - margin.left - margin.right;
 		height = 350 - margin.top - margin.bottom;
-
 
 		//positioning
 		var svg = d3.select("#username-cloud").append("svg")
@@ -464,25 +457,24 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 		//draw words in svg canvas
 		function draw(words) {
 		  svg
-			.append("g")
+			  .append("g")
 			  .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
 			  .selectAll("text")
-				.data(words)
+			  .data(words)
 			  .enter().append("text")
-				.style("font-size", function(d) { return d.size; })
-				.style("fill", "#5cacc2")
-				.attr("text-anchor", "middle")
-				.style("font-family", "K2D")
-				.attr("transform", function(d) {
+			  .style("font-size", function(d) { return d.size; })
+			  .style("fill", "#5cacc2")
+			  .attr("text-anchor", "middle")
+			  .style("font-family", "K2D")
+			  .attr("transform", function(d) {
 				  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-				})
-			.text(function(d) { return d.text; });
+			  })
+		      .text(function(d) { return d.text; });
 		}
 	}
 	
 	wordcloud(datapoints);
 	usernamecloud(datapoints);
-
 
 	//multiple line chart
 	const MultilineChartConfig = {
@@ -536,40 +528,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
     }
 	
 	var MultilineChart = new Chart(multilineChartHTML, MultilineChartConfig);
-	
-	
+
 	document.getElementById("CountTW").innerHTML=TWCount
 	document.getElementById("CountRD").innerHTML=RDCount
 	document.getElementById("CountPB").innerHTML=PBCount
 });
-
-//function myFunction() {
-//    var input, filter, table, tr, td, i, t;
-//    input = document.getElementById("searchBar");
-//    filter = input.value.toUpperCase();
-//    table = document.getElementById("tablebubz");
-//    tr = table.querySelectorAll("tbody tr:not(.header)");
-//    for (i = 0; i < tr.length; i++) {
-//        var filtered = false;
-//        var tds = tr[i].getElementsByTagName("td");
-//        for(t=0; t<tds.length; t++) {
-//            var td = tds[t];
-//            if (td) {
-//                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-//                    filtered = true;
-//                }
-//            }
-//        }
-//        if(filtered===true) {
-//            tr[i].style.display = '';
-//        }
-//        else {
-//            tr[i].style.display = 'none';
-//        }
-//    }
-//}
-
-
-
-
-
