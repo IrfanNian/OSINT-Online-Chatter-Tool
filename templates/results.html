@@ -23,7 +23,8 @@
 	<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
-	
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
 
 </head>
     <body>
@@ -130,10 +131,12 @@
             <div class="countryGraph">
                 <canvas id="countryGraph"></canvas>
             </div>
-			
 
-			
-			
+            <div class="graph">
+                <canvas id="scatterGraph"></canvas>
+            </div>
+            
+
 			<div class="headingThree">
                 <p class="title" id="wordcloudName">Word Cloud</p>
                 <p class="title">Username Cloud</p>
@@ -153,6 +156,7 @@
 				</div>
         <div class="bNav">
             <p></p>
+
         </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/result.js"></script>

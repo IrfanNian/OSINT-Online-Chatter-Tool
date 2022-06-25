@@ -1,0 +1,6 @@
+flask
+snscrape
+pandas
+geopy
+psaw
+tweepy
