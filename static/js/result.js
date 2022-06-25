@@ -29,10 +29,10 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             }
         }
     }
-    const ratio = (100-1)/(max-min);
+    var ratio = (100-1)/(max-min);
 
-    const diffTime = Math.abs(maxDate - minDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    var diffTime = Math.abs(maxDate - minDate);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     for (let i = 0; i < datapoints.length; i++) {
         var bubbleText = [];
@@ -366,8 +366,191 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             changePage(currentPage, r);
         }
     }
+    
+    //scatter graph
+    const scatterStorage = [];
 
-    // scatter graph
+    for (let i = 0; i < datapoints.length; i++) {
+        var scatterText = [];
+        var scatterUser = [];
+        var xt = datapoints[i].day;
+        var x = new Date(xt);
+        x = x.toISOString().substring(0, 10);
+
+        var yt = datapoints[i].time;
+        var y = new Date(yt).getTime();
+
+        for (let a = 0; a < datapoints.length; a++) {
+            var dateOnly = new Date(datapoints[a].time);
+            dateOnly = dateOnly.toISOString().substring(0, 10);
+
+            var timeOnly = new Date(datapoints[a].time);
+
+            timeOnly = timeOnly.getTime();
+
+            if (x == dateOnly && y == timeOnly) {
+                scatterText.push(datapoints[a].text);
+                scatterUser.push(datapoints[a].user);
+            }
+            var json = { x: x, y: y, text: scatterText, user: scatterUser };
+  
+        }
+        scatterStorage.push(json);
+        
+    }
+
+
+    //config
+    const scatterChartConfig = {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'No. of Chatter Throughout the day',
+                data: scatterStorage
+            }],
+        },
+        options: {
+            onClick: clickScatterHandler,
+            scales: {
+                x: {
+                    type: 'time',
+                    title: {
+                        display: true,
+                        text: 'Date',
+                    },
+                    time: {
+                        unit: 'day',
+                        tooltipFormat: 'DD MMM YYYY',
+                    },
+                    max: maxDate,
+                    min: minDate
+                },
+                y: {
+                    type: 'time',
+                    title: {
+                        display: true,
+                        text: 'Hour',
+                    },
+                    time: {
+                        unit: 'hour',
+                        tooltipFormat: 'hA',
+                    },
+                }
+
+            }
+        } 
+    }
+
+    //config
+    var scatterChart = new Chart(scatterGraphHTML, scatterChartConfig);
+
+    function clickScatterHandler(evt) {
+        const points = scatterChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+        let currentPage = 1;
+
+        if (points.length) {
+            const firstPoint = points[0];
+            const label = scatterChart.data.labels[firstPoint.index];
+            const value = scatterChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+            var ar = [value.user, value.text], table = document.querySelector('table tbody');
+            function getNumPages(array) {
+                return Math.ceil(array.length / recordsPerPage);
+            }
+
+            function prevPage() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    changePage(currentPage, currentArray);
+                }
+            }
+
+            function nextPage() {
+                if (currentPage < numPage) {
+                    currentPage++;
+                    changePage(currentPage, currentArray);
+                }
+            }
+
+            function changePage(page, array) {
+                numPage = getNumPages(array);
+                const btn_prev = document.getElementById('btn-prev');
+                const btn_next = document.getElementById('btn-next');
+                let page_span = document.getElementById('page');
+                page_span.style.display = 'inline-block';
+
+                if (page < 1) {
+                    page = 1;
+                }
+
+                if (page > numPage) {
+                    page = numPage;
+                }
+
+                table.innerHTML = '';
+                page_span.innerHTML = '';
+
+                if (recordsPerPage > array.length) {
+                    recordsPerPage = array.length;
+                }
+                else {
+                    recordsPerPage = 50;
+                }
+
+                for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
+                    try {
+                        table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                    }
+                    catch {
+                        numPage = page;
+                    }
+                }
+                page_span.innerHTML += page + "/" + numPage;
+                btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
+                btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
+                let tbl = document.getElementById("tablebubz");
+                if (tbl.rows.length == 1) {
+                    btn_page_nav.style.display = 'none';
+                }
+            }
+
+            function searchArray(array) {
+                input = document.getElementById("searchBar");
+                filter = input.value.toUpperCase();
+                let filtered = array.filter(text => {
+                    return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
+                })
+                currentArray = filtered;
+                currentPage = 1;
+                changePage(currentPage, filtered)
+            }
+
+            var r = ar[0].map(function (col, i) {
+                return ar.map(function (row) {
+                    return row[i];
+                });
+            });
+
+            document.getElementById('searchBar').addEventListener('keyup', (e) => {
+                e.preventDefault();
+                searchArray(r);
+            });
+
+            document.getElementById('btn-next').addEventListener('click', (e) => {
+                e.preventDefault();
+                nextPage();
+            });
+
+            document.getElementById('btn-prev').addEventListener('click', (e) => {
+                e.preventDefault();
+                prevPage();
+            });
+
+            currentArray = r;
+            currentPage = 1;
+            changePage(currentPage, r);
+        }
+    }
+
 
 });
 

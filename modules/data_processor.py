@@ -47,6 +47,24 @@ class DataProcessor:
         country_chart_df = pd.concat([country_chart_df, arg_df], axis=1)
         return country_chart_df
 
+    def scatter_chart(self, arg_df):
+        """
+        Processes dataframe and adds additional data to support the scatter chart
+        :param arg_df:
+        :return scatter_chart_df:
+        """
+        scatter_chart_df = arg_df.copy() 
+        scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
+        
+        scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
+        
+        
+        scatter_chart_df.reset_index(drop=True, inplace=True) 
+        scatter_chart_df= scatter_chart_df.loc[:, ['timeofday', 'day']]  
+        #scatter_chart_df.rename(columns={'time': 'day'}, inplace=True)
+        scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1) 
+        return scatter_chart_df
+    
     def run(self, arg_df):
         """
         Runs the data processor module
@@ -55,30 +73,44 @@ class DataProcessor:
         """
         bubble_df = self.bubble_chart(arg_df)
         country_df = self.country_chart(bubble_df)
-        self.write_to_csv(country_df)
+        scatter_df = self.scatter_chart(country_df)
+        self.write_to_csv(scatter_df)
+        
 
 
+#
 # debug code ignore
-# df = pd.read_csv(os.path.join(CWD, "..", STATIC_FOLDER, "results_compiled.csv"))
+#df = pd.read_csv(os.path.join(CWD, "..", STATIC_FOLDER, "results_compiled.csv"))
 #
-# bubble_chart_df = df.copy()
+#bubble_chart_df = df.copy()
 #
-# bubble_chart_df['time'] = pd.to_datetime(bubble_chart_df['time']).dt.date
+#bubble_chart_df['time'] = pd.to_datetime(bubble_chart_df['time']).dt.date
 #
-# bubble_chart_df['date_count'] = bubble_chart_df.time.map(bubble_chart_df.groupby('time').size())
-# bubble_chart_df.drop_duplicates(subset=['time'], inplace=True)
-# bubble_chart_df.reset_index(drop=True, inplace=True)
-# bubble_chart_df = bubble_chart_df.loc[:, ['time', 'date_count']]
-# bubble_chart_df.rename(columns={'time': 'time_count'}, inplace=True)
-# bubble_chart_df = pd.concat([bubble_chart_df, df], axis=1)
+#bubble_chart_df['date_count'] = bubble_chart_df.time.map(bubble_chart_df.groupby('time').size())
+#bubble_chart_df.drop_duplicates(subset=['time'], inplace=True)
+#bubble_chart_df.reset_index(drop=True, inplace=True)
+#bubble_chart_df = bubble_chart_df.loc[:, ['time', 'date_count']]
+#bubble_chart_df.rename(columns={'time': 'time_count'}, inplace=True)
+#bubble_chart_df = pd.concat([bubble_chart_df, df], axis=1)
 #
-# country_chart_df = bubble_chart_df.copy()
-# country_chart_df['country_count'] = country_chart_df.location.map(country_chart_df.groupby('location').size())
-# country_chart_df.drop_duplicates(subset=['location'], inplace=True)
-# country_chart_df.reset_index(drop=True, inplace=True)
-# country_chart_df = country_chart_df.loc[:, ['location', 'country_count']]
-# country_chart_df = pd.concat([country_chart_df, bubble_chart_df], axis=1)
+#country_chart_df = bubble_chart_df.copy()
+#country_chart_df['country_count'] = country_chart_df.location.map(country_chart_df.groupby('location').size())
+#country_chart_df.drop_duplicates(subset=['location'], inplace=True)
+#country_chart_df.reset_index(drop=True, inplace=True)
+#country_chart_df = country_chart_df.loc[:, ['location', 'country_count']]
+#country_chart_df = pd.concat([country_chart_df, bubble_chart_df], axis=1)
 #
-# print(country_chart_df)
-# country_chart_df.to_csv(os.path.join(CWD,  "bubble.csv"), sep=",", index=False)
-# df.to_csv(os.path.join(CWD,  "df.csv"), sep=",", index=False)
+#scatter_chart_df = country_chart_df.copy() 
+#scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
+#scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
+#scatter_chart_df.drop_duplicates(subset=['time'], inplace=True) 
+#scatter_chart_df.reset_index(drop=True, inplace=True) 
+#scatter_chart_df= scatter_chart_df.loc[:, ['day', 'timeofday']]  
+#scatter_chart_df = pd.concat([scatter_chart_df, country_chart_df], axis=1) 
+#print(bubble_chart_df)
+#print(country_chart_df)
+#print(scatter_chart_df)
+#bubble_chart_df.to_csv(os.path.join(CWD,  "bubble.csv"), sep=",", index=False)
+#country_chart_df.to_csv(os.path.join(CWD,  "country.csv"), sep=",", index=False)
+#scatter_chart_df.to_csv(os.path.join(CWD,  "scatter.csv"), sep=",", index=False)
+#df.to_csv(os.path.join(CWD,  "df.csv"), sep=",", index=False)
