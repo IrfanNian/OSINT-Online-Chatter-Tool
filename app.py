@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
+from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini
+from modules.twitter_relationship import TwitterFriends
 import os
 import shutil
 import datetime as dt
@@ -12,25 +14,65 @@ import secrets
 RESULT_FOLDER = "results"
 STATIC_RESULT_FOLDER = os.path.join("static", "results")
 UPLOAD_FOLDER = os.path.join("static", "uploads")
-ALLOWED_EXTENSIONS = {"feather"}
+DEMO_FOLDER = "demo"
 
 app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
 
 
-def allowed_file(arg_filename):
-    """
-    Whitelist validation for file extensions
-    :param arg_filename:
-    :return:
-    """
-    return '.' in arg_filename and arg_filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 @app.route('/')
 def default():
     return render_template('index.html')
+
+
+@app.route('/relationships')
+def relationships():
+    twitter_users_a, twitter_users_b = get_twitter_list_split()
+    return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
+
+
+@app.route('/relationship_results', methods=['POST'])
+def relationship_results():
+    if request.method == "POST":
+        credentials = "config.ini"
+        twitter_users = get_twitter_list()
+        searchbar_text = request.form.get('keyword')
+        level = request.form.get('level', type=int)
+        demo_mode = request.form.get('demoMode')
+        if demo_mode == "demoMode":
+            searchbar_text = "Demo Mode"
+            source = os.path.join(DEMO_FOLDER, "twitter_friendship.json")
+            destination = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
+            shutil.copy(source, destination)
+            return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+        if searchbar_text not in twitter_users:
+            twitter_users_a, twitter_users_b = get_twitter_list_split()
+            error = "User is not in the results record"
+            return render_template('/relationships.html', twitter_users_a=twitter_users_a,
+                                   twitter_users_b=twitter_users_b, error=error)
+        if "ini_file" not in request.files:
+            twitter_users_a, twitter_users_b = get_twitter_list_split()
+            error = "Uploading of ini credential file is mandatory"
+            return render_template('/relationships.html', twitter_users_a=twitter_users_a,
+                                   twitter_users_b=twitter_users_b, error=error)
+        else:
+            for f in request.files.getlist("ini_file"):
+                if f.filename != "" and allowed_file_ini(f.filename):
+                    filename = secure_filename(f.filename)
+                    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    credentials = filename
+                elif f.filename != "" and not allowed_file_index(f.filename):
+                    twitter_users_a, twitter_users_b = get_twitter_list_split()
+                    error = "Invalid filetype/filename"
+                    return render_template('/relationships.html', twitter_users_a=twitter_users_a,
+                                           twitter_users_b=twitter_users_b, error=error)
+        tf = TwitterFriends(credentials)
+        tf.run(searchbar_text, level)
+        return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+    else:
+        twitter_users_a, twitter_users_b = get_twitter_list_split()
+        return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
 
 
 @app.route('/download', methods=['GET', 'POST'])
@@ -80,12 +122,12 @@ def results():
             title = searchbar_text + " | Keyword Usage"
         if "file" in request.files:
             for f in request.files.getlist("file"):
-                if f.filename != "" and allowed_file(f.filename):
+                if f.filename != "" and allowed_file_index(f.filename):
                     filename = secure_filename(f.filename)
                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     if master_switch == "disableScraping":
                         searchbar_text = filename.split("_")[0]
-                elif f.filename != "" and not allowed_file(f.filename):
+                elif f.filename != "" and not allowed_file_index(f.filename):
                     error = "Invalid filetype"
                     return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
