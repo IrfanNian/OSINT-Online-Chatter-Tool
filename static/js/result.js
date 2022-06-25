@@ -90,6 +90,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
         },
         options: {
             onClick: clickBubbleHandler,
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',
@@ -255,6 +257,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             }],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             onClick: clickCountryBarHandler,
             scales: {
                 x: {
@@ -504,6 +508,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             ],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',
@@ -560,10 +566,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                 scatterUser.push(datapoints[a].user);
             }
             var json = { x: x, y: y, text: scatterText, user: scatterUser };
-
         }
         scatterStorage.push(json);
-       
     }
 
     //config
@@ -577,6 +581,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
         },
         options: {
             onClick: clickScatterHandler,
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',
@@ -588,17 +594,14 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                         unit: 'day',
                     },
                 },
-
                 y: {
                     title: {
                         display: true,
                         text: 'Hour (24H Format)',
                     },
-                    
                     min: 0,
                     max: 24,
                 }
-            
             }
         }
     }
@@ -712,6 +715,4 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             changePage(currentPage, r);
         }
     }
-
-
 });
