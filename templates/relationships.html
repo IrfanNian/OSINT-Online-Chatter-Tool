@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tracking Online Chatter 🔍</title>
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link type="image/png"
+          sizes="96x96"
+          rel="icon"
+          href="/static/images/keyword.png" />
+</head>
+    <body>
+        <nav>
+            <a href="/" class="brand-logo">Tracking Online Chatter</a>
+            <a class="menu" onclick="makeRespo()">
+                <img src="/static/images/menu.png" alt="Menu" />
+            </a>
+            <div class="right">
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div id="overlay">
+                <div class="loader"></div>
+            </div>
+            <div class="content">
+                <h1 style="margin-top: 250px;">Twitter Relationship Visualizer</h1>
+                <form method="POST" id="search" action="/relationship_results" enctype="multipart/form-data">
+                    <input type="text"
+                           id="keyword"
+                           name="keyword"
+                           placeholder="Search a username from the results" />
+                    <hr><br>
+                    <h2>Users from Results</h2>
+                    <div style="height:100px; overflow:auto;">
+                        <table class="center user_main_table">
+                            {% if twitter_users_a %}
+                            {% for user in twitter_users_a %}
+                            {% set user_1 = twitter_users_a[loop.index-1] %}
+                            {% set user_2 = twitter_users_b[loop.index-1] %}
+                            <tr>
+                                <td class="user_table">{{user_1}}</td>
+                                <td class="user_table">{{user_2}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td>No Users</td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                    <hr><br>
+                    <h2>Advanced Options</h2><br>
+                    <table class="center">
+                        <tr>
+                            <td><label for="ini_file" class="tooltip">Credentials Upload*<img src="/static/images/i.png" width="20px"
+                            title="">: <span class="tooltiptext">(Mandatory except in demo mode) Upload a config.ini file containing the bearer token. Format is: &#013;[TWITTER]&#013;BEARER_TOKEN =</span></label></td>
+                            <td><input type="file" name="ini_file" id="ini_file"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="level" class="tooltip">Level / Depth<img src="/static/images/i.png" width="20px"
+                            title="">: <span class="tooltiptext">(Optional) Specify the level of search. Will affect processing time.</span></label></td>
+                            <td><input type="number" name="level" id="level" placeholder="Default: 3"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center;"><input type="checkbox" name="demoMode" value="demoMode" id="demoMode"><label for="demoMode" id="demoModeLabel" class="tooltip"> Demo Mode<img src="/static/images/i.png" width="20px"
+                            title=""><span class="tooltiptext">(Optional) Enables Demo Mode and uses a pre-generated dataset.</span></label></td>
+                        </tr>
+                    </table>
+                    <hr><br>
+                    <h2 class="center">Notice!</h2>
+                    <ol type="1">
+                        <li>This feature requires a Twitter Developer Account</li>
+                        <li>This feature will take a long time to process depending on the number of followers, followings and levels specified.</li>
+                        <li>Twitter APIv2 has rate limits, 15 mins cooldown.</li>
+                    </ol>
+                    <div class="buttons">
+                        <button id="SearchSubmit" type="submit" onclick="on()" disabled class="Search">
+                            <img src="/static/images/search.png"
+                                 alt="search"
+                                 width="35px" />
+                            <span> SEARCH </span>
+                        </button>
+                    </div>
+                    {% if error %}
+                    <p class="error">Error: {{ error }}</p>
+                    {% endif%}
+                </form>
+            </div>
+        </div>
+        <script src="/static/js/relationship.js"></script>
+        <script src="/static/js/nav.js"></script>
+    </body>
+</html>

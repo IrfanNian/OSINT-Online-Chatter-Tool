@@ -7,6 +7,7 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" href="/static/css/nav.css" />
     <link rel="stylesheet" href="/static/css/result.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link type="image/png"
           sizes="96x96"
           rel="icon"
@@ -19,6 +20,7 @@
             integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"></script>
+	<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
@@ -41,16 +43,48 @@
                         {% endif %}
                     </li>
                     <li>
+                        <a href="/relationships">Relationships</a>
+                    </li>
+                    <li>
                         <a href="/">Home</a>
                     </li>
                 </ul>
             </div>
         </nav>
         <div class="container">
-            <p class="title">
-                Showing Results for:
-                <span class="query">{{ result }}</span>
-            </p>
+			<div class="row">
+				<div class="cell">
+					<p class="title">
+						Showing Results for:
+						<span class="query">{{ result }}</span>
+					</p>
+				</div>
+				<div class="cell">
+					<div class="counter blue">
+						<div class="counter-icon">
+							<i class="fa fa-twitter-square"></i>
+						</div>
+						<h3>Twitter</h3>
+						<span class="counter-value" id="CountTW"></span>
+					</div>
+
+					<div class="counter orange">
+						<div class="counter-icon">
+							<i class="fa fa-reddit-square"></i>
+						</div>
+						<h3>Reddit</h3>
+						<span class="counter-value" id="CountRD"></span>
+					</div>
+					
+					<div class="counter black">
+						<div class="counter-icon">
+						<i class="fa fa-bitbucket-square"></i>
+						</div>
+						<h3>Pastebin</h3>
+						<span class="counter-value" id="CountPB"></span>
+					</div>
+				</div>
+			</div>
 
             <div class="headingOne">
                 <p class="title">Consolidated Results</p>
@@ -69,7 +103,7 @@
                     <tfoot>
                         <tr>
                             <td style="padding-left:20px;">
-                                <a href="#" id="btn-prev">Prev</a> |
+                                <a href="#" id="btn-prev">Prev | </a>
                                 <a href="#" id="btn-next">Next</a>
                             </td>
                             <td>
@@ -83,35 +117,43 @@
                 <canvas id="graph"></canvas>
             </div>
 
+
+
             <div class="headingTwo">
-                <p class="title" id="timelineName">Timeline</p>
-                <p class="title">Pie Chart</p>
+                <p class="title" id="timelineName">Timeline Chart</p>
+                <p class="title">Country Graph</p>
             </div>
 
             <div class="timelineChart">
-                <canvas id="timline"></canvas>  <!-- To be replaced. -->
+                <canvas id="timeline"></canvas>  <!-- To be replaced. -->
             </div>
-            <div class="pieChart">
-                <canvas id="pie"></canvas>  <!-- To be replaced. -->
-            </div>
-            <div class="graph">
+
+            <div class="countryGraph">
                 <canvas id="countryGraph"></canvas>
             </div>
+
             <div class="graph">
                 <canvas id="scatterGraph"></canvas>
             </div>
-            <div class="boxes">
-                <div class="box">
-                    <h1>Most No. of Chatter in a day:</h1>
-                    <p>1502</p> <!-- To be replaced. -->
-                </div>
+            
 
-                <div class="box">
-                    <h1>Total Chatter Found:</h1>
-                    <p>52429</p> <!-- To be replaced. -->
-                </div>
+			<div class="headingThree">
+                <p class="title" id="wordcloudName">Word Cloud</p>
+                <p class="title">Username Cloud</p>
+                <p class="title"></p>
             </div>
-        </div>
+			
+			<div class="wordCloud" id="word-cloud">
+            </div>
+
+             <div class="usernameCloud" id="username-cloud">
+            </div>
+
+            <div class="scatterChart">
+            </div>
+						
+
+				</div>
         <div class="bNav">
             <p></p>
 
