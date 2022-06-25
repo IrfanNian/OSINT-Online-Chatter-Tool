@@ -54,57 +54,29 @@ nav {
     margin-left: 2px;
 }
 
-.boxes {
-    display: inline;
-    grid-gap: 5px;
-    grid-auto-flow: row;
-    justify-content: center;
-    width: 15%;
-    margin: 0 0 0 auto;
-    margin-bottom: 50px;
-    float: right;
-
-}
-
-.error {
-    color: red;
-}
-
-.box {
-    border: 1px solid #e6e6e6;
-    background: #f6f6f6;
-    max-width: 400px;
-    padding: 10px 40px;
-    border-radius: 20px;
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-.box h1 {
-    font-size: 20px;
-    font-family: "K2D", sans-serif;
-    font-weight: 400;
-}
-
-.box p {
-    font-size: 28px;
-    font-family: "K2D", sans-serif;
-    font-weight: 600;
-    color: #02b0a7;
-}
-
 .graph {
     border: 1px solid #e6e6e6;
     padding: 5px;
     background-color: #f6f6f6;
     border-radius: 20px;
-    display: grid;
+    margin: 0 0 0 auto;
+    margin-bottom: 10px;
+    width: 100%;
+    box-shadow: 0 0 20px #737272;
+}
+
+.information {
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    background-color: #f6f6f6;
+    border-radius: 20px;
     grid-gap: 5px;
     grid-auto-flow: column;
     margin: 0 0 0 auto;
     margin-bottom: 10px;
     width: 100%;
     box-shadow: 0 0 20px #737272;
+    font-family: "K2D", sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -128,21 +100,6 @@ nav {
         font-size: 40px;
         font-weight: 600;
         text-transform: uppercase;
-    }
-    .boxes {
-        display: grid;
-        grid-gap: 20px;
-        grid-auto-flow: row;
-        width: 100%;
-        margin: 0 0 0 auto;
-        margin-bottom: 50px;
-        padding: 0 30px;
-    }
-    .box h1 {
-        font-size: 40px;
-    }
-    .box p {
-        font-size: 30px;
     }
     .graph {
         width: 100%;

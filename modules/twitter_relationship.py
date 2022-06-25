@@ -5,8 +5,6 @@ import tweepy
 from modules.feather_reader import FeatherReader
 import pandas as pd
 
-pd.set_option("display.max_rows", None, "display.max_columns", None)
-CWD = os.getcwd()
 UPLOAD_FOLDER = os.path.join("static", "uploads")
 RESULT_FOLDER = "results"
 STATIC_RESULT_FOLDER = os.path.join("static", "results")
@@ -59,7 +57,6 @@ class TwitterFriends:
         """
         friend_username = []
         for response in tweepy.Paginator(self.client.get_users_following, arg_user_id, max_results=1000):
-            print(response)
             for friend in response.data:
                 friend_username.append(friend.username)
         return friend_username
@@ -76,7 +73,6 @@ class TwitterFriends:
         self.master_list = self.twitter_user_list()
         self.user_pending_queue.append(arg_user)
         self.user_list.append(arg_user)
-        print(arg_level)
         level = 0
         while level < arg_level:
             user_level_list = []
@@ -91,7 +87,7 @@ class TwitterFriends:
                                 user_level_list.append(friend)
                                 self.user_list.append(friend)
                                 if searched_user in friend_list:
-                                    value = 5
+                                    value = 3
                                 else:
                                     value = 1
                                 link_df.loc[len(link_df)] = [self.user_pending_queue[0], friend, value]
@@ -105,6 +101,7 @@ class TwitterFriends:
             self.user_pending_queue = self.user_pending_queue + user_level_list
 
         nodes_df = pd.DataFrame({'user': self.user_list})
+        nodes_df.drop_duplicates(subset=['user'], inplace=True)
         nodes_df['group'] = nodes_df.index + 1
         link_dict = link_df.to_dict("records")
         nodes_dict = nodes_df.to_dict("records")
