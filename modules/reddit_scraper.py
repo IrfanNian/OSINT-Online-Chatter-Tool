@@ -84,6 +84,7 @@ class RedditScraper:
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
                     red_dict["url"].append(post.url)
+                    red_dict["location"].append("No Data")
                     red_dict["platform"].append("reddit")
                 except AttributeError:
                     pass
