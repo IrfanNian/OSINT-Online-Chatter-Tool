@@ -153,7 +153,8 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
             }
             neighborArray.push(neighbors[i].user);
         }
-        displayNeighbors(neighborArray);
+        let uniqueNeighborArray = [...new Set(neighborArray)]
+        displayNeighbors(uniqueNeighborArray);
 
         nodeElements
             .attr('fill', node => getNodeAndColor(node, neighborArray))
