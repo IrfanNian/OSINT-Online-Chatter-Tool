@@ -38,7 +38,6 @@ function showCheckbox() {
 
 function showHide() {
     let customreddit = document.getElementById('platf')
-    console.log(customreddit.value)
     if (customreddit.value == 'all') {
         document.getElementById('csubrtexttr').removeAttribute("hidden");
     }

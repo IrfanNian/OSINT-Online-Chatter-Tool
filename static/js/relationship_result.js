@@ -121,10 +121,11 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
     }
 
     function displayNeighbors(neighbors) {
+        document.getElementById("information").removeAttribute("hidden");
         let parent = document.getElementById("parent");
         let child = document.getElementById("child");
         parent_paragraph = "You have selected: " + neighbors[0];
-        child_paragraph = "The neighbours are: ";
+        child_paragraph = "The neighbour(s) are: ";
         for (let i = 0; i < neighbors.length; i++) {
             if (i == 0) {
                 i += 1;
