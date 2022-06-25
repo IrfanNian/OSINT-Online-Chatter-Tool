@@ -89,6 +89,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
         },
         options: {
             onClick: clickBubbleHandler,
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',
@@ -254,6 +256,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
             }],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             onClick: clickCountryBarHandler,
             scales: {
                 x: {
@@ -503,6 +507,8 @@ d3.csv('/static/results/charting.csv').then(function(datapoints){
 			],
         },
         options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 x: {
                     type: 'time',

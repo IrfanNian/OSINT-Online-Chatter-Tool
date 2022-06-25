@@ -95,7 +95,6 @@ nav {
     padding: 5px;
     background-color: #f6f6f6;
     border-radius: 20px;
-
     display: grid;
     grid-gap: 5px;
     grid-auto-flow: column;
@@ -324,18 +323,21 @@ table thead {
 
 .headingOne{
     display: flex;
+    width: 100%;
     justify-content: space-around;
 }
 
 .headingTwo{
     display: flex;
-    margin-top: 450px;
+    padding-top: 2%;
+    width: 100%;
     justify-content: space-around;
 }
 
 .headingThree{
     display: flex;
-    margin-top: 400px;
+    padding-top: 2%;
+    width: 100%;
     justify-content: space-around;
 }
 
