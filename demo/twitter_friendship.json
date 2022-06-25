@@ -1,0 +1,100 @@
+{
+    "links": [
+        {
+            "source": "ka0com",
+            "target": "RedPacketSec",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "kai_ri_0001",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "tadmaddad",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "miki158s",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "taku888infinity",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "Panda_Lv0",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "sec_trend",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "piyokango",
+            "value": 1
+        }
+    ],
+    "nodes": [
+        {
+            "group": 1,
+            "user": "ka0com"
+        },
+        {
+            "group": 2,
+            "user": "RedPacketSec"
+        },
+        {
+            "group": 3,
+            "user": "NobMiwa"
+        },
+        {
+            "group": 4,
+            "user": "kai_ri_0001"
+        },
+        {
+            "group": 5,
+            "user": "tadmaddad"
+        },
+        {
+            "group": 6,
+            "user": "miki158s"
+        },
+        {
+            "group": 7,
+            "user": "taku888infinity"
+        },
+        {
+            "group": 8,
+            "user": "Panda_Lv0"
+        },
+        {
+            "group": 9,
+            "user": "autumn_good_35"
+        },
+        {
+            "group": 10,
+            "user": "sec_trend"
+        },
+        {
+            "group": 11,
+            "user": "piyokango"
+        }
+    ]
+}

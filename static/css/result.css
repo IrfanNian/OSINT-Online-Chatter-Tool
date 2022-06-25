@@ -5,6 +5,7 @@ body {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -106,7 +107,6 @@ nav {
     box-shadow: 0 0 20px #737272;
 }
 
-
 .bubbletable {
     display: grid;
     grid-gap: 5px;
@@ -166,7 +166,6 @@ table thead {
   max-width: 100%;
 }
 
-
 ::-webkit-scrollbar {
   width: 0;
 }
@@ -222,7 +221,6 @@ table thead {
     margin-right: 10px;
 }
 
-
 .boxes {
     display: grid;
     grid-gap: 25px;
@@ -245,6 +243,7 @@ table thead {
     position: relative;
     z-index: 1;
 }
+
 .counter:before{
     content: "";
     background: #51d658;
@@ -257,16 +256,19 @@ table thead {
     bottom: 27px;
     z-index: -1;
 }
+
 .counter .counter-icon{
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
+
 .counter:hover .counter-icon{
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
 .counter h3{
     font-size: 17px;
     font-weight: 500;
@@ -274,6 +276,7 @@ table thead {
     letter-spacing: 1px;
     margin: 0 0 20px;
 }
+
 .counter .counter-value{
     color: #666;
     background: #fff;
@@ -287,6 +290,7 @@ table thead {
     margin: 0 0 0 -20px;
     display: block;
 }
+
 .counter.blue:before{ background-color: #55ACEE; }
 @media screen and (max-width:990px){
     .counter{ margin-bottom: 40px; }
@@ -339,7 +343,6 @@ table thead {
     margin-left: 10px;
 }
 
-
 .button {
     background-color: black;
     border: none;
@@ -353,7 +356,6 @@ table thead {
     cursor: pointer;
 }
 
-
 .row{
 	width:100%;
 	margin-bottom:30px;
@@ -362,8 +364,8 @@ table thead {
 	width:45%;
 	display:inline-block;
 }
-/* Responsive */
 
+/* Responsive */
 @media only screen and (max-width: 969px) {
     .container {
         padding: 0 20px;
@@ -458,7 +460,6 @@ table thead {
 	}
 }
 
-
 .counter{
     font-family: 'Open Sans', sans-serif;
     color: #fff;
@@ -471,6 +472,7 @@ table thead {
     box-shadow: 10px 10px 0 rgba(0,0,0,0.05);
 	display:inline-block;
 }
+
 .counter:before{
     content: "";
     border-radius: 15px 0 30px 0;
@@ -481,16 +483,19 @@ table thead {
     right: 12px;
     bottom: 27px;
 }
+
 .counter .counter-icon{
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
+
 .counter:hover .counter-icon{
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
 .counter h3{
     font-size: 17px;
     font-weight: 500;
@@ -498,6 +503,7 @@ table thead {
     letter-spacing: 1px;
     margin: 0 0 20px;
 }
+
 .counter .counter-value{
     color: #666;
     background: #fff;
