@@ -63,6 +63,11 @@ function checkTime(val) {
         element2.setAttribute("hidden", true);
 }
 
-function on() {
-  document.getElementById("overlay").style.display = "block";
-}
+document.getElementById("SearchSubmit").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "block";
+});
+
+document.getElementById("overlay").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "none";
+});
+

@@ -1,9 +1,20 @@
 const keyword = document.getElementById("keyword");
+const fileUpload = document.getElementById("ini_file");
 const checkbox = document.querySelector("input[name=demoMode]");
 const form = document.forms[0];
 
 keyword.addEventListener("input", function () {
-    if (keyword.value.length > 0) {
+    let input = fileUpload.files[0]
+    if (keyword.value.length > 0 && input) {
+        SearchSubmit.disabled = false;
+    } else {
+        SearchSubmit.disabled = true;
+    }
+});
+
+fileUpload.addEventListener("change", function () {
+    let input = fileUpload.files[0]
+    if (keyword.value.length > 0 && input) {
         SearchSubmit.disabled = false;
     } else {
         SearchSubmit.disabled = true;
@@ -34,6 +45,11 @@ function showCheckbox() {
     }
 }
 
-function on() {
-  document.getElementById("overlay").style.display = "block";
-}
+document.getElementById("SearchSubmit").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "block";
+});
+
+
+document.getElementById("overlay").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "none";
+});

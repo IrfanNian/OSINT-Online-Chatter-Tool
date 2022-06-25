@@ -105,7 +105,7 @@ class TwitterFriends:
         nodes_df['group'] = nodes_df.index + 1
         link_dict = link_df.to_dict("records")
         nodes_dict = nodes_df.to_dict("records")
-        json_prep = {"links": link_dict, "nodes": nodes_dict}
+        json_prep = {"level": arg_level, "links": link_dict, "nodes": nodes_dict}
         json_dump = json.dumps(json_prep, indent=4, sort_keys=True)
         filename_out = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
         json_out = open(filename_out, 'w')

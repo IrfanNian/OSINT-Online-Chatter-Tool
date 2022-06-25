@@ -8,6 +8,9 @@ const svg = d3.select('svg')
 d3.json('/static/results/twitter_friendship.json').then(function(data) {
     const nodes = data['nodes'];
     const links = data['links'];
+    const level = data['level'];
+
+    document.getElementById("query").textContent += " | Level: " + level;
 
     const simulation = d3.forceSimulation()
         .force('charge', d3.forceManyBody().strength(-100))
@@ -153,7 +156,8 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
             }
             neighborArray.push(neighbors[i].user);
         }
-        displayNeighbors(neighborArray);
+        let uniqueNeighborArray = [...new Set(neighborArray)]
+        displayNeighbors(uniqueNeighborArray);
 
         nodeElements
             .attr('fill', node => getNodeAndColor(node, neighborArray))
