@@ -61,18 +61,18 @@
                     <h2>Advanced Options</h2><br>
                     <table class="center">
                         <tr>
-                            <td><label for="ini_file">Credentials Upload*<img src="/static/images/i.png" width="20px"
-                            title="(Mandatory except in demo mode) Upload a config.ini file containing the bearer token. Format is:&#013;[TWITTER]&#013;BEARER_TOKEN =">: </label></td>
+                            <td><label for="ini_file" class="tooltip">Credentials Upload*<img src="/static/images/i.png" width="20px"
+                            title="">: <span class="tooltiptext">(Mandatory except in demo mode) Upload a config.ini file containing the bearer token. Format is: &#013;[TWITTER]&#013;BEARER_TOKEN =</span></label></td>
                             <td><input type="file" name="ini_file" id="ini_file"/></td>
                         </tr>
                         <tr>
-                            <td><label for="level">Level / Depth<img src="/static/images/i.png" width="20px"
-                            title="(Optional) Specify the level of search. Will affect processing time.">: </label></td>
+                            <td><label for="level" class="tooltip">Level / Depth<img src="/static/images/i.png" width="20px"
+                            title="">: <span class="tooltiptext">(Optional) Specify the level of search. Will affect processing time.</span></label></td>
                             <td><input type="number" name="level" id="level" placeholder="Default: 3"/></td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="text-align: center;"><input type="checkbox" name="demoMode" value="demoMode" id="demoMode"><label for="demoMode" id="demoModeLabel"> Demo Mode<img src="/static/images/i.png" width="20px"
-                            title="(Optional) Enables Demo Mode and uses a pre-generated dataset."></label></td>
+                            <td colspan="2" style="text-align: center;"><input type="checkbox" name="demoMode" value="demoMode" id="demoMode"><label for="demoMode" id="demoModeLabel" class="tooltip"> Demo Mode<img src="/static/images/i.png" width="20px"
+                            title=""><span class="tooltiptext">(Optional) Enables Demo Mode and uses a pre-generated dataset.</span></label></td>
                         </tr>
                     </table>
                     <hr><br>
