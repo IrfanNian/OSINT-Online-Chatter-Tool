@@ -87,7 +87,7 @@ class TwitterFriends:
                                 user_level_list.append(friend)
                                 self.user_list.append(friend)
                                 if searched_user in friend_list:
-                                    value = 5
+                                    value = 3
                                 else:
                                     value = 1
                                 link_df.loc[len(link_df)] = [self.user_pending_queue[0], friend, value]
@@ -101,6 +101,7 @@ class TwitterFriends:
             self.user_pending_queue = self.user_pending_queue + user_level_list
 
         nodes_df = pd.DataFrame({'user': self.user_list})
+        nodes_df.drop_duplicates(subset=['user'], inplace=True)
         nodes_df['group'] = nodes_df.index + 1
         link_dict = link_df.to_dict("records")
         nodes_dict = nodes_df.to_dict("records")

@@ -17,7 +17,7 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
         .selectAll('circle')
         .data(nodes)
         .enter().append('circle')
-            .attr('r', 10)
+            .attr('r', 20)
             .attr('fill', "black");
 
     const textElements = svg.append('g')
@@ -26,7 +26,7 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
         .enter().append('text')
             .text(node => node.user)
             .attr('font-size', 10)
-            .attr('dx', 15)
+            .attr('dx', 25)
             .attr('dy', 4);
 
     simulation.nodes(nodes).on('tick', () => {
