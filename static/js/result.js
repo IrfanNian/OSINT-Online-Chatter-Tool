@@ -545,7 +545,6 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
         x = x.toISOString().substring(0, 10);
 
         var yt = datapoints[i].time;
-        //var y = new Date(yt).getTime();
         var y = new Date(yt);
         y = y.toISOString().substring(11, 13);
 
@@ -554,8 +553,6 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             dateOnly = dateOnly.toISOString().substring(0, 10);
 
             var timeOnly = new Date(datapoints[a].time);
-
-            //timeOnly = timeOnly.getTime();
             timeOnly = timeOnly.toISOString().substring(11, 13);
 
             if (x == dateOnly && y == timeOnly) {
@@ -569,13 +566,12 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
        
     }
 
-    console.log(scatterStorage);
     //config
     const scatterChartConfig = {
         type: 'scatter',
         data: {
             datasets: [{
-                label: 'No. of Chatter Throughout the day',
+                label: 'Chatter Throughout the hours and days',
                 data: scatterStorage
             }],
         },
@@ -590,24 +586,19 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     },
                     time: {
                         unit: 'day',
-                        //tooltipFormat: 'DD MMM YYYY',
-                        unitStepSize: 1,
-                    },
-                    ticks: {
-                        source: 'auto',
-                        reverse: true,
                     },
                 },
+
                 y: {
-                    //type: 'time',
                     title: {
                         display: true,
                         text: 'Hour (24H Format)',
                     },
+                    
                     min: 0,
                     max: 24,
                 }
-
+            
             }
         }
     }
