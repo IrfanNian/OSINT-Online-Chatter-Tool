@@ -545,7 +545,9 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
         x = x.toISOString().substring(0, 10);
 
         var yt = datapoints[i].time;
-        var y = new Date(yt).getTime();
+        //var y = new Date(yt).getTime();
+        var y = new Date(yt);
+        y = y.toISOString().substring(11, 13);
 
         for (let a = 0; a < datapoints.length; a++) {
             var dateOnly = new Date(datapoints[a].time);
@@ -553,7 +555,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
             var timeOnly = new Date(datapoints[a].time);
 
-            timeOnly = timeOnly.getTime();
+            //timeOnly = timeOnly.getTime();
+            timeOnly = timeOnly.toISOString().substring(11, 13);
 
             if (x == dateOnly && y == timeOnly) {
                 scatterText.push(datapoints[a].text);
@@ -563,10 +566,10 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
         }
         scatterStorage.push(json);
-
+       
     }
 
-
+    console.log(scatterStorage);
     //config
     const scatterChartConfig = {
         type: 'scatter',
@@ -587,21 +590,22 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     },
                     time: {
                         unit: 'day',
-                        tooltipFormat: 'DD MMM YYYY',
+                        //tooltipFormat: 'DD MMM YYYY',
+                        unitStepSize: 1,
                     },
-                    max: maxDate,
-                    min: minDate
+                    ticks: {
+                        source: 'auto',
+                        reverse: true,
+                    },
                 },
                 y: {
-                    type: 'time',
+                    //type: 'time',
                     title: {
                         display: true,
-                        text: 'Hour',
+                        text: 'Hour (24H Format)',
                     },
-                    time: {
-                        unit: 'hour',
-                        tooltipFormat: 'hA',
-                    },
+                    min: 0,
+                    max: 24,
                 }
 
             }
