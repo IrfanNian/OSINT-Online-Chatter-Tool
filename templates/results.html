@@ -52,43 +52,43 @@
             </div>
         </nav>
         <div class="container">
-			<div class="row">
-				<div class="cell">
-					<p class="title">
-						Showing Results for:
-						<span class="query">{{ result }}</span>
-					</p>
-				</div>
-				<div class="cell">
-					<div class="counter blue">
-						<div class="counter-icon">
-							<i class="fa fa-twitter-square"></i>
-						</div>
-						<h3>Twitter</h3>
-						<span class="counter-value" id="CountTW"></span>
-					</div>
+            <div class="row">
+                <div class="cell">
+                    <p class="title">
+                        Showing Results for:
+                        <span class="query">{{ result }}</span>
+                    </p>
+                </div>
+                <div class="cell">
+                    <div class="counter blue">
+                        <div class="counter-icon">
+                            <i class="fa fa-twitter-square"></i>
+                        </div>
+                        <h3>Twitter</h3>
+                        <span class="counter-value" id="CountTW"></span>
+                    </div>
 
-					<div class="counter orange">
-						<div class="counter-icon">
-							<i class="fa fa-reddit-square"></i>
-						</div>
-						<h3>Reddit</h3>
-						<span class="counter-value" id="CountRD"></span>
-					</div>
-					
-					<div class="counter black">
-						<div class="counter-icon">
-						<i class="fa fa-bitbucket-square"></i>
-						</div>
-						<h3>Pastebin</h3>
-						<span class="counter-value" id="CountPB"></span>
-					</div>
-				</div>
-			</div>
+                    <div class="counter orange">
+                        <div class="counter-icon">
+                            <i class="fa fa-reddit-square"></i>
+                        </div>
+                        <h3>Reddit</h3>
+                        <span class="counter-value" id="CountRD"></span>
+                    </div>
+
+                    <div class="counter black">
+                        <div class="counter-icon">
+                            <i class="fa fa-bitbucket-square"></i>
+                        </div>
+                        <h3>Pastebin</h3>
+                        <span class="counter-value" id="CountPB"></span>
+                    </div>
+                </div>
+            </div>
 
             <div class="headingOne">
                 <p class="title">Consolidated Results</p>
-                <p class="title">Trending Graph</p>
+                <p class="title">Bubble Graph</p>
             </div>
             <input type="text" id="searchBar" placeholder=" Search for ...">
             <div class="bubbletable">
@@ -125,35 +125,34 @@
             </div>
 
             <div class="timelineChart">
-                <canvas id="timeline"></canvas>  <!-- To be replaced. -->
+                <canvas id="timeline"></canvas>
             </div>
 
             <div class="countryGraph">
                 <canvas id="countryGraph"></canvas>
             </div>
-
-            <div class="graph">
+            <div class="headingThree">
+                <p class="title">Scatter Chart</p>
+            </div>
+            <div class="scatterGraph">
                 <canvas id="scatterGraph"></canvas>
             </div>
-            
 
-			<div class="headingThree">
+
+            <div class="headingTwo">
                 <p class="title" id="wordcloudName">Word Cloud</p>
                 <p class="title">Username Cloud</p>
                 <p class="title"></p>
             </div>
-			
-			<div class="wordCloud" id="word-cloud">
+
+            <div class="wordCloud" id="word-cloud">
             </div>
 
-             <div class="usernameCloud" id="username-cloud">
+            <div class="usernameCloud" id="username-cloud">
             </div>
 
-            <div class="scatterChart">
-            </div>
-						
 
-				</div>
+        </div>
         <div class="bNav">
             <p></p>
 

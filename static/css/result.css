@@ -195,6 +195,18 @@ table thead {
     margin-bottom: 10px;
 }
 
+.scatterGraph {
+    width: 49.5%;
+    height: 52.5%;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+    margin-bottom: 10px;
+}
+
 .usernameCloud {
     width: 38%;
     height: 52.5%;
@@ -327,7 +339,7 @@ table thead {
     justify-content: space-around;
 }
 
-.headingTwo{
+.headingTwo {
     display: flex;
     padding-top: 2%;
     width: 100%;
@@ -337,8 +349,9 @@ table thead {
 .headingThree{
     display: flex;
     padding-top: 2%;
-    width: 100%;
+    width: 50%;
     justify-content: space-around;
+    text-align: left;
 }
 
 #wordcloudname {
