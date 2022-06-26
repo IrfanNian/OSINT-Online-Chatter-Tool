@@ -161,12 +161,12 @@ table tbody tr td {
 }
 
 table thead {
-  width: 100%;
-  max-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 
 ::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 
 .timelineChart {
@@ -208,7 +208,7 @@ table thead {
 }
 
 .usernameCloud {
-    width: 38%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -220,7 +220,7 @@ table thead {
 }
 
 .wordCloud {
-    width:38%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -317,7 +317,6 @@ table thead {
     .counter{ margin-bottom: 40px; }
 }
 
-
 #searchBar {
     background-image: url('../images/search.png'); /* Add a search icon to input */
     /* background-position: 10px 12px; Position the search icon */
@@ -339,7 +338,7 @@ table thead {
     justify-content: space-around;
 }
 
-.headingTwo {
+.headingTwo{
     display: flex;
     padding-top: 2%;
     width: 100%;
@@ -351,7 +350,6 @@ table thead {
     padding-top: 2%;
     width: 50%;
     justify-content: space-around;
-    text-align: left;
 }
 
 #wordcloudname {
