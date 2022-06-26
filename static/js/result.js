@@ -101,7 +101,7 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     },
                     time: {
                         unit: 'day',
-                        tooltipFormat: 'DD MMM YYYY',
+                        tooltipFormat: 'dd MMM yyyy',
                     },
                     max: maxDate,
                     min: minDate
@@ -161,8 +161,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     page = numPage;
                 }
 
-                table.innerHTML = '';
-                page_span.innerHTML = '';
+                table.textContent = '';
+                page_span.textContent = '';
 
                 if (recordsPerPage > array.length) {
                     recordsPerPage = array.length;
@@ -173,13 +173,17 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
                 for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
                     try {
-                        table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                        row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.textContent = array[i][0];
+                        cell2.textContent = array[i][1];
                     }
                     catch {
                         numPage = page;
                     }
                 }
-                page_span.innerHTML += page + "/" + numPage;
+                page_span.textContent += page + "/" + numPage;
                 btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
                 btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
                 let tbl = document.getElementById("tablebubz");
@@ -326,8 +330,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     page = numPage;
                 }
 
-                table.innerHTML = '';
-                page_span.innerHTML = '';
+                table.textContent = '';
+                page_span.textContent = '';
 
                 if (recordsPerPage > array.length) {
                     recordsPerPage = array.length;
@@ -338,13 +342,17 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
                 for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
                     try {
-                        table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                        row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.textContent = array[i][0];
+                        cell2.textContent = array[i][1];
                     }
                     catch {
                         numPage = page;
                     }
                 }
-                page_span.innerHTML += page + "/" + numPage;
+                page_span.textContent += page + "/" + numPage;
                 btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
                 btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
                 let tbl = document.getElementById("tablebubz");
@@ -519,7 +527,7 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     },
                     time: {
                         unit: 'day',
-                        tooltipFormat: 'DD MMM YYYY',
+                        tooltipFormat: 'dd MMM yyyy',
                     },
                     max: maxDate,
                     min: minDate
@@ -536,9 +544,9 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
     var MultilineChart = new Chart(multilineChartHTML, MultilineChartConfig);
 
-    document.getElementById("CountTW").innerHTML = TWCount
-    document.getElementById("CountRD").innerHTML = RDCount
-    document.getElementById("CountPB").innerHTML = PBCount
+    document.getElementById("CountTW").textContent = TWCount
+    document.getElementById("CountRD").textContent = RDCount
+    document.getElementById("CountPB").textContent = PBCount
 
     //scatter graph
     const scatterStorage = [];
@@ -651,8 +659,8 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
                     page = numPage;
                 }
 
-                table.innerHTML = '';
-                page_span.innerHTML = '';
+                table.textContent = '';
+                page_span.textContent = '';
 
                 if (recordsPerPage > array.length) {
                     recordsPerPage = array.length;
@@ -663,13 +671,17 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
 
                 for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
                     try {
-                        table.innerHTML += '<tr><td>' + array[i][0] + '</td><td>' + array[i][1] + '</td></tr>'
+                        row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.textContent = array[i][0];
+                        cell2.textContent = array[i][1];
                     }
                     catch {
                         numPage = page;
                     }
                 }
-                page_span.innerHTML += page + "/" + numPage;
+                page_span.textContent += page + "/" + numPage;
                 btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
                 btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
                 let tbl = document.getElementById("tablebubz");
