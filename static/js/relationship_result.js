@@ -109,6 +109,22 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
         }, [node.target.__data__.user])
     }
 
+    function getNeighborsAndLinks(node) {
+        return links.reduce((neighbors, links) => {
+            if (links.target.user === node.target.__data__.user) {
+                let obj = links.source;
+                obj.link = links.value
+                neighbors.push(obj);
+            }
+            else if (links.source.user === node.target.__data__.user) {
+                let obj = links.target;
+                obj.link = links.value
+                neighbors.push(obj);
+            }
+            return neighbors;
+        }, [node.target.__data__.user])
+    }
+
     function getNodeAndColor(node, neighborArray) {
         if (neighborArray.includes(node.user)) {
             return 'red';
@@ -126,28 +142,47 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
     function displayNeighbors(neighbors) {
         document.getElementById("information").removeAttribute("hidden");
         let parent = document.getElementById("parent");
-        let child = document.getElementById("child");
-        parent_paragraph = "You have selected: " + neighbors[0];
-        child_paragraph = "The neighbour(s) are: ";
+        let following = document.getElementById("following");
+        let followers = document.getElementById("followers");
+        parent_paragraph = "You have selected: " + neighbors[0].user;
+        follows_paragraph = neighbors[0].user + " follow(s): ";
+        followers_paragraph = neighbors[0].user + " follower(s): ";
         for (let i = 0; i < neighbors.length; i++) {
             if (i == 0) {
                 i += 1;
             }
-            child_paragraph += neighbors[i]
+            follows_paragraph += neighbors[i].user
             if (i < neighbors.length - 2) {
-                child_paragraph += ", ";
+                follows_paragraph += ", ";
             }
             else if (i == neighbors.length - 2) {
-                child_paragraph += " and ";
+                follows_paragraph += " and ";
+            }
+        }
+        for (let i = 0; i < neighbors.length; i++) {
+            if (i == 0) {
+                i += 1;
+            }
+            if (neighbors[i].link == 3) {
+                followers_paragraph += neighbors[i].user;
+                if (i < neighbors.length - 2) {
+                    followers_paragraph += ", ";
+                }
+                else if (i == neighbors.length - 2) {
+                    followers_paragraph += " and ";
+                }
             }
         }
         parent.textContent = parent_paragraph;
-        child.textContent = child_paragraph;
+        following.textContent = follows_paragraph;
+        followers.textContent = followers_paragraph;
     }
 
     function selectNode(selectedNode) {
         const neighborArray = [];
+        const neighborAndLinksArray = [];
         const neighbors = getNeighbors(selectedNode);
+        const neighborsAndLinks = getNeighborsAndLinks(selectedNode);
 
         for (let i = 0; i < neighbors.length; i++) {
             if (i == 0) {
@@ -156,8 +191,17 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
             }
             neighborArray.push(neighbors[i].user);
         }
+
+        for (let i = 0; i < neighborsAndLinks.length; i++) {
+            if (i == 0) {
+                neighborAndLinksArray.push({user: neighborsAndLinks[0]})
+                i += 1;
+            }
+            neighborAndLinksArray.push(neighborsAndLinks[i]);
+        }
         let uniqueNeighborArray = [...new Set(neighborArray)]
-        displayNeighbors(uniqueNeighborArray);
+        let uniqueNeighborAndLinksArray = [...new Map(neighborAndLinksArray.map(item => [item['user'], item])).values()]
+        displayNeighbors(uniqueNeighborAndLinksArray);
 
         nodeElements
             .attr('fill', node => getNodeAndColor(node, neighborArray))
