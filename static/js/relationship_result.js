@@ -159,19 +159,24 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
                 follows_paragraph += " and ";
             }
         }
-        for (let i = 0; i < neighbors.length; i++) {
-            if (i == 0) {
-                i += 1;
-            }
-            if (neighbors[i].link == 3) {
-                followers_paragraph += neighbors[i].user;
-                if (i < neighbors.length - 2) {
-                    followers_paragraph += ", ";
+        if (neighbors.some(e => e.link === 3)) {
+            for (let i = 0; i < neighbors.length; i++) {
+                if (i == 0) {
+                    i += 1;
                 }
-                else if (i == neighbors.length - 2) {
-                    followers_paragraph += " and ";
+                if (neighbors[i].link == 3) {
+                    followers_paragraph += neighbors[i].user;
+                    if (i < neighbors.length - 2) {
+                        followers_paragraph += ", ";
+                    }
+                    else if (i == neighbors.length - 2) {
+                        followers_paragraph += " and ";
+                    }
                 }
             }
+        }
+        else {
+            followers_paragraph += " None"
         }
         parent.textContent = parent_paragraph;
         following.textContent = follows_paragraph;
