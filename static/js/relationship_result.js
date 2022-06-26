@@ -113,12 +113,12 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
         return links.reduce((neighbors, links) => {
             if (links.target.user === node.target.__data__.user) {
                 let obj = links.source;
-                obj.link = links.value
+                obj.link = links.value;
                 neighbors.push(obj);
             }
             else if (links.source.user === node.target.__data__.user) {
                 let obj = links.target;
-                obj.link = links.value
+                obj.link = links.value;
                 neighbors.push(obj);
             }
             return neighbors;
@@ -159,24 +159,22 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
                 follows_paragraph += " and ";
             }
         }
-        if (neighbors.some(e => e.link === 3)) {
-            for (let i = 0; i < neighbors.length; i++) {
-                if (i == 0) {
-                    i += 1;
+        followerArray = neighbors.filter(function(d) {
+            return d.link === 3;
+        });
+        if (followerArray.length !== 0) {
+            for (let i = 0; i < followerArray.length; i++) {
+                followers_paragraph += followerArray[i].user;
+                if (i < followerArray.length - 2) {
+                    followers_paragraph += ", ";
                 }
-                if (neighbors[i].link == 3) {
-                    followers_paragraph += neighbors[i].user;
-                    if (i < neighbors.length - 2) {
-                        followers_paragraph += ", ";
-                    }
-                    else if (i == neighbors.length - 2) {
-                        followers_paragraph += " and ";
-                    }
+                else if (i === followerArray.length - 2) {
+                    followers_paragraph += " and ";
                 }
             }
         }
         else {
-            followers_paragraph += " None"
+            followers_paragraph += " None";
         }
         parent.textContent = parent_paragraph;
         following.textContent = follows_paragraph;
@@ -204,8 +202,8 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
             }
             neighborAndLinksArray.push(neighborsAndLinks[i]);
         }
-        let uniqueNeighborArray = [...new Set(neighborArray)]
-        let uniqueNeighborAndLinksArray = [...new Map(neighborAndLinksArray.map(item => [item['user'], item])).values()]
+        let uniqueNeighborArray = [...new Set(neighborArray)];
+        let uniqueNeighborAndLinksArray = [...new Map(neighborAndLinksArray.map(item => [item['user'], item])).values()];
         displayNeighbors(uniqueNeighborAndLinksArray);
 
         nodeElements
