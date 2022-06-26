@@ -35,7 +35,7 @@ class FeatherReader:
         :param arg_feather_filenames:
         :return compiled_df:
         """
-        compiled_df = pd.DataFrame(columns=["time", "text", "user", "location"])
+        compiled_df = pd.DataFrame(columns=["time", "text", "user", "location", "platform"])
         for filename in arg_feather_filenames:
             # open and read the file to df
             df = pd.read_feather(filename)
