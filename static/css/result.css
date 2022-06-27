@@ -191,7 +191,7 @@ table thead {
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     background-color: #f6f6f6;
-    float: right;
+    float: left;
     margin-bottom: 10px;
 }
 
@@ -349,7 +349,7 @@ table thead {
     display: flex;
     padding-top: 2%;
     width: 50%;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 #wordcloudname {
