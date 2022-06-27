@@ -69,7 +69,6 @@ class TwitterFriends:
         :return None:
         """
         link_df = pd.DataFrame(columns=['source', 'target', 'value'])
-        searched_user = arg_user
         self.master_list = self.twitter_user_list()
         self.user_pending_queue.append(arg_user)
         self.user_list.append(arg_user)
@@ -86,10 +85,11 @@ class TwitterFriends:
                             if friend in self.master_list:
                                 user_level_list.append(friend)
                                 self.user_list.append(friend)
-                                if searched_user in friend_list:
-                                    value = 3
-                                else:
+                                follow_back = link_df[['source', 'target']][link_df['source'].str.contains(friend, na=False) & (link_df['target'] == self.user_pending_queue[0])]
+                                if follow_back.empty:
                                     value = 1
+                                else:
+                                    value = 3
                                 link_df.loc[len(link_df)] = [self.user_pending_queue[0], friend, value]
                     except:
                         print(f"An error occurred, skipping {self.user_pending_queue[0]}")
@@ -98,6 +98,7 @@ class TwitterFriends:
                 else:
                     self.user_pending_queue.pop(0)
             level += 1
+            user_level_list = list(set(user_level_list))
             self.user_pending_queue = self.user_pending_queue + user_level_list
 
         nodes_df = pd.DataFrame({'user': self.user_list})
