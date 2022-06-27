@@ -20,6 +20,15 @@ checkbox.addEventListener("change", function () {
     }
 });
 
+window.onload = function(){
+   var checkboxes = document.getElementsByTagName("INPUT");
+   for(let x=0; x < checkboxes.length; x++) {
+      if (checkboxes[x].type == "checkbox") {
+          checkboxes[x].checked = false;
+      }
+   }
+}
+
 function showCheckbox() {
     if(file.files.length > 0) {
         checkbox.removeAttribute("hidden");
@@ -29,7 +38,6 @@ function showCheckbox() {
 
 function showHide() {
     let customreddit = document.getElementById('platf')
-    console.log(customreddit.value)
     if (customreddit.value == 'all') {
         document.getElementById('csubrtexttr').removeAttribute("hidden");
     }
@@ -55,6 +63,11 @@ function checkTime(val) {
         element2.setAttribute("hidden", true);
 }
 
-function on() {
-  document.getElementById("overlay").style.display = "block";
-}
+document.getElementById("SearchSubmit").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "block";
+});
+
+document.getElementById("overlay").addEventListener("click", function() {
+    document.getElementById("overlay").style.display = "none";
+});
+

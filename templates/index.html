@@ -78,8 +78,7 @@
                         </tr>
                         <tr>
                             <td><label class="tooltip" for="depth">Depth<img src="/static/images/i.png" width="20px"
-                            title="">:
-                                <span class="tooltiptext">Quick: 1000; Standard: 10000; Deep: 100000; iterations</span>
+                            title="">: <span class="tooltiptext">Quick: 1000; Standard: 10000; Deep: 100000; iterations</span>
                             </label></td>
                             <td><select name="depthDrop" id="depth">
                                 <option value="" disabled selected hidden>Depth..</option>
@@ -109,7 +108,7 @@
                     </table>
                     <br>
                     <div class="buttons">
-                        <button id="SearchSubmit" type="submit" onclick="on()" disabled class="Search">
+                        <button id="SearchSubmit" type="submit" disabled class="Search">
                             <img src="/static/images/search.png"
                                  alt="search"
                                  width="35px" />
@@ -118,7 +117,7 @@
                     </div>
                     {% if error %}
                     <p class="error">Error: {{ error }}</p>
-                    {% endif%}
+                    {% endif %}
                 </form>
             </div>
         </div>

@@ -5,6 +5,7 @@ body {
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -94,23 +95,21 @@ nav {
     padding: 5px;
     background-color: #f6f6f6;
     border-radius: 20px;
-
     display: grid;
     grid-gap: 5px;
     grid-auto-flow: column;
-    width: 48%;
-    height:52.5%;
+    width: 49.5%;
+    height: 52.5%;
     margin: 0 0 0 auto;
     margin-bottom: 10px;
     float: right;
     box-shadow: 0 0 20px #737272;
 }
 
-
 .bubbletable {
     display: grid;
     grid-gap: 5px;
-    width:51%;
+    width: 49.5%;
     height:52.5%;
     overflow-y: auto;
     text-align: left;
@@ -162,17 +161,16 @@ table tbody tr td {
 }
 
 table thead {
-  width: 100%;
-  max-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 
-
 ::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 
 .timelineChart {
-    width:49.5%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -186,7 +184,7 @@ table thead {
 }
 
 .countryGraph {
-    width:49.5%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -197,8 +195,20 @@ table thead {
     margin-bottom: 10px;
 }
 
+.scatterGraph {
+    width: 49.5%;
+    height: 52.5%;
+    overflow-y: auto;
+    text-align: left;
+    border-radius: 30px;
+    box-shadow: 0 0 20px #737272;
+    background-color: #f6f6f6;
+    float: left;
+    margin-bottom: 10px;
+}
+
 .usernameCloud {
-    width: 38%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -210,7 +220,7 @@ table thead {
 }
 
 .wordCloud {
-    width:38%;
+    width: 49.5%;
     height: 52.5%;
     overflow-y: auto;
     text-align: left;
@@ -221,7 +231,6 @@ table thead {
     margin-bottom: 10px;
     margin-right: 10px;
 }
-
 
 .boxes {
     display: grid;
@@ -245,6 +254,7 @@ table thead {
     position: relative;
     z-index: 1;
 }
+
 .counter:before{
     content: "";
     background: #51d658;
@@ -257,16 +267,19 @@ table thead {
     bottom: 27px;
     z-index: -1;
 }
+
 .counter .counter-icon{
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
+
 .counter:hover .counter-icon{
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
 .counter h3{
     font-size: 17px;
     font-weight: 500;
@@ -274,6 +287,7 @@ table thead {
     letter-spacing: 1px;
     margin: 0 0 20px;
 }
+
 .counter .counter-value{
     color: #666;
     background: #fff;
@@ -287,6 +301,7 @@ table thead {
     margin: 0 0 0 -20px;
     display: block;
 }
+
 .counter.blue:before{ background-color: #55ACEE; }
 @media screen and (max-width:990px){
     .counter{ margin-bottom: 40px; }
@@ -302,43 +317,44 @@ table thead {
     .counter{ margin-bottom: 40px; }
 }
 
-
 #searchBar {
     background-image: url('../images/search.png'); /* Add a search icon to input */
     /* background-position: 10px 12px; Position the search icon */
     background-repeat: no-repeat; /*  Do not repeat the icon image */
     background-size: auto;
-    width: 50%; /* Full-width */
+    width: 49.5%; /* Full-width */
     font-size: 16px; /* Increase font-size */
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
     border-radius: 10px;
     background-color: white;
-    float:left;
+    float: left;
 }
 
 .headingOne{
     display: flex;
+    width: 100%;
     justify-content: space-around;
 }
 
 .headingTwo{
     display: flex;
-    margin-top: 450px;
+    padding-top: 2%;
+    width: 100%;
     justify-content: space-around;
 }
 
 .headingThree{
     display: flex;
-    margin-top: 400px;
+    padding-top: 2%;
+    width: 50%;
     justify-content: space-around;
 }
 
 #wordcloudname {
     margin-left: 10px;
 }
-
 
 .button {
     background-color: black;
@@ -353,17 +369,16 @@ table thead {
     cursor: pointer;
 }
 
-
 .row{
 	width:100%;
 	margin-bottom:30px;
 }
 .cell{
-	width:45%;
+	width:49%;
 	display:inline-block;
 }
-/* Responsive */
 
+/* Responsive */
 @media only screen and (max-width: 969px) {
     .container {
         padding: 0 20px;
@@ -458,7 +473,6 @@ table thead {
 	}
 }
 
-
 .counter{
     font-family: 'Open Sans', sans-serif;
     color: #fff;
@@ -471,6 +485,7 @@ table thead {
     box-shadow: 10px 10px 0 rgba(0,0,0,0.05);
 	display:inline-block;
 }
+
 .counter:before{
     content: "";
     border-radius: 15px 0 30px 0;
@@ -481,16 +496,19 @@ table thead {
     right: 12px;
     bottom: 27px;
 }
+
 .counter .counter-icon{
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
+
 .counter:hover .counter-icon{
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
+
 .counter h3{
     font-size: 17px;
     font-weight: 500;
@@ -498,6 +516,7 @@ table thead {
     letter-spacing: 1px;
     margin: 0 0 20px;
 }
+
 .counter .counter-value{
     color: #666;
     background: #fff;

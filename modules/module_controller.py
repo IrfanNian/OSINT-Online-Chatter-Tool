@@ -7,15 +7,6 @@ import multiprocessing
 
 
 class ModuleController:
-    def compile_feather(self):
-        """
-        Runs the feather reader module
-        :return result_df:
-        """
-        fr = FeatherReader()
-        result_df = fr.run()
-        return result_df
-
     def run(self, arg_scraping_sources, arg_searchbar_text, arg_custom_reddit=None, arg_since=None, arg_until=None,
             arg_limit=None, arg_refinement=None):
         """
@@ -51,6 +42,7 @@ class ModuleController:
         for process in processes:
             process.join()
 
-        result_df = self.compile_feather()
+        fr = FeatherReader()
+        result_df = fr.run()
         dp = DataProcessor()
         dp.run(result_df)

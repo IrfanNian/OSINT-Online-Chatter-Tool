@@ -1,0 +1,4379 @@
+{
+    "level": 3,
+    "links": [
+        {
+            "source": "ka0com",
+            "target": "RedPacketSec",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "kai_ri_0001",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "tadmaddad",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "miki158s",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "taku888infinity",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "Panda_Lv0",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "sec_trend",
+            "value": 1
+        },
+        {
+            "source": "ka0com",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "MachinaRecord",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "itmedia",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "ka0com",
+            "value": 3
+        },
+        {
+            "source": "miki158s",
+            "target": "Panda_Lv0",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "taku888infinity",
+            "value": 1
+        },
+        {
+            "source": "miki158s",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "Hoorge",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "Cybersecinsider",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "Securityblog",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "Z0vsky",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "CyberSecDN",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "ToolsWatch",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "RedPacketSec",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "RedPacketSec",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "ka0com",
+            "value": 3
+        },
+        {
+            "source": "tadmaddad",
+            "target": "FAMASoon",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "taku888infinity",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "threatinsight",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "tadmaddad",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "tkdkz",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "kai_ri_0001",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "miki158s",
+            "value": 3
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "Pyo0072",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "kwdnet",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "igaos",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "G76whizkidz",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "Adam_K_Levin",
+            "value": 1
+        },
+        {
+            "source": "Panda_Lv0",
+            "target": "ka0com",
+            "value": 3
+        },
+        {
+            "source": "taku888infinity",
+            "target": "MachinaRecord",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "securenews_web",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "ka0com",
+            "value": 3
+        },
+        {
+            "source": "taku888infinity",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "tadmaddad",
+            "value": 3
+        },
+        {
+            "source": "taku888infinity",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "miki158s",
+            "value": 3
+        },
+        {
+            "source": "taku888infinity",
+            "target": "itmedia",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "itmedia_news",
+            "value": 1
+        },
+        {
+            "source": "taku888infinity",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "NobMiwa",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "NobMiwa",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "NobMiwa",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "NobMiwa",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "h2jazi",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "tadmaddad",
+            "value": 3
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "certbe",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "taku888infinity",
+            "value": 3
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "wdormann",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "DNSC_RO",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "autumn_good_35",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "kai_ri_0001",
+            "target": "ka0com",
+            "value": 3
+        },
+        {
+            "source": "kai_ri_0001",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "G76whizkidz",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "G76whizkidz",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "nas_bench",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "h2jazi",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "cybereason",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "security_wang",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "StopMalvertisin",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "tkdkz",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "tkdkz",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "tkdkz",
+            "target": "itmedia_news",
+            "value": 1
+        },
+        {
+            "source": "tkdkz",
+            "target": "itmedia",
+            "value": 1
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "NobMiwa",
+            "value": 1
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "securenews_web",
+            "value": 1
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "taku888infinity",
+            "value": 3
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "MachinaRecord",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "cybereason",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "stevedriz",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "SCMagazine",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "certbe",
+            "target": "cybervictimes",
+            "value": 1
+        },
+        {
+            "source": "certbe",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "certbe",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "certbe",
+            "target": "DNSC_RO",
+            "value": 1
+        },
+        {
+            "source": "certbe",
+            "target": "QatarCERT",
+            "value": 1
+        },
+        {
+            "source": "itmedia",
+            "target": "G76whizkidz",
+            "value": 1
+        },
+        {
+            "source": "itmedia",
+            "target": "tkdkz",
+            "value": 3
+        },
+        {
+            "source": "itmedia",
+            "target": "itmedia_news",
+            "value": 1
+        },
+        {
+            "source": "threatinsight",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "threatinsight",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "threatinsight",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "threatinsight",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "threatinsight",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "RedPacketSec",
+            "value": 3
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "cybercentre_ca",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "iCyberFighter",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "AghiathChbib",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "AquiaSolutions",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "Secnewsbytes",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "PrivacySage",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "AI__TECH",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "Adam_K_Levin",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "GutmanYotam",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "SecludIT",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "deb_infosec",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "PVynckier",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Cybersecinsider",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "SCMagazine",
+            "value": 3
+        },
+        {
+            "source": "threatintel",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "kimkomando",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "threatintel",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "cybereason",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "Adam_K_Levin",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "teambuild3r",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "Raj_Samani",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "itmedia_news",
+            "target": "tkdkz",
+            "value": 3
+        },
+        {
+            "source": "itmedia_news",
+            "target": "itmedia",
+            "value": 3
+        },
+        {
+            "source": "kwdnet",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "kwdnet",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "kwdnet",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "kwdnet",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "kwdnet",
+            "target": "sec_trend",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "blueteamsec1",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "tadmaddad",
+            "value": 3
+        },
+        {
+            "source": "FAMASoon",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "FAMASoon",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "MrsYisWhy",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "SteveSanders7",
+            "value": 1
+        },
+        {
+            "source": "NakedSecurity",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "iototsecnews",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "moneymog",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "sec_trend",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "igaos",
+            "target": "taku888infinity",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "itmedia_news",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "igaos",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "nas_bench",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "Securityblog",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "wdormann",
+            "target": "arekfurt",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "Mister_MDM",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "RedPacketSec",
+            "value": 3
+        },
+        {
+            "source": "Hoorge",
+            "target": "KbWorks",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "Rorymon",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "adaptiva",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "bug_less",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Hoorge",
+            "target": "samilaiho",
+            "value": 1
+        },
+        {
+            "source": "ToolsWatch",
+            "target": "vFeed_IO",
+            "value": 1
+        },
+        {
+            "source": "ToolsWatch",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "ToolsWatch",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "ToolsWatch",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "mgdhermes",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "rvp",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "beingsheerazali",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "DeepFriedCyber",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "blueteamsec1",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "PVynckier",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "cybervictimes",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "certbe",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "DNSC_RO",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "CERTXMCO",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "Securityblog",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "infosecstuff",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "Swati_THN",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "Z0vsky",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "iCyberFighter",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "cybercentre_ca",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Grid32InfoSec",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "blueteamsec1",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Xc0resecurity",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Swati_THN",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "CyberSecDN",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "ncsc_gov_ie",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "kimkomando",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "hasdid",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "DarrenEwers",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "pigram86",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Cybersecinsider",
+            "value": 3
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "stevedriz",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "peterjmsimons",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "agabus98",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "SecludIT",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "lordman1982",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "GutmanYotam",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "PVynckier",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "cackerman1",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "RigneySec",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "deb_infosec",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "thalles",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "_DrFrusci",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Votiro",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "jtruglio",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "AI__TECH",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Securityblog",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "C3_Group",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "techhelpkb",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "trip_elix",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "Raj_Samani",
+            "value": 3
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "BeccaInfosecMag",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Adam_K_Levin",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "eteria_cloud",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "nf3xn",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "sonoclaudio",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "h2jazi",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "LanceSchukies",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "ArchinalLee",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "shah_sheikh",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "cornichecorp",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "niiconsulting",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "LudovicoLoreti",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "securityopenlab",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Cybermat3rial",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "orpheuscyber",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "ParkinsonFrost",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "test2v",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "nas_bench",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "TaylorParizo",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "iCyberFighter",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Cybersecinsider",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "CyberSysblue",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "danusminimus",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "SteveSanders7",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "malwaresick",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Binary_Defense",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "blueteamsec1",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "arekfurt",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "BCSecurity1",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Cyber_O51NT",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "RedPacketSec",
+            "value": 3
+        },
+        {
+            "source": "Securityblog",
+            "target": "trends_cyber",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "ncsc_gov_ie",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "DNSC_RO",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "samilaiho",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "threatinsight",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "security_wang",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "deb_infosec",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "GutmanYotam",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "MrsYisWhy",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Z0vsky",
+            "value": 3
+        },
+        {
+            "source": "Securityblog",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Adam_K_Levin",
+            "value": 3
+        },
+        {
+            "source": "Securityblog",
+            "target": "cackerman1",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Securizame",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "DeepBlueInfoSec",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "InfoSec_b",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "wdormann",
+            "value": 3
+        },
+        {
+            "source": "Securityblog",
+            "target": "SocEngineerInc",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "PatrickCMiller",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "Securityblog",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "Pyo0072",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "ToolsWatch",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "itmedia_news",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Pyo0072",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "h2jazi",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "NakedSecurity",
+            "value": 3
+        },
+        {
+            "source": "virusbtn",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "wdormann",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "Raj_Samani",
+            "value": 3
+        },
+        {
+            "source": "virusbtn",
+            "target": "certbe",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "DNSC_RO",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "iCyberFighter",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "StopMalvertisin",
+            "value": 3
+        },
+        {
+            "source": "virusbtn",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "FortiGuardLabs",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "virusbtn",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "virusbtn",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "YourAnonRiots",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "cybercentre_ca",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "ncsc_gov_ie",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "IT_securitynews",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "DNSC_RO",
+            "target": "certbe",
+            "value": 3
+        },
+        {
+            "source": "symantec",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "GetCalCISO",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "shah_sheikh",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Techmeme",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Cybersecinsider",
+            "value": 3
+        },
+        {
+            "source": "symantec",
+            "target": "JessicaHrdcstle",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "hacking_future",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Secnewsbytes",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "deb_infosec",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "annamsui",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "CyberSecDN",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "IT_securitynews",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Adam_K_Levin",
+            "value": 3
+        },
+        {
+            "source": "symantec",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "teambuild3r",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "fnmafra",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "rvp",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Swati_THN",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "rickyelqasem",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "MrsYisWhy",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "symantec",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "symantec",
+            "target": "CBIsecure",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "Practical365",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "symantec",
+            "target": "SCMagazine",
+            "value": 3
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "netsecu",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "Malwarebytes",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "StopMalvertisin",
+            "value": 3
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "InQuest",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "Securityblog",
+            "value": 3
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "security_wang",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "DNSC_RO",
+            "value": 3
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "ankit_anubhav",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Necio_news",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "DeepFriedCyber",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "rvp",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "hacking_future",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "JessicaHrdcstle",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "bugbounty18",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Securityblog",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "RigneySec",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "opsmatters_uk",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Adam_K_Levin",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "bartmcd",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "AcooEdi",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "AghiathChbib",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "IT_securitynews",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Raj_Samani",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "InfoSecPhils",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "PatrickCMiller",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "omvapt",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "SecludIT",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "JeffEnglander",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Cybersecinsider",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "laurencehaslop",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "stevedriz",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "DanWeb2_0",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "privilegedusers",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Neurons_AI",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "deb_infosec",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "techhelpkb",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "ionCube24",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "symantec",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "DirectDialcom",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "PVynckier",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "proficioinc",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "SupportDataNV",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "RedPacketSec",
+            "value": 3
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "AndresCyberSec",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "cybereason",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Security_Sleuth",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "GutmanYotam",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "cybersecboardrm",
+            "target": "Secnewsbytes",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "PerceptionPo1nt",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "teambuild3r",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "KateFazzini",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "SCMagazine",
+            "value": 3
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "CrowdStrike",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "ParkinsonFrost",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "CISAJen",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "arekfurt",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "wdormann",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "ankit_anubhav",
+            "value": 3
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "threatinsight",
+            "value": 3
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "joviannfeed",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "GossiTheDog",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "Panda_Lv0",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "miki158s",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "taku888infinity",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "autumn_good_35",
+            "value": 1
+        },
+        {
+            "source": "moneymog",
+            "target": "tadmaddad",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "NobMiwa",
+            "value": 3
+        },
+        {
+            "source": "moneymog",
+            "target": "piyokango",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "Votiro",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "ankit_anubhav",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "wdormann",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "symantec",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "QatarCERT",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "DNSC_RO",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "BeccaInfosecMag",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "FortiGuardLabs",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "cybersecboardrm",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "CrowdStrike",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "cybereason",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "Raj_Samani",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "Swati_THN",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "iCyberFighter",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "Malwarebytes",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "SocEngineerInc",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "threatintel",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "security_wang",
+            "value": 1
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "StopMalvertisin",
+            "value": 3
+        },
+        {
+            "source": "TheHackersNews",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "wdormann",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "lordman1982",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "InQuest",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "Malwarebytes",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "GossiTheDog",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "SteveSanders7",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "ISMG_News",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "Security_Sleuth",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "TheHackersNews",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "IT_securitynews",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "MrsYisWhy",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "unix_root",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "ToolsWatch",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "HelgeKlein",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "QatarCERT",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "DarkOperator",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "CERTXMCO",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "StopMalvertisin",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "Securityblog",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "anthonymfreed",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "symantec",
+            "value": 3
+        },
+        {
+            "source": "DidierStevens",
+            "target": "cudeso",
+            "value": 1
+        },
+        {
+            "source": "DidierStevens",
+            "target": "SCMagazine",
+            "value": 3
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "SecurityNewsbot",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "Securityblog",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "Cybersecinsider",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "Venafi",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "ncsc_gov_ie",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "cybercentre_ca",
+            "value": 1
+        },
+        {
+            "source": "CyberSecDN",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "wdormann",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "ankit_anubhav",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "nas_bench",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "StopMalvertisin",
+            "value": 3
+        },
+        {
+            "source": "h2jazi",
+            "target": "Cyber_O51NT",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "blueteamsec1",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "cybercentre_ca",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "MBThreatIntel",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "InQuest",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "virusbtn",
+            "value": 3
+        },
+        {
+            "source": "h2jazi",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "GossiTheDog",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "Malwarebytes",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "malwrhunterteam",
+            "value": 1
+        },
+        {
+            "source": "h2jazi",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "helpnetsecurity",
+            "target": "Raj_Samani",
+            "value": 3
+        },
+        {
+            "source": "helpnetsecurity",
+            "target": "ToolsWatch",
+            "value": 3
+        },
+        {
+            "source": "helpnetsecurity",
+            "target": "DidierStevens",
+            "value": 3
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "YourAnonRiots",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "IT_securitynews",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "SecludIT",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "InfoSec_b",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "FortiGuardLabs",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "trip_elix",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "Paula_Piccard",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "FAMASoon",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "CyberSecDN",
+            "value": 3
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "GutmanYotam",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "PrivacyPro_b",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "securezoo",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "cybersecboardrm",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "ankit_anubhav",
+            "value": 3
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "Adam_K_Levin",
+            "value": 3
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "Raj_Samani",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "talentxfactor",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "IT_SecGuru",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "CrowdStrike",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "Sec_Cyber",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "DarkReading",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "StopMalvertisin",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "helpnetsecurity",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "virusbtn",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "SCMagazine",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "TheHackersNews",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "NakedSecurity",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "threatintel",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "symantec",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "evanderburg",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "CERTXMCO",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "ToolsWatch",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "attritionorg",
+            "value": 1
+        },
+        {
+            "source": "SecurityNewsbot",
+            "target": "DidierStevens",
+            "value": 1
+        },
+        {
+            "source": "MBThreatIntel",
+            "target": "Malwarebytes",
+            "value": 3
+        }
+    ],
+    "nodes": [
+        {
+            "group": 1,
+            "user": "ka0com"
+        },
+        {
+            "group": 2,
+            "user": "RedPacketSec"
+        },
+        {
+            "group": 3,
+            "user": "NobMiwa"
+        },
+        {
+            "group": 4,
+            "user": "kai_ri_0001"
+        },
+        {
+            "group": 5,
+            "user": "tadmaddad"
+        },
+        {
+            "group": 6,
+            "user": "miki158s"
+        },
+        {
+            "group": 7,
+            "user": "taku888infinity"
+        },
+        {
+            "group": 8,
+            "user": "Panda_Lv0"
+        },
+        {
+            "group": 9,
+            "user": "autumn_good_35"
+        },
+        {
+            "group": 10,
+            "user": "sec_trend"
+        },
+        {
+            "group": 11,
+            "user": "piyokango"
+        },
+        {
+            "group": 12,
+            "user": "MachinaRecord"
+        },
+        {
+            "group": 13,
+            "user": "itmedia"
+        },
+        {
+            "group": 14,
+            "user": "virusbtn"
+        },
+        {
+            "group": 15,
+            "user": "moneymog"
+        },
+        {
+            "group": 16,
+            "user": "TheHackersNews"
+        },
+        {
+            "group": 23,
+            "user": "Hoorge"
+        },
+        {
+            "group": 24,
+            "user": "Cybersecinsider"
+        },
+        {
+            "group": 25,
+            "user": "Securityblog"
+        },
+        {
+            "group": 26,
+            "user": "Z0vsky"
+        },
+        {
+            "group": 27,
+            "user": "GossiTheDog"
+        },
+        {
+            "group": 28,
+            "user": "DidierStevens"
+        },
+        {
+            "group": 29,
+            "user": "NakedSecurity"
+        },
+        {
+            "group": 30,
+            "user": "CrowdStrike"
+        },
+        {
+            "group": 31,
+            "user": "symantec"
+        },
+        {
+            "group": 32,
+            "user": "threatintel"
+        },
+        {
+            "group": 33,
+            "user": "CyberSecDN"
+        },
+        {
+            "group": 34,
+            "user": "cybersecboardrm"
+        },
+        {
+            "group": 35,
+            "user": "SecurityNewsbot"
+        },
+        {
+            "group": 36,
+            "user": "malwrhunterteam"
+        },
+        {
+            "group": 37,
+            "user": "ToolsWatch"
+        },
+        {
+            "group": 38,
+            "user": "SCMagazine"
+        },
+        {
+            "group": 40,
+            "user": "DarkReading"
+        },
+        {
+            "group": 42,
+            "user": "MBThreatIntel"
+        },
+        {
+            "group": 45,
+            "user": "Raj_Samani"
+        },
+        {
+            "group": 47,
+            "user": "Malwarebytes"
+        },
+        {
+            "group": 49,
+            "user": "FAMASoon"
+        },
+        {
+            "group": 56,
+            "user": "threatinsight"
+        },
+        {
+            "group": 57,
+            "user": "StopMalvertisin"
+        },
+        {
+            "group": 64,
+            "user": "tkdkz"
+        },
+        {
+            "group": 68,
+            "user": "Pyo0072"
+        },
+        {
+            "group": 69,
+            "user": "kwdnet"
+        },
+        {
+            "group": 70,
+            "user": "igaos"
+        },
+        {
+            "group": 71,
+            "user": "G76whizkidz"
+        },
+        {
+            "group": 72,
+            "user": "Adam_K_Levin"
+        },
+        {
+            "group": 76,
+            "user": "securenews_web"
+        },
+        {
+            "group": 84,
+            "user": "helpnetsecurity"
+        },
+        {
+            "group": 87,
+            "user": "itmedia_news"
+        },
+        {
+            "group": 93,
+            "user": "h2jazi"
+        },
+        {
+            "group": 94,
+            "user": "ankit_anubhav"
+        },
+        {
+            "group": 96,
+            "user": "certbe"
+        },
+        {
+            "group": 99,
+            "user": "wdormann"
+        },
+        {
+            "group": 100,
+            "user": "DNSC_RO"
+        },
+        {
+            "group": 110,
+            "user": "nas_bench"
+        },
+        {
+            "group": 113,
+            "user": "cybereason"
+        },
+        {
+            "group": 115,
+            "user": "security_wang"
+        },
+        {
+            "group": 117,
+            "user": "anthonymfreed"
+        },
+        {
+            "group": 118,
+            "user": "unix_root"
+        },
+        {
+            "group": 119,
+            "user": "joviannfeed"
+        },
+        {
+            "group": 132,
+            "user": "CISAJen"
+        },
+        {
+            "group": 135,
+            "user": "stevedriz"
+        },
+        {
+            "group": 139,
+            "user": "Venafi"
+        },
+        {
+            "group": 140,
+            "user": "cybervictimes"
+        },
+        {
+            "group": 142,
+            "user": "cudeso"
+        },
+        {
+            "group": 144,
+            "user": "QatarCERT"
+        },
+        {
+            "group": 155,
+            "user": "cybercentre_ca"
+        },
+        {
+            "group": 156,
+            "user": "iCyberFighter"
+        },
+        {
+            "group": 158,
+            "user": "AghiathChbib"
+        },
+        {
+            "group": 159,
+            "user": "AquiaSolutions"
+        },
+        {
+            "group": 162,
+            "user": "Secnewsbytes"
+        },
+        {
+            "group": 169,
+            "user": "Paula_Piccard"
+        },
+        {
+            "group": 171,
+            "user": "PrivacySage"
+        },
+        {
+            "group": 173,
+            "user": "AI__TECH"
+        },
+        {
+            "group": 175,
+            "user": "GutmanYotam"
+        },
+        {
+            "group": 176,
+            "user": "SecludIT"
+        },
+        {
+            "group": 177,
+            "user": "deb_infosec"
+        },
+        {
+            "group": 178,
+            "user": "PVynckier"
+        },
+        {
+            "group": 181,
+            "user": "securezoo"
+        },
+        {
+            "group": 194,
+            "user": "kimkomando"
+        },
+        {
+            "group": 202,
+            "user": "evanderburg"
+        },
+        {
+            "group": 204,
+            "user": "teambuild3r"
+        },
+        {
+            "group": 207,
+            "user": "IT_SecGuru"
+        },
+        {
+            "group": 208,
+            "user": "Sec_Cyber"
+        },
+        {
+            "group": 217,
+            "user": "blueteamsec1"
+        },
+        {
+            "group": 226,
+            "user": "MrsYisWhy"
+        },
+        {
+            "group": 230,
+            "user": "SteveSanders7"
+        },
+        {
+            "group": 232,
+            "user": "iototsecnews"
+        },
+        {
+            "group": 245,
+            "user": "attritionorg"
+        },
+        {
+            "group": 250,
+            "user": "arekfurt"
+        },
+        {
+            "group": 251,
+            "user": "Mister_MDM"
+        },
+        {
+            "group": 253,
+            "user": "KbWorks"
+        },
+        {
+            "group": 254,
+            "user": "Rorymon"
+        },
+        {
+            "group": 255,
+            "user": "adaptiva"
+        },
+        {
+            "group": 256,
+            "user": "bug_less"
+        },
+        {
+            "group": 258,
+            "user": "samilaiho"
+        },
+        {
+            "group": 259,
+            "user": "vFeed_IO"
+        },
+        {
+            "group": 263,
+            "user": "mgdhermes"
+        },
+        {
+            "group": 264,
+            "user": "rvp"
+        },
+        {
+            "group": 265,
+            "user": "beingsheerazali"
+        },
+        {
+            "group": 267,
+            "user": "DeepFriedCyber"
+        },
+        {
+            "group": 277,
+            "user": "CERTXMCO"
+        },
+        {
+            "group": 281,
+            "user": "infosecstuff"
+        },
+        {
+            "group": 284,
+            "user": "Swati_THN"
+        },
+        {
+            "group": 295,
+            "user": "Grid32InfoSec"
+        },
+        {
+            "group": 297,
+            "user": "Xc0resecurity"
+        },
+        {
+            "group": 302,
+            "user": "ncsc_gov_ie"
+        },
+        {
+            "group": 306,
+            "user": "hasdid"
+        },
+        {
+            "group": 308,
+            "user": "DarrenEwers"
+        },
+        {
+            "group": 309,
+            "user": "pigram86"
+        },
+        {
+            "group": 313,
+            "user": "peterjmsimons"
+        },
+        {
+            "group": 314,
+            "user": "agabus98"
+        },
+        {
+            "group": 316,
+            "user": "lordman1982"
+        },
+        {
+            "group": 321,
+            "user": "cackerman1"
+        },
+        {
+            "group": 322,
+            "user": "RigneySec"
+        },
+        {
+            "group": 324,
+            "user": "thalles"
+        },
+        {
+            "group": 325,
+            "user": "_DrFrusci"
+        },
+        {
+            "group": 326,
+            "user": "Votiro"
+        },
+        {
+            "group": 327,
+            "user": "jtruglio"
+        },
+        {
+            "group": 330,
+            "user": "C3_Group"
+        },
+        {
+            "group": 331,
+            "user": "techhelpkb"
+        },
+        {
+            "group": 333,
+            "user": "trip_elix"
+        },
+        {
+            "group": 335,
+            "user": "BeccaInfosecMag"
+        },
+        {
+            "group": 338,
+            "user": "eteria_cloud"
+        },
+        {
+            "group": 339,
+            "user": "nf3xn"
+        },
+        {
+            "group": 340,
+            "user": "sonoclaudio"
+        },
+        {
+            "group": 342,
+            "user": "LanceSchukies"
+        },
+        {
+            "group": 343,
+            "user": "ArchinalLee"
+        },
+        {
+            "group": 344,
+            "user": "shah_sheikh"
+        },
+        {
+            "group": 345,
+            "user": "cornichecorp"
+        },
+        {
+            "group": 346,
+            "user": "niiconsulting"
+        },
+        {
+            "group": 347,
+            "user": "LudovicoLoreti"
+        },
+        {
+            "group": 348,
+            "user": "securityopenlab"
+        },
+        {
+            "group": 350,
+            "user": "Cybermat3rial"
+        },
+        {
+            "group": 351,
+            "user": "orpheuscyber"
+        },
+        {
+            "group": 352,
+            "user": "ParkinsonFrost"
+        },
+        {
+            "group": 353,
+            "user": "test2v"
+        },
+        {
+            "group": 355,
+            "user": "TaylorParizo"
+        },
+        {
+            "group": 358,
+            "user": "CyberSysblue"
+        },
+        {
+            "group": 359,
+            "user": "danusminimus"
+        },
+        {
+            "group": 361,
+            "user": "malwaresick"
+        },
+        {
+            "group": 362,
+            "user": "Binary_Defense"
+        },
+        {
+            "group": 365,
+            "user": "BCSecurity1"
+        },
+        {
+            "group": 366,
+            "user": "Cyber_O51NT"
+        },
+        {
+            "group": 368,
+            "user": "trends_cyber"
+        },
+        {
+            "group": 387,
+            "user": "Securizame"
+        },
+        {
+            "group": 391,
+            "user": "DeepBlueInfoSec"
+        },
+        {
+            "group": 392,
+            "user": "InfoSec_b"
+        },
+        {
+            "group": 394,
+            "user": "SocEngineerInc"
+        },
+        {
+            "group": 401,
+            "user": "PatrickCMiller"
+        },
+        {
+            "group": 441,
+            "user": "FortiGuardLabs"
+        },
+        {
+            "group": 447,
+            "user": "YourAnonRiots"
+        },
+        {
+            "group": 459,
+            "user": "IT_securitynews"
+        },
+        {
+            "group": 464,
+            "user": "GetCalCISO"
+        },
+        {
+            "group": 467,
+            "user": "Techmeme"
+        },
+        {
+            "group": 469,
+            "user": "JessicaHrdcstle"
+        },
+        {
+            "group": 470,
+            "user": "hacking_future"
+        },
+        {
+            "group": 475,
+            "user": "annamsui"
+        },
+        {
+            "group": 487,
+            "user": "fnmafra"
+        },
+        {
+            "group": 490,
+            "user": "rickyelqasem"
+        },
+        {
+            "group": 494,
+            "user": "CBIsecure"
+        },
+        {
+            "group": 495,
+            "user": "Practical365"
+        },
+        {
+            "group": 506,
+            "user": "netsecu"
+        },
+        {
+            "group": 517,
+            "user": "InQuest"
+        },
+        {
+            "group": 528,
+            "user": "Necio_news"
+        },
+        {
+            "group": 533,
+            "user": "bugbounty18"
+        },
+        {
+            "group": 536,
+            "user": "opsmatters_uk"
+        },
+        {
+            "group": 539,
+            "user": "bartmcd"
+        },
+        {
+            "group": 540,
+            "user": "AcooEdi"
+        },
+        {
+            "group": 547,
+            "user": "InfoSecPhils"
+        },
+        {
+            "group": 551,
+            "user": "omvapt"
+        },
+        {
+            "group": 553,
+            "user": "JeffEnglander"
+        },
+        {
+            "group": 555,
+            "user": "laurencehaslop"
+        },
+        {
+            "group": 557,
+            "user": "DanWeb2_0"
+        },
+        {
+            "group": 558,
+            "user": "privilegedusers"
+        },
+        {
+            "group": 559,
+            "user": "Neurons_AI"
+        },
+        {
+            "group": 562,
+            "user": "ionCube24"
+        },
+        {
+            "group": 564,
+            "user": "DirectDialcom"
+        },
+        {
+            "group": 567,
+            "user": "proficioinc"
+        },
+        {
+            "group": 568,
+            "user": "SupportDataNV"
+        },
+        {
+            "group": 571,
+            "user": "AndresCyberSec"
+        },
+        {
+            "group": 573,
+            "user": "Security_Sleuth"
+        },
+        {
+            "group": 580,
+            "user": "PerceptionPo1nt"
+        },
+        {
+            "group": 582,
+            "user": "KateFazzini"
+        },
+        {
+            "group": 639,
+            "user": "ISMG_News"
+        },
+        {
+            "group": 647,
+            "user": "HelgeKlein"
+        },
+        {
+            "group": 649,
+            "user": "DarkOperator"
+        },
+        {
+            "group": 701,
+            "user": "PrivacyPro_b"
+        },
+        {
+            "group": 707,
+            "user": "talentxfactor"
+        }
+    ]
+}
