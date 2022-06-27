@@ -77,7 +77,6 @@ class TwitterFriends:
             user_level_list = []
             while len(self.user_pending_queue) != 0:
                 if self.user_pending_queue[0] not in self.user_completed_queue:
-                    print(self.user_pending_queue)
                     user_id = self.get_user_id(self.user_pending_queue[0])
                     try:
                         friend_list = self.scrape_friends(user_id)
