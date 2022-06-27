@@ -13,7 +13,7 @@ d3.json('/static/results/twitter_friendship.json').then(function(data) {
     document.getElementById("query").textContent += " | Level: " + level;
 
     const simulation = d3.forceSimulation()
-        .force('charge', d3.forceManyBody().strength(-100))
+        .force('charge', d3.forceManyBody().strength(-500))
         .force('center', d3.forceCenter(width / 2, height / 2));
 
     const nodeElements = svg.append('g')
