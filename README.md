@@ -17,6 +17,10 @@ python app.py
 > http://127.0.0.1:5000 
 
 ### OR Using IDE
-Run app.py
+1) Run app.py
+
+2) Open a web browser to this address: 
+
+> http://127.0.0.1:5000 
 
 
