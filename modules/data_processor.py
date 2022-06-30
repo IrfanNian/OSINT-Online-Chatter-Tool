@@ -56,13 +56,9 @@ class DataProcessor:
         """
         scatter_chart_df = arg_df.copy() 
         scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
-        
         scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
-        
-        
         scatter_chart_df.reset_index(drop=True, inplace=True) 
         scatter_chart_df= scatter_chart_df.loc[:, ['timeofday', 'day']]  
-        #scatter_chart_df.rename(columns={'time': 'day'}, inplace=True)
         scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1) 
         return scatter_chart_df
     
