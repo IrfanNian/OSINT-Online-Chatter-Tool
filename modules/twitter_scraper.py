@@ -9,11 +9,10 @@ geolocator = Nominatim(user_agent="chatter")
 
 
 class TwitterScraper:
-    def __init__(self, arg_search, arg_advance_subreddit=None, arg_advance_since=None, arg_advance_until=None,
+    def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None,
                  arg_advance_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
-        self.arg_advance_subreddit = arg_advance_subreddit
         self.arg_advance_until = arg_advance_until
         self.arg_advance_limit = arg_advance_limit
         self.arg_refinement = arg_refinement
@@ -73,4 +72,4 @@ class TwitterScraper:
 
             # Output to feather
             tweets_df = tweets_df.reset_index(drop=True)
-            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.feather"))
+            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results_" + str(dt.datetime.today().date()) + ".feather"))

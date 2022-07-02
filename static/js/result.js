@@ -65,11 +65,13 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             r = Math.floor(1 + ratio * (r - min));
 
             for (let a = 0; a < datapoints.length; a++) {
-                var dateOnly = new Date(datapoints[a].time);
-                dateOnly = dateOnly.toISOString().substring(0, 10);
-                if (x == dateOnly) {
-                    bubbleText.push(datapoints[a].text);
-                    bubbleUser.push(datapoints[a].user);
+                if (datapoints[a].time != "") {
+                    var dateOnly = new Date(datapoints[a].time);
+                    dateOnly = dateOnly.toISOString().substring(0, 10);
+                    if (x == dateOnly) {
+                        bubbleText.push(datapoints[a].text);
+                        bubbleUser.push(datapoints[a].user);
+                    }
                 }
             }
             var json = { x: x, y: y, r: r, text: bubbleText, user: bubbleUser };
@@ -552,30 +554,34 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
     const scatterStorage = [];
 
     for (let i = 0; i < datapoints.length; i++) {
-        var scatterText = [];
-        var scatterUser = [];
-        var xt = datapoints[i].day;
-        var x = new Date(xt);
-        x = x.toISOString().substring(0, 10);
+        if (datapoints[i].time != "") {
+            var scatterText = [];
+            var scatterUser = [];
+            var xt = datapoints[i].day;
+            var x = new Date(xt);
+            x = x.toISOString().substring(0, 10);
 
-        var yt = datapoints[i].time;
-        var y = new Date(yt);
-        y = y.toISOString().substring(11, 13);
+            var yt = datapoints[i].time;
+            var y = new Date(yt);
+            y = y.toISOString().substring(11, 13);
 
-        for (let a = 0; a < datapoints.length; a++) {
-            var dateOnly = new Date(datapoints[a].time);
-            dateOnly = dateOnly.toISOString().substring(0, 10);
+            for (let a = 0; a < datapoints.length; a++) {
+                if (datapoints[a].time != "") {
+                    var dateOnly = new Date(datapoints[a].time);
+                    dateOnly = dateOnly.toISOString().substring(0, 10);
 
-            var timeOnly = new Date(datapoints[a].time);
-            timeOnly = timeOnly.toISOString().substring(11, 13);
+                    var timeOnly = new Date(datapoints[a].time);
+                    timeOnly = timeOnly.toISOString().substring(11, 13);
 
-            if (x == dateOnly && y == timeOnly) {
-                scatterText.push(datapoints[a].text);
-                scatterUser.push(datapoints[a].user);
+                    if (x == dateOnly && y == timeOnly) {
+                        scatterText.push(datapoints[a].text);
+                        scatterUser.push(datapoints[a].user);
+                    }
+                    var json = { x: x, y: y, text: scatterText, user: scatterUser };
+                }
             }
-            var json = { x: x, y: y, text: scatterText, user: scatterUser };
+            scatterStorage.push(json);
         }
-        scatterStorage.push(json);
     }
 
     //config

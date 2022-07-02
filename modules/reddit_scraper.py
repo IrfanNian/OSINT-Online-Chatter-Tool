@@ -97,7 +97,7 @@ class RedditScraper:
                 submission_df = submission_df.reset_index(drop=True)
                 submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df.to_feather(os.path.join(CWD, "results",
-                                                      str(self.arg_search) + "_reddit_" + subreddit + ".feather"))
+                                                      str(self.arg_search) + "_reddit_" + subreddit + "_" + str(dt.datetime.today().date()) + ".feather"))
 
     # def run(self):
     #     """
