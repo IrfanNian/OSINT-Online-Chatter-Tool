@@ -29,9 +29,9 @@ class ModuleConfigurator:
         """
         limit = 5000
         if arg_depth == "quick":
-            limit = 1000
+            limit = 5000
         elif arg_depth == "standard":
-            limit = 10000
+            limit = 50000
         elif arg_depth == "deep":
             limit = 100000
         return limit
@@ -80,7 +80,8 @@ class ModuleConfigurator:
             last_one_yr = TODAY - dateutil.relativedelta.relativedelta(years=1)
             return str(last_one_yr), str(TODAY)
         else:
-            pass
+            last_seven = TODAY - dt.timedelta(days=7)
+            return str(last_seven), str(TODAY)
 
     def configure_sources(self, arg_sources, arg_switch):
         """
