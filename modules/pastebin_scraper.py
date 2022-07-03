@@ -41,16 +41,16 @@ class PastebinScrapper:
             date_range = "from=" + post_date_str + "&to=" + post_date_str
             resp = requests.post("https://psbdmp.ws/api/v3/getbydate", headers=headers, data=date_range)
             json_data = json.loads(resp.text)
-            count += len(json_data[0])
             for result in json_data[0]:
+                count += 1
                 response = requests.get(f"https://pastebin.com/raw/{result['id']}").text
                 if self.arg_search in response:
                     pb_df.loc[len(pb_df)] = [post_date, result['id'], response, result['id'], "No Data", "pastebin"]
                     pb_df['time'] = pd.to_datetime(pb_df['time'], format='%Y-%m-%d %H:%M:%S')
                     pb_df['time'] = pb_df['time'].apply(lambda x: x.isoformat())
-                    pb_df['text'] = pb_df['text'].str[:32567]
-            if count > self.arg_limit:
-                break
+                    # pb_df['text'] = pb_df['text'].str[:32567]
+                if count > self.arg_limit:
+                    break
             post_date = post_date + dt.timedelta(days=1)
             days -= 1
 
