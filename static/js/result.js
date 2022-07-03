@@ -67,7 +67,9 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             for (let a = 0; a < datapoints.length; a++) {
                 if (datapoints[a].time != "") {
                     var dateOnly = new Date(datapoints[a].time);
-                    dateOnly = dateOnly.toISOString().substring(0, 10);
+                    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                    var localISOTime = (new Date(dateOnly - tzoffset)).toISOString().slice(0, -1);
+                    dateOnly = localISOTime.split('T', 1)[0];
                     if (x == dateOnly) {
                         bubbleText.push(datapoints[a].text);
                         bubbleUser.push(datapoints[a].user);
@@ -568,7 +570,9 @@ d3.csv('/static/results/charting.csv').then(function (datapoints) {
             for (let a = 0; a < datapoints.length; a++) {
                 if (datapoints[a].time != "") {
                     var dateOnly = new Date(datapoints[a].time);
-                    dateOnly = dateOnly.toISOString().substring(0, 10);
+                    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                    var localISOTime = (new Date(dateOnly - tzoffset)).toISOString().slice(0, -1);
+                    dateOnly = localISOTime.split('T', 1)[0];
 
                     var timeOnly = new Date(datapoints[a].time);
                     timeOnly = timeOnly.toISOString().substring(11, 13);
