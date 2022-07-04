@@ -2,8 +2,6 @@ import pandas as pd
 import os
 import re
 
-pd.set_option("display.max_rows", None, "display.max_columns", None)
-
 CWD = os.getcwd()
 STATIC_FOLDER = os.path.join("static", "results")
 
@@ -98,6 +96,7 @@ class DataProcessor:
         ex = ex.sort_values(by=['Count'], ascending=False)
         size = 100
         cnt = 0
+
         # Wordcloud words and sizes
         list_world_counts = []
         for word in ex['Word']:
@@ -119,7 +118,6 @@ class DataProcessor:
 
         return wordcloud_and_muiltiline_df
 
-
     def run(self, arg_df):
         """
         Runs the data processor module
@@ -131,41 +129,3 @@ class DataProcessor:
         multi_df = self.wordcloud_and_muiltiline(country_df)
         scatter_df = self.scatter_chart(multi_df)
         self.write_to_csv(scatter_df)
-
-
-#
-# debug code ignore
-#df = pd.read_csv(os.path.join(CWD, "..", STATIC_FOLDER, "results_compiled.csv"))
-#
-#bubble_chart_df = df.copy()
-#
-#bubble_chart_df['time'] = pd.to_datetime(bubble_chart_df['time']).dt.date
-#
-#bubble_chart_df['date_count'] = bubble_chart_df.time.map(bubble_chart_df.groupby('time').size())
-#bubble_chart_df.drop_duplicates(subset=['time'], inplace=True)
-#bubble_chart_df.reset_index(drop=True, inplace=True)
-#bubble_chart_df = bubble_chart_df.loc[:, ['time', 'date_count']]
-#bubble_chart_df.rename(columns={'time': 'time_count'}, inplace=True)
-#bubble_chart_df = pd.concat([bubble_chart_df, df], axis=1)
-#
-#country_chart_df = bubble_chart_df.copy()
-#country_chart_df['country_count'] = country_chart_df.location.map(country_chart_df.groupby('location').size())
-#country_chart_df.drop_duplicates(subset=['location'], inplace=True)
-#country_chart_df.reset_index(drop=True, inplace=True)
-#country_chart_df = country_chart_df.loc[:, ['location', 'country_count']]
-#country_chart_df = pd.concat([country_chart_df, bubble_chart_df], axis=1)
-#
-#scatter_chart_df = country_chart_df.copy() 
-#scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
-#scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
-#scatter_chart_df.drop_duplicates(subset=['time'], inplace=True) 
-#scatter_chart_df.reset_index(drop=True, inplace=True) 
-#scatter_chart_df= scatter_chart_df.loc[:, ['day', 'timeofday']]  
-#scatter_chart_df = pd.concat([scatter_chart_df, country_chart_df], axis=1) 
-#print(bubble_chart_df)
-#print(country_chart_df)
-#print(scatter_chart_df)
-#bubble_chart_df.to_csv(os.path.join(CWD,  "bubble.csv"), sep=",", index=False)
-#country_chart_df.to_csv(os.path.join(CWD,  "country.csv"), sep=",", index=False)
-#scatter_chart_df.to_csv(os.path.join(CWD,  "scatter.csv"), sep=",", index=False)
-#df.to_csv(os.path.join(CWD,  "df.csv"), sep=",", index=False)

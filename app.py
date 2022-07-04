@@ -100,7 +100,6 @@ def results():
         os.makedirs(STATIC_RESULT_FOLDER)
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    # cleanup
     shutil.rmtree(RESULT_FOLDER)
     os.makedirs(RESULT_FOLDER)
     shutil.rmtree(STATIC_RESULT_FOLDER)
@@ -108,7 +107,6 @@ def results():
     shutil.rmtree(UPLOAD_FOLDER)
     os.makedirs(UPLOAD_FOLDER)
     if request.method == "POST":
-        # configure settings
         searchbar_text = request.form.get('keyword')
         chosen_sources = request.form.get('platf')
         custom_subreddit = request.form.get('csubrtext')
@@ -143,7 +141,6 @@ def results():
             since, until = mcr.configure_date(time_range)
         limit = mcr.configure_depth(depth_range)
         custom_subreddit = mcr.configure_subreddit(custom_subreddit)
-        # run modules
         mc = ModuleController()
         mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit, refinement)
         return render_template('results.html', title=title, result=searchbar_text)
