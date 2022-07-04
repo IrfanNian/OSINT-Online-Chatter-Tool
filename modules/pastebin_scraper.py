@@ -48,7 +48,6 @@ class PastebinScrapper:
                     pb_df.loc[len(pb_df)] = [post_date, result['id'], response, result['id'], "No Data", "pastebin"]
                     pb_df['time'] = pd.to_datetime(pb_df['time'], format='%Y-%m-%d %H:%M:%S')
                     pb_df['time'] = pb_df['time'].apply(lambda x: x.isoformat())
-                    # pb_df['text'] = pb_df['text'].str[:32567]
                 if count > self.arg_limit:
                     break
             post_date = post_date + dt.timedelta(days=1)
@@ -57,6 +56,5 @@ class PastebinScrapper:
         if self.arg_refinement is not None:
             pb_df = pb_df[pb_df["text"].str.contains(self.arg_refinement)]
         if len(pb_df) != 0:
-            pb_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results.csv"), sep=",", index=False)
             pb_df = pb_df.reset_index(drop=True)
             pb_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results_" + str(dt.datetime.today().date()) + ".feather"))

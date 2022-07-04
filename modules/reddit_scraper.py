@@ -1,5 +1,3 @@
-# import praw
-# import time
 from psaw import PushshiftAPI
 import datetime as dt
 import pandas as pd
@@ -47,34 +45,27 @@ class RedditScraper:
             self.arg_advance_until = dt.datetime.strptime(self.arg_advance_until, '%Y-%m-%d')
             self.arg_advance_until = int(dt.datetime(self.arg_advance_until.year, self.arg_advance_until.month,
                                                      self.arg_advance_until.day).timestamp())
-  
-        # Check for customised limit
-        if type(self.arg_advance_limit) == int:
-            limit = self.arg_advance_limit
-        else:
-            limit = 500
             
         # Specific subreddit search
         if self.arg_advance_subreddit is None:
-            # default value
+            # the default value is at module_configurator.py
             sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
         else:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
             red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": [], "platform": []}
-            # Checking for timeframe, after is since and before is until
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
-                gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
+                gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search,
                                              after=self.arg_advance_since, before=self.arg_advance_until)
             elif self.arg_advance_since is None and self.arg_advance_until is not None:
-                gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
+                gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search,
                                              before=self.arg_advance_until)
             elif self.arg_advance_since is not None and self.arg_advance_until is None:
-                gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search,
+                gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search,
                                              after=self.arg_advance_since)
             else:
-                gen = api.search_submissions(subreddit=subreddit, limit=limit, q=self.arg_search)
+                gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search)
 
             for post in gen:
                 try:
@@ -95,36 +86,5 @@ class RedditScraper:
                 submission_df = submission_df[submission_df["text"].str.contains(self.arg_refinement)]
             if len(submission_df) != 0:
                 submission_df = submission_df.reset_index(drop=True)
-                submission_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_reddit_" + subreddit + ".csv"), sep=",", index=False)
                 submission_df.to_feather(os.path.join(CWD, "results",
                                                       str(self.arg_search) + "_reddit_" + subreddit + "_" + str(dt.datetime.today().date()) + ".feather"))
-
-    # def run(self):
-    #     """
-    #     Runs the reddit scraper module
-    #     :return None:
-    #     """
-    #     reddit = praw.Reddit(client_id="",  # my client id
-    #                          client_secret="",  # your client secret
-    #                          user_agent="",  # user agent name
-    #                          username="",  # your reddit username
-    #                          password="")  # your reddit password
-    #
-    #     # List of subreddits to scrape data
-    #     sub_list = ['cybersecurity']
-    #
-    #     for i in sub_list:
-    #         subreddit = reddit.subreddit(i)
-    #         red_dict = {"title": [], "user": [], "time": [], "text": [], "url": []}
-    #
-    #         for post in subreddit.search(self.arg_search, sort="new", limit=100):
-    #             date = datetime.datetime.fromtimestamp(post.created)
-    #             red_dict["title"].append(post.title)
-    #             red_dict["user"].append(post.author)
-    #             red_dict["time"].append(date)
-    #             red_dict["text"].append(post.selftext)
-    #             red_dict["url"].append(post.url)
-    #
-    #         post_data = pd.DataFrame(red_dict)
-    #         post_data.to_csv(os.path.join(CWD, "results", i + "_" + str(self.arg_search) + "_subreddit.csv"), sep=",",
-    #                          index=False)

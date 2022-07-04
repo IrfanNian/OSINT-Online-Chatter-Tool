@@ -37,7 +37,6 @@ class FeatherReader:
         """
         compiled_df = pd.DataFrame(columns=["time", "text", "user", "location", "platform"])
         for filename in arg_feather_filenames:
-            # open and read the file to df
             df = pd.read_feather(filename)
             compiled_df = pd.concat([compiled_df, df], ignore_index=True)
         try:
@@ -55,7 +54,6 @@ class FeatherReader:
         all_feather_files = self.get_feather_files("*_tweets_results.feather")
         twitter_df = self.feather_to_df(all_feather_files)
         twitter_df.drop_duplicates(subset=["user"], inplace=True)
-        # twitter_df["user"] = "@" + twitter_df["user"].astype(str)
         twitter_user_list = twitter_df["user"].tolist()
         return twitter_user_list
 

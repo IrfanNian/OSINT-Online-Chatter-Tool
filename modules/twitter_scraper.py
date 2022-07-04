@@ -35,15 +35,9 @@ class TwitterScraper:
         else:
             statement = self.arg_search
 
-        # Check for customised tweet limit
-        if type(self.arg_advance_limit) == int:
-            limit = self.arg_advance_limit
-        else:
-            limit = 500
-
         # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):
-            if i > limit:
+            if i > self.arg_advance_limit:
                 break
             if self.arg_search.lower() not in tweet.content.lower():
                 continue
@@ -65,11 +59,7 @@ class TwitterScraper:
         if self.arg_refinement is not None:
             tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
 
-        # Output to CSV
         if len(tweets_df) != 0:
-            tweets_df.to_csv(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results.csv"), sep=",",
-                             index=False)
-
             # Output to feather
             tweets_df = tweets_df.reset_index(drop=True)
             tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results_" + str(dt.datetime.today().date()) + ".feather"))
