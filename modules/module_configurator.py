@@ -18,8 +18,8 @@ class ModuleConfigurator:
         """
         sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
         if arg_subreddit is not None and arg_subreddit != "":
+            arg_subreddit = arg_subreddit.replace(" ", "")
             if "," in arg_subreddit:
-                arg_subreddit = arg_subreddit.replace(" ", "")
                 sub_list = arg_subreddit.split(',')
             else:
                 sub_list = [arg_subreddit]
