@@ -19,7 +19,7 @@ DEMO_FOLDER = "demo"
 app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16mb
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 @app.route('/')

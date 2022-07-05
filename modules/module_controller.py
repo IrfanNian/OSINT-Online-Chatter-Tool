@@ -21,7 +21,6 @@ class ModuleController:
         :return None:
         """
         processes = []
-        # start them scraper processes
         if arg_scraping_sources["ts"]:
             ts = TwitterScraper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
             ts_process = multiprocessing.Process(target=ts.run)
@@ -38,7 +37,6 @@ class ModuleController:
             ps_process.start()
             processes.append(ps_process)
 
-        # join them scraper processes
         for process in processes:
             process.join()
 

@@ -123,7 +123,8 @@ function drawGraph() {
                 .text(node => node.user)
                 .attr('font-size', 10)
                 .attr('dx', 25)
-                .attr('dy', 4);
+                .attr('dy', 4)
+                .attr('fill', 'black');
 
         simulation.nodes(nodes).on('tick', () => {
             nodeElements

@@ -36,7 +36,6 @@ class RedditScraper:
         """
         api = PushshiftAPI()
 
-        # convert date to epoch timestamp
         if self.arg_advance_since:
             self.arg_advance_since = dt.datetime.strptime(self.arg_advance_since, '%Y-%m-%d')
             self.arg_advance_since = int(dt.datetime(self.arg_advance_since.year, self.arg_advance_since.month,
@@ -45,10 +44,8 @@ class RedditScraper:
             self.arg_advance_until = dt.datetime.strptime(self.arg_advance_until, '%Y-%m-%d')
             self.arg_advance_until = int(dt.datetime(self.arg_advance_until.year, self.arg_advance_until.month,
                                                      self.arg_advance_until.day).timestamp())
-            
-        # Specific subreddit search
+
         if self.arg_advance_subreddit is None:
-            # the default value is at module_configurator.py
             sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
         else:
             sub_list = self.arg_advance_subreddit
