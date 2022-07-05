@@ -33,14 +33,21 @@
         <div class="container">
             <p class="title">
                 Showing Results for:
-                <span class="query" id="query">{{ result }}</span>
+                <span class="query" id="query"></span>
             </p>
-            <div class="information" id="information" hidden>
+            <div class="information" id="information">
+                <p id="most_following"></p>
+                <p id="least_following"></p>
+                <p id="most_follower"></p>
+                <p id="least_follower"></p>
+                <p id="top_five"></p>
+                <p id="bottom_five"></p>
                 <p id="parent"></p>
                 <p id="following"></p>
                 <p id="followers"></p>
             </div>
             <svg width="900" height="500" class="graph"></svg>
+            <button type="button" id="reset_graph">Reset Graph</button>
         </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/relationship_result.js"></script>

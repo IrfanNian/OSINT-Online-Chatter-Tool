@@ -41,11 +41,10 @@ def relationship_results():
         level = request.form.get('level', type=int)
         demo_mode = request.form.get('demoMode')
         if demo_mode == "demoMode":
-            searchbar_text = "Demo Mode"
             source = os.path.join(DEMO_FOLDER, "twitter_friendship.json")
             destination = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
             shutil.copy(source, destination)
-            return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+            return render_template('relationship_results.html', title=searchbar_text)
         if searchbar_text not in twitter_users:
             twitter_users_a, twitter_users_b = get_twitter_list_split()
             error = "User is not in the results record"
@@ -69,7 +68,7 @@ def relationship_results():
                                            twitter_users_b=twitter_users_b, error=error)
         tf = TwitterFriends(credentials)
         tf.run(searchbar_text, level)
-        return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+        return render_template('relationship_results.html', title=searchbar_text)
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
         return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
