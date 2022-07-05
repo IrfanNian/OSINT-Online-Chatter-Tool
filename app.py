@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
-from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini
+from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini, allowed_file_json
 from modules.twitter_relationship import TwitterFriends
 import os
 import shutil
@@ -19,6 +19,7 @@ DEMO_FOLDER = "demo"
 app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16mb
 
 
 @app.route('/')
@@ -30,6 +31,19 @@ def default():
 def relationships():
     twitter_users_a, twitter_users_b = get_twitter_list_split()
     return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
+
+
+@app.route('/rs_uploader', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        if f.filename != "" and allowed_file_json(f.filename):
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            shutil.copy(os.path.join(app.config['UPLOAD_FOLDER'], filename), STATIC_RESULT_FOLDER)
+            return render_template('relationship_results.html', error="File Uploaded Successfully")
+        else:
+            return render_template('relationship_results.html', error="File Uploaded Failed")
 
 
 @app.route('/relationship_results', methods=['POST'])
@@ -44,7 +58,7 @@ def relationship_results():
             source = os.path.join(DEMO_FOLDER, "twitter_friendship.json")
             destination = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
             shutil.copy(source, destination)
-            return render_template('relationship_results.html', title=searchbar_text)
+            return render_template('relationship_results.html', title="Demo Mode")
         if searchbar_text not in twitter_users:
             twitter_users_a, twitter_users_b = get_twitter_list_split()
             error = "User is not in the results record"
@@ -78,8 +92,13 @@ def relationship_results():
 def download_data():
     if request.method == "POST":
         timestamp = dt.datetime.now().timestamp()
-        keyword = session['keyword']
+        try:
+            keyword = session['keyword']
+        except KeyError:
+            keyword = "key_missing"
         filename = keyword + "_result_%s.zip" % timestamp
+        if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
+            shutil.copy(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"), RESULT_FOLDER)
         memory_file = BytesIO()
         with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as f:
             for root, dirs, files in os.walk(RESULT_FOLDER):

@@ -32,6 +32,7 @@ function drawGraph() {
         const top_five = data['top_five'];
         const bottom_five = data['bottom_five'];
         const searched_user = data['searched_user'];
+        document.title = searched_user;
         const most_following = data['most_following'];
         const most_follower = data['most_follower'];
         const least_following = data['least_following'];
