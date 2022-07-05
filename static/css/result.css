@@ -359,6 +359,7 @@ table thead {
 .button {
     background-color: black;
     border: none;
+    border-radius: 10px;
     color: white;
     padding: 15px 32px;
     text-align: center;

@@ -47,6 +47,10 @@ class ModuleConfigurator:
         :param arg_until:
         :return since, until:
         """
+        if arg_since is None or arg_since == "":
+            arg_since = str(TODAY)
+        if arg_until is None or arg_until == "":
+            arg_until = str(TODAY)
         since = dt.datetime.strptime(arg_since, '%Y-%m-%d').date()
         until = dt.datetime.strptime(arg_until, '%Y-%m-%d').date()
         if since > TODAY:

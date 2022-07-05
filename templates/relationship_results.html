@@ -25,6 +25,13 @@
             <div class="right">
                 <ul>
                     <li>
+                        {% if title != "Demo Mode" %}
+                        <form method="POST" action="/download">
+                            <input type="submit" class="button" value="Download">
+                        </form>
+                        {% endif %}
+                    </li>
+                    <li>
                         <a href="/">Home</a>
                     </li>
                 </ul>
@@ -33,14 +40,42 @@
         <div class="container">
             <p class="title">
                 Showing Results for:
-                <span class="query" id="query">{{ result }}</span>
+                <span class="query" id="query"></span>
             </p>
-            <div class="information" id="information" hidden>
+            <div class="information" id="information">
+                <p id="most_following"></p>
+                <p id="least_following"></p>
+                <p id="most_follower"></p>
+                <p id="least_follower"></p>
+                <p id="top_five"></p>
+                <p id="bottom_five"></p>
                 <p id="parent"></p>
                 <p id="following"></p>
                 <p id="followers"></p>
             </div>
             <svg width="900" height="500" class="graph"></svg>
+            <table class="center">
+                <form method="POST" action="/rs_uploader" enctype = "multipart/form-data">
+                <tr>
+                    <td>
+                        <input type="file" name="file"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" id="submit_button" value="Submit JSON"/>
+                    </td>
+                </tr>
+                </form>
+                <tr>
+                    <td><button type="button" id="reset_graph">Reset Graph</button></td>
+                </tr>
+                {% if error %}
+                <tr>
+                    <td><p class="error">{{ error }}</p></td>
+                </tr>
+                {% endif %}
+            </table>
         </div>
         <script src="/static/js/nav.js"></script>
         <script src="/static/js/relationship_result.js"></script>

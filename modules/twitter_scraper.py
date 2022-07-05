@@ -22,10 +22,8 @@ class TwitterScraper:
         Runs the twitter scraper module
         :return None:
         """
-        # Creating list to append tweet data to
         tweets_list = []
 
-        # Checking for timeframe
         if self.arg_advance_since is not None and self.arg_advance_until is not None:
             statement = self.arg_search + " since:" + self.arg_advance_since + " until:" + self.arg_advance_until
         elif self.arg_advance_since is None and self.arg_advance_until is not None:
@@ -35,7 +33,6 @@ class TwitterScraper:
         else:
             statement = self.arg_search
 
-        # Using TwitterSearchScraper to scrape data and append tweets to list
         for i, tweet in enumerate(sntwitter.TwitterSearchScraper(statement).get_items()):
             if i > self.arg_advance_limit:
                 break
@@ -52,14 +49,11 @@ class TwitterScraper:
                 location = "No Data"
             tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location, "twitter"])
 
-        # Creating a dataframe from the tweets list above
         tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location", "platform"])
 
-        # Refinement
         if self.arg_refinement is not None:
             tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
 
         if len(tweets_df) != 0:
-            # Output to feather
             tweets_df = tweets_df.reset_index(drop=True)
             tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_tweets_results_" + str(dt.datetime.today().date()) + ".feather"))

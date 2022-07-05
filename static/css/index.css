@@ -229,6 +229,7 @@ button {
 .error {
     color: red;
     text-align: center;
+    font-family: "K2D", sans-serif;
 }
 
 hr{

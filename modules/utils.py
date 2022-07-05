@@ -2,6 +2,7 @@ from modules.feather_reader import FeatherReader
 
 ALLOWED_EXTENSIONS_INDEX = {"feather"}
 ALLOWED_EXTENSIONS_RS = {"ini"}
+ALLOWED_EXTENSIONS_GRAPH = {"json"}
 
 
 def allowed_file_index(arg_filename):
@@ -20,6 +21,15 @@ def allowed_file_ini(arg_filename):
     :return:
     """
     return '.' in arg_filename and arg_filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_RS
+
+
+def allowed_file_json(arg_filename):
+    """
+    Whitelist validation for file extensions
+    :param arg_filename:
+    :return:
+    """
+    return '.' in arg_filename and arg_filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS_GRAPH
 
 
 def get_twitter_list_split():
