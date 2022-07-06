@@ -11,12 +11,16 @@ let currentArray = [];
 drawCloud();
 drawBubbleChart();
 
-drawBubble.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
+function removeActive() {
     let tablinks = document.getElementsByClassName("tablinks");
     for (let i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
+}
+
+drawBubble.addEventListener("click", function () {
+    let chartStatus = Chart.getChart("graph");
+    removeActive();
     drawBubble.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
@@ -25,10 +29,7 @@ drawBubble.addEventListener("click", function () {
 });
 drawCountry.addEventListener("click", function () {
     let chartStatus = Chart.getChart("graph");
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    removeActive();
     drawCountry.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
@@ -37,10 +38,7 @@ drawCountry.addEventListener("click", function () {
 });
 drawLine.addEventListener("click", function () {
     let chartStatus = Chart.getChart("graph");
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    removeActive();
     drawLine.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
@@ -49,10 +47,7 @@ drawLine.addEventListener("click", function () {
 });
 drawScatter.addEventListener("click", function () {
     let chartStatus = Chart.getChart("graph");
-    let tablinks = document.getElementsByClassName("tablinks");
-    for (let i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
+    removeActive();
     drawScatter.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
