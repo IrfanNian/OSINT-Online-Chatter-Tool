@@ -41,6 +41,9 @@ def upload_file():
             filename = secure_filename(f.filename)
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             shutil.copy(os.path.join(app.config['UPLOAD_FOLDER'], filename), STATIC_RESULT_FOLDER)
+            old_filename = os.path.join(STATIC_RESULT_FOLDER, filename)
+            new_filename = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
+            os.rename(old_filename, new_filename)
             return render_template('relationship_results.html', error="File Uploaded Successfully")
         else:
             return render_template('relationship_results.html', error="File Uploaded Failed")
