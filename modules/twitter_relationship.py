@@ -81,7 +81,7 @@ class TwitterFriends:
         self.user_list.append(arg_user)
         color_user.append(color_range[0].hex_l)
         level = 0
-        while level < arg_level:
+        while level < arg_level and len(self.user_completed_queue) < len(self.master_list):
             user_level_list = []
             while len(self.user_pending_queue) != 0:
                 if self.user_pending_queue[0] not in self.user_completed_queue:
