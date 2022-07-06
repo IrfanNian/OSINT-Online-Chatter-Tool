@@ -18,40 +18,35 @@ function removeActive() {
     }
 }
 
-drawBubble.addEventListener("click", function () {
+function destroyChart() {
     let chartStatus = Chart.getChart("graph");
-    removeActive();
-    drawBubble.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
     }
+}
+
+drawBubble.addEventListener("click", function () {
+    removeActive();
+    drawBubble.className += " active";
+    destroyChart();
     drawBubbleChart();
 });
 drawCountry.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawCountry.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawCountryChart();
 });
 drawLine.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawLine.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawLineChart();
 });
 drawScatter.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawScatter.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawScatterChart();
 });
 
