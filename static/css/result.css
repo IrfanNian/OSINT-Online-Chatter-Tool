@@ -110,14 +110,13 @@ nav {
     display: grid;
     grid-gap: 5px;
     width: 49.5%;
-    height:52.5%;
+    height: 52.5%;
     overflow-y: auto;
     text-align: left;
-    /* width: fit-content; */
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     float: left;
-    clear:left;
+    clear: left;
     background-color: #f6f6f6;
     margin-bottom: 10px;
 }
@@ -169,42 +168,32 @@ table thead {
     width: 0;
 }
 
-.timelineChart {
+.tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
     width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
-    background-color: #f6f6f6;
-    float: left;
-    clear: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    height: 50%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
-.countryGraph {
-    width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
-    background-color: #f6f6f6;
+.tab button {
+    background-color: inherit;
     float: left;
-    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 13px 16px;
+    transition: 0.3s;
+    font-family: "K2D", sans-serif;
 }
 
-.scatterGraph {
-    width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
-    background-color: #f6f6f6;
-    float: left;
-    margin-bottom: 10px;
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
 }
 
 .usernameCloud {
@@ -319,7 +308,6 @@ table thead {
 
 #searchBar {
     background-image: url('../images/search.png'); /* Add a search icon to input */
-    /* background-position: 10px 12px; Position the search icon */
     background-repeat: no-repeat; /*  Do not repeat the icon image */
     background-size: auto;
     width: 49.5%; /* Full-width */
@@ -352,6 +340,12 @@ table thead {
     justify-content: center;
 }
 
+.utility{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
 #wordcloudname {
     margin-left: 10px;
 }
@@ -374,6 +368,7 @@ table thead {
 	width:100%;
 	margin-bottom:30px;
 }
+
 .cell{
 	width:49%;
 	display:inline-block;
@@ -424,10 +419,6 @@ table thead {
     .usernameCloud{
         width: 100%;
     }
-    .timelineChart{
-        width: 100%;
-        margin-bottom: 50px;
-    }
 	.wordCloud{
 		width: 100%;
 	}
@@ -441,7 +432,6 @@ table thead {
         height: 70%;
         position: absolute;
         float: top;
-
     }
     .headingTwo {
         flex-direction: column;
@@ -459,8 +449,7 @@ table thead {
         position: absolute;
         margin-top: 61.25em;
     }
-	
-    #timelineName{
+    #timelineName {
         margin-right: 0px;
         margin-left: 0px;
     }

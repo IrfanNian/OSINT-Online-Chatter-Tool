@@ -24,8 +24,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-
-
 </head>
     <body>
         <nav>
@@ -85,12 +83,27 @@
 					</div>
 				</div>
 			</div>
-
             <div class="headingOne">
-                <p class="title">Consolidated Results</p>
-                <p class="title">Bubble Graph</p>
+                <p class="title" id="wordcloudName">Word Cloud</p>
+                <p class="title">Username Cloud</p>
             </div>
-            <input type="text" id="searchBar" placeholder=" Search for ...">
+			    <div class="wordCloud" id="word-cloud">
+            </div>
+                <div class="usernameCloud" id="username-cloud">
+            </div>
+            <div class="headingTwo">
+                <p class="title">Consolidated Results</p>
+                <p class="title">Charts</p>
+            </div>
+            <div class="utility">
+                <input type="text" id="searchBar" placeholder="  Search for Message(s)...">
+                <div class="tab">
+                    <button class="tablinks" id="bubble_chart">Bubble</button>
+                    <button class="tablinks" id="country_chart">Country</button>
+                    <button class="tablinks" id="line_chart">Platform</button>
+                    <button class="tablinks" id="scatter_chart">Scatter</button>
+                </div>
+            </div>
             <div class="bubbletable">
                 <table id="tablebubz" class="display">
                     <thead>
@@ -115,30 +128,6 @@
             </div>
             <div class="graph">
                 <canvas id="graph"></canvas>
-            </div>
-            <div class="headingTwo">
-                <p class="title" id="timelineName">Timeline Chart</p>
-                <p class="title">Scatter Chart</p>
-            </div>
-            <div class="timelineChart">
-                <canvas id="timeline"></canvas>
-            </div>
-            <div class="scatterGraph">
-                <canvas id="scatterGraph"></canvas>
-            </div>
-            <div class="headingThree">
-                <p class="title">Country Graph</p>
-            </div>
-            <div class="countryGraph">
-                <canvas id="countryGraph"></canvas>
-            </div>
-			<div class="headingTwo">
-                <p class="title" id="wordcloudName">Word Cloud</p>
-                <p class="title">Username Cloud</p>
-            </div>
-			    <div class="wordCloud" id="word-cloud">
-            </div>
-                <div class="usernameCloud" id="username-cloud">
             </div>
         </div>
         <div class="bNav">
