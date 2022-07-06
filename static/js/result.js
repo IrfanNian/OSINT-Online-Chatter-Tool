@@ -4,6 +4,7 @@ let drawBubble = document.getElementById("bubble_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
 let drawScatter = document.getElementById("scatter_chart");
+let chartSummary = document.getElementById("chart_sum");
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
@@ -256,6 +257,11 @@ function drawLineChart() {
             }
         }
         let MultilineChart = new Chart(chartHolderHTML, MultilineChartConfig);
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "Twitter has " + TWCount + " total amount of Tweets.\r\n"
+        chart_sum_paragraph += "Reddit has " + RDCount + " total amount of Posts.\r\n"
+        chart_sum_paragraph += "PasteBin has " + PBCount + " total amount of Pastes.\r\n"
+        chart_sum.textContent = chart_sum_paragraph;
     })
 }
 
@@ -307,7 +313,7 @@ function drawBubbleChart() {
                 bubbleStorage.push(json);
             }
         }
-        maxDate.setDate(maxDate.getDate() + 5);
+        maxDate.setDate(maxDate.getDate() + 3);
         minDate.setDate(minDate.getDate() - 1);
         //config
         const bubbleChartConfig = {
@@ -457,6 +463,16 @@ function drawBubbleChart() {
                 changePage(currentPage, r);
             }
         }
+        min_r = bubbleStorage.reduce(function(prev, curr) {
+            return prev.r < curr.r ? prev : curr;
+        });
+        max_r = bubbleStorage.reduce(function(prev, curr) {
+            return prev.r > curr.r ? prev : curr;
+        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "The date with the most amount of chatter on average is on: " + max_r.x + "(" + max_r.text.length + ").\r\n"
+        chart_sum_paragraph += "The date with the least amount of chatter on average is on: " + min_r.x + "(" + min_r.text.length + ").\r\n"
+        chart_sum.textContent = chart_sum_paragraph;
     })
 }
 
@@ -625,6 +641,16 @@ function drawCountryChart() {
                 changePage(currentPage, r);
             }
         }
+        min_y = countryStorage.reduce(function(prev, curr) {
+            return prev.y < curr.y ? prev : curr;
+        });
+        max_y = countryStorage.reduce(function(prev, curr) {
+            return prev.y > curr.y ? prev : curr;
+        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "The country with the most amount of tweets: " + max_y.x + "(" + max_y.text.length + ").\r\n"
+        chart_sum_paragraph += "The country with the least amount of tweets: " + min_y.x + "(" + min_y.text.length + ").\r\n"
+        chart_sum.textContent = chart_sum_paragraph;
     })
 }
 
@@ -809,5 +835,15 @@ function drawScatterChart() {
                 changePage(currentPage, r);
             }
         }
+        min_text = scatterStorage.reduce(function(prev, curr) {
+            return prev.text.length < curr.text.length ? prev : curr;
+        });
+        max_text = scatterStorage.reduce(function(prev, curr) {
+            return prev.text.length > curr.text.length ? prev : curr;
+        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "The most amount of chatter on average is on: " + max_text.x + " " + max_text.y + "00hrs" + "(" + max_text.text.length + ").\r\n"
+        chart_sum_paragraph += "The least amount of chatter on average is on: " + max_text.x + " " + min_text.y + "00hrs" + "(" + min_text.text.length + ").\r\n"
+        chart_sum.textContent = chart_sum_paragraph;
     })
 }
