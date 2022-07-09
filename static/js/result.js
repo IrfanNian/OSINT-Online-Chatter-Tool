@@ -10,8 +10,8 @@ let numPage = 1;
 let currentArray = [];
 drawCloud();
 drawBubbleChart();
-const fixWords = ["patches", "patch", "patched", "fix", "fixes", "fixed"]
-const attackWords = ["attack", "attacked", "APT", "weaponized", "weaponised", "malware", "campaign", "exploits", "target"]
+const zeroDayWords = ["0day", "zero-day"]
+const attackWords = ["attack", "attacked", "APT", "weaponized", "weaponised", "malware", "campaign"]
 
 function removeActive() {
     let tablinks = document.getElementsByClassName("tablinks");
@@ -344,6 +344,7 @@ function drawBubbleChart() {
                     borderColor: [
                         'rgba(0, 0, 0, 1)'
                     ],
+                    tension: 0.4,
                 }],
             },
             options: {
@@ -513,20 +514,20 @@ function drawBubbleChart() {
             }
             if (foundAttack) {
                 chart_sum_paragraph += "The first post mentioning of any attacks was on: " + datapoints[counter].day + ".\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text + "\r\n";
                 break;
             }
         }
         counter = datapoints.length
         while (counter > 0) {
             counter--;
-            let foundFix = false;
-            for (let a = 0; a < fixWords.length; a++) {
-                foundFix = datapoints[counter].text.toLowerCase().includes(fixWords[a]);
+            let foundZero = false;
+            for (let a = 0; a < zeroDayWords.length; a++) {
+                foundZero = datapoints[counter].text.toLowerCase().includes(zeroDayWords[a])
             }
-            if (foundFix) {
-                chart_sum_paragraph += "The first post mentioning of any fixes was on: " + datapoints[counter].day + ".\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
+            if (foundZero) {
+                chart_sum_paragraph += "Zero Day: Potentially.\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text + "\r\n";
                 break;
             }
         }
@@ -560,7 +561,11 @@ function drawCountryChart() {
             data: {
                 datasets: [{
                     label: 'No. of Tweets Per Country',
-                    data: countryStorage
+                    data: countryStorage,
+                    borderColor: [
+                        'rgba(0, 0, 0, 1)'
+                    ],
+                    backgroundColor: "#4cb6cb"
                 }],
             },
             options: {
@@ -573,6 +578,9 @@ function drawCountryChart() {
                             display: true,
                             text: 'Country',
                         },
+                        ticks: {
+                            beginAtZero: true,
+                        },
                     },
                     y: {
                         title: {
@@ -582,7 +590,9 @@ function drawCountryChart() {
                         ticks: {
                             beginAtZero: true,
                         },
-                        min: -5
+                        grace: '50%',
+                        type: 'linear',
+                        min: -500
                     }
                 }
             }

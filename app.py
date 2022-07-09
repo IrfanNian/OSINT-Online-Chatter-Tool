@@ -131,7 +131,9 @@ def results():
     os.makedirs(UPLOAD_FOLDER)
     if request.method == "POST":
         searchbar_text = request.form.get('keyword')
-        chosen_sources = request.form.get('platf')
+        chosen_sources_reddit = request.form.get('reddit')
+        chosen_sources_twitter = request.form.get('twitter')
+        chosen_sources_pastebin = request.form.get('pastebin')
         custom_subreddit = request.form.get('csubrtext')
         time_range = request.form.get('timeRangeDrop')
         depth_range = request.form.get('depthDrop')
@@ -153,7 +155,7 @@ def results():
                     return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
         session['keyword'] = searchbar_text
-        scraping_sources = mcr.configure_sources(chosen_sources, master_switch)
+        scraping_sources = mcr.configure_sources(chosen_sources_reddit, chosen_sources_twitter, chosen_sources_pastebin, master_switch)
         if time_range == "custom":
             since_date = request.form['customTimeStart']
             until_date = request.form['customTimeEnd']

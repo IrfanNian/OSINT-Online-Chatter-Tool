@@ -91,11 +91,13 @@ class ModuleConfigurator:
             last_seven = TODAY - dt.timedelta(days=7)
             return str(last_seven), str(TODAY)
 
-    def configure_sources(self, arg_sources, arg_switch):
+    def configure_sources(self, arg_reddit, arg_twitter, arg_pastebin, arg_switch):
         """
         Configure sources
+        :param arg_pastebin:
+        :param arg_twitter:
+        :param arg_reddit:
         :param arg_switch:
-        :param arg_sources:
         :return ENABLED_SCRAPING_SOURCES:
         """
         if arg_switch == "disableScraping":
@@ -103,15 +105,10 @@ class ModuleConfigurator:
             ENABLED_SCRAPING_SOURCES['ps'] = False
             ENABLED_SCRAPING_SOURCES['ts'] = False
         else:
-            if arg_sources == "twitter":
-                ENABLED_SCRAPING_SOURCES['rs'] = False
-                ENABLED_SCRAPING_SOURCES['ps'] = False
-            elif arg_sources == "pastebin":
-                ENABLED_SCRAPING_SOURCES['rs'] = False
-                ENABLED_SCRAPING_SOURCES['ts'] = False
-            elif arg_sources == "reddit":
-                ENABLED_SCRAPING_SOURCES['ps'] = False
-                ENABLED_SCRAPING_SOURCES['ts'] = False
-            else:
-                pass
+            if arg_reddit == "reddit":
+                ENABLED_SCRAPING_SOURCES['rs'] = True
+            if arg_twitter == "twitter":
+                ENABLED_SCRAPING_SOURCES['ts'] = True
+            if arg_pastebin == "pastebin":
+                ENABLED_SCRAPING_SOURCES['ps'] = True
         return ENABLED_SCRAPING_SOURCES
