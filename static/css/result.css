@@ -209,7 +209,7 @@ table thead {
     box-shadow: 0 0 20px #737272;
     font-family: "K2D", sans-serif;
     display: flex;
-    white-space: pre;
+    white-space: pre-line;
 }
 
 .usernameCloud {

@@ -10,6 +10,8 @@ let numPage = 1;
 let currentArray = [];
 drawCloud();
 drawBubbleChart();
+const fixWords = ["patches", "patch", "patched", "fix", "fixes", "fixed"]
+const attackWords = ["attack", "attacked", "APT", "weaponized", "weaponised", "malware", "campaign", "exploits", "target"]
 
 function removeActive() {
     let tablinks = document.getElementsByClassName("tablinks");
@@ -18,40 +20,35 @@ function removeActive() {
     }
 }
 
-drawBubble.addEventListener("click", function () {
+function destroyChart() {
     let chartStatus = Chart.getChart("graph");
-    removeActive();
-    drawBubble.className += " active";
     if (chartStatus != undefined) {
       chartStatus.destroy();
     }
+}
+
+drawBubble.addEventListener("click", function () {
+    removeActive();
+    drawBubble.className += " active";
+    destroyChart();
     drawBubbleChart();
 });
 drawCountry.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawCountry.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawCountryChart();
 });
 drawLine.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawLine.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawLineChart();
 });
 drawScatter.addEventListener("click", function () {
-    let chartStatus = Chart.getChart("graph");
     removeActive();
     drawScatter.className += " active";
-    if (chartStatus != undefined) {
-      chartStatus.destroy();
-    }
+    destroyChart();
     drawScatterChart();
 });
 
@@ -284,6 +281,7 @@ function drawBubbleChart() {
     d3.csv('/static/results/charting.csv').then(function (datapoints) {
         // bubble chart
         const bubbleStorage = [];
+        const lineBubbleStorage = [];
         var minDate = new Date();
         var maxDate = new Date();
         var max = Math.max.apply(Math, datapoints.map(function (o) { return o.date_count }))
@@ -325,7 +323,9 @@ function drawBubbleChart() {
                     }
                 }
                 var json = { x: x, y: y, r: r, text: bubbleText, user: bubbleUser };
+                var lineJson = { x:x, y:y }
                 bubbleStorage.push(json);
+                lineBubbleStorage.push(lineJson);
             }
         }
         maxDate.setDate(maxDate.getDate() + 3);
@@ -337,6 +337,13 @@ function drawBubbleChart() {
                 datasets: [{
                     label: 'No. of Chatter (Scaled)',
                     data: bubbleStorage
+                },{
+                    label: 'Line data',
+                    type: 'line',
+                    data: lineBubbleStorage,
+                    borderColor: [
+                        'rgba(0, 0, 0, 1)'
+                    ],
                 }],
             },
             options: {
@@ -484,9 +491,45 @@ function drawBubbleChart() {
         max_r = bubbleStorage.reduce(function(prev, curr) {
             return prev.r > curr.r ? prev : curr;
         });
+        min_x = bubbleStorage.reduce(function(prev, curr) {
+            return prev.x < curr.x ? prev : curr;
+        });
+        max_x = bubbleStorage.reduce(function(prev, curr) {
+            return prev.x > curr.x ? prev : curr;
+        });
         chart_sum.textContent = "";
         let chart_sum_paragraph = "The date with the most amount of chatter on average is on: " + max_r.x + "(" + max_r.text.length + ").\r\n"
         chart_sum_paragraph += "The date with the least amount of chatter on average is on: " + min_r.x + "(" + min_r.text.length + ").\r\n"
+        chart_sum_paragraph += "The first instance of chatter was on: " + min_x.x + ".\r\n"
+        chart_sum_paragraph += "The last instance of chatter was on: " + max_x.x + ".\r\n"
+        chart_sum_paragraph += "Sentiment peaked on: " + max_r.x + ".\r\n"
+        chart_sum_paragraph += "Sentiment reach its lowest on: " + min_r.x + ".\r\n"
+        let counter = datapoints.length
+        while (counter > 0) {
+            counter--;
+            let foundAttack = false;
+            for (let a = 0; a < attackWords.length; a++) {
+                foundAttack = datapoints[counter].text.toLowerCase().includes(attackWords[a]);
+            }
+            if (foundAttack) {
+                chart_sum_paragraph += "The first post mentioning of any attacks was on: " + datapoints[counter].day + ".\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
+                break;
+            }
+        }
+        counter = datapoints.length
+        while (counter > 0) {
+            counter--;
+            let foundFix = false;
+            for (let a = 0; a < fixWords.length; a++) {
+                foundFix = datapoints[counter].text.toLowerCase().includes(fixWords[a]);
+            }
+            if (foundFix) {
+                chart_sum_paragraph += "The first post mentioning of any fixes was on: " + datapoints[counter].day + ".\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
+                break;
+            }
+        }
         chart_sum.textContent = chart_sum_paragraph;
     })
 }
