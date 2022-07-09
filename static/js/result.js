@@ -513,7 +513,7 @@ function drawBubbleChart() {
             }
             if (foundAttack) {
                 chart_sum_paragraph += "The first post mentioning of any attacks was on: " + datapoints[counter].day + ".\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text + ".\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
                 break;
             }
         }
@@ -526,7 +526,7 @@ function drawBubbleChart() {
             }
             if (foundFix) {
                 chart_sum_paragraph += "The first post mentioning of any fixes was on: " + datapoints[counter].day + ".\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text + ".\r\n";
+                chart_sum_paragraph += "Message: " + datapoints[counter].text.split("#")[0] + "\r\n";
                 break;
             }
         }
