@@ -19,6 +19,26 @@ keyword.addEventListener("input", function () {
     }
 });
 
+depth.addEventListener("change", function () {
+    if (depth.value == "custom_depth") {
+        document.getElementById('customDepthTr').removeAttribute("hidden");
+    }
+    else {
+        document.getElementById('customDepthTr').setAttribute("hidden", true);
+    }
+});
+
+timeRange.addEventListener("change", function () {
+    if (timeRange.value == "custom") {
+        document.getElementById('customTimeStartTr').removeAttribute("hidden");
+        document.getElementById('customTimeEndTr').removeAttribute("hidden");
+    }
+    else {
+        document.getElementById('customTimeStartTr').setAttribute("hidden", true);
+        document.getElementById('customTimeEndTr').setAttribute("hidden", true);
+    }
+});
+
 checkbox.addEventListener("change", function () {
     if (this.checked) {
         SearchSubmit.disabled = false;
@@ -51,31 +71,17 @@ redditCheckBox.addEventListener("change", function() {
     else {
         document.getElementById('csubrtexttr').setAttribute("hidden", true);
     }
-})
+});
 
 file.addEventListener("change", function() {
     if(file.files.length > 0) {
         checkbox.removeAttribute("disabled");
     }
-})
+});
 
-window.onload = function(){
+window.onload = function() {
     checkbox.checked = false;
-}
-
-function checkTime(val) {
-    var element1 = document.getElementById('customTimeStartTr');
-    if (val == 'custom')
-        element1.removeAttribute("hidden");
-    else
-        element1.setAttribute("hidden", true);
-
-    var element2 = document.getElementById('customTimeEndTr');
-    if (val == 'custom')
-        element2.removeAttribute("hidden");
-    else
-        element2.setAttribute("hidden", true);
-}
+};
 
 document.getElementById("SearchSubmit").addEventListener("click", function() {
     document.getElementById("overlay").style.display = "block";

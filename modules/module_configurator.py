@@ -25,6 +25,14 @@ class ModuleConfigurator:
                 sub_list = [arg_subreddit]
         return sub_list
 
+    def configure_custom_depth(self, arg_depth):
+        limit = 10000
+        if type(arg_depth) != int:
+            return limit
+        else:
+            limit = arg_depth
+        return limit
+
     def configure_depth(self, arg_depth):
         """
         Configure depth
