@@ -55,7 +55,7 @@ class PastebinScrapper:
         date_queue = manager.Queue()
         shared_list = manager.list()
         pool = multiprocessing.Pool(multiprocessing.cpu_count()-1)
-        id_result = pool.apply_async(self.process_id, (id_queue, date_queue, shared_list))
+        id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]])
         days = self.day_calculator()
         headers = CaseInsensitiveDict()
         headers["Content-Type"] = "application/x-www-form-urlencoded"

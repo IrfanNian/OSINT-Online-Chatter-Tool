@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td><label for="tRan">Time Range: </label></td>
-                            <td colspan="2"><select name="timeRangeDrop" id="tRan" onchange='checkTime(this.value)'>
+                            <td colspan="2"><select name="timeRangeDrop" id="tRan">
                                 <option value="" disabled selected hidden>Time Range..</option>
                                 <option value="today">Today</option>
                                 <option value="yesterday">Yesterday</option>
@@ -66,11 +66,11 @@
                             </select></td>
                         </tr>
                         <tr id="customTimeStartTr" hidden>
-                            <td><label id="from" style="text-align: right;">From:</label></td>
+                            <td><label id="from" style="text-align: right;">From: </label></td>
                             <td colspan="2"><input type="date" name="customTimeStart" id="customTimeStart"/></td>
                         </tr>
                         <tr id="customTimeEndTr" hidden>
-                            <td><label id="to" style="text-align: right;">To:</label></td>
+                            <td><label id="to" style="text-align: right;">To: </label></td>
                             <td colspan="2"><input type="date" name="customTimeEnd" id="customTimeEnd"/></td>
                         </tr>
                         <tr>
@@ -82,7 +82,12 @@
                                 <option value="quick">Quick</option>
                                 <option value="standard">Standard</option>
                                 <option value="deep">Deep</option>
+                                <option value="custom_depth">Custom</option>
                             </select></td>
+                        </tr>
+                        <tr id="customDepthTr" hidden>
+                            <td><label id="customDepthLabel" style="text-align: right;">Custom Depth: </label></td>
+                            <td colspan="2"><input type="number" name="customDepth" id="customDepth" placeholder="Custom Depth"/></td>
                         </tr>
                         <tr>
                             <td><label class="tooltip" for="refinement" style="text-align: right;">Refinement<img src="/static/images/i.png" width="20px">:

@@ -157,14 +157,18 @@ def results():
         session['keyword'] = searchbar_text
         scraping_sources = mcr.configure_sources(chosen_sources_reddit, chosen_sources_twitter, chosen_sources_pastebin, master_switch)
         if time_range == "custom":
-            since_date = request.form['customTimeStart']
-            until_date = request.form['customTimeEnd']
+            since_date = request.form.get('customTimeStart')
+            until_date = request.form.get('customTimeEnd')
             since, until = mcr.configure_custom_date(since_date, until_date)
         else:
             if time_range is None:
                 time_range = "lastSeven"
             since, until = mcr.configure_date(time_range)
-        limit = mcr.configure_depth(depth_range)
+        if depth_range == "custom":
+            custom_limit = request.form.get('customDepth', type=int)
+            limit = mcr.configure_custom_depth(custom_limit)
+        else:
+            limit = mcr.configure_depth(depth_range)
         custom_subreddit = mcr.configure_subreddit(custom_subreddit)
         mc = ModuleController()
         mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit, refinement)
