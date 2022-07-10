@@ -63,7 +63,6 @@ class PastebinScrapper:
         count = 0
         while days > -1:
             post_date_str = post_date.strftime("%d.%m.%Y")
-            print(post_date_str)
             date_range = "from=" + post_date_str + "&to=" + post_date_str
             resp = requests.post("https://psbdmp.ws/api/v3/getbydate", headers=headers, data=date_range)
             json_data = json.loads(resp.text)
