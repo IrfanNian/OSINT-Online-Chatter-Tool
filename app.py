@@ -1,5 +1,3 @@
-import sys
-
 from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
