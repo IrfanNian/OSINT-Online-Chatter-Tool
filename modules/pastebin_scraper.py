@@ -4,8 +4,10 @@ import json
 import pandas as pd
 import os
 import datetime as dt
+import multiprocessing
 
 CWD = os.getcwd()
+POISON_PILL = "STOP"
 
 
 class PastebinScrapper:
@@ -25,12 +27,35 @@ class PastebinScrapper:
         d2 = dt.datetime.strptime(self.arg_advance_until, "%Y-%m-%d")
         return abs((d2 - d1).days)
 
+    def process_id(self, arg_id_queue, arg_date_queue, arg_list):
+        """
+        Processes ID from psbdmp API
+        :param arg_id_queue:
+        :param arg_date_queue:
+        :param arg_list:
+        :return None:
+        """
+        while True:
+            new_id = arg_id_queue.get()
+            new_date = arg_date_queue.get()
+            if new_id == POISON_PILL:
+                break
+            response = requests.get(f"https://pastebin.com/raw/{new_id}").text
+            if self.arg_search in response:
+                arg_list.append([new_date, new_id, response, new_id, "No Data", "pastebin"])
+        return
+
     def run(self):
         """
         Runs the pastebin scraper module
         :return None:
         """
-        pb_df = pd.DataFrame(columns=["time", "id", "text", "user", "location", "platform"])
+        manager = multiprocessing.Manager()
+        id_queue = manager.Queue()
+        date_queue = manager.Queue()
+        shared_list = manager.list()
+        pool = multiprocessing.Pool(multiprocessing.cpu_count())
+        id_result = pool.apply_async(self.process_id, (id_queue, date_queue, shared_list))
         days = self.day_calculator()
         headers = CaseInsensitiveDict()
         headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -43,16 +68,20 @@ class PastebinScrapper:
             json_data = json.loads(resp.text)
             for result in json_data[0]:
                 count += 1
-                response = requests.get(f"https://pastebin.com/raw/{result['id']}").text
-                if self.arg_search in response:
-                    pb_df.loc[len(pb_df)] = [post_date, result['id'], response, result['id'], "No Data", "pastebin"]
-                    pb_df['time'] = pd.to_datetime(pb_df['time'], format='%Y-%m-%d %H:%M:%S')
-                    pb_df['time'] = pb_df['time'].apply(lambda x: x.isoformat())
+                id_queue.put(result['id'])
+                date_queue.put(post_date)
                 if count > self.arg_limit:
                     break
             post_date = post_date + dt.timedelta(days=1)
             days -= 1
-
+        id_queue.put(POISON_PILL)
+        date_queue.put(POISON_PILL)
+        pool.close()
+        pool.join()
+        shared_list = list(shared_list)
+        pb_df = pd.DataFrame(shared_list, columns=["time", "id", "text", "user", "location", "platform"])
+        pb_df['time'] = pd.to_datetime(pb_df['time'], format='%Y-%m-%d %H:%M:%S')
+        pb_df['time'] = pb_df['time'].apply(lambda x: x.isoformat())
         if self.arg_refinement is not None:
             pb_df = pb_df[pb_df["text"].str.contains(self.arg_refinement)]
         if len(pb_df) != 0:

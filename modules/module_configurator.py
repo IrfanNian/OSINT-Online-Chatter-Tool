@@ -107,8 +107,14 @@ class ModuleConfigurator:
         else:
             if arg_reddit == "reddit":
                 ENABLED_SCRAPING_SOURCES['rs'] = True
+            else:
+                ENABLED_SCRAPING_SOURCES['rs'] = False
             if arg_twitter == "twitter":
                 ENABLED_SCRAPING_SOURCES['ts'] = True
+            else:
+                ENABLED_SCRAPING_SOURCES['ts'] = False
             if arg_pastebin == "pastebin":
                 ENABLED_SCRAPING_SOURCES['ps'] = True
+            else:
+                ENABLED_SCRAPING_SOURCES['ps'] = False
         return ENABLED_SCRAPING_SOURCES
