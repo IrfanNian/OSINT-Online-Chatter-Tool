@@ -37,6 +37,7 @@ class PastebinScrapper:
         """
         while True:
             new_id = arg_id_queue.get()
+            print(new_id)
             new_date = arg_date_queue.get()
             if new_id == POISON_PILL:
                 break
@@ -55,7 +56,7 @@ class PastebinScrapper:
         date_queue = manager.Queue()
         shared_list = manager.list()
         pool = multiprocessing.Pool(multiprocessing.cpu_count()-1)
-        id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]])
+        id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]], chunksize=10)
         days = self.day_calculator()
         headers = CaseInsensitiveDict()
         headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -70,10 +71,12 @@ class PastebinScrapper:
                 count += 1
                 id_queue.put(result['id'])
                 date_queue.put(post_date)
-                if count > self.arg_limit:
+                if count >= self.arg_limit:
                     break
             post_date = post_date + dt.timedelta(days=1)
             days -= 1
+            if count >= self.arg_limit:
+                break
         id_queue.put(POISON_PILL)
         date_queue.put(POISON_PILL)
         pool.close()
@@ -82,6 +85,7 @@ class PastebinScrapper:
         pb_df = pd.DataFrame(shared_list, columns=["time", "id", "text", "user", "location", "platform"])
         pb_df['time'] = pd.to_datetime(pb_df['time'], format='%Y-%m-%d %H:%M:%S')
         pb_df['time'] = pb_df['time'].apply(lambda x: x.isoformat())
+        pb_df.sort_values(by=['time'], inplace=True)
         if self.arg_refinement is not None:
             pb_df = pb_df[pb_df["text"].str.contains(self.arg_refinement)]
         if len(pb_df) != 0:

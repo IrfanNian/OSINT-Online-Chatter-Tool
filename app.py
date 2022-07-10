@@ -1,3 +1,5 @@
+import sys
+
 from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
@@ -164,7 +166,7 @@ def results():
             if time_range is None:
                 time_range = "lastSeven"
             since, until = mcr.configure_date(time_range)
-        if depth_range == "custom":
+        if depth_range == "custom_depth":
             custom_limit = request.form.get('customDepth', type=int)
             limit = mcr.configure_custom_depth(custom_limit)
         else:
