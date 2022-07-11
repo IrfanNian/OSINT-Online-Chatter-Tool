@@ -514,7 +514,10 @@ function drawBubbleChart() {
             }
             if (foundAttack) {
                 chart_sum_paragraph += "The first post mentioning of any attacks was on: " + datapoints[counter].day + ".\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text + "\r\n";
+                let str = datapoints[counter].text
+                if (str.length > 512)
+                    str = str.substring(0, 512) + "...";
+                chart_sum_paragraph += "Message: " + str + "\r\n";
                 break;
             }
         }
@@ -527,7 +530,10 @@ function drawBubbleChart() {
             }
             if (foundZero) {
                 chart_sum_paragraph += "Zero Day: Potentially.\r\n";
-                chart_sum_paragraph += "Message: " + datapoints[counter].text + "\r\n";
+                let str = datapoints[counter].text
+                if (str.length > 512)
+                    str = str.substring(0, 512) + "...";
+                chart_sum_paragraph += "Message: " + str + "\r\n";
                 break;
             }
         }
