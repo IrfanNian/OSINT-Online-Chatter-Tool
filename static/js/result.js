@@ -10,8 +10,16 @@ let numPage = 1;
 let currentArray = [];
 drawCloud();
 drawBubbleChart();
-const zeroDayWords = ["0day", "zero-day"]
-const attackWords = ["attack", "attacked", "APT", "weaponized", "weaponised", "malware", "campaign"]
+const zeroDayWords = ["0day", "zero-day"];
+const attackWords = [
+    "attack",
+    "attacked",
+    "APT",
+    "weaponized",
+    "weaponised",
+    "malware",
+    "campaign",
+];
 
 function removeActive() {
     let tablinks = document.getElementsByClassName("tablinks");
@@ -23,7 +31,7 @@ function removeActive() {
 function destroyChart() {
     let chartStatus = Chart.getChart("graph");
     if (chartStatus != undefined) {
-      chartStatus.destroy();
+        chartStatus.destroy();
     }
 }
 
@@ -53,7 +61,7 @@ drawScatter.addEventListener("click", function () {
 });
 
 function drawCloud() {
-    d3.csv('/static/results/charting.csv').then(function (datapoints) {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
         let TWCount = 0;
         let RDCount = 0;
         let PBCount = 0;
@@ -64,7 +72,7 @@ function drawCloud() {
         let maxDate = new Date();
         for (i = 0; i < datapoints.length; i++) {
             if (datapoints[i].date_count != "") {
-                let tDate = datapoints[i].time_count
+                let tDate = datapoints[i].time_count;
                 let xDate = new Date(tDate);
                 if (xDate < minDate) {
                     minDate = new Date(xDate.getTime());
@@ -76,112 +84,181 @@ function drawCloud() {
             if (datapoints[i].date != "") {
                 if (datapoints[i].platform == "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
-                    TWSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
-                }
-                else if (datapoints[i].platform == "reddit") {
+                    TWSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
-                    RDSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
-                }
-                else if (datapoints[i].platform == "pastebin") {
+                    RDSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
-                    PBSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
+                    PBSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
                 }
             }
         }
         //wordcloud
         function wordcloud(myWords) {
-            let margin = { top: 10, right: 10, bottom: 10, left: 10 }
+            let margin = { top: 10, right: 10, bottom: 10, left: 10 };
             //calculate size of canvas
             width = 520 - margin.left - margin.right;
             height = 350 - margin.top - margin.bottom;
             //positioning
-            let svg = d3.select("#word-cloud").append("svg")
+            let svg = d3
+                .select("#word-cloud")
+                .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr(
+                    "transform",
+                    "translate(" + margin.left + "," + margin.top + ")"
+                );
 
-            let layout = d3.layout.cloud()
+            let layout = d3.layout
+                .cloud()
                 .size([width, height])
-                .words(myWords.map(function (d) { return { text: d.word, size: d.size }; }))
+                .words(
+                    myWords.map(function (d) {
+                        return { text: d.word, size: d.size };
+                    })
+                )
                 .padding(5)
-                .rotate(function () { return ~~(Math.random() * 2) * 90; })
-                .fontSize(function (d) { return d.size / 2; })
+                .rotate(function () {
+                    return ~~(Math.random() * 2) * 90;
+                })
+                .fontSize(function (d) {
+                    return d.size / 2;
+                })
                 .on("end", draw);
 
             layout.start();
 
             //draw words in svg canvas
             function draw(words) {
-                svg
-                    .append("g")
-                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                svg.append("g")
+                    .attr(
+                        "transform",
+                        "translate(" +
+                            layout.size()[0] / 2 +
+                            "," +
+                            layout.size()[1] / 2 +
+                            ")"
+                    )
                     .selectAll("text")
                     .data(words)
-                    .enter().append("text")
-                    .style("font-size", function (d) { return d.size; })
+                    .enter()
+                    .append("text")
+                    .style("font-size", function (d) {
+                        return d.size;
+                    })
                     .style("fill", "#bd7dab")
                     .attr("text-anchor", "middle")
                     .style("font-family", "K2D")
                     .attr("transform", function (d) {
-                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                        return (
+                            "translate(" +
+                            [d.x, d.y] +
+                            ")rotate(" +
+                            d.rotate +
+                            ")"
+                        );
                     })
-                    .text(function (d) { return d.text; });
+                    .text(function (d) {
+                        return d.text;
+                    });
             }
         }
 
         //usernamecloud
         function usernamecloud(myWords) {
-            let margin = { top: 10, right: 10, bottom: 10, left: 10 }
+            let margin = { top: 10, right: 10, bottom: 10, left: 10 };
             //calculate size of canvas
             width = 520 - margin.left - margin.right;
             height = 350 - margin.top - margin.bottom;
 
             //positioning
-            let svg = d3.select("#username-cloud").append("svg")
+            let svg = d3
+                .select("#username-cloud")
+                .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr(
+                    "transform",
+                    "translate(" + margin.left + "," + margin.top + ")"
+                );
 
-            let layout = d3.layout.cloud()
+            let layout = d3.layout
+                .cloud()
                 .size([width, height])
-                .words(myWords.map(function (d) { return { text: d.user, size: d.size }; }))
+                .words(
+                    myWords.map(function (d) {
+                        return { text: d.user, size: d.size };
+                    })
+                )
                 .padding(5)
-                .rotate(function () { return ~~(Math.random() * 2) * 90; })
-                .fontSize(function (d) { return d.size / 2; })
+                .rotate(function () {
+                    return ~~(Math.random() * 2) * 90;
+                })
+                .fontSize(function (d) {
+                    return d.size / 2;
+                })
                 .on("end", draw);
 
             layout.start();
 
             //draw words in svg canvas
             function draw(words) {
-                svg
-                    .append("g")
-                    .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+                svg.append("g")
+                    .attr(
+                        "transform",
+                        "translate(" +
+                            layout.size()[0] / 2 +
+                            "," +
+                            layout.size()[1] / 2 +
+                            ")"
+                    )
                     .selectAll("text")
                     .data(words)
-                    .enter().append("text")
-                    .style("font-size", function (d) { return d.size; })
+                    .enter()
+                    .append("text")
+                    .style("font-size", function (d) {
+                        return d.size;
+                    })
                     .style("fill", "#5cacc2")
                     .attr("text-anchor", "middle")
                     .style("font-family", "K2D")
                     .attr("transform", function (d) {
-                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                        return (
+                            "translate(" +
+                            [d.x, d.y] +
+                            ")rotate(" +
+                            d.rotate +
+                            ")"
+                        );
                     })
-                    .text(function (d) { return d.text; });
+                    .text(function (d) {
+                        return d.text;
+                    });
             }
         }
         wordcloud(datapoints);
         usernamecloud(datapoints);
-        document.getElementById("CountTW").textContent = TWCount
-        document.getElementById("CountRD").textContent = RDCount
-        document.getElementById("CountPB").textContent = PBCount
-    })
+        document.getElementById("CountTW").textContent = TWCount;
+        document.getElementById("CountRD").textContent = RDCount;
+        document.getElementById("CountPB").textContent = PBCount;
+    });
 }
 
 function drawLineChart() {
-    d3.csv('/static/results/charting.csv').then(function (datapoints) {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
         let minDate = new Date();
         let maxDate = new Date();
         let TWCount = 0;
@@ -192,7 +269,7 @@ function drawLineChart() {
         let PBSeries = [];
         for (i = 0; i < datapoints.length; i++) {
             if (datapoints[i].date_count != "") {
-                let tDate = datapoints[i].time_count
+                let tDate = datapoints[i].time_count;
                 let xDate = new Date(tDate);
                 if (xDate < minDate) {
                     minDate = new Date(xDate.getTime());
@@ -204,42 +281,48 @@ function drawLineChart() {
             if (datapoints[i].date != "") {
                 if (datapoints[i].platform == "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
-                    TWSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
-                }
-                else if (datapoints[i].platform == "reddit") {
+                    TWSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
-                    RDSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
-                }
-                else if (datapoints[i].platform == "pastebin") {
+                    RDSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
-                    PBSeries.push({ x: datapoints[i].date, y: parseInt(datapoints[i].count) });
+                    PBSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
                 }
             }
         }
         //multiple line chart
         const MultilineChartConfig = {
-            type: 'line',
+            type: "line",
             data: {
                 datasets: [
                     {
-                        label: 'Twitter',
+                        label: "Twitter",
                         data: TWSeries,
                         borderColor: "rgba(0, 172, 238, 1)",
-                        backgroundColor: "rgba(0, 172, 238, 0.5)"
+                        backgroundColor: "rgba(0, 172, 238, 0.5)",
                     },
                     {
-                        label: 'Reddit',
+                        label: "Reddit",
                         data: RDSeries,
                         borderColor: "rgba(255, 67, 0, 1)",
-                        backgroundColor: "rgba(255, 67, 0, 0.5)"
-
+                        backgroundColor: "rgba(255, 67, 0, 0.5)",
                     },
                     {
-                        label: 'Pastebin',
+                        label: "Pastebin",
                         data: PBSeries,
                         borderColor: "rgba(0, 0, 0, 1)",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)"
-                    }
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    },
                 ],
             },
             options: {
@@ -247,48 +330,61 @@ function drawLineChart() {
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        type: 'time',
+                        type: "time",
                         title: {
                             display: true,
-                            text: 'Date',
+                            text: "Date",
                         },
                         time: {
-                            unit: 'day',
-                            tooltipFormat: 'dd MMM yyyy',
+                            unit: "day",
+                            tooltipFormat: "dd MMM yyyy",
                         },
                         max: maxDate,
-                        min: minDate
+                        min: minDate,
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Posts / Days',
+                            text: "Posts / Days",
                         },
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        };
         let MultilineChart = new Chart(chartHolderHTML, MultilineChartConfig);
         chart_sum.textContent = "";
-        let chart_sum_paragraph = "Twitter has " + TWCount + " total amount of Tweets.\r\n"
-        chart_sum_paragraph += "Reddit has " + RDCount + " total amount of Posts.\r\n"
-        chart_sum_paragraph += "PasteBin has " + PBCount + " total amount of Pastes.\r\n"
+        let chart_sum_paragraph =
+            "Twitter has " + TWCount + " total amount of Tweets.\r\n";
+        chart_sum_paragraph +=
+            "Reddit has " + RDCount + " total amount of Posts.\r\n";
+        chart_sum_paragraph +=
+            "PasteBin has " + PBCount + " total amount of Pastes.\r\n";
         chart_sum.textContent = chart_sum_paragraph;
-    })
+    });
 }
 
 function drawBubbleChart() {
-    d3.csv('/static/results/charting.csv').then(function (datapoints) {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // bubble chart
         const bubbleStorage = [];
         const lineBubbleStorage = [];
         var minDate = new Date();
         var maxDate = new Date();
-        var max = Math.max.apply(Math, datapoints.map(function (o) { return o.date_count }))
-        var min = Math.min.apply(Math, datapoints.map(function (o) { return o.date_count }))
+        var max = Math.max.apply(
+            Math,
+            datapoints.map(function (o) {
+                return o.date_count;
+            })
+        );
+        var min = Math.min.apply(
+            Math,
+            datapoints.map(function (o) {
+                return o.date_count;
+            })
+        );
         for (i = 0; i < datapoints.length; i++) {
             if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count
+                var tDate = datapoints[i].time_count;
                 var xDate = new Date(tDate);
                 if (xDate < minDate) {
                     minDate = new Date(xDate.getTime());
@@ -313,17 +409,25 @@ function drawBubbleChart() {
                 for (let a = 0; a < datapoints.length; a++) {
                     if (datapoints[a].time != "") {
                         var dateOnly = new Date(datapoints[a].time);
-                        var tzoffset = (new Date()).getTimezoneOffset() * 60000;
-                        var localISOTime = (new Date(dateOnly - tzoffset)).toISOString().slice(0, -1);
-                        dateOnly = localISOTime.split('T', 1)[0];
+                        var tzoffset = new Date().getTimezoneOffset() * 60000;
+                        var localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
                         if (x == dateOnly) {
                             bubbleText.push(datapoints[a].text);
                             bubbleUser.push(datapoints[a].user);
                         }
                     }
                 }
-                var json = { x: x, y: y, r: r, text: bubbleText, user: bubbleUser };
-                var lineJson = { x:x, y:y }
+                var json = {
+                    x: x,
+                    y: y,
+                    r: r,
+                    text: bubbleText,
+                    user: bubbleUser,
+                };
+                var lineJson = { x: x, y: y };
                 bubbleStorage.push(json);
                 lineBubbleStorage.push(lineJson);
             }
@@ -332,20 +436,21 @@ function drawBubbleChart() {
         minDate.setDate(minDate.getDate() - 1);
         //config
         const bubbleChartConfig = {
-            type: 'bubble',
+            type: "bubble",
             data: {
-                datasets: [{
-                    label: 'No. of Chatter (Scaled)',
-                    data: bubbleStorage
-                },{
-                    label: 'Line data',
-                    type: 'line',
-                    data: lineBubbleStorage,
-                    borderColor: [
-                        'rgba(0, 0, 0, 1)'
-                    ],
-                    tension: 0.4,
-                }],
+                datasets: [
+                    {
+                        label: "No. of Chatter (Scaled)",
+                        data: bubbleStorage,
+                    },
+                    {
+                        label: "Line data",
+                        type: "line",
+                        data: lineBubbleStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        tension: 0.4,
+                    },
+                ],
             },
             options: {
                 onClick: clickBubbleHandler,
@@ -353,38 +458,47 @@ function drawBubbleChart() {
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        type: 'time',
+                        type: "time",
                         title: {
                             display: true,
-                            text: 'Date',
+                            text: "Date",
                         },
                         time: {
-                            unit: 'day',
-                            tooltipFormat: 'dd MMM yyyy',
+                            unit: "day",
+                            tooltipFormat: "dd MMM yyyy",
                         },
                         max: maxDate,
-                        min: minDate
+                        min: minDate,
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Avg Chatter / Days',
+                            text: "Avg Chatter / Days",
                         },
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        };
         //config
         let bubbleChart = new Chart(chartHolderHTML, bubbleChartConfig);
         function clickBubbleHandler(evt) {
-            const points = bubbleChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            const points = bubbleChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
             let currentPage = 1;
 
             if (points.length) {
                 const firstPoint = points[0];
                 const label = bubbleChart.data.labels[firstPoint.index];
-                const value = bubbleChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                var ar = [value.user, value.text], table = document.querySelector('table tbody');
+                const value =
+                    bubbleChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                var ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
                 function getNumPages(array) {
                     return Math.ceil(array.length / recordsPerPage);
                 }
@@ -405,10 +519,10 @@ function drawBubbleChart() {
 
                 function changePage(page, array) {
                     numPage = getNumPages(array);
-                    const btn_prev = document.getElementById('btn-prev');
-                    const btn_next = document.getElementById('btn-next');
-                    let page_span = document.getElementById('page');
-                    page_span.style.display = 'inline-block';
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
 
                     if (page < 1) {
                         page = 1;
@@ -418,46 +532,53 @@ function drawBubbleChart() {
                         page = numPage;
                     }
 
-                    table.textContent = '';
-                    page_span.textContent = '';
+                    table.textContent = "";
+                    page_span.textContent = "";
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    }
-                    else {
+                    } else {
                         recordsPerPage = 50;
                     }
 
-                    for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && array.length;
+                        i++
+                    ) {
                         try {
                             row = table.insertRow(0);
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);
                             cell1.textContent = array[i][0];
                             cell2.textContent = array[i][1];
-                        }
-                        catch {
+                        } catch {
                             numPage = page;
                         }
                     }
                     page_span.textContent += page + "/" + numPage;
-                    btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
-                    btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
                     if (tbl.rows.length == 1) {
-                        btn_page_nav.style.display = 'none';
+                        btn_page_nav.style.display = "none";
                     }
                 }
 
                 function searchArray(array) {
                     input = document.getElementById("searchBar");
                     filter = input.value.toUpperCase();
-                    let filtered = array.filter(text => {
-                        return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
-                    })
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
                     currentArray = filtered;
                     currentPage = 1;
-                    changePage(currentPage, filtered)
+                    changePage(currentPage, filtered);
                 }
 
                 var r = ar[0].map(function (col, i) {
@@ -466,83 +587,107 @@ function drawBubbleChart() {
                     });
                 });
 
-                document.getElementById('searchBar').addEventListener('keyup', (e) => {
-                    e.preventDefault();
-                    searchArray(r);
-                });
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
 
-                document.getElementById('btn-next').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    nextPage();
-                });
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
 
-                document.getElementById('btn-prev').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    prevPage();
-                });
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
 
                 currentArray = r;
                 currentPage = 1;
                 changePage(currentPage, r);
             }
         }
-        min_r = bubbleStorage.reduce(function(prev, curr) {
+        min_r = bubbleStorage.reduce(function (prev, curr) {
             return prev.r < curr.r ? prev : curr;
         });
-        max_r = bubbleStorage.reduce(function(prev, curr) {
+        max_r = bubbleStorage.reduce(function (prev, curr) {
             return prev.r > curr.r ? prev : curr;
         });
-        min_x = bubbleStorage.reduce(function(prev, curr) {
+        min_x = bubbleStorage.reduce(function (prev, curr) {
             return prev.x < curr.x ? prev : curr;
         });
-        max_x = bubbleStorage.reduce(function(prev, curr) {
+        max_x = bubbleStorage.reduce(function (prev, curr) {
             return prev.x > curr.x ? prev : curr;
         });
         chart_sum.textContent = "";
-        let chart_sum_paragraph = "The date with the most amount of chatter on average is on: " + max_r.x + "(" + max_r.text.length + ").\r\n"
-        chart_sum_paragraph += "The date with the least amount of chatter on average is on: " + min_r.x + "(" + min_r.text.length + ").\r\n"
-        chart_sum_paragraph += "The first instance of chatter was on: " + min_x.x + ".\r\n"
-        chart_sum_paragraph += "The last instance of chatter was on: " + max_x.x + ".\r\n"
-        chart_sum_paragraph += "Sentiment peaked on: " + max_r.x + ".\r\n"
-        chart_sum_paragraph += "Sentiment reach its lowest on: " + min_r.x + ".\r\n"
-        let counter = datapoints.length
+        let chart_sum_paragraph =
+            "The date with the most amount of chatter on average is on: " +
+            max_r.x +
+            "(" +
+            max_r.text.length +
+            ").\r\n";
+        chart_sum_paragraph +=
+            "The date with the least amount of chatter on average is on: " +
+            min_r.x +
+            "(" +
+            min_r.text.length +
+            ").\r\n";
+        chart_sum_paragraph +=
+            "The first instance of chatter was on: " + min_x.x + ".\r\n";
+        chart_sum_paragraph +=
+            "The last instance of chatter was on: " + max_x.x + ".\r\n";
+        chart_sum_paragraph += "Sentiment peaked on: " + max_r.x + ".\r\n";
+        chart_sum_paragraph +=
+            "Sentiment reach its lowest on: " + min_r.x + ".\r\n";
+        let counter = datapoints.length;
         while (counter > 0) {
             counter--;
             let foundAttack = false;
             for (let a = 0; a < attackWords.length; a++) {
-                foundAttack = datapoints[counter].text.toLowerCase().includes(attackWords[a]);
+                foundAttack = datapoints[counter].text
+                    .toLowerCase()
+                    .includes(attackWords[a]);
             }
             if (foundAttack) {
-                chart_sum_paragraph += "The first post mentioning of any attacks was on: " + datapoints[counter].day + ".\r\n";
-                let str = datapoints[counter].text
-                if (str.length > 512)
-                    str = str.substring(0, 512) + "...";
+                chart_sum_paragraph +=
+                    "The first post mentioning of any attacks was on: " +
+                    datapoints[counter].day +
+                    ".\r\n";
+                let str = datapoints[counter].text;
+                if (str.length > 512) str = str.substring(0, 512) + "...";
                 chart_sum_paragraph += "Message: " + str + "\r\n";
                 break;
             }
         }
-        counter = datapoints.length
+        counter = datapoints.length;
         while (counter > 0) {
             counter--;
             let foundZero = false;
             for (let a = 0; a < zeroDayWords.length; a++) {
-                foundZero = datapoints[counter].text.toLowerCase().includes(zeroDayWords[a])
+                foundZero = datapoints[counter].text
+                    .toLowerCase()
+                    .includes(zeroDayWords[a]);
             }
             if (foundZero) {
                 chart_sum_paragraph += "Zero Day: Potentially.\r\n";
-                let str = datapoints[counter].text
-                if (str.length > 512)
-                    str = str.substring(0, 512) + "...";
+                let str = datapoints[counter].text;
+                if (str.length > 512) str = str.substring(0, 512) + "...";
                 chart_sum_paragraph += "Message: " + str + "\r\n";
                 break;
             }
         }
         chart_sum.textContent = chart_sum_paragraph;
-    })
+    });
 }
 
 function drawCountryChart() {
-    d3.csv('/static/results/charting.csv').then(function (datapoints) {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // country bar chart
         const countryStorage = [];
         for (let i = 0; i < datapoints.length; i++) {
@@ -563,16 +708,16 @@ function drawCountryChart() {
         }
         //config
         const countryChartConfig = {
-            type: 'bar',
+            type: "bar",
             data: {
-                datasets: [{
-                    label: 'No. of Tweets Per Country',
-                    data: countryStorage,
-                    borderColor: [
-                        'rgba(0, 0, 0, 1)'
-                    ],
-                    backgroundColor: "#4cb6cb"
-                }],
+                datasets: [
+                    {
+                        label: "No. of Tweets Per Country",
+                        data: countryStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "#4cb6cb",
+                    },
+                ],
             },
             options: {
                 responsive: true,
@@ -582,7 +727,7 @@ function drawCountryChart() {
                     x: {
                         title: {
                             display: true,
-                            text: 'Country',
+                            text: "Country",
                         },
                         ticks: {
                             beginAtZero: true,
@@ -591,29 +736,38 @@ function drawCountryChart() {
                     y: {
                         title: {
                             display: true,
-                            text: 'Total No. of Tweets',
+                            text: "Total No. of Tweets",
                         },
                         ticks: {
                             beginAtZero: true,
                         },
-                        grace: '50%',
-                        type: 'linear',
-                        min: -500
-                    }
-                }
-            }
-        }
+                        grace: "50%",
+                        type: "linear",
+                        min: -500,
+                    },
+                },
+            },
+        };
         //config
         let countryChart = new Chart(chartHolderHTML, countryChartConfig);
         function clickCountryBarHandler(evt) {
-            const points = countryChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            const points = countryChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
             let currentPage = 1;
 
             if (points.length) {
                 const firstPoint = points[0];
                 const label = countryChart.data.labels[firstPoint.index];
-                const value = countryChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                let ar = [value.user, value.text], table = document.querySelector('table tbody');
+                const value =
+                    countryChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
                 function getNumPages(array) {
                     return Math.ceil(array.length / recordsPerPage);
                 }
@@ -634,10 +788,10 @@ function drawCountryChart() {
 
                 function changePage(page, array) {
                     numPage = getNumPages(array);
-                    const btn_prev = document.getElementById('btn-prev');
-                    const btn_next = document.getElementById('btn-next');
-                    let page_span = document.getElementById('page');
-                    page_span.style.display = 'inline-block';
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
 
                     if (page < 1) {
                         page = 1;
@@ -647,46 +801,53 @@ function drawCountryChart() {
                         page = numPage;
                     }
 
-                    table.textContent = '';
-                    page_span.textContent = '';
+                    table.textContent = "";
+                    page_span.textContent = "";
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    }
-                    else {
+                    } else {
                         recordsPerPage = 50;
                     }
 
-                    for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && array.length;
+                        i++
+                    ) {
                         try {
                             row = table.insertRow(0);
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);
                             cell1.textContent = array[i][0];
                             cell2.textContent = array[i][1];
-                        }
-                        catch {
+                        } catch {
                             numPage = page;
                         }
                     }
                     page_span.textContent += page + "/" + numPage;
-                    btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
-                    btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
                     if (tbl.rows.length == 1) {
-                        btn_page_nav.style.display = 'none';
+                        btn_page_nav.style.display = "none";
                     }
                 }
 
                 function searchArray(array) {
                     input = document.getElementById("searchBar");
                     filter = input.value.toUpperCase();
-                    let filtered = array.filter(text => {
-                        return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
-                    })
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
                     currentArray = filtered;
                     currentPage = 1;
-                    changePage(currentPage, filtered)
+                    changePage(currentPage, filtered);
                 }
 
                 var r = ar[0].map(function (col, i) {
@@ -695,41 +856,57 @@ function drawCountryChart() {
                     });
                 });
 
-                document.getElementById('searchBar').addEventListener('keyup', (e) => {
-                    e.preventDefault();
-                    searchArray(r);
-                });
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
 
-                document.getElementById('btn-next').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    nextPage();
-                });
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
 
-                document.getElementById('btn-prev').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    prevPage();
-                });
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
 
                 currentArray = r;
                 currentPage = 1;
                 changePage(currentPage, r);
             }
         }
-        min_y = countryStorage.reduce(function(prev, curr) {
+        min_y = countryStorage.reduce(function (prev, curr) {
             return prev.y < curr.y ? prev : curr;
         });
-        max_y = countryStorage.reduce(function(prev, curr) {
+        max_y = countryStorage.reduce(function (prev, curr) {
             return prev.y > curr.y ? prev : curr;
         });
         chart_sum.textContent = "";
-        let chart_sum_paragraph = "The country with the most amount of tweets: " + max_y.x + "(" + max_y.text.length + ").\r\n"
-        chart_sum_paragraph += "The country with the least amount of tweets: " + min_y.x + "(" + min_y.text.length + ").\r\n"
+        let chart_sum_paragraph =
+            "The country with the most amount of tweets: " +
+            max_y.x +
+            "(" +
+            max_y.text.length +
+            ").\r\n";
+        chart_sum_paragraph +=
+            "The country with the least amount of tweets: " +
+            min_y.x +
+            "(" +
+            min_y.text.length +
+            ").\r\n";
         chart_sum.textContent = chart_sum_paragraph;
-    })
+    });
 }
 
 function drawScatterChart() {
-    d3.csv('/static/results/charting.csv').then(function (datapoints) {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
         //scatter graph
         const scatterStorage = [];
         for (let i = 0; i < datapoints.length; i++) {
@@ -745,9 +922,11 @@ function drawScatterChart() {
                 for (let a = 0; a < datapoints.length; a++) {
                     if (datapoints[a].time != "") {
                         let dateOnly = new Date(datapoints[a].time);
-                        let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-                        let localISOTime = (new Date(dateOnly - tzoffset)).toISOString().slice(0, -1);
-                        dateOnly = localISOTime.split('T', 1)[0];
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
 
                         let timeOnly = new Date(datapoints[a].time);
                         timeOnly = timeOnly.toISOString().substring(11, 13);
@@ -764,12 +943,14 @@ function drawScatterChart() {
         }
         //config
         const scatterChartConfig = {
-            type: 'scatter',
+            type: "scatter",
             data: {
-                datasets: [{
-                    label: 'Chatter Throughout the hours and days',
-                    data: scatterStorage
-                }],
+                datasets: [
+                    {
+                        label: "Chatter Throughout the hours and days",
+                        data: scatterStorage,
+                    },
+                ],
             },
             options: {
                 onClick: clickScatterHandler,
@@ -777,37 +958,46 @@ function drawScatterChart() {
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        type: 'time',
+                        type: "time",
                         title: {
                             display: true,
-                            text: 'Date',
+                            text: "Date",
                         },
                         time: {
-                            unit: 'day',
+                            unit: "day",
                         },
                     },
                     y: {
                         title: {
                             display: true,
-                            text: 'Hour (24H Format)',
+                            text: "Hour (24H Format)",
                         },
                         min: 0,
                         max: 24,
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        };
         //config
         let scatterChart = new Chart(chartHolderHTML, scatterChartConfig);
         function clickScatterHandler(evt) {
-            const points = scatterChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+            const points = scatterChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
             let currentPage = 1;
 
             if (points.length) {
                 const firstPoint = points[0];
                 const label = scatterChart.data.labels[firstPoint.index];
-                const value = scatterChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-                var ar = [value.user, value.text], table = document.querySelector('table tbody');
+                const value =
+                    scatterChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                var ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
                 function getNumPages(array) {
                     return Math.ceil(array.length / recordsPerPage);
                 }
@@ -828,10 +1018,10 @@ function drawScatterChart() {
 
                 function changePage(page, array) {
                     numPage = getNumPages(array);
-                    const btn_prev = document.getElementById('btn-prev');
-                    const btn_next = document.getElementById('btn-next');
-                    let page_span = document.getElementById('page');
-                    page_span.style.display = 'inline-block';
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
 
                     if (page < 1) {
                         page = 1;
@@ -841,46 +1031,53 @@ function drawScatterChart() {
                         page = numPage;
                     }
 
-                    table.textContent = '';
-                    page_span.textContent = '';
+                    table.textContent = "";
+                    page_span.textContent = "";
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    }
-                    else {
+                    } else {
                         recordsPerPage = 50;
                     }
 
-                    for (let i = (page - 1) * recordsPerPage; i < (page * recordsPerPage) && array.length; i++) {
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && array.length;
+                        i++
+                    ) {
                         try {
                             row = table.insertRow(0);
                             var cell1 = row.insertCell(0);
                             var cell2 = row.insertCell(1);
                             cell1.textContent = array[i][0];
                             cell2.textContent = array[i][1];
-                        }
-                        catch {
+                        } catch {
                             numPage = page;
                         }
                     }
                     page_span.textContent += page + "/" + numPage;
-                    btn_prev.style.display = (page === 1) ? 'none' : 'inline-block';
-                    btn_next.style.display = (page === numPage) ? 'none' : 'inline-block';
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
                     if (tbl.rows.length == 1) {
-                        btn_page_nav.style.display = 'none';
+                        btn_page_nav.style.display = "none";
                     }
                 }
 
                 function searchArray(array) {
                     input = document.getElementById("searchBar");
                     filter = input.value.toUpperCase();
-                    let filtered = array.filter(text => {
-                        return typeof text[1] == 'string' && text[1].toUpperCase().indexOf(filter) > -1;
-                    })
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
                     currentArray = filtered;
                     currentPage = 1;
-                    changePage(currentPage, filtered)
+                    changePage(currentPage, filtered);
                 }
 
                 var r = ar[0].map(function (col, i) {
@@ -889,35 +1086,57 @@ function drawScatterChart() {
                     });
                 });
 
-                document.getElementById('searchBar').addEventListener('keyup', (e) => {
-                    e.preventDefault();
-                    searchArray(r);
-                });
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
 
-                document.getElementById('btn-next').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    nextPage();
-                });
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
 
-                document.getElementById('btn-prev').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    prevPage();
-                });
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
 
                 currentArray = r;
                 currentPage = 1;
                 changePage(currentPage, r);
             }
         }
-        min_text = scatterStorage.reduce(function(prev, curr) {
+        min_text = scatterStorage.reduce(function (prev, curr) {
             return prev.text.length < curr.text.length ? prev : curr;
         });
-        max_text = scatterStorage.reduce(function(prev, curr) {
+        max_text = scatterStorage.reduce(function (prev, curr) {
             return prev.text.length > curr.text.length ? prev : curr;
         });
         chart_sum.textContent = "";
-        let chart_sum_paragraph = "The most amount of chatter on average is on: " + max_text.x + " " + max_text.y + "00hrs" + "(" + max_text.text.length + ").\r\n"
-        chart_sum_paragraph += "The least amount of chatter on average is on: " + max_text.x + " " + min_text.y + "00hrs" + "(" + min_text.text.length + ").\r\n"
+        let chart_sum_paragraph =
+            "The most amount of chatter on average is on: " +
+            max_text.x +
+            " " +
+            max_text.y +
+            "00hrs" +
+            "(" +
+            max_text.text.length +
+            ").\r\n";
+        chart_sum_paragraph +=
+            "The least amount of chatter on average is on: " +
+            max_text.x +
+            " " +
+            min_text.y +
+            "00hrs" +
+            "(" +
+            min_text.text.length +
+            ").\r\n";
         chart_sum.textContent = chart_sum_paragraph;
-    })
+    });
 }
