@@ -50,6 +50,7 @@ checkbox.addEventListener("change", function () {
         timeRange.disabled = true;
         depth.disabled = true;
         document.getElementById('csubrtexttr').setAttribute("hidden", true);
+        document.getElementById('customDepthTr').setAttribute("hidden", true);
     }
     else {
         SearchSubmit.disabled = true;
@@ -61,6 +62,7 @@ checkbox.addEventListener("change", function () {
         timeRange.disabled = false;
         depth.disabled = false;
         document.getElementById('csubrtexttr').removeAttribute("hidden");
+        document.getElementById('customDepthTr').removeAttribute("hidden");
     }
 });
 
