@@ -642,15 +642,25 @@ function drawLineChart() {
         return prev.x > curr.x ? prev : curr;
       });
     }
-    
+
     chart_sum.textContent = "";
+    let chart_sum_paragraph = "";
+    if(TWStorage.length > 0)
+    {
+      chart_sum_paragraph =
+      "Twitter has " + TWCount + " total amount of Tweets,\r and has a peak of "+ TWMaxEvent.y +" posts on "+ TWMaxEvent.x +"\n";
+    }
+    if(RDStorage.length > 0)
+    {
+      chart_sum_paragraph +=
+      "Reddit has " + RDCount + " total amount of Posts,\r and has a peak of  "+ RDMaxEvent.y +" posts on "+ RDMaxEvent.x +"\n";
+    }
+    if(PBStorage.length > 0)
+    {
+      chart_sum_paragraph +=
+      "PasteBin has " + PBCount + " total amount of Pastes,\r and has a peak of  "+ PBMaxEvent.y +" posts on "+ PBMaxEvent.x +"\n";
+    }
     
-    let chart_sum_paragraph =
-      "Twitter has " + TWCount + " total amount of Tweets,\r and has a peak of "+ TWMaxEvent.y +" posts on "+ TWMaxEvent.x +".\n";
-    chart_sum_paragraph +=
-      "Reddit has " + RDCount + " total amount of Posts,\r and has a peak of "+ RDMaxEvent.y +" posts on "+ RDMaxEvent.x +".\n";
-    chart_sum_paragraph +=
-      "PasteBin has " + PBCount + " total amount of Pastes,\r and has a peak of "+ PBMaxEvent.y +" posts on "+ PBMaxEvent.x +".\n";
     chart_sum.textContent = chart_sum_paragraph;
     
     chart_sum.textContent = chart_sum_paragraph;
