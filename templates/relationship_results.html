@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="/static/css/relationship_result.css" />
-    <link rel="stylesheet" href="/static/css/nav.css" />
-    <link type="image/png"
-          sizes="96x96"
-          rel="icon"
-          href="/static/images/keyword.png" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="/static/css/relationship_result.css" />
+        <link rel="stylesheet" href="/static/css/nav.css" />
+        <link
+            type="image/png"
+            sizes="96x96"
+            rel="icon"
+            href="/static/images/keyword.png"
+        />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
             integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
             crossorigin="anonymous"
-            referrerpolicy="no-referrer"></script>
-</head>
+            referrerpolicy="no-referrer"
+        ></script>
+    </head>
     <body>
         <nav>
             <a href="/" class="brand-logo">Tracking Online Chatter</a>
@@ -27,7 +31,11 @@
                     <li>
                         {% if title != "Demo Mode" %}
                         <form method="POST" action="/download">
-                            <input type="submit" class="button" value="Download">
+                            <input
+                                type="submit"
+                                class="button"
+                                value="Download"
+                            />
                         </form>
                         {% endif %}
                     </li>
@@ -55,20 +63,32 @@
             </div>
             <svg width="900" height="500" class="graph"></svg>
             <table class="center">
-                <form method="POST" action="/rs_uploader" enctype = "multipart/form-data">
-                <tr>
-                    <td>
-                        <input type="file" name="file"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="submit" id="submit_button" value="Submit JSON"/>
-                    </td>
-                </tr>
+                <form
+                    method="POST"
+                    action="/rs_uploader"
+                    enctype="multipart/form-data"
+                >
+                    <tr>
+                        <td>
+                            <input type="file" name="file" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                type="submit"
+                                id="submit_button"
+                                value="Submit JSON"
+                            />
+                        </td>
+                    </tr>
                 </form>
                 <tr>
-                    <td><button type="button" id="reset_graph">Reset Graph</button></td>
+                    <td>
+                        <button type="button" id="reset_graph">
+                            Reset Graph
+                        </button>
+                    </td>
                 </tr>
                 {% if error %}
                 <tr>
