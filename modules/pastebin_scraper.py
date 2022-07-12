@@ -90,4 +90,4 @@ class PastebinScrapper:
             pb_df = pb_df[pb_df["text"].str.contains(self.arg_refinement)]
         if len(pb_df) != 0:
             pb_df = pb_df.reset_index(drop=True)
-            pb_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_pastebin_results_" + str(dt.datetime.today().date()) + ".feather"))
+            pb_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + str(dt.datetime.today().date()) + "_pastebin_results_" + ".feather"))
