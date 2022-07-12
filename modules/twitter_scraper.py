@@ -56,4 +56,5 @@ class TwitterScraper:
 
         if len(tweets_df) != 0:
             tweets_df = tweets_df.reset_index(drop=True)
-            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + str(dt.datetime.today().date()) + "_tweets_results_" + ".feather"))
+            tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
+                                              str(dt.datetime.today().date()) + "_tweets_results.feather"))

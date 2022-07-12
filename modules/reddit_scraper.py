@@ -83,5 +83,6 @@ class RedditScraper:
                 submission_df = submission_df[submission_df["text"].str.contains(self.arg_refinement)]
             if len(submission_df) != 0:
                 submission_df = submission_df.reset_index(drop=True)
-                submission_df.to_feather(os.path.join(CWD, "results",
-                                                      str(self.arg_search) + str(dt.datetime.today().date()) + "_reddit_" + subreddit + "_" + ".feather"))
+                submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
+                                                      str(dt.datetime.today().date()) + "_reddit_" + subreddit +
+                                                      ".feather"))
