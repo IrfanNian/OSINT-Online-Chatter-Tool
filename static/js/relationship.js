@@ -1,8 +1,16 @@
 const keyword = document.getElementById("keyword");
 const fileUpload = document.getElementById("ini_file");
+const detectUsers = document.getElementById("detect_users");
 const level = document.getElementById("level");
 const checkbox = document.querySelector("input[name=demoMode]");
 const form = document.forms[0];
+
+if (detectUsers.innerText == "No Users") {
+    SearchSubmit.disabled = true;
+    fileUpload.disabled = true;
+    level.disabled = true;
+    keyword.disabled = true;
+}
 
 keyword.addEventListener("input", function () {
     let input = fileUpload.files[0];
@@ -35,6 +43,11 @@ checkbox.addEventListener("change", function () {
         keyword.disabled = true;
         fileUpload.disabled = true;
         level.disabled = true;
+    } else if (detectUsers.innerText == "No Users") {
+        SearchSubmit.disabled = true;
+        fileUpload.disabled = true;
+        level.disabled = true;
+        keyword.disabled = true;
     } else {
         SearchSubmit.disabled = true;
         keyword.disabled = false;

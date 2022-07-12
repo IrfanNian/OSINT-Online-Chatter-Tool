@@ -55,7 +55,7 @@
                     <br />
                     <h2>Users from Results</h2>
                     <div style="height: 100px; overflow: auto">
-                        <table class="center user_main_table">
+                        <table class="center user_main_table" id="detect_users">
                             {% if twitter_users_a %} {% for user in
                             twitter_users_a %} {% set user_1 =
                             twitter_users_a[loop.index-1] %} {% set user_2 =

@@ -6,12 +6,12 @@ let drawLine = document.getElementById("line_chart");
 let drawScatter = document.getElementById("scatter_chart");
 let chartSummary = document.getElementById("chart_sum");
 let drawDoughnut = document.getElementById("doughnut_chart");
-let drawFollowers = document.getElementById("followers_chart");															 
+let drawFollowers = document.getElementById("followers_chart");
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
-let topPoster = [];	
-let topFollowers = [];			   
+let topPoster = [];
+let topFollowers = [];
 drawCloud();
 drawBubbleChart();
 const zeroDayWords = ["0day", "zero-day"];
@@ -64,17 +64,17 @@ drawScatter.addEventListener("click", function () {
     drawScatterChart();
 });
 drawDoughnut.addEventListener("click", function () {
-  removeActive();
-  drawDoughnut.className += " active";
-  destroyChart();
-  drawDoughnutChart();
-});			
+    removeActive();
+    drawDoughnut.className += " active";
+    destroyChart();
+    drawDoughnutChart();
+});
 drawFollowers.addEventListener("click", function () {
-  removeActive();
-  drawFollowers.className += " active";
-  destroyChart();
-  drawFollowersChart();
-});										
+    removeActive();
+    drawFollowers.className += " active";
+    destroyChart();
+    drawFollowersChart();
+});
 
 function drawCloud() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
@@ -274,397 +274,414 @@ function drawCloud() {
 }
 
 function getMax(jsonList, property) {
-  var max = 0;
-  var maxItem = null;
-  for(var i=0; i<jsonList.length; i++) {
-      var item = jsonList[i];
-      if(item[property] > max) {
-          max = item[property];
-          maxItem = item;
-      }
-  }
+    var max = 0;
+    var maxItem = null;
+    for (var i = 0; i < jsonList.length; i++) {
+        var item = jsonList[i];
+        if (item[property] > max) {
+            max = item[property];
+            maxItem = item;
+        }
+    }
 
-  return maxItem;
+    return maxItem;
 }
 
 function drawLineChart() {
-  
-  d3.csv("/static/results/charting.csv").then(function (datapoints) {
-    // line chart
-    const TWStorage = [];
-    const RDStorage = [];
-    const PBStorage = [];
-   
-    let TWCount = 0;
-    let RDCount = 0;
-    let PBCount = 0;
-    let TWSeries = [];
-    let RDSeries = [];
-    let PBSeries = [];
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        // line chart
+        const TWStorage = [];
+        const RDStorage = [];
+        const PBStorage = [];
 
-    var minDate = new Date();
-    var maxDate = new Date();
-    
-    for (let i = 0; i < datapoints.length; i++) {
-      
-      if (datapoints[i].date_count != "") {
-        var tDate = datapoints[i].time_count;
-        var xDate = new Date(tDate);
-        if (xDate < minDate) {
-          minDate = new Date(xDate.getTime());
-        }
-        if (xDate > maxDate) {
-          maxDate = new Date(xDate.getTime());
-        }
-        
-      }
-      if (datapoints[i].date != "") {
+        let TWCount = 0;
+        let RDCount = 0;
+        let PBCount = 0;
+        let TWSeries = [];
+        let RDSeries = [];
+        let PBSeries = [];
 
-        if (datapoints[i].platform == "twitter") {
-          var texts = [];
-          var users = [];
-          var x = datapoints[i].time_count;
-          var y = 0;
-          for (let a = 0; a < datapoints.length; a++) {
-            if (datapoints[a].time != "") {
-              var dateOnly = new Date(datapoints[a].time);
-              var tzoffset = new Date().getTimezoneOffset() * 60000;
-              var localISOTime = new Date(dateOnly - tzoffset)
-                .toISOString()
-                .slice(0, -1);
-              dateOnly = localISOTime.split("T", 1)[0];
-              if (x == dateOnly) {
-                y++;
-                texts.push(datapoints[a].text);
-                users.push(datapoints[a].user);
-              }
+        var minDate = new Date();
+        var maxDate = new Date();
+
+        for (let i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].date_count != "") {
+                var tDate = datapoints[i].time_count;
+                var xDate = new Date(tDate);
+                if (xDate < minDate) {
+                    minDate = new Date(xDate.getTime());
+                }
+                if (xDate > maxDate) {
+                    maxDate = new Date(xDate.getTime());
+                }
             }
-          }
-          var json = { x: x, y: y, text: texts, user: users };
-          
-          TWStorage.push(json);
+            if (datapoints[i].date != "") {
+                if (datapoints[i].platform == "twitter") {
+                    var texts = [];
+                    var users = [];
+                    var x = datapoints[i].time_count;
+                    var y = 0;
+                    for (let a = 0; a < datapoints.length; a++) {
+                        if (datapoints[a].time != "") {
+                            var dateOnly = new Date(datapoints[a].time);
+                            var tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            var localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (x == dateOnly) {
+                                y++;
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
+                        }
+                    }
+                    var json = { x: x, y: y, text: texts, user: users };
 
-          TWCount = TWCount + parseInt(datapoints[i].count);
-          TWSeries.push({
-            x: datapoints[i].date,
-            y: parseInt(datapoints[i].count),
-          });
-        } else if (datapoints[i].platform == "reddit") {
-          var texts = [];
-          var users = [];
-          var x = datapoints[i].time_count;
-          var y = 0;
-          for (let a = 0; a < datapoints.length; a++) {
-            if (datapoints[a].time != "") {
-              var dateOnly = new Date(datapoints[a].time);
-              var tzoffset = new Date().getTimezoneOffset() * 60000;
-              var localISOTime = new Date(dateOnly - tzoffset)
-                .toISOString()
-                .slice(0, -1);
-              dateOnly = localISOTime.split("T", 1)[0];
-              if (x == dateOnly) {
-                y++;
-                texts.push(datapoints[a].text);
-                users.push(datapoints[a].user);
-              }
-            }
-          }
-          var json = { x: x, y: y, text: texts, user: users };
-          
-          RDStorage.push(json);
-          RDCount = RDCount + parseInt(datapoints[i].count);
-          RDSeries.push({
-            x: datapoints[i].date,
-            y: parseInt(datapoints[i].count),
-          });
-        } else if (datapoints[i].platform == "pastebin") {
+                    TWStorage.push(json);
 
-          var texts = [];
-          var users = [];
-          var x = datapoints[i].time_count;
-          var y = 0;
-          for (let a = 0; a < datapoints.length; a++) {
-            if (datapoints[a].time != "") {
-              var dateOnly = new Date(datapoints[a].time);
-              var tzoffset = new Date().getTimezoneOffset() * 60000;
-              var localISOTime = new Date(dateOnly - tzoffset)
-                .toISOString()
-                .slice(0, -1);
-              dateOnly = localISOTime.split("T", 1)[0];
-              if (x == dateOnly) {
-                y++;
-                texts.push(datapoints[a].text);
-                users.push(datapoints[a].user);
-              }
+                    TWCount = TWCount + parseInt(datapoints[i].count);
+                    TWSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "reddit") {
+                    var texts = [];
+                    var users = [];
+                    var x = datapoints[i].time_count;
+                    var y = 0;
+                    for (let a = 0; a < datapoints.length; a++) {
+                        if (datapoints[a].time != "") {
+                            var dateOnly = new Date(datapoints[a].time);
+                            var tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            var localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (x == dateOnly) {
+                                y++;
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
+                        }
+                    }
+                    var json = { x: x, y: y, text: texts, user: users };
+
+                    RDStorage.push(json);
+                    RDCount = RDCount + parseInt(datapoints[i].count);
+                    RDSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                } else if (datapoints[i].platform == "pastebin") {
+                    var texts = [];
+                    var users = [];
+                    var x = datapoints[i].time_count;
+                    var y = 0;
+                    for (let a = 0; a < datapoints.length; a++) {
+                        if (datapoints[a].time != "") {
+                            var dateOnly = new Date(datapoints[a].time);
+                            var tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            var localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (x == dateOnly) {
+                                y++;
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
+                        }
+                    }
+                    var json = { x: x, y: y, text: texts, user: users };
+
+                    PBStorage.push(json);
+                    PBCount = PBCount + parseInt(datapoints[i].count);
+                    PBSeries.push({
+                        x: datapoints[i].date,
+                        y: parseInt(datapoints[i].count),
+                    });
+                }
             }
-          }
-          var json = { x: x, y: y, text: texts, user: users };
-          
-          PBStorage.push(json);
-          PBCount = PBCount + parseInt(datapoints[i].count);
-          PBSeries.push({
-            x: datapoints[i].date,
-            y: parseInt(datapoints[i].count),
-          });
         }
-      }
-    }
 
-    var TWMaxEvent = getMax(TWStorage, 'y');
-    var RDMaxEvent = getMax(RDStorage, 'y');
-    var PBMaxEvent = getMax(PBStorage, 'y');
-    
-    maxDate.setDate(maxDate.getDate() + 3);
-    minDate.setDate(minDate.getDate() - 1);
-    //config
-    const MultilineChartConfig = {
-      type: "line",
-      data: {
-        datasets: [
-          {
-            label: "Twitter",
-            data: TWStorage,
-            borderColor: "rgba(0, 172, 238, 1)",
-            backgroundColor: "rgba(0, 172, 238, 0.5)",
-          },
-          {
-            label: "Reddit",
-            data: RDStorage,
-            borderColor: "rgba(255, 67, 0, 1)",
-            backgroundColor: "rgba(255, 67, 0, 0.5)",
-          },
-          {
-            label: "Pastebin",
-            data: PBStorage,
-            borderColor: "rgba(0, 0, 0, 1)",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          },
-        ],
-      },
-      options: {
-        onClick: clickLineHandler,
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            type: "time",
-            title: {
-              display: true,
-              text: "Date",
+        var TWMaxEvent = getMax(TWStorage, "y");
+        var RDMaxEvent = getMax(RDStorage, "y");
+        var PBMaxEvent = getMax(PBStorage, "y");
+
+        maxDate.setDate(maxDate.getDate() + 3);
+        minDate.setDate(minDate.getDate() - 1);
+        //config
+        const MultilineChartConfig = {
+            type: "line",
+            data: {
+                datasets: [
+                    {
+                        label: "Twitter",
+                        data: TWStorage,
+                        borderColor: "rgba(0, 172, 238, 1)",
+                        backgroundColor: "rgba(0, 172, 238, 0.5)",
+                    },
+                    {
+                        label: "Reddit",
+                        data: RDStorage,
+                        borderColor: "rgba(255, 67, 0, 1)",
+                        backgroundColor: "rgba(255, 67, 0, 0.5)",
+                    },
+                    {
+                        label: "Pastebin",
+                        data: PBStorage,
+                        borderColor: "rgba(0, 0, 0, 1)",
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    },
+                ],
             },
-            time: {
-              unit: "day",
-              tooltipFormat: "dd MMM yyyy",
+            options: {
+                onClick: clickLineHandler,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        type: "time",
+                        title: {
+                            display: true,
+                            text: "Date",
+                        },
+                        time: {
+                            unit: "day",
+                            tooltipFormat: "dd MMM yyyy",
+                        },
+                        max: maxDate,
+                        min: minDate,
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Posts / Days",
+                        },
+                    },
+                },
             },
-            max: maxDate,
-            min: minDate,
-          },
-          y: {
-            title: {
-              display: true,
-              text: "Posts / Days",
-            },
-          },
-        },
-      },
-    };
-    let MultilineChart = new Chart(chartHolderHTML, MultilineChartConfig);
-    function clickLineHandler(evt) {
-      const points = MultilineChart.getElementsAtEventForMode(
-        evt,
-        "nearest",
-        { intersect: true },
-        true
-      );
-      let currentPage = 1;
-
-      if (points.length) {
-        const firstPoint = points[0];
-        const label = MultilineChart.data.labels[firstPoint.index];
-        
-        const value =
-        MultilineChart.data.datasets[firstPoint.datasetIndex].data[
-            firstPoint.index
-          ];
-          // console.log(value)
-        var ar = [value.user, value.text],
-          table = document.querySelector("table tbody");
-        function getNumPages(array) {
-          return Math.ceil(array.length / recordsPerPage);
-        }
-
-        function prevPage() {
-          if (currentPage > 1) {
-            currentPage--;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function nextPage() {
-          if (currentPage < numPage) {
-            currentPage++;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function changePage(page, array) {
-          numPage = getNumPages(array);
-          const btn_prev = document.getElementById("btn-prev");
-          const btn_next = document.getElementById("btn-next");
-          let page_span = document.getElementById("page");
-          page_span.style.display = "inline-block";
-
-          if (page < 1) {
-            page = 1;
-          }
-
-          if (page > numPage) {
-            page = numPage;
-          }
-
-          table.textContent = "";
-          page_span.textContent = "";
-
-          if (recordsPerPage > array.length) {
-            recordsPerPage = array.length;
-          } else {
-            recordsPerPage = 50;
-          }
-
-          for (
-            let i = (page - 1) * recordsPerPage;
-            i < page * recordsPerPage && array.length;
-            i++
-          ) {
-            try {
-              row = table.insertRow(0);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              cell1.textContent = array[i][0];
-              cell2.textContent = array[i][1];
-            } catch {
-              numPage = page;
-            }
-          }
-          page_span.textContent += page + "/" + numPage;
-          btn_prev.style.display = page === 1 ? "none" : "inline-block";
-          btn_next.style.display = page === numPage ? "none" : "inline-block";
-          let tbl = document.getElementById("tablebubz");
-          if (tbl.rows.length == 1) {
-            btn_page_nav.style.display = "none";
-          }
-        }
-
-        function searchArray(array) {
-          input = document.getElementById("searchBar");
-          filter = input.value.toUpperCase();
-          let filtered = array.filter((text) => {
-            return (
-              typeof text[1] == "string" &&
-              text[1].toUpperCase().indexOf(filter) > -1
+        };
+        let MultilineChart = new Chart(chartHolderHTML, MultilineChartConfig);
+        function clickLineHandler(evt) {
+            const points = MultilineChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
             );
-          });
-          currentArray = filtered;
-          currentPage = 1;
-          changePage(currentPage, filtered);
+            let currentPage = 1;
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = MultilineChart.data.labels[firstPoint.index];
+
+                const value =
+                    MultilineChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                var ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else {
+                        recordsPerPage = 50;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        if (TWStorage.length > 0) {
+            min_r = TWStorage.reduce(function (prev, curr) {
+                return prev.r < curr.r ? prev : curr;
+            });
+            max_r = TWStorage.reduce(function (prev, curr) {
+                return prev.r > curr.r ? prev : curr;
+            });
+            min_x = TWStorage.reduce(function (prev, curr) {
+                return prev.x < curr.x ? prev : curr;
+            });
+            max_x = TWStorage.reduce(function (prev, curr) {
+                return prev.x > curr.x ? prev : curr;
+            });
         }
 
-        var r = ar[0].map(function (col, i) {
-          return ar.map(function (row) {
-            return row[i];
-          });
-        });
+        if (RDStorage.length > 0) {
+            min_r = RDStorage.reduce(function (prev, curr) {
+                return prev.r < curr.r ? prev : curr;
+            });
+            max_r = RDStorage.reduce(function (prev, curr) {
+                return prev.r > curr.r ? prev : curr;
+            });
+            min_x = RDStorage.reduce(function (prev, curr) {
+                return prev.x < curr.x ? prev : curr;
+            });
+            max_x = RDStorage.reduce(function (prev, curr) {
+                return prev.x > curr.x ? prev : curr;
+            });
+        }
 
-        document.getElementById("searchBar").addEventListener("keyup", (e) => {
-          e.preventDefault();
-          searchArray(r);
-        });
+        if (PBStorage.length > 0) {
+            min_r = PBStorage.reduce(function (prev, curr) {
+                return prev.r < curr.r ? prev : curr;
+            });
+            max_r = PBStorage.reduce(function (prev, curr) {
+                return prev.r > curr.r ? prev : curr;
+            });
+            min_x = PBStorage.reduce(function (prev, curr) {
+                return prev.x < curr.x ? prev : curr;
+            });
+            max_x = PBStorage.reduce(function (prev, curr) {
+                return prev.x > curr.x ? prev : curr;
+            });
+        }
 
-        document.getElementById("btn-next").addEventListener("click", (e) => {
-          e.preventDefault();
-          nextPage();
-        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "";
+        if (TWStorage.length > 0) {
+            chart_sum_paragraph =
+                "Twitter has " +
+                TWCount +
+                " total amount of Tweets,\r and has a peak of " +
+                TWMaxEvent.y +
+                " posts on " +
+                TWMaxEvent.x +
+                "\n";
+        }
+        if (RDStorage.length > 0) {
+            chart_sum_paragraph +=
+                "Reddit has " +
+                RDCount +
+                " total amount of Posts,\r and has a peak of  " +
+                RDMaxEvent.y +
+                " posts on " +
+                RDMaxEvent.x +
+                "\n";
+        }
+        if (PBStorage.length > 0) {
+            chart_sum_paragraph +=
+                "PasteBin has " +
+                PBCount +
+                " total amount of Pastes,\r and has a peak of  " +
+                PBMaxEvent.y +
+                " posts on " +
+                PBMaxEvent.x +
+                "\n";
+        }
 
-        document.getElementById("btn-prev").addEventListener("click", (e) => {
-          e.preventDefault();
-          prevPage();
-        });
+        chart_sum.textContent = chart_sum_paragraph;
 
-        currentArray = r;
-        currentPage = 1;
-        changePage(currentPage, r);
-      }
-    }
-    if(TWStorage.length > 0)
-    {
-      min_r = TWStorage.reduce(function (prev, curr) {
-        return prev.r < curr.r ? prev : curr;
-      });
-      max_r = TWStorage.reduce(function (prev, curr) {
-        return prev.r > curr.r ? prev : curr;
-      });
-      min_x = TWStorage.reduce(function (prev, curr) {
-        return prev.x < curr.x ? prev : curr;
-      });
-      max_x = TWStorage.reduce(function (prev, curr) {
-        return prev.x > curr.x ? prev : curr;
-      });
-    }
-
-    if(RDStorage.length > 0)
-    {
-      min_r = RDStorage.reduce(function (prev, curr) {
-        return prev.r < curr.r ? prev : curr;
-      });
-      max_r = RDStorage.reduce(function (prev, curr) {
-        return prev.r > curr.r ? prev : curr;
-      });
-      min_x = RDStorage.reduce(function (prev, curr) {
-        return prev.x < curr.x ? prev : curr;
-      });
-      max_x = RDStorage.reduce(function (prev, curr) {
-        return prev.x > curr.x ? prev : curr;
-      });
-    }
-
-    if(PBStorage.length > 0)
-    {
-      min_r = PBStorage.reduce(function (prev, curr) {
-        return prev.r < curr.r ? prev : curr;
-      });
-      max_r = PBStorage.reduce(function (prev, curr) {
-        return prev.r > curr.r ? prev : curr;
-      });
-      min_x = PBStorage.reduce(function (prev, curr) {
-        return prev.x < curr.x ? prev : curr;
-      });
-      max_x = PBStorage.reduce(function (prev, curr) {
-        return prev.x > curr.x ? prev : curr;
-      });
-    }
-
-    chart_sum.textContent = "";
-    let chart_sum_paragraph = "";
-    if(TWStorage.length > 0)
-    {
-      chart_sum_paragraph =
-      "Twitter has " + TWCount + " total amount of Tweets,\r and has a peak of "+ TWMaxEvent.y +" posts on "+ TWMaxEvent.x +"\n";
-    }
-    if(RDStorage.length > 0)
-    {
-      chart_sum_paragraph +=
-      "Reddit has " + RDCount + " total amount of Posts,\r and has a peak of  "+ RDMaxEvent.y +" posts on "+ RDMaxEvent.x +"\n";
-    }
-    if(PBStorage.length > 0)
-    {
-      chart_sum_paragraph +=
-      "PasteBin has " + PBCount + " total amount of Pastes,\r and has a peak of  "+ PBMaxEvent.y +" posts on "+ PBMaxEvent.x +"\n";
-    }
-    
-    chart_sum.textContent = chart_sum_paragraph;
-    
-    chart_sum.textContent = chart_sum_paragraph;
-  });
+        chart_sum.textContent = chart_sum_paragraph;
+    });
 }
 
 function drawBubbleChart() {
@@ -847,7 +864,7 @@ function drawBubbleChart() {
 
                     for (
                         let i = (page - 1) * recordsPerPage;
-                        i < page * recordsPerPage && array.length;
+                        i < page * recordsPerPage && i < array.length;
                         i++
                     ) {
                         try {
@@ -1116,7 +1133,7 @@ function drawCountryChart() {
 
                     for (
                         let i = (page - 1) * recordsPerPage;
-                        i < page * recordsPerPage && array.length;
+                        i < page * recordsPerPage && i < array.length;
                         i++
                     ) {
                         try {
@@ -1346,7 +1363,7 @@ function drawScatterChart() {
 
                     for (
                         let i = (page - 1) * recordsPerPage;
-                        i < page * recordsPerPage && array.length;
+                        i < page * recordsPerPage && i < array.length;
                         i++
                     ) {
                         try {
@@ -1446,467 +1463,501 @@ function drawScatterChart() {
 }
 
 function drawDoughnutChart() {
-  d3.csv("/static/results/charting.csv").then(function (datapoints) {
-    
-    let noPosts = [];
-    let names = [];
-    let x ;
-    for (i = 0; i < datapoints.length; i++) {
-      if (datapoints[i].date != "") {
-        if (datapoints[i].platform == "twitter") {
-          if (!names.includes(datapoints[i].user)) {
-            names.push(datapoints[i].user);
-            x = datapoints.filter((a) => a.user == datapoints[i].user);
-            
-            noPosts.push({
-              name: datapoints[i].user,
-              posts: x.length,
-              platform: "twitter"
-            });
-          }
-        } else if (datapoints[i].platform == "reddit") {
-          if (!names.includes(datapoints[i].user)) {
-            names.push(datapoints[i].user);
-            x = datapoints.filter((a) => a.user == datapoints[i].user);
-            
-            noPosts.push({
-              name: datapoints[i].user,
-              posts: x.length,
-              platform: "reddit"
-            });
-          }
-        } else if (datapoints[i].platform == "pastebin") {
-          if (!names.includes(datapoints[i].user)) {
-            names.push(datapoints[i].user);
-            x = datapoints.filter((a) => a.user == datapoints[i].user);
-            
-            noPosts.push({
-              name: datapoints[i].user,
-              posts: x.length,
-              platform: "pastebin"
-            });
-          }
-        }
-      }
-     
-    }
-    
-    var topPostValues = [...noPosts]
-      .sort((a, b) => b.posts - a.posts)
-      .slice(0, 5);
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        let noPosts = [];
+        let names = [];
+        let x;
+        for (i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].date != "") {
+                if (datapoints[i].platform == "twitter") {
+                    if (!names.includes(datapoints[i].user)) {
+                        names.push(datapoints[i].user);
+                        x = datapoints.filter(
+                            (a) => a.user == datapoints[i].user
+                        );
 
-    topPoster = [...topPostValues];
-   console.log(topPoster)
-    const data = {
-      labels: [
-        topPostValues[0].name,
-        topPostValues[1].name,
-        topPostValues[2].name,
-        topPostValues[3].name,
-        topPostValues[4].name,
-      ],
-      datasets: [
-        {
-          label: "Dataset 1",
-          data: [
-            topPostValues[0].posts,
-            topPostValues[1].posts,
-            topPostValues[2].posts,
-            topPostValues[3].posts,
-            topPostValues[4].posts,
-          ],
-          backgroundColor: ["Red", "Orange", "Yellow", "Green", "Blue"],
-        },
-      ],
-    };
+                        noPosts.push({
+                            name: datapoints[i].user,
+                            posts: x.length,
+                            platform: "twitter",
+                        });
+                    }
+                } else if (datapoints[i].platform == "reddit") {
+                    if (!names.includes(datapoints[i].user)) {
+                        names.push(datapoints[i].user);
+                        x = datapoints.filter(
+                            (a) => a.user == datapoints[i].user
+                        );
 
-    //Doughnut chart
-    const DoughnutChartConfig = {
-      type: "doughnut",
-      data: data,
-      options: {
-        onClick: clickDoughnutHandler,
-        maintainAspectRatio: false,
-        responsive: true,
-        plugins: {
-          title: {
-            display: false,
-            text: "Top 5 most frequent posters",
-          },
-        },
-      },
-    };
-	
-	let DoughnutChart = new Chart(chartHolderHTML, DoughnutChartConfig);
-    function clickDoughnutHandler(evt) {
-      const points = DoughnutChart.getElementsAtEventForMode(
-        evt,
-        "nearest",
-        { intersect: true },
-        true
-      );
-      let currentPage = 1;
-      // console.log(evt);
-      // console.log(points);
-      if (points.length) {
-        // console.log(topPoster[points[0].index]);
-      }
-      if (points.length) {
-        const firstPoint = points[0];
-        const label = DoughnutChart.data.labels[firstPoint.index];
-        const value = datapoints.filter(
-          (a) => a.user == topPoster[points[0].index].name
-        );
-        var ar = [...value];
-        table = document.querySelector("table tbody");
-        function getNumPages(array) {
-          return Math.ceil(array.length / recordsPerPage);
-        }
+                        noPosts.push({
+                            name: datapoints[i].user,
+                            posts: x.length,
+                            platform: "reddit",
+                        });
+                    }
+                } else if (datapoints[i].platform == "pastebin") {
+                    if (!names.includes(datapoints[i].user)) {
+                        names.push(datapoints[i].user);
+                        x = datapoints.filter(
+                            (a) => a.user == datapoints[i].user
+                        );
 
-        function prevPage() {
-          if (currentPage > 1) {
-            currentPage--;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function nextPage() {
-          if (currentPage < numPage) {
-            currentPage++;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function changePage(page, array) {
-          numPage = getNumPages(array);
-          const btn_prev = document.getElementById("btn-prev");
-          const btn_next = document.getElementById("btn-next");
-          let page_span = document.getElementById("page");
-          page_span.style.display = "inline-block";
-
-          if (page < 1) {
-            page = 1;
-          }
-
-          if (page > numPage) {
-            page = numPage;
-          }
-
-          table.textContent = "";
-          page_span.textContent = "";
-
-          if (recordsPerPage > array.length) {
-            recordsPerPage = array.length;
-          } else {
-            recordsPerPage = 50;
-          }
-
-          for (
-            let i = (page - 1) * recordsPerPage;
-            i < page * recordsPerPage && array.length;
-            i++
-          ) {
-            try {
-              row = table.insertRow(0);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              cell1.textContent = array[i].user;
-              cell2.textContent = array[i].text;
-            } catch {
-              numPage = page;
+                        noPosts.push({
+                            name: datapoints[i].user,
+                            posts: x.length,
+                            platform: "pastebin",
+                        });
+                    }
+                }
             }
-          }
-          page_span.textContent += page + "/" + numPage;
-          btn_prev.style.display = page === 1 ? "none" : "inline-block";
-          btn_next.style.display = page === numPage ? "none" : "inline-block";
-          let tbl = document.getElementById("tablebubz");
-          if (tbl.rows.length == 1) {
-            btn_page_nav.style.display = "none";
-          }
         }
 
-        function searchArray(array) {
-          input = document.getElementById("searchBar");
-          filter = input.value.toUpperCase();
-          let filtered = array.filter((text) => {
-            return (
-              typeof text[1] == "string" &&
-              text[1].toUpperCase().indexOf(filter) > -1
+        var topPostValues = [...noPosts]
+            .sort((a, b) => b.posts - a.posts)
+            .slice(0, 5);
+
+        topPoster = [...topPostValues];
+        const data = {
+            labels: [
+                topPostValues[0].name,
+                topPostValues[1].name,
+                topPostValues[2].name,
+                topPostValues[3].name,
+                topPostValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "Dataset 1",
+                    data: [
+                        topPostValues[0].posts,
+                        topPostValues[1].posts,
+                        topPostValues[2].posts,
+                        topPostValues[3].posts,
+                        topPostValues[4].posts,
+                    ],
+                    backgroundColor: [
+                        "Red",
+                        "Orange",
+                        "Yellow",
+                        "Green",
+                        "Blue",
+                    ],
+                },
+            ],
+        };
+
+        //Doughnut chart
+        const DoughnutChartConfig = {
+            type: "doughnut",
+            data: data,
+            options: {
+                onClick: clickDoughnutHandler,
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: false,
+                        text: "Top 5 most frequent posters",
+                    },
+                },
+            },
+        };
+
+        let DoughnutChart = new Chart(chartHolderHTML, DoughnutChartConfig);
+        function clickDoughnutHandler(evt) {
+            const points = DoughnutChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
             );
-          });
-          currentArray = filtered;
-          currentPage = 1;
-          changePage(currentPage, filtered);
+            let currentPage = 1;
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = DoughnutChart.data.labels[firstPoint.index];
+                const value = datapoints.filter(
+                    (a) => a.user == topPoster[points[0].index].name
+                );
+                var ar = [...value];
+                table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else {
+                        recordsPerPage = 50;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i].user;
+                            cell2.textContent = array[i].text;
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+                currentArray = ar;
+                currentPage = 1;
+                changePage(currentPage, ar);
+            }
         }
 
-        document.getElementById("searchBar").addEventListener("keyup", (e) => {
-          e.preventDefault();
-          searchArray(r);
-        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "";
 
-        document.getElementById("btn-next").addEventListener("click", (e) => {
-          e.preventDefault();
-          nextPage();
-        });
+        chart_sum_paragraph += "The top five most frequent posters are\r\n";
+        for (let a = 0; a < topPostValues.length; a++) {
+            chart_sum_paragraph +=
+                a +
+                1 +
+                ") user: " +
+                topPostValues[a].name +
+                " with " +
+                topPostValues[a].posts +
+                " from the " +
+                topPostValues[a].platform +
+                " platform.\r\n";
+        }
 
-        document.getElementById("btn-prev").addEventListener("click", (e) => {
-          e.preventDefault();
-          prevPage();
-        });
-        // console.log(ar);
-        currentArray = ar;
-        currentPage = 1;
-        changePage(currentPage, ar);
-      }
-    }
-	
-    chart_sum.textContent = "";
-    let chart_sum_paragraph = "";
-
-    chart_sum_paragraph += "The top five most frequent posters are\r\n";
-    for(let a = 0; a < topPostValues.length; a++)
-    {
-      chart_sum_paragraph += (a+1)+") user: " + topPostValues[a].name + " with "+topPostValues[a].posts+" from the "+ topPostValues[a].platform +" platform.\r\n"; 
-    }
-
-    chart_sum.textContent = chart_sum_paragraph;
-  });
+        chart_sum.textContent = chart_sum_paragraph;
+    });
 }
 
 function formatter(n) {
-  var str = n.toString().split(".");
-  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  return str.join(".");
+    var str = n.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
 }
 
 function drawFollowersChart() {
-  d3.csv("/static/results/charting.csv").then(function (datapoints) {
-    let noPosts = [];
-    let names = [];
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        let noPosts = [];
+        let names = [];
 
-    for (i = 0; i < datapoints.length; i++) {
-      if (datapoints[i].date_count != "") {
-        if (!names.includes(datapoints[i].user)) {
-          names.push(datapoints[i].user);
-          let x = datapoints.filter((a) => a.user == datapoints[i].user);
-          noPosts.push({
-            name: datapoints[i].user,
-            posts: x.length,
-            followers: datapoints[i].followers,
-            following: datapoints[i].following,
-          });
-        }
-      }
-    }
-    var topfollowerValues = [...noPosts]
-      .sort((a, b) => b.followers - a.followers)
-      .slice(0, 5);
-    var topfollowingValues = [...noPosts]
-      .sort((a, b) => b.following - a.following)
-      .slice(0, 5);
-    topFollowers = topfollowerValues.concat(topfollowingValues);
-    const barchartdata = {
-      labels: [
-        topfollowerValues[0].name,
-        topfollowerValues[1].name,
-        topfollowerValues[2].name,
-        topfollowerValues[3].name,
-        topfollowerValues[4].name,
-        topfollowingValues[0].name,
-        topfollowingValues[1].name,
-        topfollowingValues[2].name,
-        topfollowingValues[3].name,
-        topfollowingValues[4].name,
-      ],
-      datasets: [
-        {
-          label: "followers",
-          data: [
-            topfollowerValues[0].followers,
-            topfollowerValues[1].followers,
-            topfollowerValues[2].followers,
-            topfollowerValues[3].followers,
-            topfollowerValues[4].followers,
-            topfollowingValues[0].followers,
-            topfollowingValues[1].followers,
-            topfollowingValues[2].followers,
-            topfollowingValues[3].followers,
-            topfollowingValues[4].followers,
-          ],
-          borderColor: "#ffb1c1",
-          backgroundColor: "rgba(255, 110, 141, 0.5)",
-        },
-        {
-          label: "following",
-          data: [
-            topfollowerValues[0].following,
-            topfollowerValues[1].following,
-            topfollowerValues[2].following,
-            topfollowerValues[3].following,
-            topfollowerValues[4].following,
-            topfollowingValues[0].following,
-            topfollowingValues[1].following,
-            topfollowingValues[2].following,
-            topfollowingValues[3].following,
-            topfollowingValues[4].following,
-          ],
-          borderColor: "#4faded",
-          backgroundColor: "rgba(154,208,245,0.5)",
-        },
-      ],
-    };
-    const FollowerChartconfig = {
-      type: "bar",
-      data: barchartdata,
-      options: {
-        onClick: clickFollowerBarHandler,
-        indexAxis: "y",
-        elements: {
-          bar: {
-            borderWidth: 2,
-          },
-        },
-        maintainAspectRatio: false,
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: false,
-            text: "Most number of Twitter followers",
-          },
-        },
-      },
-    };
-
-    var followerChart = new Chart(chartHolderHTML, FollowerChartconfig);
-    function clickFollowerBarHandler(evt) {
-      const points = followerChart.getElementsAtEventForMode(
-        evt,
-        "nearest",
-        { intersect: true },
-        true
-      );
-      let currentPage = 1;
-      if (points.length) {
-      }
-      if (points.length) {
-        const firstPoint = points[0];
-        const label = followerChart.data.labels[firstPoint.index];
-        const value = datapoints.filter(
-          (a) => a.user == topFollowers[points[0].index].name
-        );
-        var ar = [...value];
-        table = document.querySelector("table tbody");
-        function getNumPages(array) {
-          return Math.ceil(array.length / recordsPerPage);
-        }
-
-        function prevPage() {
-          if (currentPage > 1) {
-            currentPage--;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function nextPage() {
-          if (currentPage < numPage) {
-            currentPage++;
-            changePage(currentPage, currentArray);
-          }
-        }
-
-        function changePage(page, array) {
-          numPage = getNumPages(array);
-          const btn_prev = document.getElementById("btn-prev");
-          const btn_next = document.getElementById("btn-next");
-          let page_span = document.getElementById("page");
-          page_span.style.display = "inline-block";
-
-          if (page < 1) {
-            page = 1;
-          }
-
-          if (page > numPage) {
-            page = numPage;
-          }
-
-          table.textContent = "";
-          page_span.textContent = "";
-
-          if (recordsPerPage > array.length) {
-            recordsPerPage = array.length;
-          } else {
-            recordsPerPage = 50;
-          }
-
-          for (
-            let i = (page - 1) * recordsPerPage;
-            i < page * recordsPerPage && array.length;
-            i++
-          ) {
-            try {
-              row = table.insertRow(0);
-              var cell1 = row.insertCell(0);
-              var cell2 = row.insertCell(1);
-              cell1.textContent = array[i].user;
-              cell2.textContent = array[i].text;
-            } catch {
-              numPage = page;
+        for (i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].date_count != "") {
+                if (!names.includes(datapoints[i].user)) {
+                    names.push(datapoints[i].user);
+                    let x = datapoints.filter(
+                        (a) => a.user == datapoints[i].user
+                    );
+                    noPosts.push({
+                        name: datapoints[i].user,
+                        posts: x.length,
+                        followers: datapoints[i].followers,
+                        following: datapoints[i].following,
+                    });
+                }
             }
-          }
-          page_span.textContent += page + "/" + numPage;
-          btn_prev.style.display = page === 1 ? "none" : "inline-block";
-          btn_next.style.display = page === numPage ? "none" : "inline-block";
-          let tbl = document.getElementById("tablebubz");
-          if (tbl.rows.length == 1) {
-            btn_page_nav.style.display = "none";
-          }
         }
+        var topfollowerValues = [...noPosts]
+            .sort((a, b) => b.followers - a.followers)
+            .slice(0, 5);
+        var topfollowingValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+        topFollowers = topfollowerValues.concat(topfollowingValues);
+        const barchartdata = {
+            labels: [
+                topfollowerValues[0].name,
+                topfollowerValues[1].name,
+                topfollowerValues[2].name,
+                topfollowerValues[3].name,
+                topfollowerValues[4].name,
+                topfollowingValues[0].name,
+                topfollowingValues[1].name,
+                topfollowingValues[2].name,
+                topfollowingValues[3].name,
+                topfollowingValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "followers",
+                    data: [
+                        topfollowerValues[0].followers,
+                        topfollowerValues[1].followers,
+                        topfollowerValues[2].followers,
+                        topfollowerValues[3].followers,
+                        topfollowerValues[4].followers,
+                        topfollowingValues[0].followers,
+                        topfollowingValues[1].followers,
+                        topfollowingValues[2].followers,
+                        topfollowingValues[3].followers,
+                        topfollowingValues[4].followers,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+                {
+                    label: "following",
+                    data: [
+                        topfollowerValues[0].following,
+                        topfollowerValues[1].following,
+                        topfollowerValues[2].following,
+                        topfollowerValues[3].following,
+                        topfollowerValues[4].following,
+                        topfollowingValues[0].following,
+                        topfollowingValues[1].following,
+                        topfollowingValues[2].following,
+                        topfollowingValues[3].following,
+                        topfollowingValues[4].following,
+                    ],
+                    borderColor: "#4faded",
+                    backgroundColor: "rgba(154,208,245,0.5)",
+                },
+            ],
+        };
+        const FollowerChartconfig = {
+            type: "bar",
+            data: barchartdata,
+            options: {
+                onClick: clickFollowerBarHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Most number of Twitter followers",
+                    },
+                },
+            },
+        };
 
-        function searchArray(array) {
-          input = document.getElementById("searchBar");
-          filter = input.value.toUpperCase();
-          let filtered = array.filter((text) => {
-            return (
-              typeof text[1] == "string" &&
-              text[1].toUpperCase().indexOf(filter) > -1
+        var followerChart = new Chart(chartHolderHTML, FollowerChartconfig);
+        function clickFollowerBarHandler(evt) {
+            const points = followerChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
             );
-          });
-          currentArray = filtered;
-          currentPage = 1;
-          changePage(currentPage, filtered);
+            let currentPage = 1;
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = followerChart.data.labels[firstPoint.index];
+                const value = datapoints.filter(
+                    (a) => a.user == topFollowers[points[0].index].name
+                );
+                var ar = [...value];
+                table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else {
+                        recordsPerPage = 50;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i].user;
+                            cell2.textContent = array[i].text;
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+                currentArray = ar;
+                currentPage = 1;
+                changePage(currentPage, ar);
+            }
         }
-		
-        document.getElementById("searchBar").addEventListener("keyup", (e) => {
-          e.preventDefault();
-          searchArray(r);
-        });
 
-        document.getElementById("btn-next").addEventListener("click", (e) => {
-          e.preventDefault();
-          nextPage();
-        });
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "";
 
-        document.getElementById("btn-prev").addEventListener("click", (e) => {
-          e.preventDefault();
-          prevPage();
-        });
-        // console.log(ar);
-        currentArray = ar;
-        currentPage = 1;
-        changePage(currentPage, ar);
-      }
-    }
-	
-    chart_sum.textContent = "";
-    let chart_sum_paragraph = "";
-   
-    chart_sum_paragraph = 
-    "The Twitter account with most followers is "+topfollowerValues[0].name+" with " + formatter(parseInt(topfollowerValues[0].followers))+ " of followers.\n"+
-    "The Twitter account with the most following is "+topfollowingValues[0].name+" with "+formatter(parseInt(topfollowerValues[0].following))+" of followings.\r\n";
+        chart_sum_paragraph =
+            "The Twitter account with most followers is " +
+            topfollowerValues[0].name +
+            " with " +
+            formatter(parseInt(topfollowerValues[0].followers)) +
+            " of followers.\n" +
+            "The Twitter account with the most following is " +
+            topfollowingValues[0].name +
+            " with " +
+            formatter(parseInt(topfollowerValues[0].following)) +
+            " of followings.\r\n";
 
-    chart_sum.textContent = chart_sum_paragraph;
-  });
+        chart_sum.textContent = chart_sum_paragraph;
+    });
 }

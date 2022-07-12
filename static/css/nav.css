@@ -20,7 +20,6 @@ nav {
     padding: 20px 30px;
 }
 
-/*  */
 a {
     text-decoration: none;
     color: white;
@@ -71,7 +70,6 @@ a.menu img {
 @media screen and (max-width: 600px) {
     .brand-logo {
         font-size: 23px;
-        /* justify-content: flex-start; */
     }
 
     nav.responsive {
