@@ -51,7 +51,7 @@ def upload_file():
             return render_template('relationship_results.html', error="File Uploaded Failed")
 
 
-@app.route('/relationship_results', methods=['POST'])
+@app.route('/relationship_results', methods=['POST', 'GET'])
 def relationship_results():
     if request.method == "POST":
         credentials = "config.ini"
@@ -88,6 +88,8 @@ def relationship_results():
         tf = TwitterFriends(credentials)
         tf.run(searchbar_text, level)
         return render_template('relationship_results.html', title=searchbar_text)
+    elif request.method == "GET":
+        return render_template('relationship_results.html', title="Demo Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
         return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
