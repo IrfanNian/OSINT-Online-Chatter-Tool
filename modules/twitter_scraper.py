@@ -47,9 +47,9 @@ class TwitterScraper:
                 location = location.split(",")[-1][1:]
             else:
                 location = "No Data"
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location, "twitter"])
+            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location, tweet.user.friendsCount, tweet.user.followersCount, "twitter"])
 
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location", "platform"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location", "following", "followers", "platform"])
 
         if self.arg_refinement is not None:
             tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
