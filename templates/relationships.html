@@ -148,27 +148,6 @@
                             </td>
                         </tr>
                     </table>
-                    <hr />
-                    <br />
-                    <h2 class="center">Notice!</h2>
-                    <ol type="1">
-                        <li>
-                            This feature requires a Twitter Developer Account.
-                        </li>
-                        <li>
-                            This feature is meant to be used after searching for a keyword else,
-                            only the upload function would work.
-                        </li>
-                        <li>
-                            It will take a long time to process depending on the
-                            number of followings and levels specified.
-                        </li>
-                        <li>Private accounts are not included.</li>
-                        <li>
-                            Twitter APIv2 has rate limits, 15 Requests per
-                            15-minute window.
-                        </li>
-                    </ol>
                     <div class="buttons">
                         <button
                             id="SearchSubmit"
@@ -188,6 +167,27 @@
                     <p class="error">Error: {{ error }}</p>
                     {% endif%}
                 </form>
+                <br />
+                <hr />
+                <h2 class="center">Notice!</h2>
+                <ol type="1">
+                    <li>
+                        This feature requires a Twitter Developer Account.
+                    </li>
+                    <li>
+                        This feature is meant to be used after searching for a keyword else,
+                        only the upload function would work.
+                    </li>
+                    <li>
+                        It will take a long time to process depending on the
+                        number of followings and levels specified.
+                    </li>
+                    <li>Private accounts are not included.</li>
+                    <li>
+                        Twitter APIv2 has rate limits, 15 Requests per
+                        15-minute window.
+                    </li>
+                </ol>
             </div>
         </div>
         <script src="/static/js/relationship.js"></script>
