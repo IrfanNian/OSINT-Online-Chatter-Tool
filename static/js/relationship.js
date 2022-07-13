@@ -57,7 +57,7 @@ checkbox.addEventListener("change", function () {
 });
 
 window.onload = function () {
-    checkbox.checked = false;
+    document.getElementById("search").reset();
 };
 
 document.getElementById("SearchSubmit").addEventListener("click", function () {
