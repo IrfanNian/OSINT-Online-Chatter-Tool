@@ -177,9 +177,19 @@ function drawGraph() {
             d3.selectAll("svg g").attr("transform", e.transform);
         }
 
-        const zoom = d3.zoom().on("zoom", handleZoom);
+        let zoom = d3.zoom()
+            .scaleExtent([.5, 20])
+            .extent([[0, 0], [width, height]])
+            .on("zoom", handleZoom);
 
-        d3.select("svg").call(zoom);
+        let zoomElem = d3.select("svg").call(zoom);
+
+        function reset() {
+            zoomElem.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        }
+        reset();
 
         const drag = d3
             .drag()
