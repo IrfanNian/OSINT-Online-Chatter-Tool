@@ -19,9 +19,14 @@ body {
 }
 
 nav {
-    z-index:999;
-    background: rgb(159,193,205);
-    background: linear-gradient(112deg, rgba(159,193,205,1) 0%, rgba(50,96,155,1) 80%, rgba(91,96,160,1) 100%);
+    z-index: 999;
+    background: rgb(159, 193, 205);
+    background: linear-gradient(
+        112deg,
+        rgba(159, 193, 205, 1) 0%,
+        rgba(50, 96, 155, 1) 80%,
+        rgba(91, 96, 160, 1) 100%
+    );
     height: 10%;
 }
 
@@ -42,7 +47,6 @@ nav {
     font-weight: 600;
     color: #545454;
     margin-left: 20px;
-    /* text-align: center; */
     margin-bottom: 40px;
 }
 
@@ -64,7 +68,6 @@ nav {
     margin: 0 0 0 auto;
     margin-bottom: 50px;
     float: right;
-
 }
 
 .box {
@@ -100,6 +103,8 @@ nav {
     grid-auto-flow: column;
     width: 49.5%;
     height: 52.5%;
+    overflow-y: auto;
+    position: relative;
     margin: 0 0 0 auto;
     margin-bottom: 10px;
     float: right;
@@ -110,54 +115,53 @@ nav {
     display: grid;
     grid-gap: 5px;
     width: 49.5%;
-    height:52.5%;
+    height: 52.5%;
     overflow-y: auto;
     text-align: left;
-    /* width: fit-content; */
     border-radius: 30px;
     box-shadow: 0 0 20px #737272;
     float: left;
-    clear:left;
+    clear: left;
     background-color: #f6f6f6;
     margin-bottom: 10px;
 }
 
 .bubbletable * {
-	margin: 0px;
-	box-sizing: border-box;
+    margin: 0px;
+    box-sizing: border-box;
 }
 
 .bubbletable table {
-	border-collapse: separate;
-	font-size: 13px;
-	background-color: #f6f6f6;
-	border-spacing: 0;
-	table-layout: fixed;
+    border-collapse: separate;
+    font-size: 13px;
+    background-color: #f6f6f6;
+    border-spacing: 0;
+    table-layout: fixed;
     color: black;
 }
 
 table thead tr th {
-	padding: 18px 24px;
-	border-bottom: 1px solid #1c1c1c;
-	position: sticky;
-	top: 0;
+    padding: 18px 24px;
+    border-bottom: 1px solid #1c1c1c;
+    position: sticky;
+    top: 0;
     background-color: #e6e6e6;
     font-family: "K2D", sans-serif;
 }
 
 table tfoot {
     padding: 18px 24px;
-	border-bottom: 1px solid #1c1c1c;
-	position: sticky;
-	bottom: 0;
+    border-bottom: 1px solid #1c1c1c;
+    position: sticky;
+    bottom: 0;
     background-color: #e6e6e6;
     font-family: "K2D", sans-serif;
 }
 table tbody tr td {
-	padding: 11px 24px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	font-family: "K2D", sans-serif;
+    padding: 11px 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "K2D", sans-serif;
 }
 
 table thead {
@@ -169,42 +173,48 @@ table thead {
     width: 0;
 }
 
-.timelineChart {
+.tab {
+    overflow: hidden;
+    background-color: #f1f1f1;
     width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
-    background-color: #f6f6f6;
-    float: left;
-    clear: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    height: 50%;
+    border-radius: 10px;
+    border: 1px solid #ddd;
 }
 
-.countryGraph {
-    width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
-    background-color: #f6f6f6;
+.tab button {
+    background-color: inherit;
     float: left;
-    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 13px 16px;
+    transition: 0.3s;
+    font-family: "K2D", sans-serif;
 }
 
-.scatterGraph {
-    width: 49.5%;
-    height: 52.5%;
-    overflow-y: auto;
-    text-align: left;
-    border-radius: 30px;
-    box-shadow: 0 0 20px #737272;
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.insights {
+    border: 1px solid #e6e6e6;
+    padding: 5px;
     background-color: #f6f6f6;
-    float: left;
+    border-radius: 20px;
+    grid-gap: 5px;
+    grid-auto-flow: column;
+    margin: 0 0 0 auto;
     margin-bottom: 10px;
+    width: 100%;
+    box-shadow: 0 0 20px #737272;
+    font-family: "K2D", sans-serif;
+    display: flex;
+    white-space: pre-line;
 }
 
 .usernameCloud {
@@ -241,25 +251,25 @@ table thead {
     margin-bottom: 50px;
 }
 
-.counter{
-    font-family: 'Open Sans', sans-serif;
+.counter {
+    font-family: "Open Sans", sans-serif;
     color: #fff;
     background: #fff;
     text-align: center;
     width: 190px;
     padding: 25px 30px 10px;
     margin: 0 auto;
-    border-radius: 30px 0 ;
-    box-shadow: 10px 10px 0 rgba(0,0,0,0.05);
+    border-radius: 30px 0;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.05);
     position: relative;
     z-index: 1;
 }
 
-.counter:before{
+.counter:before {
     content: "";
     background: #51d658;
     border-radius: 15px 0 30px 0;
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
     position: absolute;
     top: 12px;
     left: 12px;
@@ -268,19 +278,19 @@ table thead {
     z-index: -1;
 }
 
-.counter .counter-icon{
+.counter .counter-icon {
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
 
-.counter:hover .counter-icon{
+.counter:hover .counter-icon {
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.counter h3{
+.counter h3 {
     font-size: 17px;
     font-weight: 500;
     text-transform: uppercase;
@@ -288,7 +298,7 @@ table thead {
     margin: 0 0 20px;
 }
 
-.counter .counter-value{
+.counter .counter-value {
     color: #666;
     background: #fff;
     font-size: 33px;
@@ -302,24 +312,35 @@ table thead {
     display: block;
 }
 
-.counter.blue:before{ background-color: #55ACEE; }
-@media screen and (max-width:990px){
-    .counter{ margin-bottom: 40px; }
+.counter.blue:before {
+    background-color: #55acee;
+}
+@media screen and (max-width: 990px) {
+    .counter {
+        margin-bottom: 40px;
+    }
 }
 
-.counter.orange:before{ background-color: #FF5700; }
-@media screen and (max-width:990px){
-    .counter{ margin-bottom: 40px; }
+.counter.orange:before {
+    background-color: #ff5700;
+}
+@media screen and (max-width: 990px) {
+    .counter {
+        margin-bottom: 40px;
+    }
 }
 
-.counter.black:before{ background-color: #15487B; }
-@media screen and (max-width:990px){
-    .counter{ margin-bottom: 40px; }
+.counter.black:before {
+    background-color: #15487b;
+}
+@media screen and (max-width: 990px) {
+    .counter {
+        margin-bottom: 40px;
+    }
 }
 
 #searchBar {
-    background-image: url('../images/search.png'); /* Add a search icon to input */
-    /* background-position: 10px 12px; Position the search icon */
+    background-image: url("../images/search.png"); /* Add a search icon to input */
     background-repeat: no-repeat; /*  Do not repeat the icon image */
     background-size: auto;
     width: 49.5%; /* Full-width */
@@ -332,24 +353,30 @@ table thead {
     float: left;
 }
 
-.headingOne{
+.headingOne {
     display: flex;
     width: 100%;
     justify-content: space-around;
 }
 
-.headingTwo{
+.headingTwo {
     display: flex;
     padding-top: 2%;
     width: 100%;
     justify-content: space-around;
 }
 
-.headingThree{
+.headingThree {
     display: flex;
     padding-top: 2%;
     width: 50%;
     justify-content: center;
+}
+
+.utility {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
 }
 
 #wordcloudname {
@@ -359,6 +386,7 @@ table thead {
 .button {
     background-color: black;
     border: none;
+    border-radius: 10px;
     color: white;
     padding: 15px 32px;
     text-align: center;
@@ -369,13 +397,14 @@ table thead {
     cursor: pointer;
 }
 
-.row{
-	width:100%;
-	margin-bottom:30px;
+.row {
+    width: 100%;
+    margin-bottom: 30px;
 }
-.cell{
-	width:49%;
-	display:inline-block;
+
+.cell {
+    width: 49%;
+    display: inline-block;
 }
 
 /* Responsive */
@@ -416,35 +445,30 @@ table thead {
         padding: 5px;
         margin-bottom: 50px;
     }
-    .bubbletable{
+    .bubbletable {
         width: 100%;
         margin-bottom: 50px;
     }
-    .usernameCloud{
+    .usernameCloud {
         width: 100%;
     }
-    .timelineChart{
+    .wordCloud {
         width: 100%;
-        margin-bottom: 50px;
     }
-	.wordCloud{
-		width: 100%;
-	}
-    #searchBar{
-        margin-top:50px;
+    #searchBar {
+        margin-top: 50px;
     }
     .headingOne {
         flex-direction: column;
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         justify-content: space-between;
         height: 70%;
         position: absolute;
         float: top;
-
     }
     .headingTwo {
         flex-direction: column;
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         justify-content: space-between;
         height: 60%;
         position: absolute;
@@ -452,44 +476,43 @@ table thead {
     }
     .headingThree {
         flex-direction: column;
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         justify-content: space-between;
         height: 60%;
         position: absolute;
         margin-top: 61.25em;
     }
-	
-    #timelineName{
+    #timelineName {
         margin-right: 0px;
         margin-left: 0px;
     }
-	.row{
-	width:100%;
-	margin-bottom:30px;
-	}
-	.cell{
-		width:100%;
-		display:inline-block;
-	}
+    .row {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+    .cell {
+        width: 100%;
+        display: inline-block;
+    }
 }
 
-.counter{
-    font-family: 'Open Sans', sans-serif;
+.counter {
+    font-family: "Open Sans", sans-serif;
     color: #fff;
     background: #fff;
     text-align: center;
     width: 190px;
     padding: 25px 30px 10px;
     margin: 0 auto;
-    border-radius: 30px 0 ;
-    box-shadow: 10px 10px 0 rgba(0,0,0,0.05);
-	display:inline-block;
+    border-radius: 30px 0;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.05);
+    display: inline-block;
 }
 
-.counter:before{
+.counter:before {
     content: "";
     border-radius: 15px 0 30px 0;
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
     position: absolute;
     top: 12px;
     left: 12px;
@@ -497,19 +520,19 @@ table thead {
     bottom: 27px;
 }
 
-.counter .counter-icon{
+.counter .counter-icon {
     font-size: 35px;
     margin: 0 0 10px;
     transform: rotateX(0deg);
     transition: all 0.3s ease 0s;
 }
 
-.counter:hover .counter-icon{
+.counter:hover .counter-icon {
     transform: rotateX(360deg);
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
-.counter h3{
+.counter h3 {
     font-size: 17px;
     font-weight: 500;
     text-transform: uppercase;
@@ -517,7 +540,7 @@ table thead {
     margin: 0 0 20px;
 }
 
-.counter .counter-value{
+.counter .counter-value {
     color: #666;
     background: #fff;
     font-size: 33px;

@@ -21,9 +21,8 @@ class ModuleController:
         :return None:
         """
         processes = []
-        # start them scraper processes
         if arg_scraping_sources["ts"]:
-            ts = TwitterScraper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_limit, arg_refinement)
+            ts = TwitterScraper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
             ts_process = multiprocessing.Process(target=ts.run)
             ts_process.start()
             processes.append(ts_process)
@@ -33,12 +32,9 @@ class ModuleController:
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
-            ps = PastebinScrapper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_refinement)
-            ps_process = multiprocessing.Process(target=ps.run)
-            ps_process.start()
-            processes.append(ps_process)
+            ps = PastebinScrapper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
+            ps.run()
 
-        # join them scraper processes
         for process in processes:
             process.join()
 

@@ -18,8 +18,20 @@ class ModuleConfigurator:
         """
         sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
         if arg_subreddit is not None and arg_subreddit != "":
-            sub_list = arg_subreddit.split(',')
+            arg_subreddit = arg_subreddit.replace(" ", "")
+            if "," in arg_subreddit:
+                sub_list = arg_subreddit.split(',')
+            else:
+                sub_list = [arg_subreddit]
         return sub_list
+
+    def configure_custom_depth(self, arg_depth):
+        limit = 10000
+        if type(arg_depth) != int:
+            return limit
+        else:
+            limit = arg_depth
+        return limit
 
     def configure_depth(self, arg_depth):
         """
@@ -27,11 +39,11 @@ class ModuleConfigurator:
         :param arg_depth:
         :return limit:
         """
-        limit = 5000
+        limit = 10000
         if arg_depth == "quick":
-            limit = 1000
-        elif arg_depth == "standard":
             limit = 10000
+        elif arg_depth == "standard":
+            limit = 50000
         elif arg_depth == "deep":
             limit = 100000
         return limit
@@ -43,6 +55,10 @@ class ModuleConfigurator:
         :param arg_until:
         :return since, until:
         """
+        if arg_since is None or arg_since == "":
+            arg_since = str(TODAY)
+        if arg_until is None or arg_until == "":
+            arg_until = str(TODAY)
         since = dt.datetime.strptime(arg_since, '%Y-%m-%d').date()
         until = dt.datetime.strptime(arg_until, '%Y-%m-%d').date()
         if since > TODAY:
@@ -80,13 +96,16 @@ class ModuleConfigurator:
             last_one_yr = TODAY - dateutil.relativedelta.relativedelta(years=1)
             return str(last_one_yr), str(TODAY)
         else:
-            pass
+            last_seven = TODAY - dt.timedelta(days=7)
+            return str(last_seven), str(TODAY)
 
-    def configure_sources(self, arg_sources, arg_switch):
+    def configure_sources(self, arg_reddit, arg_twitter, arg_pastebin, arg_switch):
         """
         Configure sources
+        :param arg_pastebin:
+        :param arg_twitter:
+        :param arg_reddit:
         :param arg_switch:
-        :param arg_sources:
         :return ENABLED_SCRAPING_SOURCES:
         """
         if arg_switch == "disableScraping":
@@ -94,15 +113,16 @@ class ModuleConfigurator:
             ENABLED_SCRAPING_SOURCES['ps'] = False
             ENABLED_SCRAPING_SOURCES['ts'] = False
         else:
-            if arg_sources == "twitter":
-                ENABLED_SCRAPING_SOURCES['rs'] = False
-                ENABLED_SCRAPING_SOURCES['ps'] = False
-            elif arg_sources == "pastebin":
-                ENABLED_SCRAPING_SOURCES['rs'] = False
-                ENABLED_SCRAPING_SOURCES['ts'] = False
-            elif arg_sources == "reddit":
-                ENABLED_SCRAPING_SOURCES['ps'] = False
-                ENABLED_SCRAPING_SOURCES['ts'] = False
+            if arg_reddit == "reddit":
+                ENABLED_SCRAPING_SOURCES['rs'] = True
             else:
-                pass
+                ENABLED_SCRAPING_SOURCES['rs'] = False
+            if arg_twitter == "twitter":
+                ENABLED_SCRAPING_SOURCES['ts'] = True
+            else:
+                ENABLED_SCRAPING_SOURCES['ts'] = False
+            if arg_pastebin == "pastebin":
+                ENABLED_SCRAPING_SOURCES['ps'] = True
+            else:
+                ENABLED_SCRAPING_SOURCES['ps'] = False
         return ENABLED_SCRAPING_SOURCES

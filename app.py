@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
-from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini
+from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini, allowed_file_json
 from modules.twitter_relationship import TwitterFriends
 import os
 import shutil
@@ -19,6 +19,7 @@ DEMO_FOLDER = "demo"
 app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 @app.route('/')
@@ -32,7 +33,25 @@ def relationships():
     return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
 
 
-@app.route('/relationship_results', methods=['POST'])
+@app.route('/rs_uploader', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        if f.filename != "" and allowed_file_json(f.filename):
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            old_filename = os.path.join(STATIC_RESULT_FOLDER, filename)
+            new_filename = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
+            if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
+                os.remove(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"))
+            shutil.copy(os.path.join(app.config['UPLOAD_FOLDER'], filename), STATIC_RESULT_FOLDER)
+            os.rename(old_filename, new_filename)
+            return render_template('relationship_results.html', error="File Uploaded Successfully")
+        else:
+            return render_template('relationship_results.html', error="File Uploaded Failed")
+
+
+@app.route('/relationship_results', methods=['POST', 'GET'])
 def relationship_results():
     if request.method == "POST":
         credentials = "config.ini"
@@ -41,11 +60,10 @@ def relationship_results():
         level = request.form.get('level', type=int)
         demo_mode = request.form.get('demoMode')
         if demo_mode == "demoMode":
-            searchbar_text = "Demo Mode"
             source = os.path.join(DEMO_FOLDER, "twitter_friendship.json")
             destination = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
             shutil.copy(source, destination)
-            return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+            return render_template('relationship_results.html', title="Demo Mode")
         if searchbar_text not in twitter_users:
             twitter_users_a, twitter_users_b = get_twitter_list_split()
             error = "User is not in the results record"
@@ -69,7 +87,9 @@ def relationship_results():
                                            twitter_users_b=twitter_users_b, error=error)
         tf = TwitterFriends(credentials)
         tf.run(searchbar_text, level)
-        return render_template('relationship_results.html', result=searchbar_text, title=searchbar_text)
+        return render_template('relationship_results.html', title=searchbar_text)
+    elif request.method == "GET":
+        return render_template('relationship_results.html', title="Demo Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
         return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
@@ -79,8 +99,13 @@ def relationship_results():
 def download_data():
     if request.method == "POST":
         timestamp = dt.datetime.now().timestamp()
-        keyword = session['keyword']
+        try:
+            keyword = session['keyword']
+        except KeyError:
+            keyword = "key_missing"
         filename = keyword + "_result_%s.zip" % timestamp
+        if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
+            shutil.copy(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"), RESULT_FOLDER)
         memory_file = BytesIO()
         with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as f:
             for root, dirs, files in os.walk(RESULT_FOLDER):
@@ -100,7 +125,6 @@ def results():
         os.makedirs(STATIC_RESULT_FOLDER)
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    # cleanup
     shutil.rmtree(RESULT_FOLDER)
     os.makedirs(RESULT_FOLDER)
     shutil.rmtree(STATIC_RESULT_FOLDER)
@@ -108,9 +132,10 @@ def results():
     shutil.rmtree(UPLOAD_FOLDER)
     os.makedirs(UPLOAD_FOLDER)
     if request.method == "POST":
-        # configure settings
         searchbar_text = request.form.get('keyword')
-        chosen_sources = request.form.get('platf')
+        chosen_sources_reddit = request.form.get('reddit')
+        chosen_sources_twitter = request.form.get('twitter')
+        chosen_sources_pastebin = request.form.get('pastebin')
         custom_subreddit = request.form.get('csubrtext')
         time_range = request.form.get('timeRangeDrop')
         depth_range = request.form.get('depthDrop')
@@ -132,18 +157,21 @@ def results():
                     return render_template('index.html', error=error)
         mcr = ModuleConfigurator()
         session['keyword'] = searchbar_text
-        scraping_sources = mcr.configure_sources(chosen_sources, master_switch)
+        scraping_sources = mcr.configure_sources(chosen_sources_reddit, chosen_sources_twitter, chosen_sources_pastebin, master_switch)
         if time_range == "custom":
-            since_date = request.form['customTimeStart']
-            until_date = request.form['customTimeEnd']
+            since_date = request.form.get('customTimeStart')
+            until_date = request.form.get('customTimeEnd')
             since, until = mcr.configure_custom_date(since_date, until_date)
         else:
             if time_range is None:
                 time_range = "lastSeven"
             since, until = mcr.configure_date(time_range)
-        limit = mcr.configure_depth(depth_range)
+        if depth_range == "custom_depth":
+            custom_limit = request.form.get('customDepth', type=int)
+            limit = mcr.configure_custom_depth(custom_limit)
+        else:
+            limit = mcr.configure_depth(depth_range)
         custom_subreddit = mcr.configure_subreddit(custom_subreddit)
-        # run modules
         mc = ModuleController()
         mc.run(scraping_sources, searchbar_text, custom_subreddit, since, until, limit, refinement)
         return render_template('results.html', title=title, result=searchbar_text)
