@@ -1,6 +1,8 @@
 const width = window.innerWidth;
 const height = window.innerHeight;
 let resetButton = document.getElementById("reset_graph");
+let userFollowing = document.getElementById("user_following");
+let userIndirect = document.getElementById("user_indirect");
 let topFive = document.getElementById("top_five");
 let btmFive = document.getElementById("bottom_five");
 let mostFollowing = document.getElementById("most_following");
@@ -10,6 +12,7 @@ let leastFollower = document.getElementById("least_follower");
 let parent = document.getElementById("parent");
 let following = document.getElementById("following");
 let followers = document.getElementById("followers");
+let potentialInfluenced = document.getElementById("potential_influenced");
 
 resetButton.addEventListener("click", function () {
     d3.selectAll("svg > *").remove();
@@ -37,12 +40,51 @@ function drawGraph() {
         const least_follower = data["least_follower"];
         document.getElementById("query").textContent =
             searched_user + " | Level: " + level + " | Users: " + users;
+        let user_follows_paragraph = searched_user + " directly influenced by: "
+        let user_indirect_paragraph = searched_user + " indirectly influenced by: "
         let topFive_paragraph = "Top 5 Most Influential User(s): ";
         let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
         let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
         let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
         let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
         let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
+        let potential_influenced_paragraph = searched_user + " is likely to be influenced by: ";
+        let user_follows_array = [];
+        let user_indirect_follows_array = [];
+        for (let i = 0; i < links.length; i++) {
+            if (links[i].source === searched_user) {
+                user_follows_array.push(links[i].target);
+            }
+        }
+        for (let i = 0; i < user_follows_array.length; i++) {
+            let chosen_user = user_follows_array[i];
+            for (let a = 0; a < links.length; a++) {
+                if (links[a].source === chosen_user) {
+                    if (links[a].target === searched_user) {
+                    } else if (user_follows_array.includes(links[a].target)) {
+                    } else if (user_indirect_follows_array.includes(links[a].target)) {
+                    } else {
+                        user_indirect_follows_array.push(links[a].target);
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < user_indirect_follows_array.length; i++) {
+            user_indirect_paragraph += user_indirect_follows_array[i];
+            if (i < user_indirect_follows_array.length - 2) {
+                user_indirect_paragraph += ", ";
+            } else if (i == user_indirect_follows_array.length - 2) {
+                user_indirect_paragraph += " and ";
+            }
+        }
+        for (let i = 0; i < user_follows_array.length; i++) {
+            user_follows_paragraph += user_follows_array[i];
+            if (i < user_follows_array.length - 2) {
+                user_follows_paragraph += ", ";
+            } else if (i == user_follows_array.length - 2) {
+                user_follows_paragraph += " and ";
+            }
+        }
         for (let i = 0; i < most_following.length; i++) {
             most_following_paragraph +=
                 most_following[i].user + "(" + most_following[i].counts + ")";
@@ -97,12 +139,33 @@ function drawGraph() {
                 bottomFive_paragraph += " and ";
             }
         }
+        let tempArray = user_follows_array.concat(user_indirect_follows_array);
+        const influential_users = top_five.map(function (obj) {
+            return obj.user;
+        });
+        let intersection = tempArray.filter(x => influential_users.includes(x));
+        for (let i = 0; i < intersection.length; i++) {
+            if (intersection.length === 5) {
+                potential_influenced_paragraph += "The top 5 most influential users";
+                break;
+            } else {
+                potential_influenced_paragraph += intersection[i];
+                if (i < intersection.length - 2) {
+                    potential_influenced_paragraph += ", ";
+                } else if (i == intersection.length - 2) {
+                    potential_influenced_paragraph += " and ";
+                }
+            }
+        }
+        userFollowing.textContent = user_follows_paragraph;
+        userIndirect.textContent = user_indirect_paragraph;
         topFive.textContent = topFive_paragraph;
         btmFive.textContent = bottomFive_paragraph;
         mostFollowing.textContent = most_following_paragraph;
         mostFollower.textContent = most_follower_paragraph;
         leastFollowing.textContent = least_following_paragraph;
         leastFollower.textContent = least_follower_paragraph;
+        potentialInfluenced.textContent = potential_influenced_paragraph;
 
         const simulation = d3
             .forceSimulation()
