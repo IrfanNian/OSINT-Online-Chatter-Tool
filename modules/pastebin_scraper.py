@@ -37,7 +37,6 @@ class PastebinScrapper:
         """
         while True:
             new_id = arg_id_queue.get()
-            print(new_id)
             new_date = arg_date_queue.get()
             if new_id == POISON_PILL:
                 break
