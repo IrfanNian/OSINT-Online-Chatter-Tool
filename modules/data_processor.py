@@ -64,7 +64,7 @@ class DataProcessor:
         """
         Processes data and generates wordcloud data and multiple line chart data
         :param arg_df:
-        :return wordcloud_and_muiltiline_df:
+        :return wordcloud_and_multiline_df:
         """
         cp = arg_df.copy()
         cp['date'] = pd.to_datetime(cp['time']).dt.date
@@ -113,10 +113,10 @@ class DataProcessor:
             elif cnt > 3:
                 size = 80
         fx = pd.DataFrame(list_world_counts, columns=["word", "size"])
-        wordcloud_and_muiltiline_df = pd.concat([arg_df, cx], axis=1)
-        wordcloud_and_muiltiline_df = pd.concat([wordcloud_and_muiltiline_df, fx], axis=1)
+        wordcloud_and_multiline_df = pd.concat([arg_df, cx], axis=1)
+        wordcloud_and_multiline_df = pd.concat([wordcloud_and_multiline_df, fx], axis=1)
 
-        return wordcloud_and_muiltiline_df
+        return wordcloud_and_multiline_df
 
     def run(self, arg_df):
         """
