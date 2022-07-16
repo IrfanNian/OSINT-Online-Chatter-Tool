@@ -29,6 +29,9 @@
             <div class="right">
                 <ul>
                     <li>
+                        <a href="/converter">Converter</a>
+                    </li>
+                    <li>
                         {% if title != "Demo Mode" %}
                         <form method="POST" action="/download">
                             <input
@@ -63,7 +66,6 @@
                 <p id="parent"></p>
                 <p id="following"></p>
                 <p id="followers"></p>
-                <p style="color: red;" id="potential_influenced"></p>
             </div>
             <svg width="900" height="500" class="graph"></svg>
             <table class="center">

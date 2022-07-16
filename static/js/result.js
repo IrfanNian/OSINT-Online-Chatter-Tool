@@ -1,5 +1,5 @@
 const form = document.forms[0];
-const chartHolderHTML = document.querySelector("#graph").getContext("2d");
+const chartHolderHTML = document.getElementById("graph");
 let drawBubble = document.getElementById("bubble_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
@@ -7,6 +7,7 @@ let drawScatter = document.getElementById("scatter_chart");
 let chartSummary = document.getElementById("chart_sum");
 let drawDoughnut = document.getElementById("doughnut_chart");
 let drawFollowers = document.getElementById("followers_chart");
+let xPlatform = document.getElementById("xplatform_chart");
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
@@ -14,6 +15,7 @@ let topPoster = [];
 let topFollowers = [];
 drawCloud();
 drawBubbleChart();
+resetDisplayTable();
 const zeroDayWords = ["0day", "zero-day"];
 const attackWords = [
     "attack",
@@ -39,50 +41,65 @@ function destroyChart() {
     }
 }
 
+function resetDisplayTable() {
+    let table = document.querySelector("table tbody");
+    table.textContent = "";
+    row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.textContent = "NOTE:";
+    cell2.textContent = "Click on a datapoint to display its contents!";
+}
+
 drawBubble.addEventListener("click", function () {
     removeActive();
     drawBubble.className += " active";
     destroyChart();
     drawBubbleChart();
+    resetDisplayTable();
 });
 drawCountry.addEventListener("click", function () {
     removeActive();
     drawCountry.className += " active";
     destroyChart();
     drawCountryChart();
+    resetDisplayTable();
 });
 drawLine.addEventListener("click", function () {
     removeActive();
     drawLine.className += " active";
     destroyChart();
     drawLineChart();
+    resetDisplayTable();
 });
 drawScatter.addEventListener("click", function () {
     removeActive();
     drawScatter.className += " active";
     destroyChart();
     drawScatterChart();
+    resetDisplayTable();
 });
 drawDoughnut.addEventListener("click", function () {
     removeActive();
     drawDoughnut.className += " active";
     destroyChart();
     drawDoughnutChart();
+    resetDisplayTable();
 });
 drawFollowers.addEventListener("click", function () {
     removeActive();
     drawFollowers.className += " active";
     destroyChart();
     drawFollowersChart();
+    resetDisplayTable();
 });
-
-let table = document.querySelector("table tbody");
-table.textContent = "";
-row = table.insertRow(0);
-var cell1 = row.insertCell(0);
-var cell2 = row.insertCell(1);
-cell1.textContent = "NOTE:";
-cell2.textContent = "Click on a datapoint to display its contents!";
+xPlatform.addEventListener("click", function () {
+    removeActive();
+    xPlatform.className += " active";
+    destroyChart();
+    drawxPlatformChart();
+    resetDisplayTable();
+});
 
 function drawCloud() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
@@ -291,7 +308,6 @@ function getMax(jsonList, property) {
             maxItem = item;
         }
     }
-
     return maxItem;
 }
 
@@ -495,6 +511,7 @@ function drawLineChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -532,8 +549,10 @@ function drawLineChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -560,6 +579,13 @@ function drawLineChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -829,6 +855,7 @@ function drawBubbleChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -866,8 +893,10 @@ function drawBubbleChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -894,6 +923,13 @@ function drawBubbleChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1098,6 +1134,7 @@ function drawCountryChart() {
                 let ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1135,8 +1172,10 @@ function drawCountryChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1163,6 +1202,13 @@ function drawCountryChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1328,6 +1374,7 @@ function drawScatterChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1365,8 +1412,10 @@ function drawScatterChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1393,6 +1442,13 @@ function drawScatterChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1589,6 +1645,7 @@ function drawDoughnutChart() {
                 var ar = [...value];
                 table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1626,8 +1683,10 @@ function drawDoughnutChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1654,6 +1713,13 @@ function drawDoughnutChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1844,6 +1910,7 @@ function drawFollowersChart() {
                 var ar = [...value];
                 table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1881,8 +1948,10 @@ function drawFollowersChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1909,6 +1978,13 @@ function drawFollowersChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1966,6 +2042,298 @@ function drawFollowersChart() {
             formatter(parseInt(topfollowerValues[0].following)) +
             " of followings.\r\n";
 
+        chart_sum.textContent = chart_sum_paragraph;
+    });
+}
+
+function drawxPlatformChart() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        const xPlatformRedditStorage = [];
+        const xPlatformTwitterStorage = [];
+        const xPlatformPasteBinStorage = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            let xUser = [];
+            let xText = [];
+            if (datapoints[i].cross_user != "") {
+                let x = datapoints[i].cross_user;
+                let currentPlatform = datapoints[i].cross_platform;
+                for (let a = 0; a < datapoints.length; a++) {
+                    if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    } else if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    } else if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    }
+                }
+                if (currentPlatform == "reddit") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformRedditStorage.push(json);
+                } else if (currentPlatform == "twitter") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformTwitterStorage.push(json);
+                } else if (currentPlatform == "pastebin") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformPasteBinStorage.push(json);
+                }
+            }
+        }
+        //config
+        const xPlatformChartConfig = {
+            type: "bar",
+            data: {
+                datasets: [
+                    {
+                        label: "No. of Reddit Posts",
+                        data: xPlatformRedditStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Red",
+                    },
+                    {
+                        label: "No. of Twitter Posts",
+                        data: xPlatformTwitterStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Blue",
+                    },
+                    {
+                        label: "No. of PasteBin Posts",
+                        data: xPlatformPasteBinStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Green",
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: clickxPlatformBarHandler,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Users",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        stacked: true,
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "No. of Posts",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        stacked: true,
+                        grace: "50%",
+                        type: "linear",
+                    },
+                },
+            },
+        };
+        //config
+        let xPlatformChart = new Chart(chartHolderHTML, xPlatformChartConfig);
+        function clickxPlatformBarHandler(evt) {
+            const points = xPlatformChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+            let currentPage = 1;
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = xPlatformChart.data.labels[firstPoint.index];
+                const value =
+                    xPlatformChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    recordsPerPage = 50;
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else if (recordsPerPage < array.length) {
+                        recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        chart_sum.textContent = "";
+        chart_sum_paragraph =
+            "The user(s) that are active across the platforms are:  ";
+        let xTempUserArray = [];
+        let xTempPlatformArray = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].cross_user != "") {
+                xTempUserArray.push(datapoints[i].cross_user);
+                xTempPlatformArray.push(datapoints[i].cross_platform);
+            }
+        }
+        const uniqueUsers = [...new Set(xTempUserArray)];
+        for (let i = 0; i < uniqueUsers.length; i++) {
+            let tempRedditCount = 0;
+            let tempTwitterCount = 0;
+            let tempPasteBinCount = 0;
+            chart_sum_paragraph += uniqueUsers[i];
+            for (let a = 0; a < xTempPlatformArray.length; a++) {
+                if (xTempUserArray[a] === uniqueUsers[i]) {
+                    if (xTempPlatformArray[a] === "reddit") {
+                        tempRedditCount++;
+                    } else if (xTempPlatformArray[a] === "twitter") {
+                        tempTwitterCount++;
+                    } else if (xTempPlatformArray[a] === "pastebin") {
+                        tempPasteBinCount++;
+                    }
+                }
+            }
+            chart_sum_paragraph +=
+                "(Reddit: " +
+                tempRedditCount +
+                ", Twitter: " +
+                tempTwitterCount +
+                ", PasteBin: " +
+                tempPasteBinCount +
+                ")";
+            if (i < uniqueUsers.length - 2) {
+                chart_sum_paragraph += ", ";
+            } else if (i == uniqueUsers.length - 2) {
+                chart_sum_paragraph += " and ";
+            }
+        }
         chart_sum.textContent = chart_sum_paragraph;
     });
 }
