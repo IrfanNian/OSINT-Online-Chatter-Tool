@@ -130,6 +130,8 @@ def relationship_results():
         tf.run(searchbar_text, level)
         return render_template('relationship_results.html', title=searchbar_text)
     elif request.method == "GET":
+        if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
+            os.remove(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"))
         return render_template('relationship_results.html', title="Demo Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
