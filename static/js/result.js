@@ -291,7 +291,6 @@ function getMax(jsonList, property) {
             maxItem = item;
         }
     }
-
     return maxItem;
 }
 

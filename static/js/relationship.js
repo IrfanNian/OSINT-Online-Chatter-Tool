@@ -58,6 +58,7 @@ checkbox.addEventListener("change", function () {
 
 window.onload = function () {
     document.getElementById("search").reset();
+    document.getElementById("overlay").style.display = "none";
 };
 
 document.getElementById("SearchSubmit").addEventListener("click", function () {

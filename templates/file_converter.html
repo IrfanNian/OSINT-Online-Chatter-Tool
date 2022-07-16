@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tracking Online Chatter 🔍</title>
+        <link rel="stylesheet" href="/static/css/index.css" />
+        <link rel="stylesheet" href="/static/css/nav.css" />
+        <link
+            type="image/png"
+            sizes="96x96"
+            rel="icon"
+            href="/static/images/keyword.png"
+        />
+    </head>
+    <body>
+        <nav>
+            <a href="/" class="brand-logo">Tracking Online Chatter</a>
+            <a class="menu" onclick="makeRespo()">
+                <img src="/static/images/menu.png" alt="Menu" />
+            </a>
+            <div class="right">
+                <ul>
+                    <li>
+                        <a href="/converter">Converter</a>
+                    </li>
+                    <li>
+                        <a href="/relationships">Relationships</a>
+                    </li>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="content">
+                <h1>File Converter</h1>
+                <form
+                    method="POST"
+                    id="search"
+                    action="/convert_files"
+                    enctype="multipart/form-data"
+                >
+                    <h2>Feather to CSV | CSV to Feather</h2>
+                    <table class="center">
+                        <tr>
+                            <td>
+                                <label
+                                    class="tooltip"
+                                    for="file"
+                                    style="text-align: right"
+                                    >File Upload<img
+                                        src="/static/images/i.png"
+                                        width="20px"
+                                    />:
+                                    <span class="tooltiptext"
+                                        >(Optional) Able to accept multiple
+                                        feather files and CSV files</span
+                                    >
+                                </label>
+                            </td>
+                            <td colspan="2">
+                                <input
+                                    type="file"
+                                    name="file"
+                                    id="file"
+                                    multiple
+                                />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <hr />
+                    <div class="buttons">
+                        <button
+                            id="SearchSubmit"
+                            type="submit"
+                            disabled
+                            class="Search"
+                        >
+                            <span> CONVERT </span>
+                        </button>
+                    </div>
+                    {% if error %}
+                    <p class="error">Error: {{ error }}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+        <script src="/static/js/converter.js"></script>
+        <script src="/static/js/nav.js"></script>
+    </body>
+</html>

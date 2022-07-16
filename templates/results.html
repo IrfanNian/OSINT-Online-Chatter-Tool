@@ -43,6 +43,9 @@
             <div class="right">
                 <ul>
                     <li>
+                        <a href="/converter">Converter</a>
+                    </li>
+                    <li>
                         {% if title != "Scraping Disabled" %}
                         <form method="POST" action="/download">
                             <input
@@ -149,6 +152,7 @@
                 <canvas id="graph"></canvas>
             </div>
             <div class="insights" id="insights">
+                <p id="cross_platform"></p>
                 <p id="chart_sum"></p>
             </div>
         </div>
