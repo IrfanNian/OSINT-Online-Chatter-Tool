@@ -329,16 +329,6 @@ function drawLineChart() {
         var maxDate = new Date();
 
         for (let i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count;
-                var xDate = new Date(tDate);
-                if (xDate < minDate) {
-                    minDate = new Date(xDate.getTime());
-                }
-                if (xDate > maxDate) {
-                    maxDate = new Date(xDate.getTime());
-                }
-            }
             if (datapoints[i].date != "") {
                 if (datapoints[i].ml_platform == "twitter") {
                     var texts = [];
@@ -432,12 +422,20 @@ function drawLineChart() {
             }
         }
 
+        RDStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        TWStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        PBStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+
         var TWMaxEvent = getMax(TWStorage, "y");
         var RDMaxEvent = getMax(RDStorage, "y");
         var PBMaxEvent = getMax(PBStorage, "y");
 
-        maxDate.setDate(maxDate.getDate() + 3);
-        minDate.setDate(minDate.getDate() - 1);
         //config
         const MultilineChartConfig = {
             type: "line",
@@ -470,6 +468,7 @@ function drawLineChart() {
                 scales: {
                     x: {
                         type: "time",
+                        distribution: 'linear',
                         title: {
                             display: true,
                             text: "Date",
@@ -478,8 +477,6 @@ function drawLineChart() {
                             unit: "day",
                             tooltipFormat: "dd MMM yyyy",
                         },
-                        max: maxDate,
-                        min: minDate,
                     },
                     y: {
                         title: {
@@ -787,6 +784,9 @@ function drawBubbleChart() {
                 lineBubbleStorage.push(lineJson);
             }
         }
+        lineBubbleStorage.sort(function(a, b) {
+            return new Date(b.x) - new Date(a.x);
+        });
         //config
         const bubbleChartConfig = {
             type: "bubble",
