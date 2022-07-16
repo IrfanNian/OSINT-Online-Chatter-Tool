@@ -42,7 +42,6 @@ def convert_files():
             for f in request.files.getlist("file"):
                 if f.filename != "" and allowed_file_converter(f.filename):
                     filename = secure_filename(f.filename)
-                    print(filename)
                     f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     if filename.rsplit('.', 1)[1].lower() == "feather":
                         df = pd.read_feather(os.path.join(UPLOAD_FOLDER, filename))
