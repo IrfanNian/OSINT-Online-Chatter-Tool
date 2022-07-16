@@ -29,9 +29,6 @@
             <div class="right">
                 <ul>
                     <li>
-                        <a href="/converter">Converter</a>
-                    </li>
-                    <li>
                         {% if title != "Demo Mode" %}
                         <form method="POST" action="/download">
                             <input
@@ -41,6 +38,9 @@
                             />
                         </form>
                         {% endif %}
+                    </li>
+                    <li>
+                        <a href="/converter">Converter</a>
                     </li>
                     <li>
                         <a href="/">Home</a>

@@ -43,9 +43,6 @@
             <div class="right">
                 <ul>
                     <li>
-                        <a href="/converter">Converter</a>
-                    </li>
-                    <li>
                         {% if title != "Scraping Disabled" %}
                         <form method="POST" action="/download">
                             <input
@@ -55,6 +52,9 @@
                             />
                         </form>
                         {% endif %}
+                    </li>
+                    <li>
+                        <a href="/converter">Converter</a>
                     </li>
                     <li>
                         <a href="/relationships">Relationships</a>

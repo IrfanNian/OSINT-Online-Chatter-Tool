@@ -123,19 +123,19 @@ function drawCloud() {
                 }
             }
             if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
+                if (datapoints[i].ml_platform == "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
                     TWSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "reddit") {
+                } else if (datapoints[i].ml_platform == "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
                     RDSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "pastebin") {
+                } else if (datapoints[i].ml_platform == "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
                     PBSeries.push({
                         x: datapoints[i].date,
@@ -329,16 +329,6 @@ function drawLineChart() {
         var maxDate = new Date();
 
         for (let i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count;
-                var xDate = new Date(tDate);
-                if (xDate < minDate) {
-                    minDate = new Date(xDate.getTime());
-                }
-                if (xDate > maxDate) {
-                    maxDate = new Date(xDate.getTime());
-                }
-            }
             if (datapoints[i].date != "") {
                 if (datapoints[i].ml_platform == "twitter") {
                     var texts = [];
@@ -432,12 +422,20 @@ function drawLineChart() {
             }
         }
 
+        RDStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        TWStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        PBStorage.sort(function(a,b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+
         var TWMaxEvent = getMax(TWStorage, "y");
         var RDMaxEvent = getMax(RDStorage, "y");
         var PBMaxEvent = getMax(PBStorage, "y");
 
-        maxDate.setDate(maxDate.getDate() + 3);
-        minDate.setDate(minDate.getDate() - 1);
         //config
         const MultilineChartConfig = {
             type: "line",
@@ -470,6 +468,7 @@ function drawLineChart() {
                 scales: {
                     x: {
                         type: "time",
+                        distribution: 'linear',
                         title: {
                             display: true,
                             text: "Date",
@@ -478,8 +477,6 @@ function drawLineChart() {
                             unit: "day",
                             tooltipFormat: "dd MMM yyyy",
                         },
-                        max: maxDate,
-                        min: minDate,
                     },
                     y: {
                         title: {
@@ -723,15 +720,15 @@ function drawBubbleChart() {
         // bubble chart
         const bubbleStorage = [];
         const lineBubbleStorage = [];
-        var minDate = new Date();
-        var maxDate = new Date();
-        var max = Math.max.apply(
+        let minDate = new Date();
+        let maxDate = new Date();
+        let max = Math.max.apply(
             Math,
             datapoints.map(function (o) {
                 return o.date_count;
             })
         );
-        var min = Math.min.apply(
+        let min = Math.min.apply(
             Math,
             datapoints.map(function (o) {
                 return o.date_count;
@@ -739,8 +736,8 @@ function drawBubbleChart() {
         );
         for (i = 0; i < datapoints.length; i++) {
             if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count;
-                var xDate = new Date(tDate);
+                let tDate = datapoints[i].time_count;
+                let xDate = new Date(tDate);
                 if (xDate < minDate) {
                     minDate = new Date(xDate.getTime());
                 }
@@ -753,19 +750,19 @@ function drawBubbleChart() {
         const diffTime = Math.abs(maxDate - minDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         for (let i = 0; i < datapoints.length; i++) {
-            var bubbleText = [];
-            var bubbleUser = [];
+            let bubbleText = [];
+            let bubbleUser = [];
             if (datapoints[i].date_count != "") {
-                var x = datapoints[i].time_count;
-                var r = datapoints[i].date_count;
-                var y = r / diffDays;
+                let x = datapoints[i].time_count;
+                let r = datapoints[i].date_count;
+                let y = r / diffDays;
                 r = Math.floor(1 + ratio * (r - min));
 
                 for (let a = 0; a < datapoints.length; a++) {
                     if (datapoints[a].time != "") {
-                        var dateOnly = new Date(datapoints[a].time);
-                        var tzoffset = new Date().getTimezoneOffset() * 60000;
-                        var localISOTime = new Date(dateOnly - tzoffset)
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
                             .toISOString()
                             .slice(0, -1);
                         dateOnly = localISOTime.split("T", 1)[0];
@@ -775,20 +772,21 @@ function drawBubbleChart() {
                         }
                     }
                 }
-                var json = {
+                let json = {
                     x: x,
                     y: y,
                     r: r,
                     text: bubbleText,
                     user: bubbleUser,
                 };
-                var lineJson = { x: x, y: y };
+                let lineJson = { x: x, y: y };
                 bubbleStorage.push(json);
                 lineBubbleStorage.push(lineJson);
             }
         }
-        maxDate.setDate(maxDate.getDate() + 3);
-        minDate.setDate(minDate.getDate() - 1);
+        lineBubbleStorage.sort(function(a, b) {
+            return new Date(b.x) - new Date(a.x);
+        });
         //config
         const bubbleChartConfig = {
             type: "bubble",
@@ -822,8 +820,6 @@ function drawBubbleChart() {
                             unit: "day",
                             tooltipFormat: "dd MMM yyyy",
                         },
-                        max: maxDate,
-                        min: minDate,
                     },
                     y: {
                         title: {
@@ -1795,19 +1791,17 @@ function drawFollowersChart() {
         let names = [];
 
         for (i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
-                if (!names.includes(datapoints[i].user)) {
-                    names.push(datapoints[i].user);
-                    let x = datapoints.filter(
-                        (a) => a.user == datapoints[i].user
-                    );
-                    noPosts.push({
-                        name: datapoints[i].user,
-                        posts: x.length,
-                        followers: datapoints[i].followers,
-                        following: datapoints[i].following,
-                    });
-                }
+            if (!names.includes(datapoints[i].user)) {
+                names.push(datapoints[i].user);
+                let x = datapoints.filter(
+                    (a) => a.user == datapoints[i].user
+                );
+                noPosts.push({
+                    name: datapoints[i].user,
+                    posts: x.length,
+                    followers: datapoints[i].followers,
+                    following: datapoints[i].following,
+                });
             }
         }
         var topfollowerValues = [...noPosts]
