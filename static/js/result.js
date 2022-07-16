@@ -123,19 +123,19 @@ function drawCloud() {
                 }
             }
             if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
+                if (datapoints[i].ml_platform == "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
                     TWSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "reddit") {
+                } else if (datapoints[i].ml_platform == "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
                     RDSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "pastebin") {
+                } else if (datapoints[i].ml_platform == "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
                     PBSeries.push({
                         x: datapoints[i].date,
@@ -1795,7 +1795,7 @@ function drawFollowersChart() {
         let names = [];
 
         for (i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
+            if (datapoints[i].time != "") {
                 if (!names.includes(datapoints[i].user)) {
                     names.push(datapoints[i].user);
                     let x = datapoints.filter(

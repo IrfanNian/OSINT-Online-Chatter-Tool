@@ -91,5 +91,6 @@ class RedditScraper:
         fr = FeatherReader()
         reddit_df = fr.compile_reddit()
         if len(reddit_df) != 0:
+            reddit_df = reddit_df.reset_index(drop=True)
             reddit_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
                                               str(dt.datetime.today().date()) + "_reddit_results.feather"))
