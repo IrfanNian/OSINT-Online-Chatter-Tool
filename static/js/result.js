@@ -314,121 +314,104 @@ function getMax(jsonList, property) {
 function drawLineChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // line chart
-        const TWStorage = [];
-        const RDStorage = [];
-        const PBStorage = [];
-
+        let TWStorage = [];
+        let RDStorage = [];
+        let PBStorage = [];
         let TWCount = 0;
         let RDCount = 0;
         let PBCount = 0;
-        let TWSeries = [];
-        let RDSeries = [];
-        let PBSeries = [];
-
-        var minDate = new Date();
-        var maxDate = new Date();
 
         for (let i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date != "") {
+            if (datapoints[i].ml_platform != "") {
                 if (datapoints[i].ml_platform == "twitter") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "twitter"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     TWStorage.push(json);
-
-                    TWCount = TWCount + parseInt(datapoints[i].count);
-                    TWSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
                 } else if (datapoints[i].ml_platform == "reddit") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "reddit"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     RDStorage.push(json);
-                    RDCount = RDCount + parseInt(datapoints[i].count);
-                    RDSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
                 } else if (datapoints[i].ml_platform == "pastebin") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "pastebin"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     PBStorage.push(json);
-                    PBCount = PBCount + parseInt(datapoints[i].count);
-                    PBSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
                 }
             }
         }
 
-        RDStorage.sort(function(a,b) {
+        for (let i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].count != "") {
+                if (datapoints[i].ml_platform === "reddit") {
+                    RDCount += parseInt(datapoints[i].count);
+                } else if (datapoints[i].ml_platform === "twitter") {
+                    TWCount += parseInt(datapoints[i].count);
+                } else if (datapoints[i].ml_platform === "pastebin") {
+                    PBCount += parseInt(datapoints[i].count);
+                }
+            }
+        }
+
+        RDStorage.sort(function (a, b) {
             return new Date(a.x) - new Date(b.x);
         });
-        TWStorage.sort(function(a,b) {
+        TWStorage.sort(function (a, b) {
             return new Date(a.x) - new Date(b.x);
         });
-        PBStorage.sort(function(a,b) {
+        PBStorage.sort(function (a, b) {
             return new Date(a.x) - new Date(b.x);
         });
 
@@ -468,7 +451,7 @@ function drawLineChart() {
                 scales: {
                     x: {
                         type: "time",
-                        distribution: 'linear',
+                        distribution: "linear",
                         title: {
                             display: true,
                             text: "Date",
@@ -631,51 +614,6 @@ function drawLineChart() {
                 changePage(currentPage, r);
             }
         }
-        if (TWStorage.length > 0) {
-            min_r = TWStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = TWStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = TWStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = TWStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
-        if (RDStorage.length > 0) {
-            min_r = RDStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = RDStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = RDStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = RDStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
-        if (PBStorage.length > 0) {
-            min_r = PBStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = PBStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = PBStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = PBStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
         chart_sum.textContent = "";
         let chart_sum_paragraph = "";
         if (TWStorage.length > 0) {
@@ -708,9 +646,6 @@ function drawLineChart() {
                 PBMaxEvent.x +
                 "\n";
         }
-
-        chart_sum.textContent = chart_sum_paragraph;
-
         chart_sum.textContent = chart_sum_paragraph;
     });
 }
@@ -784,7 +719,7 @@ function drawBubbleChart() {
                 lineBubbleStorage.push(lineJson);
             }
         }
-        lineBubbleStorage.sort(function(a, b) {
+        lineBubbleStorage.sort(function (a, b) {
             return new Date(b.x) - new Date(a.x);
         });
         //config
@@ -1793,9 +1728,7 @@ function drawFollowersChart() {
         for (i = 0; i < datapoints.length; i++) {
             if (!names.includes(datapoints[i].user)) {
                 names.push(datapoints[i].user);
-                let x = datapoints.filter(
-                    (a) => a.user == datapoints[i].user
-                );
+                let x = datapoints.filter((a) => a.user == datapoints[i].user);
                 noPosts.push({
                     name: datapoints[i].user,
                     posts: x.length,
