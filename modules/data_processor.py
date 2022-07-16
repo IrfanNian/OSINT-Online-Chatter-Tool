@@ -124,6 +124,7 @@ class DataProcessor:
         :return df:
         """
         df = arg_df.copy()
+        print(df.head(5))
         cross_df = df.groupby(["user"]).platform.nunique().gt(1)
         df = df.loc[df.user.isin(cross_df[cross_df].index)]
         df.reset_index(drop=True, inplace=True)
@@ -141,7 +142,7 @@ class DataProcessor:
         """
         bubble_df = self.bubble_chart(arg_df)
         country_df = self.country_chart(bubble_df)
-        multi_df = self.wordcloud_and_muiltiline(country_df)
-        scatter_df = self.scatter_chart(multi_df)
-        final_df = self.detect_usernames_cross_platform(scatter_df)
+        x_user_df = self.detect_usernames_cross_platform(country_df)
+        scatter_df = self.scatter_chart(x_user_df)
+        final_df = self.wordcloud_and_muiltiline(scatter_df)
         self.write_to_csv(final_df)
