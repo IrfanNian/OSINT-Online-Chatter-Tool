@@ -3,6 +3,7 @@ import datetime as dt
 import pandas as pd
 import os
 import numpy as np
+from modules.feather_reader import FeatherReader
 
 CWD = os.getcwd()
 pd.options.mode.chained_assignment = None
@@ -84,5 +85,11 @@ class RedditScraper:
             if len(submission_df) != 0:
                 submission_df = submission_df.reset_index(drop=True)
                 submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
-                                                      str(dt.datetime.today().date()) + "_reddit_" + subreddit +
-                                                      ".feather"))
+                                                      str(dt.datetime.today().date()) + subreddit + "_reddit_results"
+                                                                                                    ".feather"))
+
+        fr = FeatherReader()
+        reddit_df = fr.compile_reddit()
+        if len(reddit_df) != 0:
+            reddit_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
+                                              str(dt.datetime.today().date()) + "_reddit_results.feather"))
