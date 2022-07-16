@@ -70,6 +70,7 @@ class DataProcessor:
         cp['date'] = pd.to_datetime(cp['time']).dt.date
         cp.groupby(['date', 'platform']).platform.count()
         cx = cp.groupby(['date', 'platform']).platform.count().reset_index(name="count")
+        cx.rename(columns = {'platform':'ml_platform'}, inplace = True)
 
         # Count words
         list_world_counts = []
