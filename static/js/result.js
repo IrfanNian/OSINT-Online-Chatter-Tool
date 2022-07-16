@@ -324,7 +324,7 @@ function drawLineChart() {
                 }
             }
             if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
+                if (datapoints[i].ml_platform == "twitter") {
                     var texts = [];
                     var users = [];
                     var x = datapoints[i].time_count;
@@ -354,7 +354,7 @@ function drawLineChart() {
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "reddit") {
+                } else if (datapoints[i].ml_platform == "reddit") {
                     var texts = [];
                     var users = [];
                     var x = datapoints[i].time_count;
@@ -383,7 +383,7 @@ function drawLineChart() {
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "pastebin") {
+                } else if (datapoints[i].ml_platform == "pastebin") {
                     var texts = [];
                     var users = [];
                     var x = datapoints[i].time_count;
