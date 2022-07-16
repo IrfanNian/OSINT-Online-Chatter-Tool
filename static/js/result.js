@@ -624,30 +624,30 @@ function drawLineChart() {
                 "Twitter has " +
                 TWCount +
                 " total amount of Tweets,\r and has a peak of " +
-                TWMaxEvent.y +
+                formatter(parseInt(TWMaxEvent.y)) +
                 " posts on " +
                 TWMaxEvent.x +
-                "\n";
+                ".\n";
         }
         if (RDStorage.length > 0) {
             chart_sum_paragraph +=
                 "Reddit has " +
                 RDCount +
                 " total amount of Posts,\r and has a peak of  " +
-                RDMaxEvent.y +
+                formatter(parseInt(RDMaxEvent.y)) +
                 " posts on " +
                 RDMaxEvent.x +
-                "\n";
+                ".\n";
         }
         if (PBStorage.length > 0) {
             chart_sum_paragraph +=
                 "PasteBin has " +
                 PBCount +
                 " total amount of Pastes,\r and has a peak of  " +
-                PBMaxEvent.y +
+                formatter(parseInt(PBMaxEvent.y)) +
                 " posts on " +
                 PBMaxEvent.x +
-                "\n";
+                ".\n";
         }
         chart_sum.textContent = chart_sum_paragraph;
     });
@@ -1961,16 +1961,16 @@ function drawFollowersChart() {
         let chart_sum_paragraph = "";
 
         chart_sum_paragraph =
-            "The Twitter account with most followers is " +
+            "The Twitter account with the most followers is " +
             topfollowerValues[0].name +
             " with " +
             formatter(parseInt(topfollowerValues[0].followers)) +
-            " of followers.\n" +
+            " followers.\n" +
             "The Twitter account with the most following is " +
             topfollowingValues[0].name +
             " with " +
             formatter(parseInt(topfollowerValues[0].following)) +
-            " of followings.\r\n";
+            " followings.\r\n";
 
         chart_sum.textContent = chart_sum_paragraph;
     });
@@ -2251,7 +2251,7 @@ function drawxPlatformChart() {
                 }
             }
             chart_sum_paragraph +=
-                "(Reddit: " +
+                " (Reddit: " +
                 tempRedditCount +
                 ", Twitter: " +
                 tempTwitterCount +
