@@ -52,7 +52,7 @@ class RedditScraper:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": [], "platform": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "location": [], "platform": []}
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search,
                                              after=self.arg_advance_since, before=self.arg_advance_until)
@@ -72,7 +72,6 @@ class RedditScraper:
                     red_dict["user"].append(post.author)
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
-                    red_dict["url"].append(post.url)
                     red_dict["location"].append("No Data")
                     red_dict["platform"].append("reddit")
                 except AttributeError:
