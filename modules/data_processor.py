@@ -52,14 +52,14 @@ class DataProcessor:
         :param arg_df:
         :return scatter_chart_df:
         """
-        scatter_chart_df = arg_df.copy() 
-        scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
+        scatter_chart_df = arg_df.copy()
+        scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date
         scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
-        scatter_chart_df.reset_index(drop=True, inplace=True) 
+        scatter_chart_df.reset_index(drop=True, inplace=True)
         scatter_chart_df = scatter_chart_df.loc[:, ['timeofday', 'day']]
-        scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1) 
+        scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1)
         return scatter_chart_df
-    
+
     def wordcloud_and_muiltiline(self, arg_df):
         """
         Processes data and generates wordcloud data and multiple line chart data
@@ -70,7 +70,7 @@ class DataProcessor:
         cp['date'] = pd.to_datetime(cp['time']).dt.date
         cp.groupby(['date', 'platform']).platform.count()
         cx = cp.groupby(['date', 'platform']).platform.count().reset_index(name="count")
-        cx.rename(columns = {'platform':'ml_platform'}, inplace = True)
+        cx.rename(columns={'platform': 'ml_platform'}, inplace=True)
 
         # Count words
         list_world_counts = []
@@ -131,6 +131,7 @@ class DataProcessor:
         df = df.loc[:, ['user', 'platform']]
         df.rename(columns={'user': 'cross_user'}, inplace=True)
         df.rename(columns={'platform': 'cross_platform'}, inplace=True)
+        df.sort_values(by='cross_user', inplace=True)
         df = pd.concat([df, arg_df], axis=1)
         return df
 
