@@ -47,12 +47,12 @@ def convert_files():
                         df = pd.read_feather(os.path.join(UPLOAD_FOLDER, filename))
                         if os.path.isfile(os.path.join(UPLOAD_FOLDER, filename)):
                             os.remove(os.path.join(UPLOAD_FOLDER, filename))
-                        df.to_csv(os.path.join(CWD, RESULT_FOLDER, filename + ".csv"), sep=",", index=False)
+                        df.to_csv(os.path.join(CWD, RESULT_FOLDER, filename.rsplit('.', 1)[0].lower() + ".csv"), sep=",", index=False)
                     elif filename.rsplit('.', 1)[1].lower() == "csv":
                         df = pd.read_csv(os.path.join(UPLOAD_FOLDER, filename))
                         if os.path.isfile(os.path.join(UPLOAD_FOLDER, filename)):
                             os.remove(os.path.join(UPLOAD_FOLDER, filename))
-                        df.to_feather(os.path.join(CWD, RESULT_FOLDER, filename + ".feather"))
+                        df.to_feather(os.path.join(CWD, RESULT_FOLDER, filename.rsplit('.', 1)[0].lower() + ".feather"))
                 elif f.filename != "" and not allowed_file_index(f.filename):
                     error = "Invalid filetype"
                     return render_template('converter.html', error=error)

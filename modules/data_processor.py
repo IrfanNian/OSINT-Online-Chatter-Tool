@@ -124,7 +124,6 @@ class DataProcessor:
         :return df:
         """
         df = arg_df.copy()
-        print(df.head(5))
         cross_df = df.groupby(["user"]).platform.nunique().gt(1)
         df = df.loc[df.user.isin(cross_df[cross_df].index)]
         df.reset_index(drop=True, inplace=True)
