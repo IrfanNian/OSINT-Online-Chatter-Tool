@@ -439,7 +439,7 @@ function drawLineChart() {
                         tension: 0.4,
                     },
                     {
-                        label: "Pastebin",
+                        label: "PasteBin",
                         data: PBStorage,
                         borderColor: "rgba(0, 0, 0, 1)",
                         backgroundColor: "rgba(0, 0, 0, 0.5)",
