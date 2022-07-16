@@ -56,7 +56,7 @@ class DataProcessor:
         scatter_chart_df['day'] = pd.to_datetime(scatter_chart_df['time']).dt.date 
         scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
         scatter_chart_df.reset_index(drop=True, inplace=True) 
-        scatter_chart_df= scatter_chart_df.loc[:, ['timeofday', 'day']]  
+        scatter_chart_df = scatter_chart_df.loc[:, ['timeofday', 'day']]
         scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1) 
         return scatter_chart_df
     
@@ -115,8 +115,24 @@ class DataProcessor:
         fx = pd.DataFrame(list_world_counts, columns=["word", "size"])
         wordcloud_and_multiline_df = pd.concat([arg_df, cx], axis=1)
         wordcloud_and_multiline_df = pd.concat([wordcloud_and_multiline_df, fx], axis=1)
-
         return wordcloud_and_multiline_df
+
+    def detect_usernames_cross_platform(self, arg_df):
+        """
+        Detects and grab users with same username but in different platforms
+        :param arg_df:
+        :return df:
+        """
+        df = arg_df.copy()
+        print(df.head(5))
+        cross_df = df.groupby(["user"]).platform.nunique().gt(1)
+        df = df.loc[df.user.isin(cross_df[cross_df].index)]
+        df.reset_index(drop=True, inplace=True)
+        df = df.loc[:, ['user', 'platform']]
+        df.rename(columns={'user': 'cross_user'}, inplace=True)
+        df.rename(columns={'platform': 'cross_platform'}, inplace=True)
+        df = pd.concat([df, arg_df], axis=1)
+        return df
 
     def run(self, arg_df):
         """
@@ -126,6 +142,7 @@ class DataProcessor:
         """
         bubble_df = self.bubble_chart(arg_df)
         country_df = self.country_chart(bubble_df)
-        multi_df = self.wordcloud_and_muiltiline(country_df)
-        scatter_df = self.scatter_chart(multi_df)
-        self.write_to_csv(scatter_df)
+        x_user_df = self.detect_usernames_cross_platform(country_df)
+        scatter_df = self.scatter_chart(x_user_df)
+        final_df = self.wordcloud_and_muiltiline(scatter_df)
+        self.write_to_csv(final_df)
