@@ -575,3 +575,7 @@ table thead {
     margin: 0 0 0 -20px;
     display: block;
 }
+
+#tRan option {
+    width: 20px;
+}
