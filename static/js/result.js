@@ -2242,6 +2242,9 @@ function drawxPlatformChart() {
             }
         }
         const uniqueUsers = [...new Set(xTempUserArray)];
+        if (uniqueUsers.length === 0) {
+            chart_sum_paragraph += "No such user exists."
+        }
         for (let i = 0; i < uniqueUsers.length; i++) {
             let tempRedditCount = 0;
             let tempTwitterCount = 0;
