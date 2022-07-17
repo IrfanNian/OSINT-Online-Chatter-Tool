@@ -110,13 +110,6 @@ drawBar.addEventListener("click", function () {
     drawBarChart();
 });
 
-let table = document.querySelector("table tbody");
-table.textContent = "";
-row = table.insertRow(0);
-var cell1 = row.insertCell(0);
-var cell2 = row.insertCell(1);
-cell1.textContent = "NOTE:";
-cell2.textContent = "Click on a datapoint to display its contents!";
 
 function drawCloud() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
