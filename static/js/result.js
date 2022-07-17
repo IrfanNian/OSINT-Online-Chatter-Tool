@@ -307,12 +307,12 @@ function drawCloud() {
 }
 
 function getMax(jsonList, property) {
-    var max = 0;
-    var maxItem = null;
-    for (var i = 0; i < jsonList.length; i++) {
-        var item = jsonList[i];
+    let max = 0;
+    let maxItem = null;
+    for (let i = 0; i < jsonList.length; i++) {
+        let item = jsonList[i];
         if (item[property] > max) {
-            max = item[property];
+            max = parseInt(item[property]);
             maxItem = item;
         }
     }
