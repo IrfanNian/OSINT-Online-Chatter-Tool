@@ -44,6 +44,7 @@ function destroyChart() {
 
 function resetDisplayTable() {
     let table = document.querySelector("table tbody");
+    document.getElementById("searchBar").value = "";
     table.textContent = "";
     row = table.insertRow(0);
     var cell1 = row.insertCell(0);
@@ -490,6 +491,7 @@ function drawLineChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
@@ -786,6 +788,7 @@ function drawBubbleChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
@@ -796,6 +799,7 @@ function drawBubbleChart() {
                     ];
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
+
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1065,6 +1069,7 @@ function drawCountryChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
@@ -1305,6 +1310,7 @@ function drawScatterChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
@@ -1578,6 +1584,8 @@ function drawDoughnutChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
+
             if (points.length) {
                 const firstPoint = points[0];
                 const label = DoughnutChart.data.labels[firstPoint.index];
@@ -1839,6 +1847,8 @@ function drawFollowersChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
+
             if (points.length) {
                 const firstPoint = points[0];
                 const label = followerChart.data.labels[firstPoint.index];
@@ -2096,6 +2106,7 @@ function drawxPlatformChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
@@ -2359,6 +2370,7 @@ function drawKeywordChart() {
                 true
             );
             let currentPage = 1;
+            document.getElementById("searchBar").value = "";
 
             if (points.length) {
                 const firstPoint = points[0];
