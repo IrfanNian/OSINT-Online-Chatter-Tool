@@ -2493,7 +2493,7 @@ function drawKeywordChart() {
             max_y.text.length +
             ").\r\n";
         chart_sum_paragraph += "Other popular keywords mentioned:\r\n ";
-        for (let a = 1; a < Object.keys(dict).length; a++) {
+        for (let a = 1; a < keywordStorage.length; a++) {
             chart_sum_paragraph +=
                 a +
                 0 +
