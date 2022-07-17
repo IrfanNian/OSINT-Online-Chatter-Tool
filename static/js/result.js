@@ -7,6 +7,8 @@ let drawScatter = document.getElementById("scatter_chart");
 let chartSummary = document.getElementById("chart_sum");
 let drawDoughnut = document.getElementById("doughnut_chart");
 let drawFollowers = document.getElementById("followers_chart");
+let drawBar = document.getElementById("bar_chart");
+
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
@@ -74,6 +76,12 @@ drawFollowers.addEventListener("click", function () {
     drawFollowers.className += " active";
     destroyChart();
     drawFollowersChart();
+});
+drawBar.addEventListener("click", function () {
+    removeActive();
+    drawBar.className += " active";
+    destroyChart();
+    drawBarChart();
 });
 
 let table = document.querySelector("table tbody");
@@ -1965,6 +1973,240 @@ function drawFollowersChart() {
             " with " +
             formatter(parseInt(topfollowerValues[0].following)) +
             " of followings.\r\n";
+
+        chart_sum.textContent = chart_sum_paragraph;
+    });
+}
+
+function drawBarChart() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        // keyword chart
+        const barStorage = [];
+        var dict = {};
+        for (let i = 0; i < datapoints.length; i++) {
+            let barText = [];
+            let barUser = [];
+            
+            if (datapoints[i].count != "") {
+
+                let x = datapoints[i].word.toLowerCase();
+                let y = 0;
+
+                for (let a = 0; a < datapoints.length; a++) {
+                    let d = datapoints[a].text.toLowerCase();
+                    if (d.includes(x)) {
+                        y = y + 1;
+                        barText.push(datapoints[a].text);
+                        barUser.push(datapoints[a].user);   
+                    }
+                }
+                dict[x] = y;
+                let json = { x: x, y: y, text: barText, user: barUser };
+                barStorage.push(json);
+                
+            }
+
+        }
+ 
+        //config
+        const barChartConfig = {
+            type: "bar",
+            data: {
+                datasets: [
+                    {
+                        label: "No. of Posts Per Keyword",
+                        data: barStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "#4C6DCB",
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: clickBarHandler,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Keyword",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "Total No. of Posts",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        grace: "50%",
+                        type: "linear",
+                    },
+                },
+            },
+        };
+        //config
+        let barChart = new Chart(chartHolderHTML, barChartConfig);
+        function clickBarHandler(evt) {
+            const points = barChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+            let currentPage = 1;
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = barChart.data.labels[firstPoint.index];
+                const value =
+                    barChart.data.datasets[firstPoint.datasetIndex].data[
+                    firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else {
+                        recordsPerPage = 50;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        
+        max_y = barStorage.reduce(function (prev, curr) {
+            return prev.y > curr.y ? prev : curr;
+        });
+
+        chart_sum.textContent = "";
+        let chart_sum_paragraph =
+            "The searched keyword: " +
+            max_y.x +
+            "(" +
+            max_y.text.length +
+            ").\r\n";
+        chart_sum_paragraph +=
+            "The top keywords searched with it:\r\n ";
+        for (let a = 1; a < Object.keys(dict).length; a++) {
+            chart_sum_paragraph +=
+                a +
+                0 +
+                ") " +
+                datapoints[a].word +
+                "(" +
+                dict[datapoints[a].word.toLowerCase()] +
+                ") \r\n";
+        }
 
         chart_sum.textContent = chart_sum_paragraph;
     });
