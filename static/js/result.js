@@ -7,10 +7,8 @@ let drawScatter = document.getElementById("scatter_chart");
 let chartSummary = document.getElementById("chart_sum");
 let drawDoughnut = document.getElementById("doughnut_chart");
 let drawFollowers = document.getElementById("followers_chart");
-let drawBar = document.getElementById("bar_chart");
+let drawKeyword = document.getElementById("keyword_chart");
 let xPlatform = document.getElementById("xplatform_chart");
-
-
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
@@ -103,20 +101,13 @@ xPlatform.addEventListener("click", function () {
     drawxPlatformChart();
     resetDisplayTable();
 });
-drawBar.addEventListener("click", function () {
+drawKeyword.addEventListener("click", function () {
     removeActive();
-    drawBar.className += " active";
+    drawKeyword.className += " active";
     destroyChart();
-    drawBarChart();
+    drawKeywordChart();
+    resetDisplayTable();
 });
-
-let table = document.querySelector("table tbody");
-table.textContent = "";
-row = table.insertRow(0);
-var cell1 = row.insertCell(0);
-var cell2 = row.insertCell(1);
-cell1.textContent = "NOTE:";
-cell2.textContent = "Click on a datapoint to display its contents!";
 
 function drawCloud() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
@@ -2285,17 +2276,16 @@ function drawxPlatformChart() {
     });
 }
 
-function drawBarChart() {
+function drawKeywordChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // keyword chart
-        const barStorage = [];
+        const keywordStorage = [];
         var dict = {};
         for (let i = 0; i < datapoints.length; i++) {
             let barText = [];
             let barUser = [];
-            
-            if (datapoints[i].count != "") {
 
+            if (datapoints[i].count != "") {
                 let x = datapoints[i].word.toLowerCase();
                 let y = 0;
 
@@ -2304,25 +2294,25 @@ function drawBarChart() {
                     if (d.includes(x)) {
                         y = y + 1;
                         barText.push(datapoints[a].text);
-                        barUser.push(datapoints[a].user);   
+                        barUser.push(datapoints[a].user);
                     }
                 }
                 dict[x] = y;
                 let json = { x: x, y: y, text: barText, user: barUser };
-                barStorage.push(json);
-                
+                keywordStorage.push(json);
             }
-
         }
- 
+        keywordStorage.sort(function (a, b) {
+            return b.y - a.y;
+        });
         //config
-        const barChartConfig = {
+        const keywordChartConfig = {
             type: "bar",
             data: {
                 datasets: [
                     {
                         label: "No. of Posts Per Keyword",
-                        data: barStorage,
+                        data: keywordStorage,
                         borderColor: ["rgba(0, 0, 0, 1)"],
                         backgroundColor: "#4C6DCB",
                     },
@@ -2357,9 +2347,9 @@ function drawBarChart() {
             },
         };
         //config
-        let barChart = new Chart(chartHolderHTML, barChartConfig);
+        let keywordChart = new Chart(chartHolderHTML, keywordChartConfig);
         function clickBarHandler(evt) {
-            const points = barChart.getElementsAtEventForMode(
+            const points = keywordChart.getElementsAtEventForMode(
                 evt,
                 "nearest",
                 { intersect: true },
@@ -2369,10 +2359,10 @@ function drawBarChart() {
 
             if (points.length) {
                 const firstPoint = points[0];
-                const label = barChart.data.labels[firstPoint.index];
+                const label = keywordChart.data.labels[firstPoint.index];
                 const value =
-                    barChart.data.datasets[firstPoint.datasetIndex].data[
-                    firstPoint.index
+                    keywordChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
                     ];
                 let ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
@@ -2490,8 +2480,8 @@ function drawBarChart() {
                 changePage(currentPage, r);
             }
         }
-        
-        max_y = barStorage.reduce(function (prev, curr) {
+
+        max_y = keywordStorage.reduce(function (prev, curr) {
             return prev.y > curr.y ? prev : curr;
         });
 
@@ -2502,16 +2492,15 @@ function drawBarChart() {
             "(" +
             max_y.text.length +
             ").\r\n";
-        chart_sum_paragraph +=
-            "The top keywords searched with it:\r\n ";
+        chart_sum_paragraph += "Other popular keywords mentioned:\r\n ";
         for (let a = 1; a < Object.keys(dict).length; a++) {
             chart_sum_paragraph +=
                 a +
                 0 +
                 ") " +
-                datapoints[a].word +
+                keywordStorage[a].x +
                 "(" +
-                dict[datapoints[a].word.toLowerCase()] +
+                keywordStorage[a].y +
                 ") \r\n";
         }
 
