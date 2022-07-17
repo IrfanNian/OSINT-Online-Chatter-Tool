@@ -444,26 +444,30 @@ table thead {
     .graph {
         width: 100%;
         padding: 5px;
-        margin-bottom: 50px;
+        margin-top: 10%;
     }
     .bubbletable {
         width: 100%;
+        margin-top: 15%;
         margin-bottom: 50px;
     }
     .usernameCloud {
         width: 100%;
+        margin-top: 5%;
     }
     .wordCloud {
         width: 100%;
+        margin-top: 5%;
     }
     #searchBar {
-        margin-top: 50px;
+        margin-top: 10%;
+        width: 95%;
     }
     .headingOne {
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: space-between;
-        height: 70%;
+        height: 60%;
         position: absolute;
         float: top;
     }
@@ -471,9 +475,10 @@ table thead {
         flex-direction: column;
         flex-wrap: wrap;
         justify-content: space-between;
-        height: 60%;
+        height: 73%;
         position: absolute;
-        margin-top: 61.25em;
+        float: top;
+        margin-top: 62em;
     }
     .headingThree {
         flex-direction: column;
@@ -481,7 +486,8 @@ table thead {
         justify-content: space-between;
         height: 60%;
         position: absolute;
-        margin-top: 61.25em;
+        float: top;
+        margin-top: 62em;
     }
     #timelineName {
         margin-right: 0px;
@@ -494,6 +500,21 @@ table thead {
     .cell {
         width: 100%;
         display: inline-block;
+    }
+    .utility {
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        position: absolute;
+        margin-top: 61.25em;
+    }
+    .tab {
+        margin-top: 70%;
+        width: 95%;
+    }
+    .insights {
+        width: 100%;
     }
 }
 
