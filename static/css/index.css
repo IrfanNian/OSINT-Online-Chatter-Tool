@@ -139,6 +139,14 @@ button {
     border-radius: 20px;
 }
 
+#twitter_td {
+    text-align: center;
+}
+
+#pastebin_td {
+    text-align: center;
+}
+
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;
@@ -171,8 +179,6 @@ button {
     }
     input {
         font-size: 20px;
-        padding: 15px 15px;
-        font-size: 21px;
         border-radius: 10px;
         background-size: 25px 25px;
     }
@@ -186,17 +192,25 @@ button {
         margin: auto;
     }
     button {
-        /* font-size: 10px; */
-        width: 20%;
-        margin-bottom: 20px;
-        background: transparent;
-        box-shadow: none;
+        padding: 12px 10px;
+        border-radius: 10px;
+        box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.2);
+        border: none;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        font-family: "K2D", sans-serif;
+        font-size: 21px;
     }
     .buttons img {
         width: 50px;
     }
-    button span {
-        display: none;
+    #twitter_td {
+        text-align: center;
+    }
+    #pastebin_td {
+        text-align: left;
     }
 }
 
