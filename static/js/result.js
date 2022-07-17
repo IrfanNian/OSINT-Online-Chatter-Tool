@@ -1,5 +1,5 @@
 const form = document.forms[0];
-const chartHolderHTML = document.querySelector("#graph").getContext("2d");
+const chartHolderHTML = document.getElementById("graph");
 let drawBubble = document.getElementById("bubble_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
@@ -8,6 +8,8 @@ let chartSummary = document.getElementById("chart_sum");
 let drawDoughnut = document.getElementById("doughnut_chart");
 let drawFollowers = document.getElementById("followers_chart");
 let drawBar = document.getElementById("bar_chart");
+let xPlatform = document.getElementById("xplatform_chart");
+
 
 let recordsPerPage = 50;
 let numPage = 1;
@@ -16,6 +18,7 @@ let topPoster = [];
 let topFollowers = [];
 drawCloud();
 drawBubbleChart();
+resetDisplayTable();
 const zeroDayWords = ["0day", "zero-day"];
 const attackWords = [
     "attack",
@@ -41,41 +44,64 @@ function destroyChart() {
     }
 }
 
+function resetDisplayTable() {
+    let table = document.querySelector("table tbody");
+    table.textContent = "";
+    row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.textContent = "NOTE:";
+    cell2.textContent = "Click on a datapoint to display its contents!";
+}
+
 drawBubble.addEventListener("click", function () {
     removeActive();
     drawBubble.className += " active";
     destroyChart();
     drawBubbleChart();
+    resetDisplayTable();
 });
 drawCountry.addEventListener("click", function () {
     removeActive();
     drawCountry.className += " active";
     destroyChart();
     drawCountryChart();
+    resetDisplayTable();
 });
 drawLine.addEventListener("click", function () {
     removeActive();
     drawLine.className += " active";
     destroyChart();
     drawLineChart();
+    resetDisplayTable();
 });
 drawScatter.addEventListener("click", function () {
     removeActive();
     drawScatter.className += " active";
     destroyChart();
     drawScatterChart();
+    resetDisplayTable();
 });
 drawDoughnut.addEventListener("click", function () {
     removeActive();
     drawDoughnut.className += " active";
     destroyChart();
     drawDoughnutChart();
+    resetDisplayTable();
 });
 drawFollowers.addEventListener("click", function () {
     removeActive();
     drawFollowers.className += " active";
     destroyChart();
     drawFollowersChart();
+    resetDisplayTable();
+});
+xPlatform.addEventListener("click", function () {
+    removeActive();
+    xPlatform.className += " active";
+    destroyChart();
+    drawxPlatformChart();
+    resetDisplayTable();
 });
 drawBar.addEventListener("click", function () {
     removeActive();
@@ -114,19 +140,19 @@ function drawCloud() {
                 }
             }
             if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
+                if (datapoints[i].ml_platform == "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
                     TWSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "reddit") {
+                } else if (datapoints[i].ml_platform == "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
                     RDSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].platform == "pastebin") {
+                } else if (datapoints[i].ml_platform == "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
                     PBSeries.push({
                         x: datapoints[i].date,
@@ -299,137 +325,117 @@ function getMax(jsonList, property) {
             maxItem = item;
         }
     }
-
     return maxItem;
 }
 
 function drawLineChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // line chart
-        const TWStorage = [];
-        const RDStorage = [];
-        const PBStorage = [];
-
+        let TWStorage = [];
+        let RDStorage = [];
+        let PBStorage = [];
         let TWCount = 0;
         let RDCount = 0;
         let PBCount = 0;
-        let TWSeries = [];
-        let RDSeries = [];
-        let PBSeries = [];
-
-        var minDate = new Date();
-        var maxDate = new Date();
 
         for (let i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count;
-                var xDate = new Date(tDate);
-                if (xDate < minDate) {
-                    minDate = new Date(xDate.getTime());
-                }
-                if (xDate > maxDate) {
-                    maxDate = new Date(xDate.getTime());
-                }
-            }
-            if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+            if (datapoints[i].ml_platform != "") {
+                if (datapoints[i].ml_platform == "twitter") {
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "twitter"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     TWStorage.push(json);
-
-                    TWCount = TWCount + parseInt(datapoints[i].count);
-                    TWSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
-                } else if (datapoints[i].platform == "reddit") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+                } else if (datapoints[i].ml_platform == "reddit") {
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "reddit"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     RDStorage.push(json);
-                    RDCount = RDCount + parseInt(datapoints[i].count);
-                    RDSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
-                } else if (datapoints[i].platform == "pastebin") {
-                    var texts = [];
-                    var users = [];
-                    var x = datapoints[i].time_count;
-                    var y = 0;
+                } else if (datapoints[i].ml_platform == "pastebin") {
+                    let texts = [];
+                    let users = [];
+                    let x = datapoints[i].date;
+                    let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-                        if (datapoints[a].time != "") {
-                            var dateOnly = new Date(datapoints[a].time);
-                            var tzoffset =
-                                new Date().getTimezoneOffset() * 60000;
-                            var localISOTime = new Date(dateOnly - tzoffset)
-                                .toISOString()
-                                .slice(0, -1);
-                            dateOnly = localISOTime.split("T", 1)[0];
-                            if (x == dateOnly) {
-                                y++;
-                                texts.push(datapoints[a].text);
-                                users.push(datapoints[a].user);
-                            }
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
+                            .toISOString()
+                            .slice(0, -1);
+                        dateOnly = localISOTime.split("T", 1)[0];
+                        if (
+                            x == dateOnly &&
+                            datapoints[a].platform == "pastebin"
+                        ) {
+                            texts.push(datapoints[a].text);
+                            users.push(datapoints[a].user);
                         }
                     }
-                    var json = { x: x, y: y, text: texts, user: users };
-
+                    let json = { x: x, y: y, text: texts, user: users };
                     PBStorage.push(json);
-                    PBCount = PBCount + parseInt(datapoints[i].count);
-                    PBSeries.push({
-                        x: datapoints[i].date,
-                        y: parseInt(datapoints[i].count),
-                    });
                 }
             }
         }
+
+        for (let i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].count != "") {
+                if (datapoints[i].ml_platform === "reddit") {
+                    RDCount += parseInt(datapoints[i].count);
+                } else if (datapoints[i].ml_platform === "twitter") {
+                    TWCount += parseInt(datapoints[i].count);
+                } else if (datapoints[i].ml_platform === "pastebin") {
+                    PBCount += parseInt(datapoints[i].count);
+                }
+            }
+        }
+
+        RDStorage.sort(function (a, b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        TWStorage.sort(function (a, b) {
+            return new Date(a.x) - new Date(b.x);
+        });
+        PBStorage.sort(function (a, b) {
+            return new Date(a.x) - new Date(b.x);
+        });
 
         var TWMaxEvent = getMax(TWStorage, "y");
         var RDMaxEvent = getMax(RDStorage, "y");
         var PBMaxEvent = getMax(PBStorage, "y");
 
-        maxDate.setDate(maxDate.getDate() + 3);
-        minDate.setDate(minDate.getDate() - 1);
         //config
         const MultilineChartConfig = {
             type: "line",
@@ -440,18 +446,21 @@ function drawLineChart() {
                         data: TWStorage,
                         borderColor: "rgba(0, 172, 238, 1)",
                         backgroundColor: "rgba(0, 172, 238, 0.5)",
+                        tension: 0.4,
                     },
                     {
                         label: "Reddit",
                         data: RDStorage,
                         borderColor: "rgba(255, 67, 0, 1)",
                         backgroundColor: "rgba(255, 67, 0, 0.5)",
+                        tension: 0.4,
                     },
                     {
-                        label: "Pastebin",
+                        label: "PasteBin",
                         data: PBStorage,
                         borderColor: "rgba(0, 0, 0, 1)",
                         backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        tension: 0.4,
                     },
                 ],
             },
@@ -462,6 +471,7 @@ function drawLineChart() {
                 scales: {
                     x: {
                         type: "time",
+                        distribution: "linear",
                         title: {
                             display: true,
                             text: "Date",
@@ -470,8 +480,6 @@ function drawLineChart() {
                             unit: "day",
                             tooltipFormat: "dd MMM yyyy",
                         },
-                        max: maxDate,
-                        min: minDate,
                     },
                     y: {
                         title: {
@@ -503,6 +511,7 @@ function drawLineChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -540,8 +549,10 @@ function drawLineChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -568,6 +579,13 @@ function drawLineChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -616,51 +634,6 @@ function drawLineChart() {
                 changePage(currentPage, r);
             }
         }
-        if (TWStorage.length > 0) {
-            min_r = TWStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = TWStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = TWStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = TWStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
-        if (RDStorage.length > 0) {
-            min_r = RDStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = RDStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = RDStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = RDStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
-        if (PBStorage.length > 0) {
-            min_r = PBStorage.reduce(function (prev, curr) {
-                return prev.r < curr.r ? prev : curr;
-            });
-            max_r = PBStorage.reduce(function (prev, curr) {
-                return prev.r > curr.r ? prev : curr;
-            });
-            min_x = PBStorage.reduce(function (prev, curr) {
-                return prev.x < curr.x ? prev : curr;
-            });
-            max_x = PBStorage.reduce(function (prev, curr) {
-                return prev.x > curr.x ? prev : curr;
-            });
-        }
-
         chart_sum.textContent = "";
         let chart_sum_paragraph = "";
         if (TWStorage.length > 0) {
@@ -668,34 +641,31 @@ function drawLineChart() {
                 "Twitter has " +
                 TWCount +
                 " total amount of Tweets,\r and has a peak of " +
-                TWMaxEvent.y +
+                formatter(parseInt(TWMaxEvent.y)) +
                 " posts on " +
                 TWMaxEvent.x +
-                "\n";
+                ".\n";
         }
         if (RDStorage.length > 0) {
             chart_sum_paragraph +=
                 "Reddit has " +
                 RDCount +
                 " total amount of Posts,\r and has a peak of  " +
-                RDMaxEvent.y +
+                formatter(parseInt(RDMaxEvent.y)) +
                 " posts on " +
                 RDMaxEvent.x +
-                "\n";
+                ".\n";
         }
         if (PBStorage.length > 0) {
             chart_sum_paragraph +=
                 "PasteBin has " +
                 PBCount +
                 " total amount of Pastes,\r and has a peak of  " +
-                PBMaxEvent.y +
+                formatter(parseInt(PBMaxEvent.y)) +
                 " posts on " +
                 PBMaxEvent.x +
-                "\n";
+                ".\n";
         }
-
-        chart_sum.textContent = chart_sum_paragraph;
-
         chart_sum.textContent = chart_sum_paragraph;
     });
 }
@@ -705,15 +675,15 @@ function drawBubbleChart() {
         // bubble chart
         const bubbleStorage = [];
         const lineBubbleStorage = [];
-        var minDate = new Date();
-        var maxDate = new Date();
-        var max = Math.max.apply(
+        let minDate = new Date();
+        let maxDate = new Date();
+        let max = Math.max.apply(
             Math,
             datapoints.map(function (o) {
                 return o.date_count;
             })
         );
-        var min = Math.min.apply(
+        let min = Math.min.apply(
             Math,
             datapoints.map(function (o) {
                 return o.date_count;
@@ -721,8 +691,8 @@ function drawBubbleChart() {
         );
         for (i = 0; i < datapoints.length; i++) {
             if (datapoints[i].date_count != "") {
-                var tDate = datapoints[i].time_count;
-                var xDate = new Date(tDate);
+                let tDate = datapoints[i].time_count;
+                let xDate = new Date(tDate);
                 if (xDate < minDate) {
                     minDate = new Date(xDate.getTime());
                 }
@@ -735,19 +705,19 @@ function drawBubbleChart() {
         const diffTime = Math.abs(maxDate - minDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         for (let i = 0; i < datapoints.length; i++) {
-            var bubbleText = [];
-            var bubbleUser = [];
+            let bubbleText = [];
+            let bubbleUser = [];
             if (datapoints[i].date_count != "") {
-                var x = datapoints[i].time_count;
-                var r = datapoints[i].date_count;
-                var y = r / diffDays;
+                let x = datapoints[i].time_count;
+                let r = datapoints[i].date_count;
+                let y = r / diffDays;
                 r = Math.floor(1 + ratio * (r - min));
 
                 for (let a = 0; a < datapoints.length; a++) {
                     if (datapoints[a].time != "") {
-                        var dateOnly = new Date(datapoints[a].time);
-                        var tzoffset = new Date().getTimezoneOffset() * 60000;
-                        var localISOTime = new Date(dateOnly - tzoffset)
+                        let dateOnly = new Date(datapoints[a].time);
+                        let tzoffset = new Date().getTimezoneOffset() * 60000;
+                        let localISOTime = new Date(dateOnly - tzoffset)
                             .toISOString()
                             .slice(0, -1);
                         dateOnly = localISOTime.split("T", 1)[0];
@@ -757,20 +727,21 @@ function drawBubbleChart() {
                         }
                     }
                 }
-                var json = {
+                let json = {
                     x: x,
                     y: y,
                     r: r,
                     text: bubbleText,
                     user: bubbleUser,
                 };
-                var lineJson = { x: x, y: y };
+                let lineJson = { x: x, y: y };
                 bubbleStorage.push(json);
                 lineBubbleStorage.push(lineJson);
             }
         }
-        maxDate.setDate(maxDate.getDate() + 3);
-        minDate.setDate(minDate.getDate() - 1);
+        lineBubbleStorage.sort(function (a, b) {
+            return new Date(b.x) - new Date(a.x);
+        });
         //config
         const bubbleChartConfig = {
             type: "bubble",
@@ -804,8 +775,6 @@ function drawBubbleChart() {
                             unit: "day",
                             tooltipFormat: "dd MMM yyyy",
                         },
-                        max: maxDate,
-                        min: minDate,
                     },
                     y: {
                         title: {
@@ -837,6 +806,7 @@ function drawBubbleChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -874,8 +844,10 @@ function drawBubbleChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -902,6 +874,13 @@ function drawBubbleChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1106,6 +1085,7 @@ function drawCountryChart() {
                 let ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1143,8 +1123,10 @@ function drawCountryChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1171,6 +1153,13 @@ function drawCountryChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1336,6 +1325,7 @@ function drawScatterChart() {
                 var ar = [value.user, value.text],
                     table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1373,8 +1363,10 @@ function drawScatterChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1401,6 +1393,13 @@ function drawScatterChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1597,6 +1596,7 @@ function drawDoughnutChart() {
                 var ar = [...value];
                 table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1634,8 +1634,10 @@ function drawDoughnutChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1662,6 +1664,13 @@ function drawDoughnutChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1737,19 +1746,15 @@ function drawFollowersChart() {
         let names = [];
 
         for (i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date_count != "") {
-                if (!names.includes(datapoints[i].user)) {
-                    names.push(datapoints[i].user);
-                    let x = datapoints.filter(
-                        (a) => a.user == datapoints[i].user
-                    );
-                    noPosts.push({
-                        name: datapoints[i].user,
-                        posts: x.length,
-                        followers: datapoints[i].followers,
-                        following: datapoints[i].following,
-                    });
-                }
+            if (!names.includes(datapoints[i].user)) {
+                names.push(datapoints[i].user);
+                let x = datapoints.filter((a) => a.user == datapoints[i].user);
+                noPosts.push({
+                    name: datapoints[i].user,
+                    posts: x.length,
+                    followers: datapoints[i].followers,
+                    following: datapoints[i].following,
+                });
             }
         }
         var topfollowerValues = [...noPosts]
@@ -1852,6 +1857,7 @@ function drawFollowersChart() {
                 var ar = [...value];
                 table = document.querySelector("table tbody");
                 function getNumPages(array) {
+                    recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
                 }
 
@@ -1889,8 +1895,10 @@ function drawFollowersChart() {
 
                     if (recordsPerPage > array.length) {
                         recordsPerPage = array.length;
-                    } else {
+                    } else if (recordsPerPage < array.length) {
                         recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
                     }
 
                     for (
@@ -1917,6 +1925,13 @@ function drawFollowersChart() {
                     if (tbl.rows.length == 1) {
                         btn_page_nav.style.display = "none";
                     }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
                 }
 
                 function searchArray(array) {
@@ -1963,17 +1978,309 @@ function drawFollowersChart() {
         let chart_sum_paragraph = "";
 
         chart_sum_paragraph =
-            "The Twitter account with most followers is " +
+            "The Twitter account with the most followers is " +
             topfollowerValues[0].name +
             " with " +
             formatter(parseInt(topfollowerValues[0].followers)) +
-            " of followers.\n" +
+            " followers.\n" +
             "The Twitter account with the most following is " +
             topfollowingValues[0].name +
             " with " +
             formatter(parseInt(topfollowerValues[0].following)) +
-            " of followings.\r\n";
+            " followings.\r\n";
 
+        chart_sum.textContent = chart_sum_paragraph;
+    });
+}
+
+function drawxPlatformChart() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        const xPlatformRedditStorage = [];
+        const xPlatformTwitterStorage = [];
+        const xPlatformPasteBinStorage = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            let xUser = [];
+            let xText = [];
+            if (datapoints[i].cross_user != "") {
+                let x = datapoints[i].cross_user;
+                let currentPlatform = datapoints[i].cross_platform;
+                for (let a = 0; a < datapoints.length; a++) {
+                    if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    } else if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    } else if (
+                        x == datapoints[a].user &&
+                        datapoints[a].platform == currentPlatform
+                    ) {
+                        xText.push(datapoints[a].text);
+                        xUser.push(datapoints[a].user);
+                    }
+                }
+                if (currentPlatform == "reddit") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformRedditStorage.push(json);
+                } else if (currentPlatform == "twitter") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformTwitterStorage.push(json);
+                } else if (currentPlatform == "pastebin") {
+                    let y = xText.length;
+                    let json = { x: x, y: y, text: xText, user: xUser };
+                    xPlatformPasteBinStorage.push(json);
+                }
+            }
+        }
+        //config
+        const xPlatformChartConfig = {
+            type: "bar",
+            data: {
+                datasets: [
+                    {
+                        label: "No. of Reddit Posts",
+                        data: xPlatformRedditStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Red",
+                    },
+                    {
+                        label: "No. of Twitter Posts",
+                        data: xPlatformTwitterStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Blue",
+                    },
+                    {
+                        label: "No. of PasteBin Posts",
+                        data: xPlatformPasteBinStorage,
+                        borderColor: ["rgba(0, 0, 0, 1)"],
+                        backgroundColor: "Green",
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: clickxPlatformBarHandler,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Users",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        stacked: true,
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "No. of Posts",
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        stacked: true,
+                        grace: "50%",
+                        type: "linear",
+                    },
+                },
+            },
+        };
+        //config
+        let xPlatformChart = new Chart(chartHolderHTML, xPlatformChartConfig);
+        function clickxPlatformBarHandler(evt) {
+            const points = xPlatformChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+            let currentPage = 1;
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = xPlatformChart.data.labels[firstPoint.index];
+                const value =
+                    xPlatformChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    recordsPerPage = 50;
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else if (recordsPerPage < array.length) {
+                        recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        chart_sum.textContent = "";
+        chart_sum_paragraph =
+            "The user(s) that are active across the platforms are:  ";
+        let xTempUserArray = [];
+        let xTempPlatformArray = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].cross_user != "") {
+                xTempUserArray.push(datapoints[i].cross_user);
+                xTempPlatformArray.push(datapoints[i].cross_platform);
+            }
+        }
+        const uniqueUsers = [...new Set(xTempUserArray)];
+        for (let i = 0; i < uniqueUsers.length; i++) {
+            let tempRedditCount = 0;
+            let tempTwitterCount = 0;
+            let tempPasteBinCount = 0;
+            chart_sum_paragraph += uniqueUsers[i];
+            for (let a = 0; a < xTempPlatformArray.length; a++) {
+                if (xTempUserArray[a] === uniqueUsers[i]) {
+                    if (xTempPlatformArray[a] === "reddit") {
+                        tempRedditCount++;
+                    } else if (xTempPlatformArray[a] === "twitter") {
+                        tempTwitterCount++;
+                    } else if (xTempPlatformArray[a] === "pastebin") {
+                        tempPasteBinCount++;
+                    }
+                }
+            }
+            chart_sum_paragraph +=
+                " (Reddit: " +
+                tempRedditCount +
+                ", Twitter: " +
+                tempTwitterCount +
+                ", PasteBin: " +
+                tempPasteBinCount +
+                ")";
+            if (i < uniqueUsers.length - 2) {
+                chart_sum_paragraph += ", ";
+            } else if (i == uniqueUsers.length - 2) {
+                chart_sum_paragraph += " and ";
+            }
+        }
         chart_sum.textContent = chart_sum_paragraph;
     });
 }

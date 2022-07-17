@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, send_file, session
+from flask import Flask, render_template, request, send_file, session, redirect, url_for
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
-from modules.utils import allowed_file_index, get_twitter_list, get_twitter_list_split, allowed_file_ini, allowed_file_json
+from modules.utils import *
 from modules.twitter_relationship import TwitterFriends
 import os
 import shutil
@@ -10,7 +10,9 @@ import datetime as dt
 from io import BytesIO
 import zipfile
 import secrets
+import pandas as pd
 
+CWD = os.getcwd()
 RESULT_FOLDER = "results"
 STATIC_RESULT_FOLDER = os.path.join("static", "results")
 UPLOAD_FOLDER = os.path.join("static", "uploads")
@@ -25,6 +27,45 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 @app.route('/')
 def default():
     return render_template('index.html')
+
+
+@app.route('/converter')
+def converter():
+    return render_template('file_converter.html')
+
+
+@app.route('/convert_files', methods=['POST'])
+def convert_files():
+    if request.method == 'POST':
+        cleanup()
+        if "file" in request.files:
+            for f in request.files.getlist("file"):
+                if f.filename != "" and allowed_file_converter(f.filename):
+                    filename = secure_filename(f.filename)
+                    f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    if filename.rsplit('.', 1)[1].lower() == "feather":
+                        df = pd.read_feather(os.path.join(UPLOAD_FOLDER, filename))
+                        if os.path.isfile(os.path.join(UPLOAD_FOLDER, filename)):
+                            os.remove(os.path.join(UPLOAD_FOLDER, filename))
+                        df.to_csv(os.path.join(CWD, RESULT_FOLDER, filename.rsplit('.', 1)[0].lower() + ".csv"), sep=",", index=False)
+                    elif filename.rsplit('.', 1)[1].lower() == "csv":
+                        df = pd.read_csv(os.path.join(UPLOAD_FOLDER, filename))
+                        if os.path.isfile(os.path.join(UPLOAD_FOLDER, filename)):
+                            os.remove(os.path.join(UPLOAD_FOLDER, filename))
+                        df.to_feather(os.path.join(CWD, RESULT_FOLDER, filename.rsplit('.', 1)[0].lower() + ".feather"))
+                elif f.filename != "" and not allowed_file_index(f.filename):
+                    error = "Invalid filetype"
+                    return render_template('converter.html', error=error)
+            timestamp = dt.datetime.now().timestamp()
+            download_filename = "converted_files_%s.zip" % timestamp
+            memory_file = BytesIO()
+            with zipfile.ZipFile(memory_file, "w", zipfile.ZIP_DEFLATED) as a:
+                for root, dirs, files in os.walk(RESULT_FOLDER):
+                    for file in files:
+                        a.write(os.path.join(root, file))
+            memory_file.seek(0)
+            return send_file(memory_file, download_name=download_filename, as_attachment=True)
+    return render_template('file_converter.html')
 
 
 @app.route('/relationships')
@@ -89,6 +130,8 @@ def relationship_results():
         tf.run(searchbar_text, level)
         return render_template('relationship_results.html', title=searchbar_text)
     elif request.method == "GET":
+        if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
+            os.remove(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"))
         return render_template('relationship_results.html', title="Demo Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
@@ -119,19 +162,8 @@ def download_data():
 
 @app.route('/results', methods=['POST'])
 def results():
-    if not os.path.exists(RESULT_FOLDER):
-        os.makedirs(RESULT_FOLDER)
-    if not os.path.exists(STATIC_RESULT_FOLDER):
-        os.makedirs(STATIC_RESULT_FOLDER)
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
-    shutil.rmtree(RESULT_FOLDER)
-    os.makedirs(RESULT_FOLDER)
-    shutil.rmtree(STATIC_RESULT_FOLDER)
-    os.makedirs(STATIC_RESULT_FOLDER)
-    shutil.rmtree(UPLOAD_FOLDER)
-    os.makedirs(UPLOAD_FOLDER)
     if request.method == "POST":
+        cleanup()
         searchbar_text = request.form.get('keyword')
         chosen_sources_reddit = request.form.get('reddit')
         chosen_sources_twitter = request.form.get('twitter')
