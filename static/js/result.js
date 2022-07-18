@@ -2477,7 +2477,7 @@ function drawKeywordChart() {
 
         chart_sum.textContent = "";
         let chart_sum_paragraph =
-            "The searched keyword: " +
+            "The most searched keyword: " +
             max_y.x +
             "(" +
             max_y.text.length +
