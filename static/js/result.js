@@ -338,6 +338,7 @@ function drawLineChart() {
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
+						if (datapoints[a].time != "") {
                         let dateOnly = new Date(datapoints[a].time);
                         let tzoffset = new Date().getTimezoneOffset() * 60000;
                         let localISOTime = new Date(dateOnly - tzoffset)
@@ -352,6 +353,7 @@ function drawLineChart() {
                             users.push(datapoints[a].user);
                         }
                     }
+				}
                     let json = { x: x, y: y, text: texts, user: users };
                     TWStorage.push(json);
                 } else if (datapoints[i].ml_platform == "reddit") {
@@ -360,6 +362,7 @@ function drawLineChart() {
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
+						if (datapoints[a].time != "") {
                         let dateOnly = new Date(datapoints[a].time);
                         let tzoffset = new Date().getTimezoneOffset() * 60000;
                         let localISOTime = new Date(dateOnly - tzoffset)
@@ -374,6 +377,7 @@ function drawLineChart() {
                             users.push(datapoints[a].user);
                         }
                     }
+				}
                     let json = { x: x, y: y, text: texts, user: users };
                     RDStorage.push(json);
                 } else if (datapoints[i].ml_platform == "pastebin") {
@@ -382,6 +386,7 @@ function drawLineChart() {
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
+						if (datapoints[a].time != "") {
                         let dateOnly = new Date(datapoints[a].time);
                         let tzoffset = new Date().getTimezoneOffset() * 60000;
                         let localISOTime = new Date(dateOnly - tzoffset)
@@ -396,6 +401,7 @@ function drawLineChart() {
                             users.push(datapoints[a].user);
                         }
                     }
+				}
                     let json = { x: x, y: y, text: texts, user: users };
                     PBStorage.push(json);
                 }
@@ -1475,54 +1481,23 @@ function drawScatterChart() {
 }
 
 function drawDoughnutChart() {
-    d3.csv("/static/results/charting.csv").then(function (datapoints) {
-        let noPosts = [];
-        let names = [];
-        let x;
-        for (i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].date != "") {
-                if (datapoints[i].platform == "twitter") {
-                    if (!names.includes(datapoints[i].user)) {
-                        names.push(datapoints[i].user);
-                        x = datapoints.filter(
-                            (a) => a.user == datapoints[i].user
-                        );
-
-                        noPosts.push({
-                            name: datapoints[i].user,
-                            posts: x.length,
-                            platform: "twitter",
-                        });
-                    }
-                } else if (datapoints[i].platform == "reddit") {
-                    if (!names.includes(datapoints[i].user)) {
-                        names.push(datapoints[i].user);
-                        x = datapoints.filter(
-                            (a) => a.user == datapoints[i].user
-                        );
-
-                        noPosts.push({
-                            name: datapoints[i].user,
-                            posts: x.length,
-                            platform: "reddit",
-                        });
-                    }
-                } else if (datapoints[i].platform == "pastebin") {
-                    if (!names.includes(datapoints[i].user)) {
-                        names.push(datapoints[i].user);
-                        x = datapoints.filter(
-                            (a) => a.user == datapoints[i].user
-                        );
-
-                        noPosts.push({
-                            name: datapoints[i].user,
-                            posts: x.length,
-                            platform: "pastebin",
-                        });
-                    }
-                }
-            }
-        }
+  d3.csv("/static/results/charting.csv").then(function (datapoints) {
+    let noPosts = [];
+    let names = [];
+    let x;
+    for (i = 0; i < datapoints.length; i++) {
+      if (!names.includes(datapoints[i].user)) {
+        names.push(datapoints[i].user);
+        x = datapoints.filter(
+			(a) => a.user == datapoints[i].user
+			);
+        noPosts.push({
+          name: datapoints[i].user,
+          posts: x.length,
+	    platform: datapoints[i].platform,
+        });
+      }
+    }
 
         var topPostValues = [...noPosts]
             .sort((a, b) => b.posts - a.posts)
