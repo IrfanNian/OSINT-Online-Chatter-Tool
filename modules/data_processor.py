@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import re
+import multiprocessing
 
 CWD = os.getcwd()
 STATIC_FOLDER = os.path.join("static", "results")
@@ -15,9 +16,10 @@ class DataProcessor:
         """
         arg_df.to_csv(os.path.join(CWD, STATIC_FOLDER, "charting.csv"), sep=",", index=False)
 
-    def bubble_chart(self, arg_df):
+    def bubble_chart(self, arg_df, queue):
         """
         Processes dataframe and adds additional data to support the bubble chart
+        :param queue:
         :param arg_df:
         :return bubble_chart_df:
         """
@@ -28,12 +30,12 @@ class DataProcessor:
         bubble_chart_df.reset_index(drop=True, inplace=True)
         bubble_chart_df = bubble_chart_df.loc[:, ['time', 'date_count']]
         bubble_chart_df.rename(columns={'time': 'time_count'}, inplace=True)
-        bubble_chart_df = pd.concat([bubble_chart_df, arg_df], axis=1)
-        return bubble_chart_df
+        queue.put(bubble_chart_df)
 
-    def country_chart(self, arg_df):
+    def country_chart(self, arg_df, queue):
         """
         Processes dataframe and adds additional data to support the country bar chart
+        :param queue:
         :param arg_df:
         :return country_chart_df:
         """
@@ -43,12 +45,12 @@ class DataProcessor:
         country_chart_df.reset_index(drop=True, inplace=True)
         country_chart_df = country_chart_df.loc[:, ['location', 'country_count']]
         country_chart_df.rename(columns={'location': 'location_count'}, inplace=True)
-        country_chart_df = pd.concat([country_chart_df, arg_df], axis=1)
-        return country_chart_df
+        queue.put(country_chart_df)
 
-    def scatter_chart(self, arg_df):
+    def scatter_chart(self, arg_df, queue):
         """
         Processes dataframe and adds additional data to support the scatter chart
+        :param queue:
         :param arg_df:
         :return scatter_chart_df:
         """
@@ -57,12 +59,12 @@ class DataProcessor:
         scatter_chart_df['timeofday'] = pd.to_datetime(scatter_chart_df['time']).dt.time
         scatter_chart_df.reset_index(drop=True, inplace=True)
         scatter_chart_df = scatter_chart_df.loc[:, ['timeofday', 'day']]
-        scatter_chart_df = pd.concat([scatter_chart_df, arg_df], axis=1)
-        return scatter_chart_df
+        queue.put(scatter_chart_df)
 
-    def wordcloud_and_muiltiline(self, arg_df):
+    def wordcloud_and_muiltiline(self, arg_df, queue):
         """
         Processes data and generates wordcloud data and multiple line chart data
+        :param queue:
         :param arg_df:
         :return wordcloud_and_multiline_df:
         """
@@ -114,13 +116,13 @@ class DataProcessor:
             elif cnt > 3:
                 size = 80
         fx = pd.DataFrame(list_world_counts, columns=["word", "size"])
-        wordcloud_and_multiline_df = pd.concat([arg_df, cx], axis=1)
-        wordcloud_and_multiline_df = pd.concat([wordcloud_and_multiline_df, fx], axis=1)
-        return wordcloud_and_multiline_df
+        wordcloud_and_multiline_df = pd.concat([fx, cx], axis=1)
+        queue.put(wordcloud_and_multiline_df)
 
-    def detect_usernames_cross_platform(self, arg_df):
+    def detect_usernames_cross_platform(self, arg_df, queue):
         """
         Detects and grab users with same username but in different platforms
+        :param queue:
         :param arg_df:
         :return df:
         """
@@ -132,8 +134,7 @@ class DataProcessor:
         df.rename(columns={'user': 'cross_user'}, inplace=True)
         df.rename(columns={'platform': 'cross_platform'}, inplace=True)
         df.sort_values(by='cross_user', inplace=True)
-        df = pd.concat([df, arg_df], axis=1)
-        return df
+        queue.put(df)
 
     def run(self, arg_df):
         """
@@ -141,9 +142,26 @@ class DataProcessor:
         :param arg_df:
         :return None:
         """
-        bubble_df = self.bubble_chart(arg_df)
-        country_df = self.country_chart(bubble_df)
-        x_user_df = self.detect_usernames_cross_platform(country_df)
-        scatter_df = self.scatter_chart(x_user_df)
-        final_df = self.wordcloud_and_muiltiline(scatter_df)
-        self.write_to_csv(final_df)
+        manager = multiprocessing.Manager()
+        queue = manager.Queue()
+        processes = []
+        bc_process = multiprocessing.Process(target=self.bubble_chart, args=(arg_df, queue))
+        bc_process.start()
+        processes.append(bc_process)
+        cc_process = multiprocessing.Process(target=self.country_chart, args=(arg_df, queue))
+        cc_process.start()
+        processes.append(cc_process)
+        sc_process = multiprocessing.Process(target=self.scatter_chart, args=(arg_df, queue))
+        sc_process.start()
+        processes.append(sc_process)
+        wm_process = multiprocessing.Process(target=self.wordcloud_and_muiltiline, args=(arg_df, queue))
+        wm_process.start()
+        processes.append(wm_process)
+        cp_process = multiprocessing.Process(target=self.detect_usernames_cross_platform, args=(arg_df, queue))
+        cp_process.start()
+        processes.append(cp_process)
+        for process in processes:
+            value = queue.get()
+            arg_df = pd.concat([value, arg_df], axis=1)
+            process.join()
+        self.write_to_csv(arg_df)
