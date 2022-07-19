@@ -1,3 +1,4 @@
+import time
 import requests
 from requests.structures import CaseInsensitiveDict
 import json
@@ -41,6 +42,7 @@ class PastebinScrapper:
             if new_id == POISON_PILL:
                 break
             response = requests.get(f"https://pastebin.com/raw/{new_id}").text
+            time.sleep(1)
             if self.arg_search in response:
                 arg_list.append([new_date, new_id, response, new_id, "No Data", "pastebin"])
         return
