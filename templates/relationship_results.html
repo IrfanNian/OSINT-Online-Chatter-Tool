@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{{ title }}</title>
-        <link rel="stylesheet" href="/static/css/relationship_result.css" />
-        <link rel="stylesheet" href="/static/css/nav.css" />
-        <link
-            type="image/png"
-            sizes="96x96"
-            rel="icon"
-            href="/static/images/keyword.png"
-        />
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/css/relationship_result.css" />
+    <link rel="stylesheet" href="/static/css/nav.css" />
+    <link type="image/png"
+          sizes="96x96"
+          rel="icon"
+          href="/static/images/keyword.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
             integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
             crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        ></script>
-    </head>
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+            integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
     <body>
         <nav>
             <a href="/" class="brand-logo">Tracking Online Chatter</a>
@@ -70,27 +74,36 @@
                 <p id="following"></p>
                 <p id="followers"></p>
             </div>
+            <div class="tab">
+                <button class="tablinks active" id="mostFollowingChart">
+                    Most Following
+                </button>
+                <button class="tablinks" id="leastFollowingChart">Least Following</button>
+                <button class="tablinks" id="mostFollowersChart">Most Followers</button>
+                <button class="tablinks" id="leastFollowersChart">Least Followers</button>
+                <button class="tablinks" id="mostInfluentialChart">Most Influential</button>
+                <button class="tablinks" id="leastInfluentialChart">Least Influential</button>
+            </div>
+            <div class="infograph">
+                <canvas id="graph"></canvas>
+            </div>
             <svg width="900" height="500" class="graph"></svg>
             <table class="center">
-                <form
-                    method="POST"
-                    action="/rs_uploader"
-                    enctype="multipart/form-data"
-                >
-                    <tr>
-                        <td>
-                            <input type="file" name="file" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input
-                                type="submit"
-                                id="submit_button"
-                                value="Submit JSON"
-                            />
-                        </td>
-                    </tr>
+                <form method="POST"
+                      action="/rs_uploader"
+                      enctype="multipart/form-data">
+                <tr>
+                    <td>
+                        <input type="file" name="file" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit"
+                               id="submit_button"
+                               value="Submit JSON" />
+                    </td>
+                </tr>
                 </form>
                 <tr>
                     <td>

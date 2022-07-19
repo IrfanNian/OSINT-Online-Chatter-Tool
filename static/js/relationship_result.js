@@ -14,14 +14,94 @@ let following = document.getElementById("following");
 let followers = document.getElementById("followers");
 let potentialInfluenced = document.getElementById("potential_influenced");
 
+const chartHolderHTML = document.getElementById("graph");
+let mostFollowings = document.getElementById("mostFollowingChart");
+let leastFollowings = document.getElementById("leastFollowingChart");
+let mostFollowers = document.getElementById("mostFollowersChart");
+let leastFollowers = document.getElementById("leastFollowersChart");
+let mostInfluential = document.getElementById("mostInfluentialChart");
+let leastInfluential = document.getElementById("leastInfluentialChart");
+
 resetButton.addEventListener("click", function () {
     d3.selectAll("svg > *").remove();
     parent.textContent = "";
     following.textContent = "";
     followers.textContent = "";
     drawGraph();
+    drawMostFollowing();
 });
 
+mostFollowings.addEventListener("click", function () {
+    removeActive();
+    mostFollowings.className += " active";
+    destroyChart();
+    drawMostFollowing();
+    resetDisplayTable();
+});
+
+leastFollowings.addEventListener("click", function () {
+    removeActive();
+    leastFollowings.className += " active";
+    destroyChart();
+    drawLeastFollowing();
+    resetDisplayTable();
+});
+
+mostFollowers.addEventListener("click", function () {
+    removeActive();
+    mostFollowers.className += " active";
+    destroyChart();
+    drawMostFollowers();
+    resetDisplayTable();
+});
+
+leastFollowers.addEventListener("click", function () {
+    removeActive();
+    leastFollowers.className += " active";
+    destroyChart();
+    drawLeastFollowers();
+    resetDisplayTable();
+});
+
+mostInfluential.addEventListener("click", function () {
+    removeActive();
+    mostInfluential.className += " active";
+    destroyChart();
+    drawMostInfluential();
+    resetDisplayTable();
+});
+
+leastInfluential.addEventListener("click", function () {
+    removeActive();
+    leastInfluential.className += " active";
+    destroyChart();
+    drawLeastInfluential();
+    resetDisplayTable();
+});
+
+function removeActive() {
+    let tablinks = document.getElementsByClassName("tablinks");
+    for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+}
+
+function destroyChart() {
+    let chartStatus = Chart.getChart("graph");
+    if (chartStatus != undefined) {
+        chartStatus.destroy();
+    }
+}
+
+function resetDisplayTable() {
+    let table = document.querySelector("table tbody");
+    table.textContent = "";
+    row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    cell1.textContent = "NOTE:";
+    cell2.textContent = "Click on a datapoint to display its contents!";
+}
 const svg = d3.select("svg").attr("width", width).attr("height", height);
 
 function drawGraph() {
@@ -411,4 +491,485 @@ function drawGraph() {
         }
     });
 }
+
+function drawMostFollowing() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const most_following = data["most_following"];
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < most_following.length; i++) {
+            names.push(most_following[i].user);
+            noPosts.push({
+                name: most_following[i].user,
+                following: most_following[i].counts,
+            });
+        }
+
+        var topfollowingValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const topfollowingdata = {
+            labels: [
+                topfollowingValues[0].name,
+                topfollowingValues[1].name,
+                topfollowingValues[2].name,
+                topfollowingValues[3].name,
+                topfollowingValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "No. of Following",
+                    data: [
+                        topfollowingValues[0].following,
+                        topfollowingValues[1].following,
+                        topfollowingValues[2].following,
+                        topfollowingValues[3].following,
+                        topfollowingValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const MostFollowingChartconfig = {
+            type: "bar",
+            data: topfollowingdata,
+            options: {
+                onClick: clickMostFollowingHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Most Amount of Following",
+                    },
+                },
+            },
+        };
+
+        let mFollowingChart = new Chart(chartHolderHTML, MostFollowingChartconfig);
+        function clickMostFollowingHandler(evt) {
+            const points = mFollowingChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+});
+}
+
+function drawLeastFollowing() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const least_following = data["least_following"];
+
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < least_following.length; i++) {
+            names.push(least_following[i].user);
+            noPosts.push({
+                name: least_following[i].user,
+                following: least_following[i].counts,
+            });
+        }
+
+        var btmfollowingValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const btmfollowingdata = {
+            labels: [
+                btmfollowingValues[0].name,
+                btmfollowingValues[1].name,
+                btmfollowingValues[2].name,
+                btmfollowingValues[3].name,
+                btmfollowingValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "No. of Following",
+                    data: [
+                        btmfollowingValues[0].following,
+                        btmfollowingValues[1].following,
+                        btmfollowingValues[2].following,
+                        btmfollowingValues[3].following,
+                        btmfollowingValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const LeastFollowingChartconfig = {
+            type: "bar",
+            data: btmfollowingdata,
+            options: {
+                onClick: clickLeastFollowingHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Least Amount of Following",
+                    },
+                },
+            },
+        };
+
+        let lFollowingChart = new Chart(chartHolderHTML, LeastFollowingChartconfig);
+        function clickLeastFollowingHandler(evt) {
+            const points = lFollowingChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+    });
+}
+
+function drawMostFollowers() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const most_follower = data["most_follower"];
+
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < most_follower.length; i++) {
+            names.push(most_follower[i].user);
+            noPosts.push({
+                name: most_follower[i].user,
+                following: most_follower[i].counts,
+            });
+        }
+
+        var topfollowerValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const topfollowersdata = {
+            labels: [
+                topfollowerValues[0].name,
+                topfollowerValues[1].name,
+                topfollowerValues[2].name,
+                topfollowerValues[3].name,
+                topfollowerValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "No. of Followers",
+                    data: [
+                        topfollowerValues[0].following,
+                        topfollowerValues[1].following,
+                        topfollowerValues[2].following,
+                        topfollowerValues[3].following,
+                        topfollowerValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const MostFollowersChartconfig = {
+            type: "bar",
+            data: topfollowersdata,
+            options: {
+                onClick: clickMostFollowersHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Most Amount of Followers",
+                    },
+                },
+            },
+        };
+
+        let mFollowersChart = new Chart(chartHolderHTML, MostFollowersChartconfig);
+        function clickMostFollowersHandler(evt) {
+            const points = mFollowersChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+    });
+}
+
+function drawLeastFollowers() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const least_follower = data["least_follower"];
+
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < least_follower.length; i++) {
+            names.push(least_follower[i].user);
+            noPosts.push({
+                name: least_follower[i].user,
+                following: least_follower[i].counts,
+            });
+        }
+
+        var btmfollowerValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const btmfollowersdata = {
+            labels: [
+                btmfollowerValues[0].name,
+                btmfollowerValues[1].name,
+                btmfollowerValues[2].name,
+                btmfollowerValues[3].name,
+                btmfollowerValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "No. of Followers",
+                    data: [
+                        btmfollowerValues[0].following,
+                        btmfollowerValues[1].following,
+                        btmfollowerValues[2].following,
+                        btmfollowerValues[3].following,
+                        btmfollowerValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const LeastFollowersChartconfig = {
+            type: "bar",
+            data: btmfollowersdata,
+            options: {
+                onClick: clickLeastFollowersHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Least Amount of Followers",
+                    },
+                },
+            },
+        };
+
+        let lFollowersChart = new Chart(chartHolderHTML, LeastFollowersChartconfig);
+        function clickLeastFollowersHandler(evt) {
+            const points = lFollowersChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+    });
+}
+
+function drawMostInfluential() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const top_five = data["top_five"];
+
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < top_five.length; i++) {
+            names.push(top_five[i].user);
+            noPosts.push({
+                name: top_five[i].user,
+                following: top_five[i].counts,
+            });
+        }
+
+        var topInfluentialValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const topInfluentialdata = {
+            labels: [
+                topInfluentialValues[0].name,
+                topInfluentialValues[1].name,
+                topInfluentialValues[2].name,
+                topInfluentialValues[3].name,
+                topInfluentialValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "Top Influential",
+                    data: [
+                        topInfluentialValues[0].following,
+                        topInfluentialValues[1].following,
+                        topInfluentialValues[2].following,
+                        topInfluentialValues[3].following,
+                        topInfluentialValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const MostInfluentialChartconfig = {
+            type: "bar",
+            data: topInfluentialdata,
+            options: {
+                onClick: clickMostInfluentialHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Most Influential",
+                    },
+                },
+            },
+        };
+
+        let mInfluentialChart = new Chart(chartHolderHTML, MostInfluentialChartconfig);
+        function clickMostInfluentialHandler(evt) {
+            const points = mInfluentialChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+    });
+}
+
+function drawLeastInfluential() {
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        const bottom_five = data["bottom_five"];
+
+        let names = [];
+        let noPosts = [];
+
+        for (i = 0; i < bottom_five.length; i++) {
+            names.push(bottom_five[i].user);
+            noPosts.push({
+                name: bottom_five[i].user,
+                following: bottom_five[i].counts,
+            });
+        }
+
+        var btmInfluentialValues = [...noPosts]
+            .sort((a, b) => b.following - a.following)
+            .slice(0, 5);
+
+        const btmInfluentialdata = {
+            labels: [
+                btmInfluentialValues[0].name,
+                btmInfluentialValues[1].name,
+                btmInfluentialValues[2].name,
+                btmInfluentialValues[3].name,
+                btmInfluentialValues[4].name,
+            ],
+            datasets: [
+                {
+                    label: "Least Influential",
+                    data: [
+                        btmInfluentialValues[0].following,
+                        btmInfluentialValues[1].following,
+                        btmInfluentialValues[2].following,
+                        btmInfluentialValues[3].following,
+                        btmInfluentialValues[4].following,
+                    ],
+                    borderColor: "#ffb1c1",
+                    backgroundColor: "rgba(255, 110, 141, 0.5)",
+                },
+            ]
+        };
+
+        const LeastInfluentialChartconfig = {
+            type: "bar",
+            data: btmInfluentialdata,
+            options: {
+                onClick: clickLeastInfluentialHandler,
+                indexAxis: "y",
+                elements: {
+                    bar: {
+                        borderWidth: 2,
+                    },
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "right",
+                    },
+                    title: {
+                        display: false,
+                        text: "Top 5 Most Influential",
+                    },
+                },
+            },
+        };
+
+        let lInfluentialChart = new Chart(chartHolderHTML, LeastInfluentialChartconfig);
+        function clickLeastInfluentialHandler(evt) {
+            const points = lInfluentialChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+        }
+    });
+}
+
 drawGraph();
+drawMostFollowing();
