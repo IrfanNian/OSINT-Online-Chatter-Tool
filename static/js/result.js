@@ -1023,6 +1023,7 @@ function drawCountryChart() {
                 countryStorage.push(json);
             }
         }
+
         //config
         const countryChartConfig = {
             type: "bar",
@@ -1078,6 +1079,7 @@ function drawCountryChart() {
             document.getElementById("searchBar").value = "";
 
             if (points.length) {
+
                 const firstPoint = points[0];
                 const label = countryChart.data.labels[firstPoint.index];
                 const value =

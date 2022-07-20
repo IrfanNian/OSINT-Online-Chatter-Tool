@@ -16,7 +16,10 @@ class ModuleConfigurator:
         :param arg_subreddit:
         :return sub_list:
         """
-        sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
+        sub_list = ['cybersecurity', 'blueteamsec', 'netsec', 'hacking', 'hackers', 'AskNetsec','blackhat',
+                    'computerforensics','ComputerSecurity','cyber','Cybersecurity101','datarecovery','ethicalhacking',
+                    'exploitdev','fulldisclosure','hackersec','Information_Security','InfoSecNews','IOT','malware',
+                    'netsecstudents','reverseengineering']
         if arg_subreddit is not None and arg_subreddit != "":
             arg_subreddit = arg_subreddit.replace(" ", "")
             if "," in arg_subreddit:

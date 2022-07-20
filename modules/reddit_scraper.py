@@ -47,7 +47,10 @@ class RedditScraper:
                                                      self.arg_advance_until.day).timestamp())
 
         if self.arg_advance_subreddit is None:
-            sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
+            sub_list = ['cybersecurity', 'blueteamsec', 'netsec', 'hacking', 'hackers', 'AskNetsec','blackhat',
+                    'computerforensics','ComputerSecurity','cyber','Cybersecurity101','datarecovery','ethicalhacking',
+                    'exploitdev','fulldisclosure','hackersec','Information_Security','InfoSecNews','IOT','malware',
+                    'netsecstudents','reverseengineering']
         else:
             sub_list = self.arg_advance_subreddit
 
