@@ -14,7 +14,9 @@ let following = document.getElementById("following");
 let followers = document.getElementById("followers");
 let potentialInfluenced = document.getElementById("potential_influenced");
 
+const postgraph = document.getElementById("postgraph");
 const chartHolderHTML = document.getElementById("graph");
+let post = document.getElementById("postChart");
 let mostFollowings = document.getElementById("mostFollowingChart");
 let leastFollowings = document.getElementById("leastFollowingChart");
 let mostFollowers = document.getElementById("mostFollowersChart");
@@ -36,7 +38,6 @@ mostFollowings.addEventListener("click", function () {
     mostFollowings.className += " active";
     destroyChart();
     drawMostFollowing();
-    resetDisplayTable();
 });
 
 leastFollowings.addEventListener("click", function () {
@@ -44,7 +45,6 @@ leastFollowings.addEventListener("click", function () {
     leastFollowings.className += " active";
     destroyChart();
     drawLeastFollowing();
-    resetDisplayTable();
 });
 
 mostFollowers.addEventListener("click", function () {
@@ -52,7 +52,6 @@ mostFollowers.addEventListener("click", function () {
     mostFollowers.className += " active";
     destroyChart();
     drawMostFollowers();
-    resetDisplayTable();
 });
 
 leastFollowers.addEventListener("click", function () {
@@ -60,7 +59,6 @@ leastFollowers.addEventListener("click", function () {
     leastFollowers.className += " active";
     destroyChart();
     drawLeastFollowers();
-    resetDisplayTable();
 });
 
 mostInfluential.addEventListener("click", function () {
@@ -68,7 +66,6 @@ mostInfluential.addEventListener("click", function () {
     mostInfluential.className += " active";
     destroyChart();
     drawMostInfluential();
-    resetDisplayTable();
 });
 
 leastInfluential.addEventListener("click", function () {
@@ -76,7 +73,6 @@ leastInfluential.addEventListener("click", function () {
     leastInfluential.className += " active";
     destroyChart();
     drawLeastInfluential();
-    resetDisplayTable();
 });
 
 function removeActive() {
@@ -93,15 +89,6 @@ function destroyChart() {
     }
 }
 
-function resetDisplayTable() {
-    let table = document.querySelector("table tbody");
-    table.textContent = "";
-    row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    cell1.textContent = "NOTE:";
-    cell2.textContent = "Click on a datapoint to display its contents!";
-}
 const svg = d3.select("svg").attr("width", width).attr("height", height);
 
 function drawGraph() {
@@ -111,23 +98,12 @@ function drawGraph() {
         const level = data["level"];
         const users = data["users"];
         const top_five = data["top_five"];
-        const bottom_five = data["bottom_five"];
         const searched_user = data["searched_user"];
         document.title = searched_user;
-        const most_following = data["most_following"];
-        const most_follower = data["most_follower"];
-        const least_following = data["least_following"];
-        const least_follower = data["least_follower"];
         document.getElementById("query").textContent =
             searched_user + " | Level: " + level + " | Users: " + users;
         let user_follows_paragraph = searched_user + " directly influenced by: "
         let user_indirect_paragraph = searched_user + " indirectly influenced by: "
-        let topFive_paragraph = "Top 5 Most Influential User(s): ";
-        let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
-        let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
-        let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
-        let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
-        let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
         let potential_influenced_paragraph = searched_user + " is likely to be influenced by: ";
         let user_follows_array = [];
         let user_indirect_follows_array = [];
@@ -157,68 +133,7 @@ function drawGraph() {
                 user_indirect_paragraph += " and ";
             }
         }
-        for (let i = 0; i < user_follows_array.length; i++) {
-            user_follows_paragraph += user_follows_array[i];
-            if (i < user_follows_array.length - 2) {
-                user_follows_paragraph += ", ";
-            } else if (i == user_follows_array.length - 2) {
-                user_follows_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < most_following.length; i++) {
-            most_following_paragraph +=
-                most_following[i].user + "(" + most_following[i].counts + ")";
-            if (i < most_following.length - 2) {
-                most_following_paragraph += ", ";
-            } else if (i == most_following.length - 2) {
-                most_following_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < most_follower.length; i++) {
-            most_follower_paragraph +=
-                most_follower[i].user + "(" + most_follower[i].counts + ")";
-            if (i < most_follower.length - 2) {
-                most_follower_paragraph += ", ";
-            } else if (i == most_follower.length - 2) {
-                most_follower_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < least_following.length; i++) {
-            least_following_paragraph +=
-                least_following[i].user + "(" + least_following[i].counts + ")";
-            if (i < least_following.length - 2) {
-                least_following_paragraph += ", ";
-            } else if (i == least_following.length - 2) {
-                least_following_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < least_follower.length; i++) {
-            least_follower_paragraph +=
-                least_follower[i].user + "(" + least_follower[i].counts + ")";
-            if (i < least_follower.length - 2) {
-                least_follower_paragraph += ", ";
-            } else if (i == least_follower.length - 2) {
-                least_follower_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < top_five.length; i++) {
-            topFive_paragraph +=
-                top_five[i].user + "(" + top_five[i].counts + ")";
-            if (i < top_five.length - 2) {
-                topFive_paragraph += ", ";
-            } else if (i == top_five.length - 2) {
-                topFive_paragraph += " and ";
-            }
-        }
-        for (let i = 0; i < bottom_five.length; i++) {
-            bottomFive_paragraph +=
-                bottom_five[i].user + "(" + bottom_five[i].counts + ")";
-            if (i < bottom_five.length - 2) {
-                bottomFive_paragraph += ", ";
-            } else if (i == bottom_five.length - 2) {
-                bottomFive_paragraph += " and ";
-            }
-        }
+
         let tempArray = user_follows_array.concat(user_indirect_follows_array);
         const influential_users = top_five.map(function (obj) {
             return obj.user;
@@ -237,14 +152,18 @@ function drawGraph() {
                 }
             }
         }
+
+        for (let i = 0; i < user_follows_array.length; i++) {
+            user_follows_paragraph += user_follows_array[i];
+            if (i < user_follows_array.length - 2) {
+                user_follows_paragraph += ", ";
+            } else if (i == user_follows_array.length - 2) {
+                user_follows_paragraph += " and ";
+            }
+        }
+
         userFollowing.textContent = user_follows_paragraph;
         userIndirect.textContent = user_indirect_paragraph;
-        topFive.textContent = topFive_paragraph;
-        btmFive.textContent = bottomFive_paragraph;
-        mostFollowing.textContent = most_following_paragraph;
-        mostFollower.textContent = most_follower_paragraph;
-        leastFollowing.textContent = least_following_paragraph;
-        leastFollower.textContent = least_follower_paragraph;
         potentialInfluenced.textContent = potential_influenced_paragraph;
 
         const simulation = d3
@@ -490,6 +409,59 @@ function drawGraph() {
             );
         }
     });
+}
+
+function drawPost() {
+    var searched_user = "";
+    const postStorage = [];
+    d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        searched_user = data["searched_user"];
+        document.getElementById("queries").textContent = searched_user;
+        d3.csv("/static/results/charting.csv").then(function (data) {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].user == searched_user) {
+                    let json = [data[i].day, data[i].text];
+                    postStorage.push(json);
+                }
+            }
+            const postData = {
+                type: 'line',
+                data: {
+                    labels: ["Date", "Post"],
+                    datasets: postStorage,
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                reverse: false
+                            }
+                        }]
+                    }
+                }
+            };
+
+            const xAxis = postData.data.labels;
+            const yAxis = postData.data.datasets;
+            const tableHeader = `<tr>${xAxis.reduce((memo, entry) => { memo += `<th>${entry}</th>`; return memo; }, '<th></th>')
+                }</tr>`;
+
+            var tableBody = "";
+            for (let i = 0; i < yAxis.length; i++) {
+                tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>`+ yAxis[i][1]+ `</td></tr>`;
+                console.log(yAxis[0]);
+                
+            }
+
+            const table = `<table id="tab">${tableHeader}${tableBody}</table>`;
+            
+
+            console.log(yAxis);
+            postgraph.innerHTML = table;
+
+        });
+    });
+
 }
 
 function drawMostFollowing() {
@@ -972,4 +944,5 @@ function drawLeastInfluential() {
 }
 
 drawGraph();
+drawPost();
 drawMostFollowing();
