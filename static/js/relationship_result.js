@@ -13,7 +13,8 @@ let parent = document.getElementById("parent");
 let following = document.getElementById("following");
 let followers = document.getElementById("followers");
 let potentialInfluenced = document.getElementById("potential_influenced");
-
+const fileUpload = document.getElementById("json_file");
+const submitButton = document.getElementById("submit_button");
 const postgraph = document.getElementById("postgraph");
 const chartHolderHTML = document.getElementById("graph");
 let post = document.getElementById("postChart");
@@ -73,6 +74,15 @@ leastInfluential.addEventListener("click", function () {
     leastInfluential.className += " active";
     destroyChart();
     drawLeastInfluential();
+});
+
+fileUpload.addEventListener("change", function () {
+    let input = fileUpload.files[0];
+    if (input) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
 });
 
 function removeActive() {
@@ -943,6 +953,9 @@ function drawLeastInfluential() {
     });
 }
 
-drawGraph();
-drawPost();
-drawMostFollowing();
+if (document.title === "Demo Mode") {
+} else {
+    drawGraph();
+    drawPost();
+    drawMostFollowing();
+}

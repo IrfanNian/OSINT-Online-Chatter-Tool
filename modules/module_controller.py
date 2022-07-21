@@ -1,9 +1,9 @@
 from modules.twitter_scraper import TwitterScraper
 from modules.reddit_scraper import RedditScraper
-from modules.pastebin_scraper import PastebinScrapper
+from modules.pastebin_scraper import PastebinScraper
 from modules.feather_reader import FeatherReader
 from modules.data_processor import DataProcessor
-import multiprocessing
+from multiprocessing import Process
 
 
 class ModuleController:
@@ -23,16 +23,16 @@ class ModuleController:
         processes = []
         if arg_scraping_sources["ts"]:
             ts = TwitterScraper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
-            ts_process = multiprocessing.Process(target=ts.run)
+            ts_process = Process(target=ts.run)
             ts_process.start()
             processes.append(ts_process)
         if arg_scraping_sources["rs"]:
             rs = RedditScraper(arg_searchbar_text, arg_custom_reddit, arg_since, arg_until, arg_limit, arg_refinement)
-            rs_process = multiprocessing.Process(target=rs.run)
+            rs_process = Process(target=rs.run)
             rs_process.start()
             processes.append(rs_process)
         if arg_scraping_sources["ps"]:
-            ps = PastebinScrapper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
+            ps = PastebinScraper(arg_searchbar_text, arg_since, arg_until, arg_limit, arg_refinement)
             ps.run()
 
         for process in processes:
