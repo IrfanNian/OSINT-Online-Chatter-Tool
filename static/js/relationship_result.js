@@ -1,6 +1,7 @@
 const width = window.innerWidth;
 const height = window.innerHeight;
 let resetButton = document.getElementById("reset_graph");
+let errorMsg = document.getElementById("error");
 let userFollowing = document.getElementById("user_following");
 let userIndirect = document.getElementById("user_indirect");
 let topFive = document.getElementById("top_five");
@@ -39,6 +40,7 @@ resetButton.addEventListener("click", function () {
     parent.textContent = "";
     following.textContent = "";
     followers.textContent = "";
+    errorMsg.textContent = "";
     drawGraph();
     drawMostFollowing();
 });
