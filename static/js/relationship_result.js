@@ -25,6 +25,15 @@ let leastFollowers = document.getElementById("leastFollowersChart");
 let mostInfluential = document.getElementById("mostInfluentialChart");
 let leastInfluential = document.getElementById("leastInfluentialChart");
 
+fileUpload.addEventListener("change", function () {
+    let input = fileUpload.files[0];
+    if (input) {
+        submitButton.disabled = false;
+    } else {
+        submitButton.disabled = true;
+    }
+});
+
 resetButton.addEventListener("click", function () {
     d3.selectAll("svg > *").remove();
     parent.textContent = "";
@@ -74,15 +83,6 @@ leastInfluential.addEventListener("click", function () {
     leastInfluential.className += " active";
     destroyChart();
     drawLeastInfluential();
-});
-
-fileUpload.addEventListener("change", function () {
-    let input = fileUpload.files[0];
-    if (input) {
-        submitButton.disabled = false;
-    } else {
-        submitButton.disabled = true;
-    }
 });
 
 function removeActive() {
