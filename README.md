@@ -125,3 +125,5 @@ This section is for uploading of past results.
 Result for Twitter Relationship:
 
     <img src="https://imgur.com/SdF3dsQ.png">
+
+    Twitter relationship graph as shown in image
