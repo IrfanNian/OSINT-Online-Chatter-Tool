@@ -33,7 +33,7 @@
             <div class="right">
                 <ul>
                     <li>
-                        {% if title != "Demo Mode" %}
+                        {% if title != "Upload Mode" %}
                         <form method="POST" action="/download">
                             <input
                                 type="submit"
@@ -56,7 +56,7 @@
             </div>
         </nav>
         <div class="container">
-            {% if title != "Demo Mode" %}
+            {% if title != "Upload Mode" %}
             <p class="title">
                 Showing Results for:
                 <span class="query" id="query"></span>
