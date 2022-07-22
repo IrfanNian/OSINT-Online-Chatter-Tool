@@ -36,7 +36,7 @@ Part 1:
 2) Fill in the advanced options as follows:
 <img src="https://imgur.com/xhR8hYK.png"> 
 Choose platforms to scrape from: Twitter, Reddit, Pastebin 
-(Default setting will scrape from all 3 platforms)
+(Default setting will scrape from all 3 platforms)\\
   
 3) Subreddit (optional)
 <img src="https://imgur.com/5QBN5hV.png">
