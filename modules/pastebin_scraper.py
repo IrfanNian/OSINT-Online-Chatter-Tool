@@ -5,13 +5,13 @@ import json
 import pandas as pd
 import os
 import datetime as dt
-import multiprocessing
+from multiprocessing import Pool, Manager
 
 CWD = os.getcwd()
 POISON_PILL = "STOP"
 
 
-class PastebinScrapper:
+class PastebinScraper:
     def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
@@ -52,11 +52,11 @@ class PastebinScrapper:
         Runs the pastebin scraper module
         :return None:
         """
-        manager = multiprocessing.Manager()
+        manager = Manager()
         id_queue = manager.Queue()
         date_queue = manager.Queue()
         shared_list = manager.list()
-        pool = multiprocessing.Pool(4)
+        pool = Pool(4)
         for i in range(4):
             id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]], chunksize=10)
         days = self.day_calculator()
