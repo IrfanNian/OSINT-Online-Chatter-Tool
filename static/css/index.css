@@ -344,17 +344,3 @@ hr {
         transform: rotate(360deg);
     }
 }
-
-.user_table:first-child {
-    border-right: solid 1px black;
-}
-
-.user_table {
-    text-align: center;
-    vertical-align: center;
-}
-
-.user_main_table {
-    border-collapse: collapse;
-    font-family: "K2D", sans-serif;
-}
