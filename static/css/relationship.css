@@ -22,7 +22,9 @@ body {
 }
 
 .content {
-    width: 80%;
+    width: 60%;
+    max-width: 900px;
+    /* height: 100px; */
 }
 
 #keyword {
@@ -47,10 +49,6 @@ body {
     backface-visibility: hidden;
     transform-style: preserve-3d;
     margin: 40px auto;
-}
-
-#csubr {
-    display: none;
 }
 
 div {
@@ -82,21 +80,7 @@ h1 {
     text-align: center;
     letter-spacing: 0.045em;
     color: #000000bc;
-    padding-top: 70px;
 }
-
-.indexh2 {
-    font-family: "Livvic", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 35px;
-    line-height: 35px;
-    text-align: right;
-    letter-spacing: 0.045em;
-    color: #000000bc;
-    padding-right: 85px;
-}
-
 
 h2 {
     font-family: "Livvic", sans-serif;
@@ -105,17 +89,6 @@ h2 {
     font-size: 35px;
     line-height: 35px;
     text-align: center;
-    letter-spacing: 0.045em;
-    color: #000000bc;
-}
-
-h3 {
-    font-family: "Livvic", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 35px;
-    text-align: left;
     letter-spacing: 0.045em;
     color: #000000bc;
 }
@@ -131,21 +104,12 @@ label {
     color: #000000bc;
 }
 
-.indexbutton {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 40px;
-    width: 50%;
-    margin-left: 650px;
-}
-
 .buttons {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 10px;
-    width: 50%;
+    width: 80%;
     margin: auto;
 }
 
@@ -160,7 +124,6 @@ button {
     width: 30%;
     font-family: "K2D", sans-serif;
     font-size: 21px;
-    margin-top: 20px;
 }
 
 .buttons img {
@@ -172,13 +135,6 @@ button {
     border-radius: 20px;
 }
 
-#twitter_td {
-    text-align: center;
-}
-
-#pastebin_td {
-    text-align: center;
-}
 
 .tooltip .tooltiptext {
     visibility: hidden;
@@ -194,11 +150,6 @@ button {
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
-}
-
-table td {
-    text-overflow: ellipsis;
-    font-family: "K2D", sans-serif;
 }
 
 .tooltip:hover .tooltiptext {
@@ -277,36 +228,6 @@ table td {
     margin-right: auto;
 }
 
-.news {
-    float: left;
-    width: 49.5%;
-    height: 300px;
-    display: grid;
-    border: 1px solid #e6e6e6;
-    padding: 5px;
-    background-color: #f6f6f6;
-    overflow-y: auto;
-    display: block;
-    border-radius: 20px;
-}
-.news table td {
-        padding: 2px 2px;
-}
-
-.newslink:link {
-    color: cornflowerblue;
-    text-decoration: underline;
-}
-
-.newslink:visited {
-    color: black;
-}
-
-.right {
-    float: right;
-}
-
-
 .error {
     color: red;
     text-align: center;
@@ -343,4 +264,18 @@ hr {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.user_table:first-child {
+    border-right: solid 1px black;
+}
+
+.user_table {
+    text-align: center;
+    vertical-align: center;
+}
+
+.user_main_table {
+    border-collapse: collapse;
+    font-family: "K2D", sans-serif;
 }

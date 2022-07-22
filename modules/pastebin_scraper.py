@@ -95,3 +95,4 @@ class PastebinScraper:
             pb_df = pb_df.reset_index(drop=True)
             pb_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" + str(dt.datetime.today().date()) +
                                           "_pastebin_results.feather"))
+        return

@@ -1,6 +1,7 @@
 const form = document.forms[0];
 const chartHolderHTML = document.getElementById("graph");
 let drawBubble = document.getElementById("bubble_chart");
+let drawCategory = document.getElementById("category_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
 let drawScatter = document.getElementById("scatter_chart");
@@ -58,6 +59,13 @@ drawBubble.addEventListener("click", function () {
     drawBubble.className += " active";
     destroyChart();
     drawBubbleChart();
+    resetDisplayTable();
+});
+drawCategory.addEventListener("click", function () {
+    removeActive();
+    drawCategory.className += " active";
+    destroyChart();
+    drawCategoryChart();
     resetDisplayTable();
 });
 drawCountry.addEventListener("click", function () {
@@ -1003,6 +1011,213 @@ function drawBubbleChart() {
     });
 }
 
+function drawCategoryChart() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        const categoryStorage = [];
+        const labels = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            let categoryText = [];
+            let categoryUser = [];
+            if (datapoints[i].cat_count != "") {
+                let x = datapoints[i].cat_count;
+                let label = datapoints[i].uniq_cat
+                labels.push(label);
+                for (let a = 0; a < datapoints.length; a++) {
+                    if (label === datapoints[a].category) {
+                        categoryText.push(datapoints[a].text);
+                        categoryUser.push(datapoints[a].user);
+                    }
+                }
+                let json = { x: x, labels: labels, text: categoryText, user: categoryUser };
+                categoryStorage.push(json);
+            }
+        }
+        const categoryChartConfig = {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "No. of Posts in Category",
+                        data: categoryStorage,
+                        backgroundColor: [
+                            "Grey",
+                            "Black",
+                            "Yellow",
+                            "Red",
+                            "Green",
+                        ],
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: clickCategoryChartHandler,
+                parsing: {
+                    key: 'x'
+                },
+            },
+        };
+        let categoryChart = new Chart(chartHolderHTML, categoryChartConfig);
+        function clickCategoryChartHandler(evt) {
+            const points = categoryChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+            let currentPage = 1;
+            document.getElementById("searchBar").value = "";
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = categoryChart.data.labels[firstPoint.index];
+                const value =
+                    categoryChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    recordsPerPage = 50;
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else if (recordsPerPage < array.length) {
+                        recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "This data is automatically generated by a text classification model which determines the category of each post and therefore will not be 100% accurate. Only English is supported.\r\n\r\n The categories are: ";
+        for (let i = 0; i < categoryStorage.length; i++) {
+            chart_sum_paragraph += categoryStorage[i].labels[i] + "(" + parseInt(categoryStorage[i].x) + ")"
+            if (i < categoryStorage.length - 2) {
+                chart_sum_paragraph += ", ";
+            } else if (i == categoryStorage.length - 2) {
+                chart_sum_paragraph += " and ";
+            }
+        }
+        chart_sum_paragraph += "\r\n\r\nWhere 'is' stands for Information Security."
+        chart_sum.textContent = chart_sum_paragraph;
+    });
+}
+
 function drawCountryChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // country bar chart
@@ -1023,7 +1238,6 @@ function drawCountryChart() {
                 countryStorage.push(json);
             }
         }
-
         //config
         const countryChartConfig = {
             type: "bar",
@@ -1079,7 +1293,6 @@ function drawCountryChart() {
             document.getElementById("searchBar").value = "";
 
             if (points.length) {
-
                 const firstPoint = points[0];
                 const label = countryChart.data.labels[firstPoint.index];
                 const value =
