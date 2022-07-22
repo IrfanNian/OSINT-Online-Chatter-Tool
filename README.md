@@ -64,7 +64,7 @@ This section is for reusing past scraped results. User will upload feather files
 1) Upload past results
     
     <img src="https://imgur.com/3NhRYTz.png">
-    
+
     User can upload feather file(s)
 
 2) Disable scraper
@@ -90,28 +90,38 @@ User can choose to view a relationship model for twitter users based on data scr
 ### Part 1:
 
 1) Select user
-<img src="https://imgur.com/pY1yi9G.png">
-Step 1: Navigate to the Twitter Relationship Visualizer page, it can be accessed from the scraping results page. A list of users from the results will be listed on the webpage for easy access and browsing. Select one user from the result list and input it into the search field. The user this example would be using would be “ka0com”. 
+
+    <img src="https://imgur.com/pY1yi9G.png">
+
+    Step 1: Navigate to the Twitter Relationship Visualizer page, it can be accessed from the scraping results page. A list of users from the results will be listed on the webpage for easy access and browsing. Select one user from the result list and input it into the search field. The user this example would be using would be “ka0com”. 
 
 2) Upload credentials
-<img src="https://imgur.com/cuLwkHR.png">
-Step 2: The end user must have a Twitter Developer Account and registered an application to obtain a bearer token which is needed to authenticate with the official Twitter API. After obtaining the token, it needs to be in a “.ini” file in the format as seen in image above. The user would then be able to upload the credential file onto the website to authenticate with the Twitter API. 
+
+    <img src="https://imgur.com/cuLwkHR.png">
+
+    Step 2: The end user must have a Twitter Developer Account and registered an application to obtain a bearer token which is needed to authenticate with the official Twitter API. After obtaining the token, it needs to be in a “.ini” file in the format as seen in image above. The user would then be able to upload the credential file onto the website to authenticate with the Twitter API. 
 
 3) Advanced Options
-<img src="https://imgur.com/SYEfloE.png">
-Step 3: The user needs to specify the level/depth desired. The depth that the example will be using would be “3”, it is also the default if none is specified. If a high level is chosen, the tool will take a long time to gather all the data required. The user is now able to click on the search button to execute the scraping process. 
+
+    <img src="https://imgur.com/SYEfloE.png">
+
+    Step 3: The user needs to specify the level/depth desired. The depth that the example will be using would be “3”, it is also the default if none is specified. If a high level is chosen, the tool will take a long time to gather all the data required. The user is now able to click on the search button to execute the scraping process. 
 
 
 ### Part 2:
 This section is for uploading of past results.
 
 1) Upload 
-<img src="https://imgur.com/sDLYyRg.png">
-The user can upload an existing JSON result file to display the graph.
+
+    <img src="https://imgur.com/sDLYyRg.png">
+
+    The user can upload an existing JSON result file to display the graph.
 
 2) Submit
-The user will submit the JSON file.
+
+    The user will submit the JSON file.
 
 
 Result for Twitter Relationship:
-<img src="https://imgur.com/SdF3dsQ.png">
+
+    <img src="https://imgur.com/SdF3dsQ.png">
