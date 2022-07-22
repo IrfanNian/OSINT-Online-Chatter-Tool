@@ -48,7 +48,9 @@ Part 1:
 <img src="https://imgur.com/JuJdAR1.png"> Choose the maximum amount of data to scrape based on the given preset values quick, standard, and deep. Respectively, the iterations are 10,000, 50,000 and 100,000. User can also select custom option for custom input. (The default value if the user did not specify any would be 10,000)
   
 6) Refinement
-<img src="https://imgur.com/CnJNRtZ.png"> User can choose to input additonal keyword for refinement. This feature in essence works the same way the Google exact-match search operator (“”) does, which basically tells the tool to only return search results if it only has the keyword provided.
+
+    <img src="https://imgur.com/CnJNRtZ.png">  
+    User can choose to input additonal keyword for refinement. This feature in essence works the same way the Google exact-match search operator (“”) does, which basically tells the tool to only return search results if it only has the keyword provided.
 
 7) The user will then click search
 
