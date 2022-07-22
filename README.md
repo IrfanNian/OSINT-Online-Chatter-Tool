@@ -30,7 +30,7 @@ python app.py
 ## Usage:
 NOTE: To reuse past results based on feather files, refer to Part 2.
 
-Part 1:
+### Part 1:
 1) Enter a keyword in the search bar (eg: Ransomware)
 
 2) Fill in the advanced options as follows:
@@ -54,12 +54,11 @@ Part 1:
     User can choose to input additonal keyword for refinement. This feature in essence works the same way the Google exact-match search operator (“”) does, which basically tells the tool to only return search results if it only has the keyword provided.  
       
         
-
   
 7) The user will then click search
 
 
-Part 2:
+### Part 2:
 This section is for reusing past scraped results. User will upload feather files to view data on dashboard without performing scraping operations again.
 
 1) Upload past results
@@ -84,7 +83,7 @@ Dashboard Results:
 
 User can choose to view a relationship model for twitter users based on data scraped from twitter.
 
-Part 1:
+### Part 1:
 
 1) Select user
 <img src="https://imgur.com/pY1yi9G.png">
@@ -99,7 +98,7 @@ Step 2: The end user must have a Twitter Developer Account and registered an app
 Step 3: The user needs to specify the level/depth desired. The depth that the example will be using would be “3”, it is also the default if none is specified. If a high level is chosen, the tool will take a long time to gather all the data required. The user is now able to click on the search button to execute the scraping process. 
 
 
-Part 2:
+### Part 2:
 This section is for uploading of past results.
 
 1) Upload 
