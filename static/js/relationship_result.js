@@ -152,12 +152,16 @@ function drawGraph() {
                 }
             }
         }
-        for (let i = 0; i < user_indirect_follows_array.length; i++) {
-            user_indirect_paragraph += user_indirect_follows_array[i];
-            if (i < user_indirect_follows_array.length - 2) {
-                user_indirect_paragraph += ", ";
-            } else if (i == user_indirect_follows_array.length - 2) {
-                user_indirect_paragraph += " and ";
+        if (user_indirect_follows_array.length === 0) {
+                user_indirect_paragraph += "None";
+        } else {
+            for (let i = 0; i < user_indirect_follows_array.length; i++) {
+                user_indirect_paragraph += user_indirect_follows_array[i];
+                if (i < user_indirect_follows_array.length - 2) {
+                    user_indirect_paragraph += ", ";
+                } else if (i == user_indirect_follows_array.length - 2) {
+                    user_indirect_paragraph += " and ";
+                }
             }
         }
 
@@ -497,13 +501,17 @@ function drawMostFollowing() {
         let names = [];
         let noPosts = [];
         let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
-        for (let i = 0; i < most_following.length; i++) {
-            most_following_paragraph +=
-                most_following[i].user + "(" + most_following[i].counts + ")";
-            if (i < most_following.length - 2) {
-                most_following_paragraph += ", ";
-            } else if (i == most_following.length - 2) {
-                most_following_paragraph += " and ";
+        if (most_following.length === 0) {
+            most_following_paragraph += "None"
+        } else {
+            for (let i = 0; i < most_following.length; i++) {
+                most_following_paragraph +=
+                    most_following[i].user + "(" + most_following[i].counts + ")";
+                if (i < most_following.length - 2) {
+                    most_following_paragraph += ", ";
+                } else if (i == most_following.length - 2) {
+                    most_following_paragraph += " and ";
+                }
             }
         }
         mostFollowing.textContent = most_following_paragraph;
@@ -587,13 +595,17 @@ function drawLeastFollowing() {
         let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
         let names = [];
         let noPosts = [];
-        for (let i = 0; i < least_follower.length; i++) {
-            least_follower_paragraph +=
-                least_follower[i].user + "(" + least_follower[i].counts + ")";
-            if (i < least_follower.length - 2) {
-                least_follower_paragraph += ", ";
-            } else if (i == least_follower.length - 2) {
-                least_follower_paragraph += " and ";
+        if (least_following.length === 0) {
+            least_following_paragraph += "None"
+        } else {
+            for (let i = 0; i < least_following.length; i++) {
+                least_following_paragraph +=
+                    least_following[i].user + "(" + least_following[i].counts + ")";
+                if (i < least_following.length - 2) {
+                    least_following_paragraph += ", ";
+                } else if (i == least_following.length - 2) {
+                    least_following_paragraph += " and ";
+                }
             }
         }
         leastFollowing.textContent = least_following_paragraph;
@@ -677,13 +689,17 @@ function drawMostFollowers() {
         let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
         let names = [];
         let noPosts = [];
-        for (let i = 0; i < most_follower.length; i++) {
-            most_follower_paragraph +=
-                most_follower[i].user + "(" + most_follower[i].counts + ")";
-            if (i < most_follower.length - 2) {
-                most_follower_paragraph += ", ";
-            } else if (i == most_follower.length - 2) {
-                most_follower_paragraph += " and ";
+        if (most_follower.length === 0) {
+            most_follower_paragraph += "None"
+        } else {
+            for (let i = 0; i < most_follower.length; i++) {
+                most_follower_paragraph +=
+                    most_follower[i].user + "(" + most_follower[i].counts + ")";
+                if (i < most_follower.length - 2) {
+                    most_follower_paragraph += ", ";
+                } else if (i == most_follower.length - 2) {
+                    most_follower_paragraph += " and ";
+                }
             }
         }
         mostFollower.textContent = most_follower_paragraph;
@@ -767,14 +783,17 @@ function drawLeastFollowers() {
         let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
         let names = [];
         let noPosts = [];
-
-        for (let i = 0; i < least_follower.length; i++) {
-            least_follower_paragraph +=
-                least_follower[i].user + "(" + least_follower[i].counts + ")";
-            if (i < least_follower.length - 2) {
-                least_follower_paragraph += ", ";
-            } else if (i == least_follower.length - 2) {
-                least_follower_paragraph += " and ";
+        if (least_follower.length === 0) {
+            least_follower_paragraph += "None"
+        } else {
+            for (let i = 0; i < least_follower.length; i++) {
+                least_follower_paragraph +=
+                    least_follower[i].user + "(" + least_follower[i].counts + ")";
+                if (i < least_follower.length - 2) {
+                    least_follower_paragraph += ", ";
+                } else if (i == least_follower.length - 2) {
+                    least_follower_paragraph += " and ";
+                }
             }
         }
         leastFollower.textContent = least_follower_paragraph;
@@ -858,14 +877,17 @@ function drawMostInfluential() {
         let topFive_paragraph = "Top 5 Most Influential User(s): ";
         let names = [];
         let noPosts = [];
-
-        for (let i = 0; i < top_five.length; i++) {
-            topFive_paragraph +=
-                top_five[i].user + "(" + top_five[i].counts + ")";
-            if (i < top_five.length - 2) {
-                topFive_paragraph += ", ";
-            } else if (i == top_five.length - 2) {
-                topFive_paragraph += " and ";
+        if (top_five.length === 0) {
+            topFive_paragraph += "None"
+        } else {
+            for (let i = 0; i < top_five.length; i++) {
+                topFive_paragraph +=
+                    top_five[i].user + "(" + top_five[i].counts + ")";
+                if (i < top_five.length - 2) {
+                    topFive_paragraph += ", ";
+                } else if (i == top_five.length - 2) {
+                    topFive_paragraph += " and ";
+                }
             }
         }
         topFive.textContent = topFive_paragraph;
@@ -949,14 +971,17 @@ function drawLeastInfluential() {
         let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
         let names = [];
         let noPosts = [];
-
-        for (let i = 0; i < bottom_five.length; i++) {
-            bottomFive_paragraph +=
-                bottom_five[i].user + "(" + bottom_five[i].counts + ")";
-            if (i < bottom_five.length - 2) {
-                bottomFive_paragraph += ", ";
-            } else if (i == bottom_five.length - 2) {
-                bottomFive_paragraph += " and ";
+        if (bottom_five.length === 0) {
+            bottomFive_paragraph += "None"
+        } else {
+            for (let i = 0; i < bottom_five.length; i++) {
+                bottomFive_paragraph +=
+                    bottom_five[i].user + "(" + bottom_five[i].counts + ")";
+                if (i < bottom_five.length - 2) {
+                    bottomFive_paragraph += ", ";
+                } else if (i == bottom_five.length - 2) {
+                    bottomFive_paragraph += " and ";
+                }
             }
         }
         btmFive.textContent = bottomFive_paragraph;
