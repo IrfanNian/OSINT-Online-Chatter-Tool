@@ -62,12 +62,13 @@ NOTE: To reuse past results based on feather files, refer to Part 2.
 This section is for reusing past scraped results. User will upload feather files to view data on dashboard without performing scraping operations again.
 
 1) Upload past results
-<img src="https://imgur.com/3NhRYTz.png">
-User can upload feather file(s)
+    <img src="https://imgur.com/3NhRYTz.png">
+    User can upload feather file(s)
 
 2) Disable scraper
-<img src="https://imgur.com/lef3mvJ.png">
-After upload the file(s), the user must check the disable scraper option.
+    <img src="https://imgur.com/lef3mvJ.png">
+
+    After upload the file(s), the user must check the disable scraper option.
 
 3) The user will then click search
 
