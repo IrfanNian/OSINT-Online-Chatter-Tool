@@ -122,8 +122,8 @@ This section is for uploading of past results.
     The user will submit the JSON file.
 
 
-Result for Twitter Relationship:
+3) Result for Twitter Relationship:
 
     <img src="https://imgur.com/SdF3dsQ.png">
 
-    Twitter relationship graph as shown in image
+    
