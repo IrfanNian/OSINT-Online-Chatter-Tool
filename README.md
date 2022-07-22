@@ -34,10 +34,9 @@ Part 1:
 1) Enter a keyword in the search bar (eg: Ransomware)
 
 2) Fill in the advanced options as follows:
-<img src="https://imgur.com/xhR8hYK.png"> 
-    Choose platforms to scrape from: Twitter, Reddit, Pastebin. (Default setting will scrape from all 3 platforms)  
+<img src="https://imgur.com/xhR8hYK.png"> Choose platforms to scrape from: Twitter, Reddit, Pastebin. (Default setting will scrape from all 3 platforms)  
       
-      
+
 3) Subreddit (optional)
 <img src="https://imgur.com/5QBN5hV.png">
 If reddit platform is selected, user can specify multiple subreddit to perform scraping on. Commas are used as delimiters. Eg: hacking,sysadmin  
