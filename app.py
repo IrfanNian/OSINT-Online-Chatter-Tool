@@ -22,7 +22,7 @@ app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-
+  
 
 @app.route('/')
 def default():
@@ -211,5 +211,7 @@ def results():
         return render_template('index.html')
 
 
+    
+ 
 if __name__ == '__main__':
     app.run()

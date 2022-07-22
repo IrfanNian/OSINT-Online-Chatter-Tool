@@ -480,14 +480,9 @@ function drawPost() {
             var tableBody = "";
             for (let i = 0; i < yAxis.length; i++) {
                 tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>`+ yAxis[i][1]+ `</td></tr>`;
-                console.log(yAxis[0]);
-                
             }
 
             const table = `<table id="tab">${tableHeader}${tableBody}</table>`;
-            
-
-            console.log(yAxis);
             postgraph.innerHTML = table;
 
         });
