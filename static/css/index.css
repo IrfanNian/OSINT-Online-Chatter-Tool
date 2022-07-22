@@ -135,7 +135,7 @@ label {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 40px;
     width: 50%;
     margin-left: 650px;
 }
@@ -160,6 +160,7 @@ button {
     width: 30%;
     font-family: "K2D", sans-serif;
     font-size: 21px;
+    margin-top: 20px;
 }
 
 .buttons img {
