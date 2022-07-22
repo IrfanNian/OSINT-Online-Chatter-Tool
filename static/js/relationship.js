@@ -4,7 +4,7 @@ const detectUsers = document.getElementById("detect_users");
 const level = document.getElementById("level");
 const form = document.forms[0];
 
-if (detectUsers.innerText == "No Users") {
+if (detectUsers.innerText === "No Users") {
     SearchSubmit.disabled = true;
     fileUpload.disabled = true;
     level.disabled = true;
