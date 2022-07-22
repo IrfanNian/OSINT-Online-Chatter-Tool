@@ -49,10 +49,12 @@ Part 1:
   
 6) Refinement
 
-<img src="https://imgur.com/CnJNRtZ.png"> 
-    User can choose to input additonal keyword for refinement. This feature in essence works the same way the Google exact-match search operator (“”) does, which basically tells the tool to only return search results if it only has the keyword provided.
+    <img src="https://imgur.com/CnJNRtZ.png"> 
+        User can choose to input additonal keyword for refinement. This feature in essence works the same way the Google exact-match search operator (“”) does, which basically tells the tool to only return search results if it only has the keyword provided.  
+      
+        
 
-<br />
+  
 7) The user will then click search
 
 
