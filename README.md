@@ -35,19 +35,16 @@ Part 1:
 
 2) Fill in the advanced options as follows:
 <img src="https://imgur.com/xhR8hYK.png"> 
-Choose platforms to scrape from: Twitter, Reddit, Pastebin 
-(Default setting will scrape from all 3 platforms)
+Choose platforms to scrape from: Twitter, Reddit, Pastebin. (Default setting will scrape from all 3 platforms)
 
 
 3) Subreddit (optional)
 <img src="https://imgur.com/5QBN5hV.png">
-If reddit platform is selected, user can specify multiple subreddit to perform scraping on.
-Commas are used as delimiters. Eg: hacking,sysadmin 
+If reddit platform is selected, user can specify multiple subreddit to perform scraping on. Commas are used as delimiters. Eg: hacking,sysadmin 
   
 4) Time range selection
 <img src="https://imgur.com/u8UqIMt.png">
-Choose a time range which data will be scraped from
-(Default setting is 7 days)
+Choose a time range which data will be scraped from.(Default setting is 7 days)
   
 5) Depth
 <img src="https://imgur.com/JuJdAR1.png">
