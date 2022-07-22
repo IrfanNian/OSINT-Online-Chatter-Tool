@@ -447,47 +447,44 @@ function drawPost() {
     const postStorage = [];
     d3.json("/static/results/twitter_friendship.json").then(function (data) {
         searched_user = data["searched_user"];
+        user_tweets = data["user_tweets"];
+        let postStorage = [];
         document.getElementById("queries").textContent = searched_user;
-        d3.csv("/static/results/charting.csv").then(function (data) {
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].user == searched_user) {
-                    let json = [data[i].day, data[i].text];
-                    postStorage.push(json);
+        for (let i = 0; i < user_tweets.length; i++) {
+            x = user_tweets[i].time
+            y = user_tweets[i].text
+            let json = { x: x, y: y };
+            postStorage.push(json);
+        }
+        const postData = {
+            type: 'line',
+            data: {
+                labels: ["Date", "Post"],
+                datasets: postStorage,
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            reverse: false
+                        }
+                    }]
                 }
             }
-            const postData = {
-                type: 'line',
-                data: {
-                    labels: ["Date", "Post"],
-                    datasets: postStorage,
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                reverse: false
-                            }
-                        }]
-                    }
-                }
-            };
+        }
+        const xAxis = postData.data.labels;
+        const yAxis = postData.data.datasets;
+        const tableHeader = `<tr>${xAxis.reduce((memo, entry) => { memo += `<th>${entry}</th>`; return memo; }, '<th></th>')
+            }</tr>`;
 
-            const xAxis = postData.data.labels;
-            const yAxis = postData.data.datasets;
-            const tableHeader = `<tr>${xAxis.reduce((memo, entry) => { memo += `<th>${entry}</th>`; return memo; }, '<th></th>')
-                }</tr>`;
+        var tableBody = "";
+        for (let i = 0; i < postStorage.length; i++) {
+            tableBody += `<tr><td>` + postStorage[i].x + `</td><td>`+ postStorage[i].y+ `</td></tr>`;
+        }
 
-            var tableBody = "";
-            for (let i = 0; i < yAxis.length; i++) {
-                tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>`+ yAxis[i][1]+ `</td></tr>`;
-            }
-
-            const table = `<table id="tab">${tableHeader}${tableBody}</table>`;
-            postgraph.innerHTML = table;
-
-        });
+        const table = `<table id="tab">${tableHeader}${tableBody}</table>`;
+        postgraph.innerHTML = table;
     });
-
 }
 
 function drawMostFollowing() {

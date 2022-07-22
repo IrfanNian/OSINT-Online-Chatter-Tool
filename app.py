@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, session, redirect, url_for
+from flask import Flask, render_template, request, send_file, session
 from werkzeug.utils import secure_filename
 from modules.module_controller import ModuleController
 from modules.module_configurator import ModuleConfigurator
@@ -22,10 +22,11 @@ app = Flask(__name__)  # Create the flask object
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['SECRET_KEY'] = secrets.token_hex(24)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-  
+
 
 @app.route('/')
 def default():
+    cleanup()
     return render_template('index.html')
 
 
@@ -77,6 +78,7 @@ def relationships():
 @app.route('/rs_uploader', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
+        cleanup()
         f = request.files['file']
         if f.filename != "" and allowed_file_json(f.filename):
             filename = secure_filename(f.filename)
@@ -99,12 +101,6 @@ def relationship_results():
         twitter_users = get_twitter_list()
         searchbar_text = request.form.get('keyword')
         level = request.form.get('level', type=int)
-        demo_mode = request.form.get('demoMode')
-        if demo_mode == "demoMode":
-            source = os.path.join(DEMO_FOLDER, "twitter_friendship.json")
-            destination = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
-            shutil.copy(source, destination)
-            return render_template('relationship_results.html', title="Demo Mode")
         if searchbar_text not in twitter_users:
             twitter_users_a, twitter_users_b = get_twitter_list_split()
             error = "User is not in the results record"
@@ -132,7 +128,7 @@ def relationship_results():
     elif request.method == "GET":
         if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
             os.remove(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"))
-        return render_template('relationship_results.html', title="Demo Mode")
+        return render_template('relationship_results.html', title="Upload Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
         return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
@@ -211,7 +207,5 @@ def results():
         return render_template('index.html')
 
 
-    
- 
 if __name__ == '__main__':
     app.run()
