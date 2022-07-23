@@ -5421,5 +5421,17 @@
             "user": "_DrFrusci",
             "counts": 1
         }
+    ],
+    "user_tweets": [
+        {
+            "time": "2022-06-16T03:31:15",
+            "text": "Microsoft\u30015\u6708\u672B\u767A\u8868\u306E\u60AA\u7528\u3055\u308C\u305F\u30BC\u30ED\u30C7\u30A4\u8106\u5F31\u6027\u300CFollina\u300D\u3092\u4FEE\u6B63 - https://t.co/vyiZ981yoE",
+            "user": "ka0com",
+            "location": "No Data",
+            "platform": "twitter",
+            "tweet id": 1.54E+18,
+            "following": 912.0,
+            "followers": 1207.0
+        }
     ]
 }

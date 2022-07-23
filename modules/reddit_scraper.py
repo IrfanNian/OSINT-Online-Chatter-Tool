@@ -3,6 +3,7 @@ import datetime as dt
 import pandas as pd
 import os
 import numpy as np
+from modules.feather_reader import FeatherReader
 
 CWD = os.getcwd()
 pd.options.mode.chained_assignment = None
@@ -46,12 +47,15 @@ class RedditScraper:
                                                      self.arg_advance_until.day).timestamp())
 
         if self.arg_advance_subreddit is None:
-            sub_list = ['cybersecurity', 'blueteamsec', 'netsec']
+            sub_list = ['cybersecurity', 'blueteamsec', 'netsec', 'hacking', 'hackers', 'AskNetsec', 'blackhat',
+                        'computerforensics', 'ComputerSecurity', 'cyber', 'Cybersecurity101', 'datarecovery',
+                        'ethicalhacking', 'exploitdev', 'fulldisclosure', 'hackersec', 'Information_Security',
+                        'InfoSecNews', 'IOT', 'malware', 'netsecstudents', 'reverseengineering']
         else:
             sub_list = self.arg_advance_subreddit
 
         for subreddit in sub_list:
-            red_dict = {"title": [], "user": [], "time": [], "text": [], "url": [], "location": [], "platform": []}
+            red_dict = {"title": [], "user": [], "time": [], "text": [], "location": [], "platform": []}
             if self.arg_advance_since is not None and self.arg_advance_until is not None:
                 gen = api.search_submissions(subreddit=subreddit, limit=self.arg_advance_limit, q=self.arg_search,
                                              after=self.arg_advance_since, before=self.arg_advance_until)
@@ -71,7 +75,6 @@ class RedditScraper:
                     red_dict["user"].append(post.author)
                     red_dict["time"].append(date)
                     red_dict["text"].append(post.selftext)
-                    red_dict["url"].append(post.url)
                     red_dict["location"].append("No Data")
                     red_dict["platform"].append("reddit")
                 except AttributeError:
@@ -84,5 +87,13 @@ class RedditScraper:
             if len(submission_df) != 0:
                 submission_df = submission_df.reset_index(drop=True)
                 submission_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
-                                                      str(dt.datetime.today().date()) + "_reddit_" + subreddit +
-                                                      ".feather"))
+                                                      str(dt.datetime.today().date()) + subreddit + "_reddit_results"
+                                                                                                    ".feather"))
+
+        fr = FeatherReader()
+        reddit_df = fr.compile_reddit()
+        if len(reddit_df) != 0:
+            reddit_df = reddit_df.reset_index(drop=True)
+            reddit_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
+                                              str(dt.datetime.today().date()) + "_reddit_results.feather"))
+        return

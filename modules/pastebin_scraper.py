@@ -1,16 +1,17 @@
+import time
 import requests
 from requests.structures import CaseInsensitiveDict
 import json
 import pandas as pd
 import os
 import datetime as dt
-import multiprocessing
+from multiprocessing import Pool, Manager
 
 CWD = os.getcwd()
 POISON_PILL = "STOP"
 
 
-class PastebinScrapper:
+class PastebinScraper:
     def __init__(self, arg_search, arg_advance_since=None, arg_advance_until=None, arg_limit=None, arg_refinement=None):
         self.arg_search = arg_search
         self.arg_advance_since = arg_advance_since
@@ -37,11 +38,11 @@ class PastebinScrapper:
         """
         while True:
             new_id = arg_id_queue.get()
-            print(new_id)
             new_date = arg_date_queue.get()
             if new_id == POISON_PILL:
                 break
             response = requests.get(f"https://pastebin.com/raw/{new_id}").text
+            time.sleep(1)
             if self.arg_search in response:
                 arg_list.append([new_date, new_id, response, new_id, "No Data", "pastebin"])
         return
@@ -51,12 +52,13 @@ class PastebinScrapper:
         Runs the pastebin scraper module
         :return None:
         """
-        manager = multiprocessing.Manager()
+        manager = Manager()
         id_queue = manager.Queue()
         date_queue = manager.Queue()
         shared_list = manager.list()
-        pool = multiprocessing.Pool(multiprocessing.cpu_count()-1)
-        id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]], chunksize=10)
+        pool = Pool(4)
+        for i in range(4):
+            id_result = pool.starmap_async(self.process_id, [[id_queue, date_queue, shared_list]], chunksize=10)
         days = self.day_calculator()
         headers = CaseInsensitiveDict()
         headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -77,8 +79,9 @@ class PastebinScrapper:
             days -= 1
             if count >= self.arg_limit:
                 break
-        id_queue.put(POISON_PILL)
-        date_queue.put(POISON_PILL)
+        for i in range(4):
+            id_queue.put(POISON_PILL)
+            date_queue.put(POISON_PILL)
         pool.close()
         pool.join()
         shared_list = list(shared_list)
@@ -92,3 +95,4 @@ class PastebinScrapper:
             pb_df = pb_df.reset_index(drop=True)
             pb_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" + str(dt.datetime.today().date()) +
                                           "_pastebin_results.feather"))
+        return

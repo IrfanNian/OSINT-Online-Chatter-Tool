@@ -24,6 +24,7 @@ class TwitterScraper:
         """
         tweets_list = []
 
+        # statement builder
         if self.arg_advance_since is not None and self.arg_advance_until is not None:
             statement = self.arg_search + " since:" + self.arg_advance_since + " until:" + self.arg_advance_until
         elif self.arg_advance_since is None and self.arg_advance_until is not None:
@@ -47,9 +48,9 @@ class TwitterScraper:
                 location = location.split(",")[-1][1:]
             else:
                 location = "No Data"
-            tweets_list.append([date, tweet.id, tweet.content, tweet.user.username, location, tweet.user.friendsCount, tweet.user.followersCount, "twitter"])
+            tweets_list.append([date, tweet.content, tweet.user.username, location, tweet.user.friendsCount, tweet.user.followersCount, "twitter"])
 
-        tweets_df = pd.DataFrame(tweets_list, columns=["time", "tweet id", "text", "user", "location", "following", "followers", "platform"])
+        tweets_df = pd.DataFrame(tweets_list, columns=["time", "text", "user", "location", "following", "followers", "platform"])
 
         if self.arg_refinement is not None:
             tweets_df = tweets_df[tweets_df["text"].str.contains(self.arg_refinement)]
@@ -58,3 +59,4 @@ class TwitterScraper:
             tweets_df = tweets_df.reset_index(drop=True)
             tweets_df.to_feather(os.path.join(CWD, "results", str(self.arg_search) + "_" +
                                               str(dt.datetime.today().date()) + "_tweets_results.feather"))
+        return

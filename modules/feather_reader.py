@@ -39,10 +39,6 @@ class FeatherReader:
         for filename in arg_feather_filenames:
             df = pd.read_feather(filename)
             compiled_df = pd.concat([compiled_df, df], ignore_index=True)
-        try:
-            compiled_df = compiled_df.drop_duplicates(subset=['title', 'user'], keep='first')
-        except KeyError:
-            pass
         compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
@@ -56,6 +52,22 @@ class FeatherReader:
         twitter_df.drop_duplicates(subset=["user"], inplace=True)
         twitter_user_list = twitter_df["user"].tolist()
         return twitter_user_list
+
+    def compile_reddit(self):
+        """
+        Compiles all reddit feather files into one
+        :return reddit_df:
+        """
+        all_feather_files = self.get_feather_files("*_reddit_results.feather")
+        reddit_df = self.feather_to_df(all_feather_files)
+        for file in all_feather_files:
+            if os.path.isfile(os.path.join(RESULT_FOLDER, file)):
+                os.remove(os.path.join(RESULT_FOLDER, file))
+        try:
+            reddit_df.drop_duplicates(subset=["title", "user"], keep="first", inplace=True)
+        except KeyError:
+            pass
+        return reddit_df
 
     def run(self):
         """
