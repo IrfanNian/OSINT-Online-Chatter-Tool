@@ -189,7 +189,7 @@ table thead {
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 13px 16px;
+    padding: 13px 13px;
     transition: 0.3s;
     font-family: "K2D", sans-serif;
 }
