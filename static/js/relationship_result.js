@@ -494,7 +494,7 @@ function drawMostFollowing() {
         let noPosts = [];
         let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
         if (most_following.length === 0) {
-            most_following_paragraph += "None"
+            most_following_paragraph += "None";
         } else {
             for (let i = 0; i < most_following.length; i++) {
                 most_following_paragraph +=
@@ -520,28 +520,22 @@ function drawMostFollowing() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let MostFollowingArray = topfollowingValues.map((e) => e.name);
+        let topfollowing = topfollowingValues.map((e) => e.following);
+        if (!MostFollowingArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const topfollowingdata = {
-            labels: [
-                topfollowingValues[0].name,
-                topfollowingValues[1].name,
-                topfollowingValues[2].name,
-                topfollowingValues[3].name,
-                topfollowingValues[4].name,
-            ],
+            labels: MostFollowingArray,
             datasets: [
                 {
                     label: "No. of Following",
-                    data: [
-                        topfollowingValues[0].following,
-                        topfollowingValues[1].following,
-                        topfollowingValues[2].following,
-                        topfollowingValues[3].following,
-                        topfollowingValues[4].following,
-                    ],
+                    data: topfollowing,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const MostFollowingChartconfig = {
@@ -588,7 +582,7 @@ function drawLeastFollowing() {
         let names = [];
         let noPosts = [];
         if (least_following.length === 0) {
-            least_following_paragraph += "None"
+            least_following_paragraph += "None";
         } else {
             for (let i = 0; i < least_following.length; i++) {
                 least_following_paragraph +=
@@ -614,28 +608,22 @@ function drawLeastFollowing() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let LeastFollowingArray = btmfollowingValues.map((e) => e.name);
+        let following = btmfollowingValues.map((e) => e.following);
+        if (!LeastFollowingArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const btmfollowingdata = {
-            labels: [
-                btmfollowingValues[0].name,
-                btmfollowingValues[1].name,
-                btmfollowingValues[2].name,
-                btmfollowingValues[3].name,
-                btmfollowingValues[4].name,
-            ],
+            labels: LeastFollowingArray,
             datasets: [
                 {
                     label: "No. of Following",
-                    data: [
-                        btmfollowingValues[0].following,
-                        btmfollowingValues[1].following,
-                        btmfollowingValues[2].following,
-                        btmfollowingValues[3].following,
-                        btmfollowingValues[4].following,
-                    ],
+                    data: following,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const LeastFollowingChartconfig = {
@@ -682,7 +670,7 @@ function drawMostFollowers() {
         let names = [];
         let noPosts = [];
         if (most_follower.length === 0) {
-            most_follower_paragraph += "None"
+            most_follower_paragraph += "None";
         } else {
             for (let i = 0; i < most_follower.length; i++) {
                 most_follower_paragraph +=
@@ -708,28 +696,22 @@ function drawMostFollowers() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let MostFollowersArray = topfollowerValues.map((e) => e.name);
+        let following = topfollowerValues.map((e) => e.following);
+        if (!MostFollowersArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const topfollowersdata = {
-            labels: [
-                topfollowerValues[0].name,
-                topfollowerValues[1].name,
-                topfollowerValues[2].name,
-                topfollowerValues[3].name,
-                topfollowerValues[4].name,
-            ],
+            labels: MostFollowersArray,
             datasets: [
                 {
                     label: "No. of Followers",
-                    data: [
-                        topfollowerValues[0].following,
-                        topfollowerValues[1].following,
-                        topfollowerValues[2].following,
-                        topfollowerValues[3].following,
-                        topfollowerValues[4].following,
-                    ],
+                    data: following,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const MostFollowersChartconfig = {
@@ -776,7 +758,7 @@ function drawLeastFollowers() {
         let names = [];
         let noPosts = [];
         if (least_follower.length === 0) {
-            least_follower_paragraph += "None"
+            least_follower_paragraph += "None";
         } else {
             for (let i = 0; i < least_follower.length; i++) {
                 least_follower_paragraph +=
@@ -802,28 +784,22 @@ function drawLeastFollowers() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let LeastFollowersArray = btmfollowerValues.map((e) => e.name);
+        let following = btmfollowerValues.map((e) => e.following);
+        if (!LeastFollowersArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const btmfollowersdata = {
-            labels: [
-                btmfollowerValues[0].name,
-                btmfollowerValues[1].name,
-                btmfollowerValues[2].name,
-                btmfollowerValues[3].name,
-                btmfollowerValues[4].name,
-            ],
+            labels: LeastFollowersArray,
             datasets: [
                 {
                     label: "No. of Followers",
-                    data: [
-                        btmfollowerValues[0].following,
-                        btmfollowerValues[1].following,
-                        btmfollowerValues[2].following,
-                        btmfollowerValues[3].following,
-                        btmfollowerValues[4].following,
-                    ],
+                    data: following,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const LeastFollowersChartconfig = {
@@ -870,11 +846,10 @@ function drawMostInfluential() {
         let names = [];
         let noPosts = [];
         if (top_five.length === 0) {
-            topFive_paragraph += "None"
+            topFive_paragraph += "None";
         } else {
             for (let i = 0; i < top_five.length; i++) {
-                topFive_paragraph +=
-                    top_five[i].user + "(" + top_five[i].counts + ")";
+                topFive_paragraph += top_five[i].user + "(" + top_five[i].counts + ")";
                 if (i < top_five.length - 2) {
                     topFive_paragraph += ", ";
                 } else if (i == top_five.length - 2) {
@@ -896,28 +871,22 @@ function drawMostInfluential() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let MostInfluentialArray = topInfluentialValues.map((e) => e.name);
+        let following = topInfluentialValues.map((e) => e.following);
+        if (!MostInfluentialArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const topInfluentialdata = {
-            labels: [
-                topInfluentialValues[0].name,
-                topInfluentialValues[1].name,
-                topInfluentialValues[2].name,
-                topInfluentialValues[3].name,
-                topInfluentialValues[4].name,
-            ],
+            labels: MostInfluentialArray,
             datasets: [
                 {
                     label: "Top Influential",
-                    data: [
-                        topInfluentialValues[0].following,
-                        topInfluentialValues[1].following,
-                        topInfluentialValues[2].following,
-                        topInfluentialValues[3].following,
-                        topInfluentialValues[4].following,
-                    ],
+                    data: following,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const MostInfluentialChartconfig = {
@@ -964,7 +933,7 @@ function drawLeastInfluential() {
         let names = [];
         let noPosts = [];
         if (bottom_five.length === 0) {
-            bottomFive_paragraph += "None"
+            bottomFive_paragraph += "None";
         } else {
             for (let i = 0; i < bottom_five.length; i++) {
                 bottomFive_paragraph +=
@@ -990,28 +959,22 @@ function drawLeastInfluential() {
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
 
+        let LeastInfluentialArray = btmInfluentialValues.map((e) => e.name);
+        let following = btmInfluentialValues.map((e) => e.following);
+        if (!LeastInfluentialArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const btmInfluentialdata = {
-            labels: [
-                btmInfluentialValues[0].name,
-                btmInfluentialValues[1].name,
-                btmInfluentialValues[2].name,
-                btmInfluentialValues[3].name,
-                btmInfluentialValues[4].name,
-            ],
+            labels: LeastInfluentialArray,
             datasets: [
                 {
                     label: "Least Influential",
-                    data: [
-                        btmInfluentialValues[0].following,
-                        btmInfluentialValues[1].following,
-                        btmInfluentialValues[2].following,
-                        btmInfluentialValues[3].following,
-                        btmInfluentialValues[4].following,
-                    ],
+                    data: following,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
-            ]
+            ],
         };
 
         const LeastInfluentialChartconfig = {
