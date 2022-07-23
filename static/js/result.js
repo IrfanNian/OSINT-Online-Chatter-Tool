@@ -1696,58 +1696,46 @@ function drawScatterChart() {
 }
 
 function drawDoughnutChart() {
-  d3.csv("/static/results/charting.csv").then(function (datapoints) {
-    let noPosts = [];
-    let names = [];
-    let x;
-    for (i = 0; i < datapoints.length; i++) {
-      if (!names.includes(datapoints[i].user)) {
-        names.push(datapoints[i].user);
-        x = datapoints.filter(
-			(a) => a.user == datapoints[i].user
-			);
-        noPosts.push({
-          name: datapoints[i].user,
-          posts: x.length,
-	    platform: datapoints[i].platform,
-        });
-      }
-    }
+	d3.csv("/static/results/charting.csv").then(function (datapoints) {
+		let noPosts = [];
+		let names = [];
+		let x;
+		for (i = 0; i < datapoints.length; i++) {
+		  if (!names.includes(datapoints[i].user)) {
+			names.push(datapoints[i].user);
+			x = datapoints.filter((a) => a.user == datapoints[i].user);
+			noPosts.push({
+			  name: datapoints[i].user,
+			  posts: x.length,
+			  platform: datapoints[i].platform,
+			});
+		  }
+		}
 
-        var topPostValues = [...noPosts]
-            .sort((a, b) => b.posts - a.posts)
-            .slice(0, 5);
+		var topPostValues = [...noPosts]
+		  .sort((a, b) => b.posts - a.posts)
+		  .slice(0, 5);
 
-        topPoster = [...topPostValues];
-        const data = {
-            labels: [
-                topPostValues[0].name,
-                topPostValues[1].name,
-                topPostValues[2].name,
-                topPostValues[3].name,
-                topPostValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "Dataset 1",
-                    data: [
-                        topPostValues[0].posts,
-                        topPostValues[1].posts,
-                        topPostValues[2].posts,
-                        topPostValues[3].posts,
-                        topPostValues[4].posts,
-                    ],
-                    backgroundColor: [
-                        "Red",
-                        "Orange",
-                        "Yellow",
-                        "Green",
-                        "Blue",
-                    ],
-                },
-            ],
-        };
+		let TopPostsArray = topPostValues.map((e) => e.name);
+		let posts = topPostValues.map((e) => e.posts);
 
+		topPoster = [...topPostValues];
+		if (!TopPostsArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const data = {
+		  labels: TopPostsArray,
+		  datasets: [
+			{
+			  label: "Frequent Posters",
+			  data: posts,
+			  backgroundColor: 
+			  ["Red", "Orange", "Yellow", "Green", "Blue"],
+			},
+		  ],
+		};
+	
         //Doughnut chart
         const DoughnutChartConfig = {
             type: "doughnut",
@@ -1930,79 +1918,65 @@ function formatter(n) {
 }
 
 function drawFollowersChart() {
-    d3.csv("/static/results/charting.csv").then(function (datapoints) {
-        let noPosts = [];
-        let names = [];
+	d3.csv("/static/results/charting.csv").then(function (datapoints) {
+		let noPosts = [];
+		let names = [];
 
-        for (i = 0; i < datapoints.length; i++) {
-            if (!names.includes(datapoints[i].user)) {
-                names.push(datapoints[i].user);
-                let x = datapoints.filter((a) => a.user == datapoints[i].user);
-                noPosts.push({
-                    name: datapoints[i].user,
-                    posts: x.length,
-                    followers: datapoints[i].followers,
-                    following: datapoints[i].following,
-                });
-            }
-        }
-        var topfollowerValues = [...noPosts]
-            .sort((a, b) => b.followers - a.followers)
-            .slice(0, 5);
-        var topfollowingValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
-        topFollowers = topfollowerValues.concat(topfollowingValues);
-        const barchartdata = {
-            labels: [
-                topfollowerValues[0].name,
-                topfollowerValues[1].name,
-                topfollowerValues[2].name,
-                topfollowerValues[3].name,
-                topfollowerValues[4].name,
-                topfollowingValues[0].name,
-                topfollowingValues[1].name,
-                topfollowingValues[2].name,
-                topfollowingValues[3].name,
-                topfollowingValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "followers",
-                    data: [
-                        topfollowerValues[0].followers,
-                        topfollowerValues[1].followers,
-                        topfollowerValues[2].followers,
-                        topfollowerValues[3].followers,
-                        topfollowerValues[4].followers,
-                        topfollowingValues[0].followers,
-                        topfollowingValues[1].followers,
-                        topfollowingValues[2].followers,
-                        topfollowingValues[3].followers,
-                        topfollowingValues[4].followers,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-                {
-                    label: "following",
-                    data: [
-                        topfollowerValues[0].following,
-                        topfollowerValues[1].following,
-                        topfollowerValues[2].following,
-                        topfollowerValues[3].following,
-                        topfollowerValues[4].following,
-                        topfollowingValues[0].following,
-                        topfollowingValues[1].following,
-                        topfollowingValues[2].following,
-                        topfollowingValues[3].following,
-                        topfollowingValues[4].following,
-                    ],
-                    borderColor: "#4faded",
-                    backgroundColor: "rgba(154,208,245,0.5)",
-                },
-            ],
-        };
+		for (i = 0; i < datapoints.length; i++) {
+		  if (!names.includes(datapoints[i].user)) {
+			names.push(datapoints[i].user);
+			let x = datapoints.filter((a) => a.user == datapoints[i].user);
+			noPosts.push({
+			  name: datapoints[i].user,
+			  posts: x.length,
+			  followers: datapoints[i].followers,
+			  following: datapoints[i].following,
+			});
+		  }
+		}
+		var topfollowerValues = [...noPosts]
+		  .sort((a, b) => b.followers - a.followers)
+		  .slice(0, 5);
+		var topfollowingValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
+		  
+		function arrayUnique(array) {
+		var a = array.concat();
+		for (var i = 0; i < a.length; ++i) {
+		for (var j = i + 1; j < a.length; ++j) {
+		  if (a[i] === a[j]) a.splice(j--, 1);
+			}
+		}
+		return a;
+		}
+		
+		topFollowers = arrayUnique(topfollowerValues.concat(topfollowingValues));
+		let TopFollowersArray = topFollowers.map((e) => e.name);
+		let followers = topFollowers.map((e) => e.followers);
+		let followings = topFollowers.map((e) => e.following);
+		if (!TopFollowersArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		//config
+		const barchartdata = {
+		  labels: TopFollowersArray,
+		  datasets: [
+			{
+			  label: "followers",
+			  data: followers,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+			{
+			  label: "following",
+			  data: followings,
+			  borderColor: "#4faded",
+			  backgroundColor: "rgba(154,208,245,0.5)",
+			},
+		  ],
+		};
         const FollowerChartconfig = {
             type: "bar",
             data: barchartdata,

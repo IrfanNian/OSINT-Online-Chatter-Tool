@@ -488,61 +488,55 @@ function drawPost() {
 }
 
 function drawMostFollowing() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const most_following = data["most_following"];
-        let names = [];
-        let noPosts = [];
-        let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
-        if (most_following.length === 0) {
-            most_following_paragraph += "None"
-        } else {
-            for (let i = 0; i < most_following.length; i++) {
-                most_following_paragraph +=
-                    most_following[i].user + "(" + most_following[i].counts + ")";
-                if (i < most_following.length - 2) {
-                    most_following_paragraph += ", ";
-                } else if (i == most_following.length - 2) {
-                    most_following_paragraph += " and ";
-                }
-            }
-        }
-        mostFollowing.textContent = most_following_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const most_following = data["most_following"];
+		let names = [];
+		let noPosts = [];
+		let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
+		if (most_following.length === 0) {
+		  most_following_paragraph += "None";
+		} else {
+		  for (let i = 0; i < most_following.length; i++) {
+			most_following_paragraph +=
+			  most_following[i].user + "(" + most_following[i].counts + ")";
+			if (i < most_following.length - 2) {
+			  most_following_paragraph += ", ";
+			} else if (i == most_following.length - 2) {
+			  most_following_paragraph += " and ";
+			}
+		  }
+		}
+		mostFollowing.textContent = most_following_paragraph;
 
-        for (i = 0; i < most_following.length; i++) {
-            names.push(most_following[i].user);
-            noPosts.push({
-                name: most_following[i].user,
-                following: most_following[i].counts,
-            });
-        }
+		for (i = 0; i < most_following.length; i++) {
+		  names.push(most_following[i].user);
+		  noPosts.push({
+			name: most_following[i].user,
+			following: most_following[i].counts,
+		  });
+		}
 
-        var topfollowingValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var topfollowingValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const topfollowingdata = {
-            labels: [
-                topfollowingValues[0].name,
-                topfollowingValues[1].name,
-                topfollowingValues[2].name,
-                topfollowingValues[3].name,
-                topfollowingValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "No. of Following",
-                    data: [
-                        topfollowingValues[0].following,
-                        topfollowingValues[1].following,
-                        topfollowingValues[2].following,
-                        topfollowingValues[3].following,
-                        topfollowingValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let MostFollowingArray = topfollowingValues.map((e) => e.name);
+		let topfollowing = topfollowingValues.map((e) => e.following);
+		if (!MostFollowingArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const topfollowingdata = {
+		  labels: MostFollowingArray,
+		  datasets: [
+			{
+			  label: "No. of Following",
+			  data: topfollowing,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const MostFollowingChartconfig = {
             type: "bar",
@@ -582,61 +576,55 @@ function drawMostFollowing() {
 }
 
 function drawLeastFollowing() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const least_following = data["least_following"];
-        let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
-        let names = [];
-        let noPosts = [];
-        if (least_following.length === 0) {
-            least_following_paragraph += "None"
-        } else {
-            for (let i = 0; i < least_following.length; i++) {
-                least_following_paragraph +=
-                    least_following[i].user + "(" + least_following[i].counts + ")";
-                if (i < least_following.length - 2) {
-                    least_following_paragraph += ", ";
-                } else if (i == least_following.length - 2) {
-                    least_following_paragraph += " and ";
-                }
-            }
-        }
-        leastFollowing.textContent = least_following_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const least_following = data["least_following"];
+		let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
+		let names = [];
+		let noPosts = [];
+		if (least_following.length === 0) {
+		  least_following_paragraph += "None";
+		} else {
+		  for (let i = 0; i < least_following.length; i++) {
+			least_following_paragraph +=
+			  least_following[i].user + "(" + least_following[i].counts + ")";
+			if (i < least_following.length - 2) {
+			  least_following_paragraph += ", ";
+			} else if (i == least_following.length - 2) {
+			  least_following_paragraph += " and ";
+			}
+		  }
+		}
+		leastFollowing.textContent = least_following_paragraph;
 
-        for (i = 0; i < least_following.length; i++) {
-            names.push(least_following[i].user);
-            noPosts.push({
-                name: least_following[i].user,
-                following: least_following[i].counts,
-            });
-        }
+		for (i = 0; i < least_following.length; i++) {
+		  names.push(least_following[i].user);
+		  noPosts.push({
+			name: least_following[i].user,
+			following: least_following[i].counts,
+		  });
+		}
 
-        var btmfollowingValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var btmfollowingValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const btmfollowingdata = {
-            labels: [
-                btmfollowingValues[0].name,
-                btmfollowingValues[1].name,
-                btmfollowingValues[2].name,
-                btmfollowingValues[3].name,
-                btmfollowingValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "No. of Following",
-                    data: [
-                        btmfollowingValues[0].following,
-                        btmfollowingValues[1].following,
-                        btmfollowingValues[2].following,
-                        btmfollowingValues[3].following,
-                        btmfollowingValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let LeastFollowingArray = btmfollowingValues.map((e) => e.name);
+		let following = btmfollowingValues.map((e) => e.following);
+		if (!LeastFollowingArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const btmfollowingdata = {
+		  labels: LeastFollowingArray,
+		  datasets: [
+			{
+			  label: "No. of Following",
+			  data: following,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const LeastFollowingChartconfig = {
             type: "bar",
@@ -676,61 +664,55 @@ function drawLeastFollowing() {
 }
 
 function drawMostFollowers() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const most_follower = data["most_follower"];
-        let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
-        let names = [];
-        let noPosts = [];
-        if (most_follower.length === 0) {
-            most_follower_paragraph += "None"
-        } else {
-            for (let i = 0; i < most_follower.length; i++) {
-                most_follower_paragraph +=
-                    most_follower[i].user + "(" + most_follower[i].counts + ")";
-                if (i < most_follower.length - 2) {
-                    most_follower_paragraph += ", ";
-                } else if (i == most_follower.length - 2) {
-                    most_follower_paragraph += " and ";
-                }
-            }
-        }
-        mostFollower.textContent = most_follower_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const most_follower = data["most_follower"];
+		let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
+		let names = [];
+		let noPosts = [];
+		if (most_follower.length === 0) {
+		  most_follower_paragraph += "None";
+		} else {
+		  for (let i = 0; i < most_follower.length; i++) {
+			most_follower_paragraph +=
+			  most_follower[i].user + "(" + most_follower[i].counts + ")";
+			if (i < most_follower.length - 2) {
+			  most_follower_paragraph += ", ";
+			} else if (i == most_follower.length - 2) {
+			  most_follower_paragraph += " and ";
+			}
+		  }
+		}
+		mostFollower.textContent = most_follower_paragraph;
 
-        for (i = 0; i < most_follower.length; i++) {
-            names.push(most_follower[i].user);
-            noPosts.push({
-                name: most_follower[i].user,
-                following: most_follower[i].counts,
-            });
-        }
+		for (i = 0; i < most_follower.length; i++) {
+		  names.push(most_follower[i].user);
+		  noPosts.push({
+			name: most_follower[i].user,
+			following: most_follower[i].counts,
+		  });
+		}
 
-        var topfollowerValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var topfollowerValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const topfollowersdata = {
-            labels: [
-                topfollowerValues[0].name,
-                topfollowerValues[1].name,
-                topfollowerValues[2].name,
-                topfollowerValues[3].name,
-                topfollowerValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "No. of Followers",
-                    data: [
-                        topfollowerValues[0].following,
-                        topfollowerValues[1].following,
-                        topfollowerValues[2].following,
-                        topfollowerValues[3].following,
-                        topfollowerValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let MostFollowersArray = topfollowerValues.map((e) => e.name);
+		let following = topfollowerValues.map((e) => e.following);
+		if (!MostFollowersArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const topfollowersdata = {
+		  labels: MostFollowersArray,
+		  datasets: [
+			{
+			  label: "No. of Followers",
+			  data: following,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const MostFollowersChartconfig = {
             type: "bar",
@@ -770,61 +752,55 @@ function drawMostFollowers() {
 }
 
 function drawLeastFollowers() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const least_follower = data["least_follower"];
-        let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
-        let names = [];
-        let noPosts = [];
-        if (least_follower.length === 0) {
-            least_follower_paragraph += "None"
-        } else {
-            for (let i = 0; i < least_follower.length; i++) {
-                least_follower_paragraph +=
-                    least_follower[i].user + "(" + least_follower[i].counts + ")";
-                if (i < least_follower.length - 2) {
-                    least_follower_paragraph += ", ";
-                } else if (i == least_follower.length - 2) {
-                    least_follower_paragraph += " and ";
-                }
-            }
-        }
-        leastFollower.textContent = least_follower_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const least_follower = data["least_follower"];
+		let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
+		let names = [];
+		let noPosts = [];
+		if (least_follower.length === 0) {
+		  least_follower_paragraph += "None";
+		} else {
+		  for (let i = 0; i < least_follower.length; i++) {
+			least_follower_paragraph +=
+			  least_follower[i].user + "(" + least_follower[i].counts + ")";
+			if (i < least_follower.length - 2) {
+			  least_follower_paragraph += ", ";
+			} else if (i == least_follower.length - 2) {
+			  least_follower_paragraph += " and ";
+			}
+		  }
+		}
+		leastFollower.textContent = least_follower_paragraph;
 
-        for (i = 0; i < least_follower.length; i++) {
-            names.push(least_follower[i].user);
-            noPosts.push({
-                name: least_follower[i].user,
-                following: least_follower[i].counts,
-            });
-        }
+		for (i = 0; i < least_follower.length; i++) {
+		  names.push(least_follower[i].user);
+		  noPosts.push({
+			name: least_follower[i].user,
+			following: least_follower[i].counts,
+		  });
+		}
 
-        var btmfollowerValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var btmfollowerValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const btmfollowersdata = {
-            labels: [
-                btmfollowerValues[0].name,
-                btmfollowerValues[1].name,
-                btmfollowerValues[2].name,
-                btmfollowerValues[3].name,
-                btmfollowerValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "No. of Followers",
-                    data: [
-                        btmfollowerValues[0].following,
-                        btmfollowerValues[1].following,
-                        btmfollowerValues[2].following,
-                        btmfollowerValues[3].following,
-                        btmfollowerValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let LeastFollowersArray = btmfollowerValues.map((e) => e.name);
+		let following = btmfollowerValues.map((e) => e.following);
+		if (!LeastFollowersArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const btmfollowersdata = {
+		  labels: LeastFollowersArray,
+		  datasets: [
+			{
+			  label: "No. of Followers",
+			  data: following,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const LeastFollowersChartconfig = {
             type: "bar",
@@ -864,61 +840,54 @@ function drawLeastFollowers() {
 }
 
 function drawMostInfluential() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const top_five = data["top_five"];
-        let topFive_paragraph = "Top 5 Most Influential User(s): ";
-        let names = [];
-        let noPosts = [];
-        if (top_five.length === 0) {
-            topFive_paragraph += "None"
-        } else {
-            for (let i = 0; i < top_five.length; i++) {
-                topFive_paragraph +=
-                    top_five[i].user + "(" + top_five[i].counts + ")";
-                if (i < top_five.length - 2) {
-                    topFive_paragraph += ", ";
-                } else if (i == top_five.length - 2) {
-                    topFive_paragraph += " and ";
-                }
-            }
-        }
-        topFive.textContent = topFive_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const top_five = data["top_five"];
+		let topFive_paragraph = "Top 5 Most Influential User(s): ";
+		let names = [];
+		let noPosts = [];
+		if (top_five.length === 0) {
+		  topFive_paragraph += "None";
+		} else {
+		  for (let i = 0; i < top_five.length; i++) {
+			topFive_paragraph += top_five[i].user + "(" + top_five[i].counts + ")";
+			if (i < top_five.length - 2) {
+			  topFive_paragraph += ", ";
+			} else if (i == top_five.length - 2) {
+			  topFive_paragraph += " and ";
+			}
+		  }
+		}
+		topFive.textContent = topFive_paragraph;
 
-        for (i = 0; i < top_five.length; i++) {
-            names.push(top_five[i].user);
-            noPosts.push({
-                name: top_five[i].user,
-                following: top_five[i].counts,
-            });
-        }
+		for (i = 0; i < top_five.length; i++) {
+		  names.push(top_five[i].user);
+		  noPosts.push({
+			name: top_five[i].user,
+			following: top_five[i].counts,
+		  });
+		}
 
-        var topInfluentialValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var topInfluentialValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const topInfluentialdata = {
-            labels: [
-                topInfluentialValues[0].name,
-                topInfluentialValues[1].name,
-                topInfluentialValues[2].name,
-                topInfluentialValues[3].name,
-                topInfluentialValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "Top Influential",
-                    data: [
-                        topInfluentialValues[0].following,
-                        topInfluentialValues[1].following,
-                        topInfluentialValues[2].following,
-                        topInfluentialValues[3].following,
-                        topInfluentialValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let MostInfluentialArray = topInfluentialValues.map((e) => e.name);
+		let following = topInfluentialValues.map((e) => e.following);
+		if (!MostInfluentialArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const topInfluentialdata = {
+		  labels: MostInfluentialArray,
+		  datasets: [
+			{
+			  label: "Top Influential",
+			  data: following,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const MostInfluentialChartconfig = {
             type: "bar",
@@ -958,61 +927,55 @@ function drawMostInfluential() {
 }
 
 function drawLeastInfluential() {
-    d3.json("/static/results/twitter_friendship.json").then(function (data) {
-        const bottom_five = data["bottom_five"];
-        let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
-        let names = [];
-        let noPosts = [];
-        if (bottom_five.length === 0) {
-            bottomFive_paragraph += "None"
-        } else {
-            for (let i = 0; i < bottom_five.length; i++) {
-                bottomFive_paragraph +=
-                    bottom_five[i].user + "(" + bottom_five[i].counts + ")";
-                if (i < bottom_five.length - 2) {
-                    bottomFive_paragraph += ", ";
-                } else if (i == bottom_five.length - 2) {
-                    bottomFive_paragraph += " and ";
-                }
-            }
-        }
-        btmFive.textContent = bottomFive_paragraph;
+	  d3.json("/static/results/twitter_friendship.json").then(function (data) {
+		const bottom_five = data["bottom_five"];
+		let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
+		let names = [];
+		let noPosts = [];
+		if (bottom_five.length === 0) {
+		  bottomFive_paragraph += "None";
+		} else {
+		  for (let i = 0; i < bottom_five.length; i++) {
+			bottomFive_paragraph +=
+			  bottom_five[i].user + "(" + bottom_five[i].counts + ")";
+			if (i < bottom_five.length - 2) {
+			  bottomFive_paragraph += ", ";
+			} else if (i == bottom_five.length - 2) {
+			  bottomFive_paragraph += " and ";
+			}
+		  }
+		}
+		btmFive.textContent = bottomFive_paragraph;
 
-        for (i = 0; i < bottom_five.length; i++) {
-            names.push(bottom_five[i].user);
-            noPosts.push({
-                name: bottom_five[i].user,
-                following: bottom_five[i].counts,
-            });
-        }
+		for (i = 0; i < bottom_five.length; i++) {
+		  names.push(bottom_five[i].user);
+		  noPosts.push({
+			name: bottom_five[i].user,
+			following: bottom_five[i].counts,
+		  });
+		}
 
-        var btmInfluentialValues = [...noPosts]
-            .sort((a, b) => b.following - a.following)
-            .slice(0, 5);
+		var btmInfluentialValues = [...noPosts]
+		  .sort((a, b) => b.following - a.following)
+		  .slice(0, 5);
 
-        const btmInfluentialdata = {
-            labels: [
-                btmInfluentialValues[0].name,
-                btmInfluentialValues[1].name,
-                btmInfluentialValues[2].name,
-                btmInfluentialValues[3].name,
-                btmInfluentialValues[4].name,
-            ],
-            datasets: [
-                {
-                    label: "Least Influential",
-                    data: [
-                        btmInfluentialValues[0].following,
-                        btmInfluentialValues[1].following,
-                        btmInfluentialValues[2].following,
-                        btmInfluentialValues[3].following,
-                        btmInfluentialValues[4].following,
-                    ],
-                    borderColor: "#ffb1c1",
-                    backgroundColor: "rgba(255, 110, 141, 0.5)",
-                },
-            ]
-        };
+		let LeastInfluentialArray = btmInfluentialValues.map((e) => e.name);
+		let following = btmInfluentialValues.map((e) => e.following);
+		if (!LeastInfluentialArray.length) {
+		  chartHolderHTML.innerHTML = "Data not available";
+		  return;
+		}
+		const btmInfluentialdata = {
+		  labels: LeastInfluentialArray,
+		  datasets: [
+			{
+			  label: "Least Influential",
+			  data: following,
+			  borderColor: "#ffb1c1",
+			  backgroundColor: "rgba(255, 110, 141, 0.5)",
+			},
+		  ],
+		};
 
         const LeastInfluentialChartconfig = {
             type: "bar",
