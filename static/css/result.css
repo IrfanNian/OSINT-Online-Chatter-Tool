@@ -218,6 +218,9 @@ table thead {
     width: 100%;
 }
 
+.hashtagtab td {
+    text-align: left;
+}
 
 .insights {
     border: 1px solid #e6e6e6;
