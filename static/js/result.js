@@ -1,5 +1,6 @@
 const form = document.forms[0];
 const chartHolderHTML = document.getElementById("graph");
+let drawhashtag = document.getElementById("hashtag");
 let drawBubble = document.getElementById("bubble_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
@@ -14,9 +15,12 @@ let numPage = 1;
 let currentArray = [];
 let topPoster = [];
 let topFollowers = [];
+
 drawCloud();
+drawHashTags();
 drawBubbleChart();
 resetDisplayTable();
+
 const zeroDayWords = ["0day", "zero-day"];
 const attackWords = [
     "attack",
@@ -43,7 +47,7 @@ function destroyChart() {
 }
 
 function resetDisplayTable() {
-    let table = document.querySelector("table tbody");
+    let table = document.querySelector("#tablebubz tbody");
     document.getElementById("searchBar").value = "";
     table.textContent = "";
     row = table.insertRow(0);
@@ -320,6 +324,74 @@ function getMax(jsonList, property) {
     return maxItem;
 }
 
+function drawHashTags() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        const hash = [];
+        const dict = {};
+        for (let i = 0; i < datapoints.length; i++) {
+            word = datapoints[i].text.match(/#[a-z]+/gi);
+            if (word != null) {
+                if (word.length > 0) {
+                    for (let j = 0; j < word.length; j++) {
+                        hash.push(word[j])
+                    }
+                }
+            }
+        }
+        if (dict != {}) {
+            document.getElementById("hashtagHeader").style.display = "flex";
+        }
+
+        const lower = hash.map(element => {
+            return element.toLowerCase();
+        });
+
+        for (const i of lower) {
+            if (dict[i]) {
+                dict[i] += 1;
+            } else {
+                dict[i] = 1;
+            }
+        }
+        var items = Object.keys(dict).map(function (key) {
+            return [key, dict[key]];
+        });
+
+        items.sort(function (first, second) {
+            return second[1] - first[1];
+        });
+
+        const hashtagData = {
+            type: 'line',
+            data: {
+                datasets: items.slice(0,10),
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            reverse: false
+                        }
+                    }]
+                }
+            }
+        };
+
+        const yAxis = hashtagData.data.datasets;
+        
+        var tableBody = "";
+        for (let i = 0; i < yAxis.length; i++) {
+            tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>` + yAxis[i][1] +
+                `</td></tr>` ;
+        }
+
+        const table = `<table class="hashtagtab">${tableBody}</table>`;
+        hashtag.innerHTML = table;
+
+
+    });
+}
+
 function drawLineChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // line chart
@@ -508,7 +580,7 @@ function drawLineChart() {
                         firstPoint.index
                     ];
                 var ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -804,7 +876,7 @@ function drawBubbleChart() {
                         firstPoint.index
                     ];
                 var ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
 
                 function getNumPages(array) {
                     recordsPerPage = 50;
@@ -1087,7 +1159,7 @@ function drawCountryChart() {
                         firstPoint.index
                     ];
                 let ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1328,7 +1400,7 @@ function drawScatterChart() {
                         firstPoint.index
                     ];
                 var ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1570,7 +1642,7 @@ function drawDoughnutChart() {
                     (a) => a.user == topPoster[points[0].index].name
                 );
                 var ar = [...value];
-                table = document.querySelector("table tbody");
+                table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1833,7 +1905,7 @@ function drawFollowersChart() {
                     (a) => a.user == topFollowers[points[0].index].name
                 );
                 var ar = [...value];
-                table = document.querySelector("table tbody");
+                table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -2093,7 +2165,7 @@ function drawxPlatformChart() {
                         firstPoint.index
                     ];
                 let ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -2357,7 +2429,7 @@ function drawKeywordChart() {
                         firstPoint.index
                     ];
                 let ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                    table = document.querySelector("#tablebubz tbody");
                 function getNumPages(array) {
                     return Math.ceil(array.length / recordsPerPage);
                 }
