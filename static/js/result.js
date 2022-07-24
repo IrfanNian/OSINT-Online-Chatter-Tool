@@ -388,9 +388,9 @@ function drawHashTags() {
         const yAxis = hashtagData.data.datasets;
         
         var tableBody = "";
-        for (let i = 0; i < yAxis.length; i++) {
+        for (let i = 0; i < yAxis.length / 2; i++) {
             tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>` + yAxis[i][1] +
-                `</td></tr>` ;
+                `</td><td>` + yAxis[i + 5][0] + `</td><td>` + yAxis[i + 5][1] + '</td></tr>';
         }
 
         const table = `<table class="hashtagtab">${tableBody}</table>`;
