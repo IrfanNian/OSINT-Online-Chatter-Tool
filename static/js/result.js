@@ -2,6 +2,7 @@ const form = document.forms[0];
 const chartHolderHTML = document.getElementById("graph");
 let drawhashtag = document.getElementById("hashtag");
 let drawBubble = document.getElementById("bubble_chart");
+let drawCategory = document.getElementById("category_chart");
 let drawCountry = document.getElementById("country_chart");
 let drawLine = document.getElementById("line_chart");
 let drawScatter = document.getElementById("scatter_chart");
@@ -62,6 +63,13 @@ drawBubble.addEventListener("click", function () {
     drawBubble.className += " active";
     destroyChart();
     drawBubbleChart();
+    resetDisplayTable();
+});
+drawCategory.addEventListener("click", function () {
+    removeActive();
+    drawCategory.className += " active";
+    destroyChart();
+    drawCategoryChart();
     resetDisplayTable();
 });
 drawCountry.addEventListener("click", function () {
@@ -1075,6 +1083,213 @@ function drawBubbleChart() {
     });
 }
 
+function drawCategoryChart() {
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        const categoryStorage = [];
+        const labels = [];
+        for (let i = 0; i < datapoints.length; i++) {
+            let categoryText = [];
+            let categoryUser = [];
+            if (datapoints[i].cat_count != "") {
+                let x = datapoints[i].cat_count;
+                let label = datapoints[i].uniq_cat
+                labels.push(label);
+                for (let a = 0; a < datapoints.length; a++) {
+                    if (label === datapoints[a].category) {
+                        categoryText.push(datapoints[a].text);
+                        categoryUser.push(datapoints[a].user);
+                    }
+                }
+                let json = { x: x, labels: labels, text: categoryText, user: categoryUser };
+                categoryStorage.push(json);
+            }
+        }
+        const categoryChartConfig = {
+            type: "pie",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "No. of Posts in Category",
+                        data: categoryStorage,
+                        backgroundColor: [
+                            "Grey",
+                            "Black",
+                            "Yellow",
+                            "Red",
+                            "Green",
+                        ],
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                onClick: clickCategoryChartHandler,
+                parsing: {
+                    key: 'x'
+                },
+            },
+        };
+        let categoryChart = new Chart(chartHolderHTML, categoryChartConfig);
+        function clickCategoryChartHandler(evt) {
+            const points = categoryChart.getElementsAtEventForMode(
+                evt,
+                "nearest",
+                { intersect: true },
+                true
+            );
+            let currentPage = 1;
+            document.getElementById("searchBar").value = "";
+
+            if (points.length) {
+                const firstPoint = points[0];
+                const label = categoryChart.data.labels[firstPoint.index];
+                const value =
+                    categoryChart.data.datasets[firstPoint.datasetIndex].data[
+                        firstPoint.index
+                    ];
+                let ar = [value.user, value.text],
+                    table = document.querySelector("table tbody");
+                function getNumPages(array) {
+                    recordsPerPage = 50;
+                    return Math.ceil(array.length / recordsPerPage);
+                }
+
+                function prevPage() {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function nextPage() {
+                    if (currentPage < numPage) {
+                        currentPage++;
+                        changePage(currentPage, currentArray);
+                    }
+                }
+
+                function changePage(page, array) {
+                    numPage = getNumPages(array);
+                    const btn_prev = document.getElementById("btn-prev");
+                    const btn_next = document.getElementById("btn-next");
+                    let page_span = document.getElementById("page");
+                    page_span.style.display = "inline-block";
+
+                    if (page < 1) {
+                        page = 1;
+                    }
+
+                    if (page > numPage) {
+                        page = numPage;
+                    }
+
+                    table.textContent = "";
+                    page_span.textContent = "";
+
+                    if (recordsPerPage > array.length) {
+                        recordsPerPage = array.length;
+                    } else if (recordsPerPage < array.length) {
+                        recordsPerPage = 50;
+                    } else {
+                        recordsPerPage = array.length;
+                    }
+
+                    for (
+                        let i = (page - 1) * recordsPerPage;
+                        i < page * recordsPerPage && i < array.length;
+                        i++
+                    ) {
+                        try {
+                            row = table.insertRow(0);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            cell1.textContent = array[i][0];
+                            cell2.textContent = array[i][1];
+                        } catch {
+                            numPage = page;
+                        }
+                    }
+                    page_span.textContent += page + "/" + numPage;
+                    btn_prev.style.display =
+                        page === 1 ? "none" : "inline-block";
+                    btn_next.style.display =
+                        page === numPage ? "none" : "inline-block";
+                    let tbl = document.getElementById("tablebubz");
+                    if (tbl.rows.length == 1) {
+                        btn_page_nav.style.display = "none";
+                    }
+                    let TargetTr =
+                        document.getElementsByTagName("table")[0].rows;
+                    TargetTr[0].scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                        inline: "nearest",
+                    });
+                }
+
+                function searchArray(array) {
+                    input = document.getElementById("searchBar");
+                    filter = input.value.toUpperCase();
+                    let filtered = array.filter((text) => {
+                        return (
+                            typeof text[1] == "string" &&
+                            text[1].toUpperCase().indexOf(filter) > -1
+                        );
+                    });
+                    currentArray = filtered;
+                    currentPage = 1;
+                    changePage(currentPage, filtered);
+                }
+
+                var r = ar[0].map(function (col, i) {
+                    return ar.map(function (row) {
+                        return row[i];
+                    });
+                });
+
+                document
+                    .getElementById("searchBar")
+                    .addEventListener("keyup", (e) => {
+                        e.preventDefault();
+                        searchArray(r);
+                    });
+
+                document
+                    .getElementById("btn-next")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        nextPage();
+                    });
+
+                document
+                    .getElementById("btn-prev")
+                    .addEventListener("click", (e) => {
+                        e.preventDefault();
+                        prevPage();
+                    });
+
+                currentArray = r;
+                currentPage = 1;
+                changePage(currentPage, r);
+            }
+        }
+        chart_sum.textContent = "";
+        let chart_sum_paragraph = "This data is automatically generated by a text classification model which determines the category of each post and therefore will not be 100% accurate. Only English is supported.\r\n\r\n The categories are: ";
+        for (let i = 0; i < categoryStorage.length; i++) {
+            chart_sum_paragraph += categoryStorage[i].labels[i] + "(" + parseInt(categoryStorage[i].x) + ")"
+            if (i < categoryStorage.length - 2) {
+                chart_sum_paragraph += ", ";
+            } else if (i == categoryStorage.length - 2) {
+                chart_sum_paragraph += " and ";
+            }
+        }
+        chart_sum_paragraph += "\r\n\r\nWhere 'is' stands for Information Security."
+        chart_sum.textContent = chart_sum_paragraph;
+    });
+}
+
 function drawCountryChart() {
     d3.csv("/static/results/charting.csv").then(function (datapoints) {
         // country bar chart
@@ -1095,7 +1310,6 @@ function drawCountryChart() {
                 countryStorage.push(json);
             }
         }
-
         //config
         const countryChartConfig = {
             type: "bar",
@@ -1151,7 +1365,6 @@ function drawCountryChart() {
             document.getElementById("searchBar").value = "";
 
             if (points.length) {
-
                 const firstPoint = points[0];
                 const label = countryChart.data.labels[firstPoint.index];
                 const value =
@@ -1555,54 +1768,42 @@ function drawScatterChart() {
 }
 
 function drawDoughnutChart() {
-  d3.csv("/static/results/charting.csv").then(function (datapoints) {
-    let noPosts = [];
-    let names = [];
-    let x;
-    for (i = 0; i < datapoints.length; i++) {
-      if (!names.includes(datapoints[i].user)) {
-        names.push(datapoints[i].user);
-        x = datapoints.filter(
-			(a) => a.user == datapoints[i].user
-			);
-        noPosts.push({
-          name: datapoints[i].user,
-          posts: x.length,
-	    platform: datapoints[i].platform,
-        });
-      }
-    }
+    d3.csv("/static/results/charting.csv").then(function (datapoints) {
+        let noPosts = [];
+        let names = [];
+        let x;
+        for (i = 0; i < datapoints.length; i++) {
+            if (!names.includes(datapoints[i].user)) {
+                names.push(datapoints[i].user);
+                x = datapoints.filter((a) => a.user == datapoints[i].user);
+                noPosts.push({
+                    name: datapoints[i].user,
+                    posts: x.length,
+                    platform: datapoints[i].platform,
+                });
+            }
+        }
 
         var topPostValues = [...noPosts]
             .sort((a, b) => b.posts - a.posts)
             .slice(0, 5);
 
+        let TopPostsArray = topPostValues.map((e) => e.name);
+        let posts = topPostValues.map((e) => e.posts);
+
         topPoster = [...topPostValues];
+        if (!TopPostsArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
         const data = {
-            labels: [
-                topPostValues[0].name,
-                topPostValues[1].name,
-                topPostValues[2].name,
-                topPostValues[3].name,
-                topPostValues[4].name,
-            ],
+            labels: TopPostsArray,
             datasets: [
                 {
-                    label: "Dataset 1",
-                    data: [
-                        topPostValues[0].posts,
-                        topPostValues[1].posts,
-                        topPostValues[2].posts,
-                        topPostValues[3].posts,
-                        topPostValues[4].posts,
-                    ],
-                    backgroundColor: [
-                        "Red",
-                        "Orange",
-                        "Yellow",
-                        "Green",
-                        "Blue",
-                    ],
+                    label: "Frequent Posters",
+                    data: posts,
+                    backgroundColor:
+                        ["Red", "Orange", "Yellow", "Green", "Blue"],
                 },
             ],
         };
@@ -1811,52 +2012,38 @@ function drawFollowersChart() {
         var topfollowingValues = [...noPosts]
             .sort((a, b) => b.following - a.following)
             .slice(0, 5);
-        topFollowers = topfollowerValues.concat(topfollowingValues);
+
+        function arrayUnique(array) {
+            var a = array.concat();
+            for (var i = 0; i < a.length; ++i) {
+                for (var j = i + 1; j < a.length; ++j) {
+                    if (a[i] === a[j]) a.splice(j--, 1);
+                }
+            }
+            return a;
+        }
+
+        topFollowers = arrayUnique(topfollowerValues.concat(topfollowingValues));
+        let TopFollowersArray = topFollowers.map((e) => e.name);
+        let followers = topFollowers.map((e) => e.followers);
+        let followings = topFollowers.map((e) => e.following);
+        if (!TopFollowersArray.length) {
+            chartHolderHTML.innerHTML = "Data not available";
+            return;
+        }
+        //config
         const barchartdata = {
-            labels: [
-                topfollowerValues[0].name,
-                topfollowerValues[1].name,
-                topfollowerValues[2].name,
-                topfollowerValues[3].name,
-                topfollowerValues[4].name,
-                topfollowingValues[0].name,
-                topfollowingValues[1].name,
-                topfollowingValues[2].name,
-                topfollowingValues[3].name,
-                topfollowingValues[4].name,
-            ],
+            labels: TopFollowersArray,
             datasets: [
                 {
                     label: "followers",
-                    data: [
-                        topfollowerValues[0].followers,
-                        topfollowerValues[1].followers,
-                        topfollowerValues[2].followers,
-                        topfollowerValues[3].followers,
-                        topfollowerValues[4].followers,
-                        topfollowingValues[0].followers,
-                        topfollowingValues[1].followers,
-                        topfollowingValues[2].followers,
-                        topfollowingValues[3].followers,
-                        topfollowingValues[4].followers,
-                    ],
+                    data: followers,
                     borderColor: "#ffb1c1",
                     backgroundColor: "rgba(255, 110, 141, 0.5)",
                 },
                 {
                     label: "following",
-                    data: [
-                        topfollowerValues[0].following,
-                        topfollowerValues[1].following,
-                        topfollowerValues[2].following,
-                        topfollowerValues[3].following,
-                        topfollowerValues[4].following,
-                        topfollowingValues[0].following,
-                        topfollowingValues[1].following,
-                        topfollowingValues[2].following,
-                        topfollowingValues[3].following,
-                        topfollowingValues[4].following,
-                    ],
+                    data: followings,
                     borderColor: "#4faded",
                     backgroundColor: "rgba(154,208,245,0.5)",
                 },
