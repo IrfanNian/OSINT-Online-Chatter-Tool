@@ -1773,7 +1773,7 @@ function drawDoughnutChart() {
         let names = [];
         let x;
         for (i = 0; i < datapoints.length; i++) {
-            if (!names.includes(datapoints[i].user)) {
+            if (!names.includes(datapoints[i].user) && datapoints[i].user) {
                 names.push(datapoints[i].user);
                 x = datapoints.filter((a) => a.user == datapoints[i].user);
                 noPosts.push({
@@ -1995,7 +1995,7 @@ function drawFollowersChart() {
         let names = [];
 
         for (i = 0; i < datapoints.length; i++) {
-            if (!names.includes(datapoints[i].user)) {
+            if (!names.includes(datapoints[i].user) && datapoints[i].platform == "twitter" && datapoints[i].user) {
                 names.push(datapoints[i].user);
                 let x = datapoints.filter((a) => a.user == datapoints[i].user);
                 noPosts.push({
@@ -2027,10 +2027,7 @@ function drawFollowersChart() {
         let TopFollowersArray = topFollowers.map((e) => e.name);
         let followers = topFollowers.map((e) => e.followers);
         let followings = topFollowers.map((e) => e.following);
-        if (!TopFollowersArray.length) {
-            chartHolderHTML.innerHTML = "Data not available";
-            return;
-        }
+
         //config
         const barchartdata = {
             labels: TopFollowersArray,
@@ -2213,6 +2210,11 @@ function drawFollowersChart() {
 
         chart_sum.textContent = "";
         let chart_sum_paragraph = "";
+
+        if (!TopFollowersArray.length) {
+            chart_sum_paragraph = "Followers/following data is not available.";
+            chart_sum.textContent = chart_sum_paragraph;
+        }
 
         chart_sum_paragraph =
             "The Twitter account with the most followers is " +
