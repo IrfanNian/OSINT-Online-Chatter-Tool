@@ -26,17 +26,29 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 @app.route('/')
 def default():
+    """
+    Landing page
+    :return render_template():
+    """
     cleanup()
     return render_template('index.html')
 
 
 @app.route('/converter')
 def converter():
+    """
+    Landing page for file converter
+    :return render_template():
+    """
     return render_template('file_converter.html')
 
 
 @app.route('/convert_files', methods=['POST'])
 def convert_files():
+    """
+    File conversion function
+    :return send_file() or return_template():
+    """
     if request.method == 'POST':
         cleanup()
         if "file" in request.files:
@@ -71,12 +83,20 @@ def convert_files():
 
 @app.route('/relationships')
 def relationships():
+    """
+    Landing page for TRV
+    :return render_template():
+    """
     twitter_users_a, twitter_users_b = get_twitter_list_split()
     return render_template('relationships.html', twitter_users_a=twitter_users_a, twitter_users_b=twitter_users_b)
 
 
 @app.route('/rs_uploader', methods=['POST'])
 def upload_file():
+    """
+    Function for uploading TRV results
+    :return render_template():
+    """
     if request.method == 'POST':
         cleanup()
         f = request.files['file']
@@ -96,6 +116,10 @@ def upload_file():
 
 @app.route('/relationship_results', methods=['POST', 'GET'])
 def relationship_results():
+    """
+    Function for processing TRV search
+    :return render_template():
+    """
     if request.method == "POST":
         credentials = "config.ini"
         twitter_users = get_twitter_list()
@@ -126,8 +150,6 @@ def relationship_results():
         tf.run(searchbar_text, level)
         return render_template('relationship_results.html', title=searchbar_text)
     elif request.method == "GET":
-        if os.path.isfile(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")):
-            os.remove(os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json"))
         return render_template('relationship_results.html', title="Upload Mode")
     else:
         twitter_users_a, twitter_users_b = get_twitter_list_split()
@@ -136,6 +158,10 @@ def relationship_results():
 
 @app.route('/download', methods=['GET', 'POST'])
 def download_data():
+    """
+    Function for downloading of results
+    :return send_file() or render_template():
+    """
     if request.method == "POST":
         timestamp = dt.datetime.now().timestamp()
         try:
@@ -158,6 +184,10 @@ def download_data():
 
 @app.route('/results', methods=['POST'])
 def results():
+    """
+    Function for web scraping
+    :return render_template():
+    """
     if request.method == "POST":
         cleanup()
         searchbar_text = request.form.get('keyword')

@@ -12,6 +12,10 @@ ALLOWED_EXTENSIONS_CONVERTER = {"feather", "csv"}
 
 
 def cleanup():
+    """
+    Clean up directories
+    :return None:
+    """
     if not os.path.exists(RESULT_FOLDER):
         os.makedirs(RESULT_FOLDER)
     if not os.path.exists(STATIC_RESULT_FOLDER):
@@ -63,6 +67,10 @@ def allowed_file_converter(arg_filename):
 
 
 def get_twitter_list_split():
+    """
+    Get list of Twitter users and split into two
+    :return twitter_users_a, twitter_users_b:
+    """
     fr = FeatherReader()
     twitter_users = fr.twitter_user_list()
     if len(twitter_users) % 2 == 0:
@@ -75,5 +83,9 @@ def get_twitter_list_split():
 
 
 def get_twitter_list():
+    """
+    Get list of Twitter user
+    :return fr.twitter_user_list():
+    """
     fr = FeatherReader()
     return fr.twitter_user_list()
