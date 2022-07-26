@@ -42,6 +42,17 @@ class FeatherReader:
         compiled_df.reset_index(inplace=True, drop=True)
         return compiled_df
 
+    def get_user_tweets(self, arg_user):
+        """
+        Gets all tweets of a user
+        :param arg_user:
+        :return twitter_df:
+        """
+        all_feather_files = self.get_feather_files("*_tweets_results.feather")
+        twitter_df = self.feather_to_df(all_feather_files)
+        twitter_df = twitter_df.loc[twitter_df['user'] == arg_user]
+        return twitter_df
+
     def twitter_user_list(self):
         """
         Gets all Twitter Users into a list

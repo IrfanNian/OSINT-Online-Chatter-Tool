@@ -43,15 +43,6 @@ class TwitterFriends:
         screen_name_id = self.client.get_user(username=arg_screen_name)
         return screen_name_id.data.id
 
-    def twitter_user_list(self):
-        """
-        Gets all the Twitter user into a list from the feather files
-        :return twitter_user_list:
-        """
-        fr = FeatherReader()
-        twitter_user_list = fr.twitter_user_list()
-        return twitter_user_list
-
     def scrape_friends(self, arg_user_id):
         """
         Requests for friends from the ID
@@ -71,12 +62,13 @@ class TwitterFriends:
         :param arg_level:
         :return None:
         """
+        fr = FeatherReader()
         link_df = pd.DataFrame(columns=['source', 'target', 'value', 'color'])
         color_user = []
         red = Color("red")
         blue = Color("blue")
         color_range = list(red.range_to(blue, 7))
-        self.master_list = self.twitter_user_list()
+        self.master_list = fr.twitter_user_list()
         self.user_pending_queue.append(arg_user)
         self.user_list.append(arg_user)
         color_user.append(color_range[0].hex_l)
@@ -141,6 +133,8 @@ class TwitterFriends:
         follower_df.sort_values(by="counts", inplace=True, ascending=False)
         follower_df_dict_top = follower_df.head(5).to_dict("records")
         follower_df_dict_tail = follower_df.tail(5).to_dict("records")
+        user_tweets_df = fr.get_user_tweets(arg_user)
+        user_tweets_dict = user_tweets_df.to_dict("records")
         top_five_dict = count_df.head(5).to_dict("records")
         bottom_five_dict = count_df.tail(5).to_dict("records")
         link_dict = link_df.to_dict("records")
@@ -149,7 +143,7 @@ class TwitterFriends:
                      "bottom_five": bottom_five_dict, "links": link_dict, "nodes": nodes_dict,
                      "searched_user": arg_user, "most_following": following_df_dict_top,
                      "least_following": following_df_dict_tail, "most_follower": follower_df_dict_top,
-                     "least_follower": follower_df_dict_tail}
+                     "least_follower": follower_df_dict_tail, "user_tweets": user_tweets_dict}
         json_dump = json.dumps(json_prep, indent=4, sort_keys=False)
         filename_out = os.path.join(STATIC_RESULT_FOLDER, "twitter_friendship.json")
         json_out = open(filename_out, 'w')
