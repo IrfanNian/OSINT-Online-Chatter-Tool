@@ -115,6 +115,7 @@
                     </td>
                 </tr>
                 </form>
+                {% if title != "Upload Mode" %}
                 <tr>
                     <td>
                         <button type="button" id="reset_graph">
@@ -122,11 +123,10 @@
                         </button>
                     </td>
                 </tr>
-                {% if error %}
-                <tr>
-                    <td><p class="error" id="error">{{ error }}</p></td>
-                </tr>
                 {% endif %}
+                <tr>
+                    <td><p class="error" id="error">{% if error %} {{ error }} {% endif %}</p></td>
+                </tr>
             </table>
         </div>
         <script src="/static/js/nav.js"></script>
