@@ -107,7 +107,10 @@ if (document.title === "Upload Mode") {
     function removeActive() {
         let tablinks = document.getElementsByClassName("tablinks");
         for (let i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
+            tablinks[i].className = tablinks[i].className.replace(
+                " active",
+                ""
+            );
         }
     }
 
@@ -121,7 +124,9 @@ if (document.title === "Upload Mode") {
     const svg = d3.select("svg").attr("width", width).attr("height", height);
 
     function drawGraph() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const nodes = data["nodes"];
             const links = data["links"];
             const level = data["level"];
@@ -131,9 +136,12 @@ if (document.title === "Upload Mode") {
             document.title = searched_user;
             document.getElementById("query").textContent =
                 searched_user + " | Level: " + level + " | Users: " + users;
-            let user_follows_paragraph = searched_user + " directly influenced by: "
-            let user_indirect_paragraph = searched_user + " indirectly influenced by: "
-            let potential_influenced_paragraph = searched_user + " is likely to be influenced by: ";
+            let user_follows_paragraph =
+                searched_user + " directly influenced by: ";
+            let user_indirect_paragraph =
+                searched_user + " indirectly influenced by: ";
+            let potential_influenced_paragraph =
+                searched_user + " is likely to be influenced by: ";
             let user_follows_array = [];
             let user_indirect_follows_array = [];
             for (let i = 0; i < links.length; i++) {
@@ -146,8 +154,14 @@ if (document.title === "Upload Mode") {
                 for (let a = 0; a < links.length; a++) {
                     if (links[a].source === chosen_user) {
                         if (links[a].target === searched_user) {
-                        } else if (user_follows_array.includes(links[a].target)) {
-                        } else if (user_indirect_follows_array.includes(links[a].target)) {
+                        } else if (
+                            user_follows_array.includes(links[a].target)
+                        ) {
+                        } else if (
+                            user_indirect_follows_array.includes(
+                                links[a].target
+                            )
+                        ) {
                         } else {
                             user_indirect_follows_array.push(links[a].target);
                         }
@@ -155,7 +169,7 @@ if (document.title === "Upload Mode") {
                 }
             }
             if (user_indirect_follows_array.length === 0) {
-                    user_indirect_paragraph += "None";
+                user_indirect_paragraph += "None";
             } else {
                 for (let i = 0; i < user_indirect_follows_array.length; i++) {
                     user_indirect_paragraph += user_indirect_follows_array[i];
@@ -167,14 +181,19 @@ if (document.title === "Upload Mode") {
                 }
             }
 
-            let tempArray = user_follows_array.concat(user_indirect_follows_array);
+            let tempArray = user_follows_array.concat(
+                user_indirect_follows_array
+            );
             const influential_users = top_five.map(function (obj) {
                 return obj.user;
             });
-            let intersection = tempArray.filter(x => influential_users.includes(x));
+            let intersection = tempArray.filter((x) =>
+                influential_users.includes(x)
+            );
             for (let i = 0; i < intersection.length; i++) {
                 if (intersection.length === 5) {
-                    potential_influenced_paragraph += "The top 5 most influential users";
+                    potential_influenced_paragraph +=
+                        "The top 5 most influential users";
                     break;
                 } else {
                     potential_influenced_paragraph += intersection[i];
@@ -272,15 +291,20 @@ if (document.title === "Upload Mode") {
                 d3.selectAll("svg g").attr("transform", e.transform);
             }
 
-            let zoom = d3.zoom()
-                .scaleExtent([.5, 20])
-                .extent([[0, 0], [width, height]])
+            let zoom = d3
+                .zoom()
+                .scaleExtent([0.5, 20])
+                .extent([
+                    [0, 0],
+                    [width, height],
+                ])
                 .on("zoom", handleZoom);
 
             let zoomElem = d3.select("svg").call(zoom);
 
             function reset() {
-                zoomElem.transition()
+                zoomElem
+                    .transition()
                     .duration(750)
                     .call(zoom.transform, d3.zoomIdentity);
             }
@@ -419,14 +443,19 @@ if (document.title === "Upload Mode") {
 
                 for (let i = 0; i < neighborsAndLinks.length; i++) {
                     if (i == 0) {
-                        neighborAndLinksArray.push({ user: neighborsAndLinks[0] });
+                        neighborAndLinksArray.push({
+                            user: neighborsAndLinks[0],
+                        });
                         i += 1;
                     }
                     neighborAndLinksArray.push(neighborsAndLinks[i]);
                 }
                 let uniqueNeighborAndLinksArray = [
                     ...new Map(
-                        neighborAndLinksArray.map((item) => [item["user"], item])
+                        neighborAndLinksArray.map((item) => [
+                            item["user"],
+                            item,
+                        ])
                     ).values(),
                 ];
                 displayNeighbors(uniqueNeighborAndLinksArray);
@@ -447,41 +476,52 @@ if (document.title === "Upload Mode") {
     function drawPost() {
         var searched_user = "";
         const postStorage = [];
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             searched_user = data["searched_user"];
             user_tweets = data["user_tweets"];
             let postStorage = [];
             document.getElementById("queries").textContent = searched_user;
             for (let i = 0; i < user_tweets.length; i++) {
-                x = user_tweets[i].time
-                y = user_tweets[i].text
+                x = user_tweets[i].time;
+                y = user_tweets[i].text;
                 let json = { x: x, y: y };
                 postStorage.push(json);
             }
             const postData = {
-                type: 'line',
+                type: "line",
                 data: {
                     labels: ["Date", "Post"],
                     datasets: postStorage,
                 },
                 options: {
                     scales: {
-                        yAxes: [{
-                            ticks: {
-                                reverse: false
-                            }
-                        }]
-                    }
-                }
-            }
+                        yAxes: [
+                            {
+                                ticks: {
+                                    reverse: false,
+                                },
+                            },
+                        ],
+                    },
+                },
+            };
             const xAxis = postData.data.labels;
             const yAxis = postData.data.datasets;
-            const tableHeader = `<tr>${xAxis.reduce((memo, entry) => { memo += `<th>${entry}</th>`; return memo; }, '<th></th>')
-                }</tr>`;
+            const tableHeader = `<tr>${xAxis.reduce((memo, entry) => {
+                memo += `<th>${entry}</th>`;
+                return memo;
+            }, "<th></th>")}</tr>`;
 
             var tableBody = "";
             for (let i = 0; i < postStorage.length; i++) {
-                tableBody += `<tr><td>` + postStorage[i].x + `</td><td>`+ postStorage[i].y+ `</td></tr>`;
+                tableBody +=
+                    `<tr><td>` +
+                    postStorage[i].x +
+                    `</td><td>` +
+                    postStorage[i].y +
+                    `</td></tr>`;
             }
 
             const table = `<table id="tab">${tableHeader}${tableBody}</table>`;
@@ -490,17 +530,23 @@ if (document.title === "Upload Mode") {
     }
 
     function drawMostFollowing() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const most_following = data["most_following"];
             let names = [];
             let noPosts = [];
-            let most_following_paragraph = "Top 5 Most Amount of Following(s): ";
+            let most_following_paragraph =
+                "Top 5 Most Amount of Following(s): ";
             if (most_following.length === 0) {
                 most_following_paragraph += "None";
             } else {
                 for (let i = 0; i < most_following.length; i++) {
                     most_following_paragraph +=
-                        most_following[i].user + "(" + most_following[i].counts + ")";
+                        most_following[i].user +
+                        "(" +
+                        most_following[i].counts +
+                        ")";
                     if (i < most_following.length - 2) {
                         most_following_paragraph += ", ";
                     } else if (i == most_following.length - 2) {
@@ -565,7 +611,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let mFollowingChart = new Chart(chartHolderHTML, MostFollowingChartconfig);
+            let mFollowingChart = new Chart(
+                chartHolderHTML,
+                MostFollowingChartconfig
+            );
             function clickMostFollowingHandler(evt) {
                 const points = mFollowingChart.getElementsAtEventForMode(
                     evt,
@@ -574,13 +623,16 @@ if (document.title === "Upload Mode") {
                     true
                 );
             }
-    });
+        });
     }
 
     function drawLeastFollowing() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const least_following = data["least_following"];
-            let least_following_paragraph = "Top 5 Least Amount of Following(s): ";
+            let least_following_paragraph =
+                "Top 5 Least Amount of Following(s): ";
             let names = [];
             let noPosts = [];
             if (least_following.length === 0) {
@@ -588,7 +640,10 @@ if (document.title === "Upload Mode") {
             } else {
                 for (let i = 0; i < least_following.length; i++) {
                     least_following_paragraph +=
-                        least_following[i].user + "(" + least_following[i].counts + ")";
+                        least_following[i].user +
+                        "(" +
+                        least_following[i].counts +
+                        ")";
                     if (i < least_following.length - 2) {
                         least_following_paragraph += ", ";
                     } else if (i == least_following.length - 2) {
@@ -653,7 +708,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let lFollowingChart = new Chart(chartHolderHTML, LeastFollowingChartconfig);
+            let lFollowingChart = new Chart(
+                chartHolderHTML,
+                LeastFollowingChartconfig
+            );
             function clickLeastFollowingHandler(evt) {
                 const points = lFollowingChart.getElementsAtEventForMode(
                     evt,
@@ -666,7 +724,9 @@ if (document.title === "Upload Mode") {
     }
 
     function drawMostFollowers() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const most_follower = data["most_follower"];
             let most_follower_paragraph = "Top 5 Most Amount of Follower(s): ";
             let names = [];
@@ -676,7 +736,10 @@ if (document.title === "Upload Mode") {
             } else {
                 for (let i = 0; i < most_follower.length; i++) {
                     most_follower_paragraph +=
-                        most_follower[i].user + "(" + most_follower[i].counts + ")";
+                        most_follower[i].user +
+                        "(" +
+                        most_follower[i].counts +
+                        ")";
                     if (i < most_follower.length - 2) {
                         most_follower_paragraph += ", ";
                     } else if (i == most_follower.length - 2) {
@@ -741,7 +804,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let mFollowersChart = new Chart(chartHolderHTML, MostFollowersChartconfig);
+            let mFollowersChart = new Chart(
+                chartHolderHTML,
+                MostFollowersChartconfig
+            );
             function clickMostFollowersHandler(evt) {
                 const points = mFollowersChart.getElementsAtEventForMode(
                     evt,
@@ -754,9 +820,12 @@ if (document.title === "Upload Mode") {
     }
 
     function drawLeastFollowers() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const least_follower = data["least_follower"];
-            let least_follower_paragraph = "Top 5 Least Amount of Follower(s): ";
+            let least_follower_paragraph =
+                "Top 5 Least Amount of Follower(s): ";
             let names = [];
             let noPosts = [];
             if (least_follower.length === 0) {
@@ -764,7 +833,10 @@ if (document.title === "Upload Mode") {
             } else {
                 for (let i = 0; i < least_follower.length; i++) {
                     least_follower_paragraph +=
-                        least_follower[i].user + "(" + least_follower[i].counts + ")";
+                        least_follower[i].user +
+                        "(" +
+                        least_follower[i].counts +
+                        ")";
                     if (i < least_follower.length - 2) {
                         least_follower_paragraph += ", ";
                     } else if (i == least_follower.length - 2) {
@@ -829,7 +901,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let lFollowersChart = new Chart(chartHolderHTML, LeastFollowersChartconfig);
+            let lFollowersChart = new Chart(
+                chartHolderHTML,
+                LeastFollowersChartconfig
+            );
             function clickLeastFollowersHandler(evt) {
                 const points = lFollowersChart.getElementsAtEventForMode(
                     evt,
@@ -842,7 +917,9 @@ if (document.title === "Upload Mode") {
     }
 
     function drawMostInfluential() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const top_five = data["top_five"];
             let topFive_paragraph = "Top 5 Most Influential User(s): ";
             let names = [];
@@ -851,7 +928,8 @@ if (document.title === "Upload Mode") {
                 topFive_paragraph += "None";
             } else {
                 for (let i = 0; i < top_five.length; i++) {
-                    topFive_paragraph += top_five[i].user + "(" + top_five[i].counts + ")";
+                    topFive_paragraph +=
+                        top_five[i].user + "(" + top_five[i].counts + ")";
                     if (i < top_five.length - 2) {
                         topFive_paragraph += ", ";
                     } else if (i == top_five.length - 2) {
@@ -916,7 +994,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let mInfluentialChart = new Chart(chartHolderHTML, MostInfluentialChartconfig);
+            let mInfluentialChart = new Chart(
+                chartHolderHTML,
+                MostInfluentialChartconfig
+            );
             function clickMostInfluentialHandler(evt) {
                 const points = mInfluentialChart.getElementsAtEventForMode(
                     evt,
@@ -929,7 +1010,9 @@ if (document.title === "Upload Mode") {
     }
 
     function drawLeastInfluential() {
-        d3.json("/static/results/twitter_friendship.json").then(function (data) {
+        d3.json("/static/results/twitter_friendship.json").then(function (
+            data
+        ) {
             const bottom_five = data["bottom_five"];
             let bottomFive_paragraph = "Top 5 Least Influential User(s): ";
             let names = [];
@@ -1004,7 +1087,10 @@ if (document.title === "Upload Mode") {
                 },
             };
 
-            let lInfluentialChart = new Chart(chartHolderHTML, LeastInfluentialChartconfig);
+            let lInfluentialChart = new Chart(
+                chartHolderHTML,
+                LeastInfluentialChartconfig
+            );
             function clickLeastInfluentialHandler(evt) {
                 const points = lInfluentialChart.getElementsAtEventForMode(
                     evt,
