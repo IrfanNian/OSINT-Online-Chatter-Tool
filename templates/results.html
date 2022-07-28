@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="/static/css/nav.css" />
+        <link rel="stylesheet" href="/static/css/result.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link
+            type="image/png"
+            sizes="96x96"
+            rel="icon"
+            href="/static/images/keyword.png"
+        />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+            integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.4.4/d3.min.js"
+            integrity="sha512-hnFpvCiJ8Fr1lYLqcw6wLgFUOEZ89kWCkO+cEekwcWPIPKyknKV1eZmSSG3UxXfsSuf+z/SgmiYB1zFOg3l2UQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    </head>
+    <body>
+        <nav>
+            <a href="/" class="brand-logo">Tracking Online Chatter</a>
+            <a class="menu" onclick="makeRespo()">
+                <img src="/static/images/menu.png" alt="Menu" />
+            </a>
+            <div class="right">
+                <ul>
+                    <li>
+                        {% if title != "Scraping Disabled" %}
+                        <form method="POST" action="/download">
+                            <input
+                                type="submit"
+                                class="button"
+                                value="Download"
+                            />
+                        </form>
+                        {% endif %}
+                    </li>
+                    <li>
+                        <a href="/converter">Converter</a>
+                    </li>
+                    <li>
+                        <a href="/relationships">Relationships</a>
+                    </li>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="cell">
+                    <p class="title">
+                        Showing Results for:
+                        <span class="query">{{ result }}</span>
+                    </p>
+                </div>
+                <div class="cell">
+                    <div class="counter blue">
+                        <div class="counter-icon">
+                            <i class="fa fa-twitter-square"></i>
+                        </div>
+                        <h3>Twitter</h3>
+                        <span class="counter-value" id="CountTW"></span>
+                    </div>
+                    <div class="counter orange">
+                        <div class="counter-icon">
+                            <i class="fa fa-reddit-square"></i>
+                        </div>
+                        <h3>Reddit</h3>
+                        <span class="counter-value" id="CountRD"></span>
+                    </div>
+                    <div class="counter black">
+                        <div class="counter-icon">
+                            <i class="fa fa-bitbucket-square"></i>
+                        </div>
+                        <h3>Pastebin</h3>
+                        <span class="counter-value" id="CountPB"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="headingOne">
+                <p class="title" id="wordcloudName">Word Cloud</p>
+                <p class="title">Username Cloud</p>
+            </div>
+            <div class="wordCloud" id="word-cloud"></div>
+            <div class="usernameCloud" id="username-cloud"></div>
+            <div class="headingOne" id="hashtagHeader" style="display:none;">
+                <p class="title">Top HashTags Mentioned</p>
+            </div>
+            <div class="hashtag" id="hashtag"></div>
+            <div class="headingTwo">
+                <p class="title">Consolidated Results</p>
+                <p class="title">Charts</p>
+            </div>
+            <div class="utility">
+                <input
+                    type="text"
+                    id="searchBar"
+                    placeholder="  Search Message(s)..."
+                />
+                <div class="tab">
+                    <button class="tablinks active" id="bubble_chart">Trends</button>
+                    <button class="tablinks" id="category_chart">Category</button>
+					<button class="tablinks" id="doughnut_chart">Freq. Posters</button>
+					<button class="tablinks" id="followers_chart">Most Followers</button>
+                    <button class="tablinks" id="line_chart">Platform</button>
+                    <button class="tablinks" id="xplatform_chart">X-Platform</button>
+                    <button class="tablinks" id="country_chart">GeoLoc</button>
+                    <button class="tablinks" id="keyword_chart">Keyword</button>
+                    <button class="tablinks" id="scatter_chart">Scatter</button>
+                </div>
+            </div>
+            <div class="bubbletable">
+                <table id="tablebubz" class="display">
+                    <thead>
+                        <tr>
+                            <th style="width: 10.375em">Username</th>
+                            <th style="width: 33.375em">Message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablebody"></tbody>
+                    <tfoot>
+                        <tr>
+                            <td style="padding-left: 20px">
+                                <a href="#" id="btn-prev" style="color: black"
+                                    >Prev |
+                                </a>
+                                <a href="#" id="btn-next" style="color: black"
+                                    >Next</a
+                                >
+                            </td>
+                            <td>Page: <span id="page"></span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="graph">
+                <canvas id="graph"></canvas>
+            </div>
+            <div class="insights" id="insights">
+                <p id="chart_sum"></p>
+            </div>
+        </div>
+        <div class="bNav">
+            <p></p>
+        </div>
+        <script src="/static/js/nav.js"></script>
+        <script src="/static/js/result.js"></script>
+    </body>
+</html>
