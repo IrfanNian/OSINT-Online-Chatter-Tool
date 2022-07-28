@@ -1,16 +1,16 @@
 const form = document.forms[0];
 const chartHolderHTML = document.getElementById("graph");
-let drawhashtag = document.getElementById("hashtag");
-let drawBubble = document.getElementById("bubble_chart");
-let drawCategory = document.getElementById("category_chart");
-let drawCountry = document.getElementById("country_chart");
-let drawLine = document.getElementById("line_chart");
-let drawScatter = document.getElementById("scatter_chart");
-let chartSummary = document.getElementById("chart_sum");
-let drawDoughnut = document.getElementById("doughnut_chart");
-let drawFollowers = document.getElementById("followers_chart");
-let drawKeyword = document.getElementById("keyword_chart");
-let xPlatform = document.getElementById("xplatform_chart");
+const drawhashtag = document.getElementById("hashtag");
+const drawBubble = document.getElementById("bubble_chart");
+const drawCategory = document.getElementById("category_chart");
+const drawCountry = document.getElementById("country_chart");
+const drawLine = document.getElementById("line_chart");
+const drawScatter = document.getElementById("scatter_chart");
+const chartSummary = document.getElementById("chart_sum");
+const drawDoughnut = document.getElementById("doughnut_chart");
+const drawFollowers = document.getElementById("followers_chart");
+const drawKeyword = document.getElementById("keyword_chart");
+const xPlatform = document.getElementById("xplatform_chart");
 let recordsPerPage = 50;
 let numPage = 1;
 let currentArray = [];
@@ -144,19 +144,19 @@ function drawCloud() {
                 }
             }
             if (datapoints[i].date != "") {
-                if (datapoints[i].ml_platform == "twitter") {
+                if (datapoints[i].ml_platform === "twitter") {
                     TWCount = TWCount + parseInt(datapoints[i].count);
                     TWSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].ml_platform == "reddit") {
+                } else if (datapoints[i].ml_platform === "reddit") {
                     RDCount = RDCount + parseInt(datapoints[i].count);
                     RDSeries.push({
                         x: datapoints[i].date,
                         y: parseInt(datapoints[i].count),
                     });
-                } else if (datapoints[i].ml_platform == "pastebin") {
+                } else if (datapoints[i].ml_platform === "pastebin") {
                     PBCount = PBCount + parseInt(datapoints[i].count);
                     PBSeries.push({
                         x: datapoints[i].date,
@@ -341,7 +341,7 @@ function drawHashTags() {
             if (word != null) {
                 if (word.length > 0) {
                     for (let j = 0; j < word.length; j++) {
-                        hash.push(word[j])
+                        hash.push(word[j]);
                     }
                 }
             }
@@ -350,7 +350,7 @@ function drawHashTags() {
             document.getElementById("hashtagHeader").style.display = "flex";
         }
 
-        const lower = hash.map(element => {
+        const lower = hash.map((element) => {
             return element.toLowerCase();
         });
 
@@ -370,33 +370,41 @@ function drawHashTags() {
         });
 
         const hashtagData = {
-            type: 'line',
+            type: "line",
             data: {
-                datasets: items.slice(0,10),
+                datasets: items.slice(0, 10),
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            reverse: false
-                        }
-                    }]
-                }
-            }
+                    yAxes: [
+                        {
+                            ticks: {
+                                reverse: false,
+                            },
+                        },
+                    ],
+                },
+            },
         };
 
         const yAxis = hashtagData.data.datasets;
-        
+
         var tableBody = "";
         for (let i = 0; i < yAxis.length / 2; i++) {
-            tableBody += `<tr><td>` + yAxis[i][0] + `</td><td>` + yAxis[i][1] +
-                `</td><td>` + yAxis[i + 5][0] + `</td><td>` + yAxis[i + 5][1] + '</td></tr>';
+            tableBody +=
+                `<tr><td>` +
+                yAxis[i][0] +
+                `</td><td>` +
+                yAxis[i][1] +
+                `</td><td>` +
+                yAxis[i + 5][0] +
+                `</td><td>` +
+                yAxis[i + 5][1] +
+                "</td></tr>";
         }
 
         const table = `<table class="hashtagtab">${tableBody}</table>`;
         hashtag.innerHTML = table;
-
-
     });
 }
 
@@ -412,76 +420,79 @@ function drawLineChart() {
 
         for (let i = 0; i < datapoints.length; i++) {
             if (datapoints[i].ml_platform != "") {
-                if (datapoints[i].ml_platform == "twitter") {
+                if (datapoints[i].ml_platform === "twitter") {
                     let texts = [];
                     let users = [];
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-						if (datapoints[a].time != "") {
-                        let dateOnly = new Date(datapoints[a].time);
-                        let tzoffset = new Date().getTimezoneOffset() * 60000;
-                        let localISOTime = new Date(dateOnly - tzoffset)
-                            .toISOString()
-                            .slice(0, -1);
-                        dateOnly = localISOTime.split("T", 1)[0];
-                        if (
-                            x == dateOnly &&
-                            datapoints[a].platform == "twitter"
-                        ) {
-                            texts.push(datapoints[a].text);
-                            users.push(datapoints[a].user);
+                        if (datapoints[a].time != "") {
+                            let dateOnly = new Date(datapoints[a].time);
+                            let tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            let localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (
+                                x === dateOnly &&
+                                datapoints[a].platform === "twitter"
+                            ) {
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
                         }
                     }
-				}
                     let json = { x: x, y: y, text: texts, user: users };
                     TWStorage.push(json);
-                } else if (datapoints[i].ml_platform == "reddit") {
+                } else if (datapoints[i].ml_platform === "reddit") {
                     let texts = [];
                     let users = [];
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-						if (datapoints[a].time != "") {
-                        let dateOnly = new Date(datapoints[a].time);
-                        let tzoffset = new Date().getTimezoneOffset() * 60000;
-                        let localISOTime = new Date(dateOnly - tzoffset)
-                            .toISOString()
-                            .slice(0, -1);
-                        dateOnly = localISOTime.split("T", 1)[0];
-                        if (
-                            x == dateOnly &&
-                            datapoints[a].platform == "reddit"
-                        ) {
-                            texts.push(datapoints[a].text);
-                            users.push(datapoints[a].user);
+                        if (datapoints[a].time != "") {
+                            let dateOnly = new Date(datapoints[a].time);
+                            let tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            let localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (
+                                x === dateOnly &&
+                                datapoints[a].platform === "reddit"
+                            ) {
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
                         }
                     }
-				}
                     let json = { x: x, y: y, text: texts, user: users };
                     RDStorage.push(json);
-                } else if (datapoints[i].ml_platform == "pastebin") {
+                } else if (datapoints[i].ml_platform === "pastebin") {
                     let texts = [];
                     let users = [];
                     let x = datapoints[i].date;
                     let y = datapoints[i].count;
                     for (let a = 0; a < datapoints.length; a++) {
-						if (datapoints[a].time != "") {
-                        let dateOnly = new Date(datapoints[a].time);
-                        let tzoffset = new Date().getTimezoneOffset() * 60000;
-                        let localISOTime = new Date(dateOnly - tzoffset)
-                            .toISOString()
-                            .slice(0, -1);
-                        dateOnly = localISOTime.split("T", 1)[0];
-                        if (
-                            x == dateOnly &&
-                            datapoints[a].platform == "pastebin"
-                        ) {
-                            texts.push(datapoints[a].text);
-                            users.push(datapoints[a].user);
+                        if (datapoints[a].time != "") {
+                            let dateOnly = new Date(datapoints[a].time);
+                            let tzoffset =
+                                new Date().getTimezoneOffset() * 60000;
+                            let localISOTime = new Date(dateOnly - tzoffset)
+                                .toISOString()
+                                .slice(0, -1);
+                            dateOnly = localISOTime.split("T", 1)[0];
+                            if (
+                                x === dateOnly &&
+                                datapoints[a].platform === "pastebin"
+                            ) {
+                                texts.push(datapoints[a].text);
+                                users.push(datapoints[a].user);
+                            }
                         }
                     }
-				}
                     let json = { x: x, y: y, text: texts, user: users };
                     PBStorage.push(json);
                 }
@@ -587,8 +598,8 @@ function drawLineChart() {
                     MultilineChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                var ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -655,11 +666,11 @@ function drawLineChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -800,7 +811,7 @@ function drawBubbleChart() {
                             .toISOString()
                             .slice(0, -1);
                         dateOnly = localISOTime.split("T", 1)[0];
-                        if (x == dateOnly) {
+                        if (x === dateOnly) {
                             bubbleText.push(datapoints[a].text);
                             bubbleUser.push(datapoints[a].user);
                         }
@@ -883,8 +894,8 @@ function drawBubbleChart() {
                     bubbleChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                var ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
 
                 function getNumPages(array) {
                     recordsPerPage = 50;
@@ -952,11 +963,11 @@ function drawBubbleChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -1092,7 +1103,7 @@ function drawCategoryChart() {
             let categoryUser = [];
             if (datapoints[i].cat_count != "") {
                 let x = datapoints[i].cat_count;
-                let label = datapoints[i].uniq_cat
+                let label = datapoints[i].uniq_cat;
                 labels.push(label);
                 for (let a = 0; a < datapoints.length; a++) {
                     if (label === datapoints[a].category) {
@@ -1100,7 +1111,12 @@ function drawCategoryChart() {
                         categoryUser.push(datapoints[a].user);
                     }
                 }
-                let json = { x: x, labels: labels, text: categoryText, user: categoryUser };
+                let json = {
+                    x: x,
+                    labels: labels,
+                    text: categoryText,
+                    user: categoryUser,
+                };
                 categoryStorage.push(json);
             }
         }
@@ -1127,7 +1143,7 @@ function drawCategoryChart() {
                 maintainAspectRatio: false,
                 onClick: clickCategoryChartHandler,
                 parsing: {
-                    key: 'x'
+                    key: "x",
                 },
             },
         };
@@ -1149,8 +1165,8 @@ function drawCategoryChart() {
                     categoryChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                let ar = [value.user, value.text],
-                    table = document.querySelector("table tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1217,11 +1233,11 @@ function drawCategoryChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -1276,16 +1292,22 @@ function drawCategoryChart() {
             }
         }
         chart_sum.textContent = "";
-        let chart_sum_paragraph = "This data is automatically generated by a text classification model which determines the category of each post and therefore will not be 100% accurate. Only English is supported.\r\n\r\n The categories are: ";
+        let chart_sum_paragraph =
+            "This data is automatically generated by a text classification model which determines the category of each post and therefore will not be 100% accurate. Only English is supported.\r\n\r\n The categories are: ";
         for (let i = 0; i < categoryStorage.length; i++) {
-            chart_sum_paragraph += categoryStorage[i].labels[i] + "(" + parseInt(categoryStorage[i].x) + ")"
+            chart_sum_paragraph +=
+                categoryStorage[i].labels[i] +
+                "(" +
+                parseInt(categoryStorage[i].x) +
+                ")";
             if (i < categoryStorage.length - 2) {
                 chart_sum_paragraph += ", ";
-            } else if (i == categoryStorage.length - 2) {
+            } else if (i === categoryStorage.length - 2) {
                 chart_sum_paragraph += " and ";
             }
         }
-        chart_sum_paragraph += "\r\n\r\nWhere 'is' stands for Information Security."
+        chart_sum_paragraph +=
+            "\r\n\r\nWhere 'is' stands for Information Security.";
         chart_sum.textContent = chart_sum_paragraph;
     });
 }
@@ -1301,7 +1323,7 @@ function drawCountryChart() {
                 let x = datapoints[i].location_count;
                 let y = datapoints[i].country_count;
                 for (let a = 0; a < datapoints.length; a++) {
-                    if (x == datapoints[a].location) {
+                    if (x === datapoints[a].location) {
                         countryText.push(datapoints[a].text);
                         countryUser.push(datapoints[a].user);
                     }
@@ -1371,8 +1393,8 @@ function drawCountryChart() {
                     countryChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                let ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1439,11 +1461,11 @@ function drawCountryChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -1546,7 +1568,7 @@ function drawScatterChart() {
                         let timeOnly = new Date(datapoints[a].time);
                         timeOnly = timeOnly.toISOString().substring(11, 13);
 
-                        if (x == dateOnly && y == timeOnly) {
+                        if (x === dateOnly && y === timeOnly) {
                             scatterText.push(datapoints[a].text);
                             scatterUser.push(datapoints[a].user);
                         }
@@ -1612,8 +1634,8 @@ function drawScatterChart() {
                     scatterChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                var ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1680,11 +1702,11 @@ function drawScatterChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -1775,7 +1797,7 @@ function drawDoughnutChart() {
         for (i = 0; i < datapoints.length; i++) {
             if (!names.includes(datapoints[i].user) && datapoints[i].user) {
                 names.push(datapoints[i].user);
-                x = datapoints.filter((a) => a.user == datapoints[i].user);
+                x = datapoints.filter((a) => a.user === datapoints[i].user);
                 noPosts.push({
                     name: datapoints[i].user,
                     posts: x.length,
@@ -1802,8 +1824,13 @@ function drawDoughnutChart() {
                 {
                     label: "Frequent Posters",
                     data: posts,
-                    backgroundColor:
-                        ["Red", "Orange", "Yellow", "Green", "Blue"],
+                    backgroundColor: [
+                        "Red",
+                        "Orange",
+                        "Yellow",
+                        "Green",
+                        "Blue",
+                    ],
                 },
             ],
         };
@@ -1840,10 +1867,10 @@ function drawDoughnutChart() {
                 const firstPoint = points[0];
                 const label = DoughnutChart.data.labels[firstPoint.index];
                 const value = datapoints.filter(
-                    (a) => a.user == topPoster[points[0].index].name
+                    (a) => a.user === topPoster[points[0].index].name
                 );
                 var ar = [...value];
-                table = document.querySelector("#tablebubz tbody");
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -1910,11 +1937,11 @@ function drawDoughnutChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -1995,9 +2022,13 @@ function drawFollowersChart() {
         let names = [];
 
         for (i = 0; i < datapoints.length; i++) {
-            if (!names.includes(datapoints[i].user) && datapoints[i].platform == "twitter" && datapoints[i].user) {
+            if (
+                !names.includes(datapoints[i].user) &&
+                datapoints[i].platform === "twitter" &&
+                datapoints[i].user
+            ) {
                 names.push(datapoints[i].user);
-                let x = datapoints.filter((a) => a.user == datapoints[i].user);
+                let x = datapoints.filter((a) => a.user === datapoints[i].user);
                 noPosts.push({
                     name: datapoints[i].user,
                     posts: x.length,
@@ -2023,7 +2054,9 @@ function drawFollowersChart() {
             return a;
         }
 
-        topFollowers = arrayUnique(topfollowerValues.concat(topfollowingValues));
+        topFollowers = arrayUnique(
+            topfollowerValues.concat(topfollowingValues)
+        );
         let TopFollowersArray = topFollowers.map((e) => e.name);
         let followers = topFollowers.map((e) => e.followers);
         let followings = topFollowers.map((e) => e.following);
@@ -2086,10 +2119,10 @@ function drawFollowersChart() {
                 const firstPoint = points[0];
                 const label = followerChart.data.labels[firstPoint.index];
                 const value = datapoints.filter(
-                    (a) => a.user == topFollowers[points[0].index].name
+                    (a) => a.user === topFollowers[points[0].index].name
                 );
                 var ar = [...value];
-                table = document.querySelector("#tablebubz tbody");
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -2156,11 +2189,11 @@ function drawFollowersChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -2245,34 +2278,34 @@ function drawxPlatformChart() {
                 let currentPlatform = datapoints[i].cross_platform;
                 for (let a = 0; a < datapoints.length; a++) {
                     if (
-                        x == datapoints[a].user &&
-                        datapoints[a].platform == currentPlatform
+                        x === datapoints[a].user &&
+                        datapoints[a].platform === currentPlatform
                     ) {
                         xText.push(datapoints[a].text);
                         xUser.push(datapoints[a].user);
                     } else if (
-                        x == datapoints[a].user &&
-                        datapoints[a].platform == currentPlatform
+                        x === datapoints[a].user &&
+                        datapoints[a].platform === currentPlatform
                     ) {
                         xText.push(datapoints[a].text);
                         xUser.push(datapoints[a].user);
                     } else if (
-                        x == datapoints[a].user &&
-                        datapoints[a].platform == currentPlatform
+                        x === datapoints[a].user &&
+                        datapoints[a].platform === currentPlatform
                     ) {
                         xText.push(datapoints[a].text);
                         xUser.push(datapoints[a].user);
                     }
                 }
-                if (currentPlatform == "reddit") {
+                if (currentPlatform === "reddit") {
                     let y = xText.length;
                     let json = { x: x, y: y, text: xText, user: xUser };
                     xPlatformRedditStorage.push(json);
-                } else if (currentPlatform == "twitter") {
+                } else if (currentPlatform === "twitter") {
                     let y = xText.length;
                     let json = { x: x, y: y, text: xText, user: xUser };
                     xPlatformTwitterStorage.push(json);
-                } else if (currentPlatform == "pastebin") {
+                } else if (currentPlatform === "pastebin") {
                     let y = xText.length;
                     let json = { x: x, y: y, text: xText, user: xUser };
                     xPlatformPasteBinStorage.push(json);
@@ -2353,8 +2386,8 @@ function drawxPlatformChart() {
                     xPlatformChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                let ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     recordsPerPage = 50;
                     return Math.ceil(array.length / recordsPerPage);
@@ -2421,11 +2454,11 @@ function drawxPlatformChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                     let TargetTr =
-                        document.getElementsByTagName("table")[0].rows;
+                        document.getElementsByTagName("table")[1].rows;
                     TargetTr[0].scrollIntoView({
                         behavior: "smooth",
                         block: "nearest",
@@ -2492,7 +2525,7 @@ function drawxPlatformChart() {
         }
         const uniqueUsers = [...new Set(xTempUserArray)];
         if (uniqueUsers.length === 0) {
-            chart_sum_paragraph += "No such user exists."
+            chart_sum_paragraph += "No such user exists.";
         }
         for (let i = 0; i < uniqueUsers.length; i++) {
             let tempRedditCount = 0;
@@ -2520,7 +2553,7 @@ function drawxPlatformChart() {
                 ")";
             if (i < uniqueUsers.length - 2) {
                 chart_sum_paragraph += ", ";
-            } else if (i == uniqueUsers.length - 2) {
+            } else if (i === uniqueUsers.length - 2) {
                 chart_sum_paragraph += " and ";
             }
         }
@@ -2617,8 +2650,8 @@ function drawKeywordChart() {
                     keywordChart.data.datasets[firstPoint.datasetIndex].data[
                         firstPoint.index
                     ];
-                let ar = [value.user, value.text],
-                    table = document.querySelector("#tablebubz tbody");
+                let ar = [value.user, value.text];
+                let table = document.getElementById("tablebody");
                 function getNumPages(array) {
                     return Math.ceil(array.length / recordsPerPage);
                 }
@@ -2682,7 +2715,7 @@ function drawKeywordChart() {
                     btn_next.style.display =
                         page === numPage ? "none" : "inline-block";
                     let tbl = document.getElementById("tablebubz");
-                    if (tbl.rows.length == 1) {
+                    if (tbl.rows.length === 1) {
                         btn_page_nav.style.display = "none";
                     }
                 }

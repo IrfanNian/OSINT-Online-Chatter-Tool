@@ -146,5 +146,3 @@ function news() {
 }
 
 news()
-
-
