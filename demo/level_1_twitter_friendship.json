@@ -1,0 +1,268 @@
+{
+    "level": 1,
+    "users": 11,
+    "top_five": [
+        {
+            "user": "ka0com",
+            "counts": 10
+        },
+        {
+            "user": "autumn_good_35",
+            "counts": 1
+        },
+        {
+            "user": "kai_ri_0001",
+            "counts": 1
+        },
+        {
+            "user": "miki158s",
+            "counts": 1
+        },
+        {
+            "user": "NobMiwa",
+            "counts": 1
+        }
+    ],
+    "bottom_five": [
+        {
+            "user": "piyokango",
+            "counts": 1
+        },
+        {
+            "user": "RedPacketSec",
+            "counts": 1
+        },
+        {
+            "user": "sec_trend",
+            "counts": 1
+        },
+        {
+            "user": "tadmaddad",
+            "counts": 1
+        },
+        {
+            "user": "taku888infinity",
+            "counts": 1
+        }
+    ],
+    "links": [
+        {
+            "source": "ka0com",
+            "target": "RedPacketSec",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "NobMiwa",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "kai_ri_0001",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "tadmaddad",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "miki158s",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "taku888infinity",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "Panda_Lv0",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "autumn_good_35",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "sec_trend",
+            "value": 1,
+            "color": "#ff0000"
+        },
+        {
+            "source": "ka0com",
+            "target": "piyokango",
+            "value": 1,
+            "color": "#ff0000"
+        }
+    ],
+    "nodes": [
+        {
+            "user": "ka0com",
+            "color": "#ff0000",
+            "group": 1
+        },
+        {
+            "user": "RedPacketSec",
+            "color": "#ff0000",
+            "group": 2
+        },
+        {
+            "user": "NobMiwa",
+            "color": "#ff0000",
+            "group": 3
+        },
+        {
+            "user": "kai_ri_0001",
+            "color": "#ff0000",
+            "group": 4
+        },
+        {
+            "user": "tadmaddad",
+            "color": "#ff0000",
+            "group": 5
+        },
+        {
+            "user": "miki158s",
+            "color": "#ff0000",
+            "group": 6
+        },
+        {
+            "user": "taku888infinity",
+            "color": "#ff0000",
+            "group": 7
+        },
+        {
+            "user": "Panda_Lv0",
+            "color": "#ff0000",
+            "group": 8
+        },
+        {
+            "user": "autumn_good_35",
+            "color": "#ff0000",
+            "group": 9
+        },
+        {
+            "user": "sec_trend",
+            "color": "#ff0000",
+            "group": 10
+        },
+        {
+            "user": "piyokango",
+            "color": "#ff0000",
+            "group": 11
+        }
+    ],
+    "searched_user": "ka0com",
+    "most_following": [
+        {
+            "user": "ka0com",
+            "counts": 10.0
+        },
+        {
+            "user": "autumn_good_35",
+            "counts": 0.0
+        },
+        {
+            "user": "kai_ri_0001",
+            "counts": 0.0
+        },
+        {
+            "user": "miki158s",
+            "counts": 0.0
+        },
+        {
+            "user": "NobMiwa",
+            "counts": 0.0
+        }
+    ],
+    "least_following": [
+        {
+            "user": "piyokango",
+            "counts": 0.0
+        },
+        {
+            "user": "RedPacketSec",
+            "counts": 0.0
+        },
+        {
+            "user": "sec_trend",
+            "counts": 0.0
+        },
+        {
+            "user": "tadmaddad",
+            "counts": 0.0
+        },
+        {
+            "user": "taku888infinity",
+            "counts": 0.0
+        }
+    ],
+    "most_follower": [
+        {
+            "user": "autumn_good_35",
+            "counts": 1.0
+        },
+        {
+            "user": "kai_ri_0001",
+            "counts": 1.0
+        },
+        {
+            "user": "miki158s",
+            "counts": 1.0
+        },
+        {
+            "user": "NobMiwa",
+            "counts": 1.0
+        },
+        {
+            "user": "Panda_Lv0",
+            "counts": 1.0
+        }
+    ],
+    "least_follower": [
+        {
+            "user": "RedPacketSec",
+            "counts": 1.0
+        },
+        {
+            "user": "sec_trend",
+            "counts": 1.0
+        },
+        {
+            "user": "tadmaddad",
+            "counts": 1.0
+        },
+        {
+            "user": "taku888infinity",
+            "counts": 1.0
+        },
+        {
+            "user": "ka0com",
+            "counts": 0.0
+        }
+    ],
+    "user_tweets": [
+        {
+            "time": "2022-06-16T03:31:15",
+            "text": "Microsoft\u30015\u6708\u672B\u767A\u8868\u306E\u60AA\u7528\u3055\u308C\u305F\u30BC\u30ED\u30C7\u30A4\u8106\u5F31\u6027\u300CFollina\u300D\u3092\u4FEE\u6B63 - https://t.co/vyiZ981yoE",
+            "user": "ka0com",
+            "location": "No Data",
+            "platform": "twitter",
+            "tweet id": 1.54E+18,
+            "following": 912.0,
+            "followers": 1207.0
+        }
+    ]
+}
